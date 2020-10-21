@@ -1,0 +1,33 @@
+header {
+  background: linear-gradient(
+      270deg,
+      #4e63bd 9.03%,
+      rgba(255, 255, 255, 0) 90.28%
+    ),
+    url(/images/background-header.png);
+  min-height: 107px;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+}
+header .header-app {
+  display: flex;
+  align-items: center;
+}
+header a {
+  text-decoration: none;
+  color: #fff;
+  margin-right: 56px;
+  font-size: 20px;
+  font-weight: 600;
+  word-break: keep-all;
+  cursor: pointer;
+}
+@media screen and (max-width: 780px) {
+  header {
+    min-height: 80px;
+  }
+  header img {
+    height: 50px;
+  }
+}

@@ -1,0 +1,214 @@
+.test-page {
+  position: absolute;
+}
+.test-game-panel {
+  padding-top: 120px;
+}
+.test-game-panel .right-panel {
+  overflow: hidden;
+}
+.test-game-panel .custom-test-view {
+  box-shadow: 0 0 6px 4px rgba(185, 185, 185, 0.5);
+  border-radius: 5px;
+  padding: 30px;
+  background: #f0f0f3;
+}
+.test-game-panel .custom-test-view .buttons-panel {
+  width: 100%;
+  margin-top: 20px;
+}
+.test-game-panel .custom-test-view .buttons-panel button {
+  width: 200px;
+  margin: 0 auto;
+  display: block;
+}
+.test-game-panel .box-question-panel {
+  box-shadow: 0 0 6px 4px rgba(185, 185, 185, 0.5);
+  border-radius: 5px;
+}
+.test-game-panel .test-progress-panel {
+  padding: 20px 40px;
+  background: #f0f0f3;
+}
+.test-game-panel .test-progress-panel .progress-panel {
+  position: relative;
+}
+.test-game-panel .test-progress-panel .progress-panel .content-line-progress {
+  position: absolute;
+  top: 0;
+  height: 20px;
+  transition: 0.5s;
+  white-space: nowrap;
+}
+.test-game-panel .test-progress-panel .progress-panel .parent-content-panel {
+  width: 100%;
+  height: 10px;
+  background: #ddd;
+  border-radius: 10px;
+}
+.test-game-panel
+  .test-progress-panel
+  .progress-panel
+  .parent-content-panel
+  .content-progress {
+  background: linear-gradient(270deg, #4e63bd 6.58%, #7f91dc 99.04%);
+  height: 10px;
+  position: absolute;
+  top: 18px;
+  left: 0;
+  border-radius: 10px;
+  transition: 0.5s;
+}
+.test-game-panel .button-game-panel {
+  padding: 20px 0;
+}
+.test-game-panel .questions-panel.end-game {
+  box-shadow: 0 0 6px 4px rgba(185, 185, 185, 0.5);
+  border-radius: 5px;
+}
+.custom-test-content-dialog-panel .custom-test-content-panel {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  padding: 30px;
+  padding-bottom: 0;
+  justify-content: space-between;
+}
+.custom-test-content-dialog-panel .custom-test-content-panel .item {
+  width: calc(50% - 10px);
+  margin-bottom: 20px;
+}
+.custom-test-content-dialog-panel .custom-test-content-panel .item label {
+  font-weight: 500;
+  display: block;
+  width: 100%;
+  margin-bottom: 10px;
+}
+.custom-test-content-dialog-panel
+  .custom-test-content-panel
+  .item
+  .field-content {
+  width: 100%;
+  border-radius: 3px;
+}
+.custom-test-content-dialog-panel
+  .custom-test-content-panel
+  .item
+  .field-content
+  #select-content-test,
+.custom-test-content-dialog-panel
+  .custom-test-content-panel
+  .item
+  .field-content
+  #select-instance-feedback,
+.custom-test-content-dialog-panel
+  .custom-test-content-panel
+  .item
+  .field-content
+  #text-box-allowed-mistakes,
+.custom-test-content-dialog-panel
+  .custom-test-content-panel
+  .item
+  .field-content
+  #text-box-question-number {
+  padding: 10px;
+}
+.custom-test-content-dialog-panel
+  .custom-test-content-panel
+  .item
+  .field-content
+  #select-content-test {
+  border: 1px solid #ddd;
+}
+.custom-test-content-dialog-panel
+  .custom-test-content-panel
+  .item
+  .select-content-test
+  .MuiInput-formControl:after,
+.custom-test-content-dialog-panel
+  .custom-test-content-panel
+  .item
+  .select-content-test
+  .MuiInput-formControl:before {
+  content: none;
+}
+.custom-test-content-dialog-panel .start-test-button-panel {
+  padding: 30px;
+  padding-top: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+@media screen and (max-width: 780px) {
+  .test-game-panel {
+    padding: 0 !important;
+  }
+  .test-game-panel .custom-test-view {
+    padding: 10px 20px;
+    box-shadow: none !important;
+    background: #e5e5e5;
+  }
+  .test-game-panel .questions-panel {
+    overflow-y: scroll;
+    max-height: 300px;
+    background: #e5e5e5;
+  }
+  .test-game-panel .questions-panel .question-item-panel {
+    margin-bottom: 0;
+  }
+  .test-game-panel .box-question-panel {
+    box-shadow: none;
+    background: #e5e5e5;
+  }
+  .test-game-panel .test-progress-panel {
+    padding-top: 0;
+    background: #e5e5e5;
+  }
+  .custom-test-content-dialog-panel .custom-test-content-panel .item {
+    width: 100%;
+  }
+}
+.end-test-view {
+  box-shadow: 0 0 6px 4px rgba(185, 185, 185, 0.5);
+  border-radius: 5px;
+}
+.end-test-view .title {
+  background-color: green;
+  color: #fff;
+  text-align: center;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  border-top-left-radius: 3px;
+  border-top-right-radius: 3px;
+}
+.end-test-view .chart-panel {
+  padding: 30px;
+}
+.end-test-view .description {
+  padding: 0 30px;
+}
+.end-test-view .description .content {
+  border-radius: 10px;
+  background-color: #ceff83;
+  padding: 20px;
+}
+.end-test-view .try-again-test-button {
+  margin: 20px auto;
+  display: block;
+  width: calc(100% - 60px);
+}
+.end-test-view.test-failed .title {
+  background-color: red;
+}
+.end-test-view.test-failed .description .content {
+  background-color: #ffbcbc;
+}
+@media (max-width: 780px) {
+  .end-test-view {
+    box-shadow: none;
+  }
+  .end-test-view .chart-panel {
+    padding: 30px 0;
+  }
+}

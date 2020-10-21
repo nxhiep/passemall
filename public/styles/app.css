@@ -1,0 +1,359 @@
+body {
+  font-family: -apple-system, BlinkMacSystemFont, sans-serif !important;
+  background-color: #f8fdff;
+}
+.body-panel header {
+  min-height: 630px;
+  /* position: relative; */
+}
+header .container-header .header-tab-panel {
+  margin-bottom: 80px;
+}
+.body-panel header .container-header {
+  margin-top: 36px;
+}
+
+header .menu-appbar {
+  display: flex;
+  align-items: center;
+}
+header .menu-appbar .menu-nav {
+  display: flex;
+  color: #fff;
+  cursor: pointer;
+}
+.info-feedback {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.feedback-container {
+  align-items: center;
+  justify-content: space-between;
+  display: flex !important;
+  height: 321px;
+  margin-bottom: 200px !important;
+  overflow: hidden;
+}
+.feedback-container .feedback-content {
+  width: 70%;
+  display: flex;
+  flex-direction: column;
+}
+.feedback-container .feedback-content div:first-child {
+  font-size: 24px;
+}
+header .menu-appbar .menu-nav a {
+  display: flex;
+  font-size: 18px;
+  flex-direction: row;
+  margin-right: 80px;
+  text-decoration: none;
+  font-weight: 600;
+  color: #fff;
+}
+header .container-header .header-title {
+  padding-left: 8px;
+  width: 30%;
+}
+header .container-header .header-title h1 {
+  font-weight: 700;
+}
+header .container-header .header-title p {
+  font-weight: 500;
+  font-size: 14px;
+  margin-top: 24px;
+  margin-bottom: 0px;
+}
+.features-container {
+  margin-top: 126px;
+  margin-bottom: 160px;
+}
+.features-container .list-features {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+}
+.features-container .list-features div {
+  width: 30%;
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  align-items: center;
+}
+.features-container .list-features div p {
+  color: #383838;
+}
+.overview-container {
+  margin-bottom: 168px;
+}
+.overview-container .overview-title {
+  margin-bottom: 80px;
+}
+.overview-container .overview-title h2 {
+  margin-bottom: 40px;
+  text-align: center;
+  font-size: 36px;
+}
+.overview-container .overview-title p {
+  color: #383838;
+  font-size: 20px;
+  font-weight: 400;
+}
+.overview-container .list-overview {
+  display: flex;
+  justify-content: space-between;
+}
+.overview-container .list-overview .overview-item {
+  width: 30%;
+}
+.overview-container .list-overview .overview-item h2 {
+  margin-bottom: 24px;
+}
+.big-image {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 124px;
+}
+.big-image .big-image-content {
+  max-width: 450px;
+  margin-left: auto;
+  margin-right: auto;
+}
+.big-image .big-image-content h2 {
+  font-size: 36px;
+}
+.big-image .big-image-content p {
+  font-size: 20px;
+}
+.infographic-container {
+  text-align: center;
+  margin-bottom: 150px;
+}
+.infographic-container h2 {
+  margin-bottom: 40px;
+}
+.infographic-container > p {
+  font-weight: 400;
+  font-size: 20px;
+  color: #383838;
+  margin-bottom: 55px;
+}
+.infographic-container .list-infographic {
+  display: flex;
+  justify-content: space-between;
+}
+.infographic-container .list-infographic > div {
+  align-items: center;
+  height: 280px;
+  display: flex;
+  width: 230px;
+  box-sizing: border-box;
+  padding: 16px;
+  text-align: center;
+  flex-direction: column;
+  background-color: #f7f8ff;
+  box-shadow: 2px 2px 20px rgba(0, 0, 0, 0.1);
+  border-radius: 5px;
+  justify-content: space-around;
+}
+.infographic-container .list-infographic > div > div {
+  color: #fa8e45;
+  font-weight: bold;
+}
+.mobile-description-container {
+  backdrop-filter: blur(10px);
+  border-radius: 20px;
+  margin-top: 92px;
+  margin-bottom: 200px;
+  display: flex !important;
+  padding: 0px !important;
+}
+.mobile-description-container .mobile-description-content {
+  width: 50%;
+  margin: 32px 60px 24px 40px;
+}
+.mobile-description-container .mobile-description-content h3 {
+  font-size: 36px;
+  font-weight: bold;
+  margin-top: 0px;
+}
+.mobile-description-container .mobile-description-content p {
+  font-size: 20px;
+  margin-bottom: 32px;
+  color: #383838;
+}
+.mobile-description-container .mobile-description-content .app-info {
+  display: flex;
+  width: 90%;
+}
+.mobile-description-container
+  .mobile-description-content
+  .app-info
+  .app-info-right {
+  margin-left: 20px;
+}
+.mobile-description-container
+  .mobile-description-content
+  .app-info
+  .app-info-right
+  h4 {
+  font-size: 24px;
+  font-weight: 700;
+  margin-top: 0px;
+  margin-bottom: 16px;
+}
+.mobile-description-container .mobile-description-content .app-url {
+  display: flex;
+  margin-top: 16px;
+}
+.mobile-description-container .mobile-description-image {
+  background: url(/images/screenshot.png) no-repeat;
+  background-size: contain;
+  height: auto;
+  width: 78%;
+  padding: 0;
+}
+.MuiRating-icon {
+  margin-right: 8px;
+}
+
+@media (max-width: 1170px) {
+  .body-panel header .container-header {
+    margin-top: 0px;
+  }
+  .big-image .image-info {
+    display: none;
+  }
+  .big-image .big-image-content {
+    width: 80%;
+    max-width: none;
+  }
+  .big-image .big-image-content h2 {
+    text-align: center;
+  }
+  .big-image .big-image-content .MuiButton-root {
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
+  }
+  .mobile-description-container .mobile-description-image {
+    background: url(/images/screenshot-2.png) no-repeat;
+    background-size: contain;
+    background-position: center;
+    width: 300px;
+    margin-left: auto;
+  }
+  .mobile-description-container .mobile-description-content {
+    width: 70%;
+  }
+  .big-image {
+    margin-bottom: 0px;
+  }
+}
+@media (max-width: 960px) {
+  .MuiContainer-root.infographic-container {
+    display: none;
+  }
+}
+
+@media (max-width: 780px) {
+  .feedback-container .feedback-content div:first-child {
+    font-size: 18px;
+  }
+  .feedback-container {
+    margin-bottom: 50px;
+  }
+  header .container-header .header-title {
+    width: 95%;
+    margin-right: auto;
+    margin-left: auto;
+  }
+  .overview-container {
+    margin-bottom: 80px;
+  }
+  header .container-header .header-title h1 {
+    font-size: 36px !important;
+  }
+  h1,
+  h2,
+  h3,
+  h4 {
+    font-size: 18px !important;
+  }
+  .mobile-description-container .mobile-description-image {
+    width: 49%;
+  }
+  .parent-logo {
+    margin-left: 16px;
+  }
+  .features-container {
+    display: none !important;
+  }
+  .overview-container .list-overview {
+    flex-direction: column;
+  }
+  .overview-container .list-overview .overview-item {
+    width: 80%;
+    margin: 20px auto;
+  }
+  .overview-container .overview-title {
+    width: 80%;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 40px;
+    margin-top: 80px;
+  }
+  .mobile-description-container .mobile-description-content p {
+    font-size: 12px;
+    color: #383838;
+  }
+  .mobile-description-container {
+    margin-bottom: 34px;
+    padding: 18px 10px !important;
+  }
+  .mobile-description-container .mobile-description-content .app-info {
+    width: 100%;
+  }
+  .mobile-description-container .mobile-description-content {
+    margin: 0px !important;
+    width: 100%;
+  }
+  .mobile-description-container .mobile-description-content .app-url a img {
+    height: 30px;
+  }
+  .mobile-description-container .mobile-description-image {
+    background-size: 110px 230px;
+  }
+  .mobile-description-container .mobile-description-content .app-info img {
+    height: 75px !important;
+    width: 75px;
+  }
+  .big-image .big-image-content {
+    display: none !important;
+  }
+  .big-image .image-info {
+    display: none !important;
+  }
+  .big-image .image-info:first-child {
+    display: block !important;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .big-image .image-info:first-child img {
+    width: 350px;
+  }
+  .overview-container .list-overview .overview-item h2 {
+    text-align: center;
+  }
+  .main-title > span:before {
+    bottom: -17px !important;
+  }
+  .mobile-description-container
+    .mobile-description-content
+    .app-info
+    .app-info-right {
+    margin-left: 8px;
+  }
+}

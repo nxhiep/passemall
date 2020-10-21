@@ -1,0 +1,42 @@
+.background-title-blog {
+  background: url(/images/blog-background.png) no-repeat;
+  background-size: cover;
+  height: 100%;
+  width: 100%;
+  min-height: 800px;
+  position: relative;
+}
+.list-social {
+  position: absolute;
+  bottom: 40px;
+  display: flex;
+  flex-direction: column;
+  right: 40px;
+}
+.related-post {
+  font-size: 36px;
+  text-align: center;
+  padding: 40px 0px;
+  border-top: 1px solid #e0e0e0;
+  width: 44%;
+  margin: auto;
+}
+.blog-content {
+  width: 75%;
+  margin-left: 40px;
+}
+.blog-content h1,
+h2,
+h3,
+h4,
+h5 {
+  font-size: 20px;
+}
+.blog-content p {
+  font-size: 18px;
+}
+@media screen and (max-width: 780px) {
+  .related-post {
+    width: 90%;
+  }
+}

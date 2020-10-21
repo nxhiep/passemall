@@ -1,0 +1,36 @@
+.background-header {
+  background: url(/images/background-header-blog.png) no-repeat;
+  background-size: cover;
+  min-height: 790px;
+  display: flex;
+  position: relative;
+}
+.list-social {
+  position: absolute;
+  bottom: 40px;
+  display: flex;
+  flex-direction: column;
+  right: 40px;
+}
+.background-blog {
+  position: relative;
+}
+.name-blog {
+  position: absolute;
+  bottom: 40px;
+  color: #fff;
+  left: 40px;
+  font-size: 48px;
+}
+.list-blog-container {
+  margin-bottom: 40px;
+  display: flex;
+  margin-left: 64px;
+  position: relative;
+}
+
+@media screen and (max-width: 780px) {
+  .list-blog-container {
+    margin-left: 0px;
+  }
+}
