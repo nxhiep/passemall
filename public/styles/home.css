@@ -1,0 +1,131 @@
+.content-home-page {
+  flex: auto;
+}
+.content-home-page .main-title {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.content-home-page .content-panel {
+  align-items: stretch;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+.content-home-page .content-panel .topic-item-panel {
+  box-shadow: 0 0 6px 4px rgba(185, 185, 185, 0.5);
+  border-radius: 5px;
+  padding: 20px;
+  width: calc(50% - 10px);
+  box-sizing: border-box;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+.content-home-page .content-panel .topic-item-panel > a {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  align-items: flex-start;
+  text-decoration: none;
+  color: inherit;
+}
+.content-home-page .content-panel .topic-item-panel > a label {
+  font-weight: bold;
+}
+.content-home-page
+  .content-panel
+  .topic-item-panel
+  > a
+  .parent-line-progress-panel {
+  margin-top: auto;
+}
+.content-home-page .content-panel .topic-item-panel > a font,
+.content-home-page .content-panel .topic-item-panel > a p,
+.content-home-page .content-panel .topic-item-panel > a span {
+  text-indent: 0 !important;
+}
+.content-home-page .content-panel .topic-item-panel > a:hover {
+  text-decoration: none;
+}
+.user-info-panel .user-avatar-content-panel .parent-app-info-name {
+  box-shadow: 0 0 6px 4px rgba(185, 185, 185, 0.5);
+  border-radius: 5px;
+  padding-bottom: 10px;
+  margin-bottom: 15px;
+}
+.user-info-panel
+  .user-avatar-content-panel
+  .parent-app-info-name
+  .app-info-name {
+  display: flex;
+  align-items: flex-start;
+  padding: 10px;
+}
+.user-info-panel
+  .user-avatar-content-panel
+  .parent-app-info-name
+  .app-info-name
+  .app-child-name {
+  padding-top: 10px;
+  padding-left: 20px;
+}
+.user-info-panel
+  .user-avatar-content-panel
+  .parent-app-info-name
+  .app-info-name
+  .app-child-name
+  strong {
+  font-size: 20px;
+}
+.user-info-panel
+  .user-avatar-content-panel
+  .parent-app-info-name
+  .link-app-store {
+  border-top: 1px solid #ddd;
+  padding-top: 15px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.user-info-panel
+  .user-avatar-content-panel
+  .parent-app-info-name
+  .link-app-store
+  a
+  img {
+  width: 120px;
+}
+.user-info-panel .review-app-slider {
+  margin: -10px;
+}
+.user-info-panel .review-app-slider .review-app-item {
+  padding: 10px;
+}
+.user-info-panel .review-app-slider .review-app-item > div {
+  box-shadow: 0 0 6px 4px rgba(185, 185, 185, 0.5);
+  border-radius: 5px;
+  padding: 15px;
+}
+.user-info-panel .review-app-slider .review-app-item > div .time {
+  color: #555;
+  font-size: 0.9em;
+}
+.user-info-panel .review-app-slider .review-app-item .dot-3 {
+  min-height: 72px;
+}
+@media screen and (max-width: 760px) {
+  .content-home-page .content-panel .topic-item-panel {
+    width: 100%;
+  }
+  .user-info-panel .user-info-content-panel {
+    order: 2;
+  }
+  .user-info-panel .user-info-content-panel > p:first-child {
+    margin-top: 0;
+  }
+  .user-info-panel .user-avatar-content-panel {
+    order: 1;
+    margin-top: 20px;
+  }
+}

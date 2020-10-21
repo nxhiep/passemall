@@ -1,0 +1,21 @@
+.background-title-blog {
+  background: url(/images/blog-background.png) no-repeat;
+  background-size: cover;
+  height: 100%;
+  width: 100%;
+  min-height: 800px;
+  position: relative;
+}
+.related-post {
+  font-size: 36px;
+  text-align: center;
+  padding: 40px 0px;
+  border-top: 1px solid #e0e0e0;
+  width: 44%;
+  margin: auto;
+}
+@media screen and (max-width: 760px) {
+  .related-post {
+    width: 90%;
+  }
+}
