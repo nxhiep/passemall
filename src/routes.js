@@ -4,5 +4,6 @@ class Routes {
     static STUDY_SCREEN = "study";
     static TEST_SCREEN ="test";
     static LANDING_PAGE_SCREEN ="/";
+    static FAQ_SCREEN ="/faq";
 }
 export default Routes;

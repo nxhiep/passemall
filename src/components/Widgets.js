@@ -101,4 +101,25 @@ const TitleBlock = ({ title = '', description = '', image = '' }) => {
     );
 }
 
-export { TitleBlock, FixedContainer, LoadingWidget, TabPanel, LineProgress, Modal };
+const ConnectAppStore = ({ appInfo }) => {
+    return <div className="parent-app-info-name">
+        <div className="app-info-name">
+            <Image src={appInfo.avatar} alt={appInfo.appName} width="100px" height="100px" />
+            <div className="app-child-name">
+                <div><strong>{appInfo.appName}</strong></div>
+                <Rating name="read-only" value={5} readOnly size="small" style={{ marginTop: '10px' }} />
+            </div>
+        </div>
+        <div className="link-app-store">
+            <a href={appInfo.urlAndroid} target="_blank" rel="noopener noreferrer">
+                <Image alt="Link google app" src="/images/googlePlayIcon.png" />
+            </a>
+            <div style={{ width: '20px' }}></div>
+            <a href={appInfo.urlIos} target="_blank" rel="noopener noreferrer">
+                <Image alt="Link app store" src="/images/appStoreIcon.png" />
+            </a>
+        </div>
+    </div>
+}
+
+export { TitleBlock, FixedContainer, LoadingWidget, TabPanel, LineProgress, Modal, ConnectAppStore };

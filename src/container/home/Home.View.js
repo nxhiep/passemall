@@ -5,7 +5,7 @@ import ReactHtmlParser from 'react-html-parser';
 import Slider from "react-slick";
 import Footer from '../../components/Footer';
 import Header from '../../components/Header';
-import Image from '../../components/Image';
+import { ConnectAppStore } from '../../components/Widgets';
 import SelectStatePopup from '../../components/SelectStatePopup';
 import { formatDate } from '../../utils';
 import HomeContent from '../home/HomeContent';
@@ -82,24 +82,7 @@ const AppInfoUI = ({ appInfoState, userRateState }) => {
                         </Button> : ''}
                 </Grid>
                 <Grid item xs={12} sm={12} md={4} className="user-avatar-content-panel" style={{ overflow: 'hidden' }}>
-                    <div className="parent-app-info-name">
-                        <div className="app-info-name">
-                            <Image src={appInfo.avatar} alt={appInfo.appName} width="100px" height="100px" />
-                            <div className="app-child-name">
-                                <div><strong>{appInfo.appName}</strong></div>
-                                <Rating name="read-only" value={5} readOnly size="small" style={{ marginTop: '10px' }} />
-                            </div>
-                        </div>
-                        <div className="link-app-store">
-                            <a href={appInfo.urlAndroid} target="_blank" rel="noopener noreferrer">
-                                <Image alt="Link google app" src="/images/googlePlayIcon.png" />
-                            </a>
-                            <div style={{ width: '20px' }}></div>
-                            <a href={appInfo.urlIos} target="_blank" rel="noopener noreferrer">
-                                <Image alt="Link app store" src="/images/appStoreIcon.png" />
-                            </a>
-                        </div>
-                    </div>
+                    <ConnectAppStore appInfo={appInfo} />
                     <UserRateAppSliderUI userRateState={userRateState} />
                 </Grid>
             </Grid>
