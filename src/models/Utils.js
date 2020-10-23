@@ -1,3 +1,4 @@
+import { getCookieParser } from 'next/dist/next-server/server/api-utils';
 import ReactHtmlParser from 'react-html-parser';
 export function onScrollElementAtParentElement(childClass, parentClass, offset) {
     var _a;

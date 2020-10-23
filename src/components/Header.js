@@ -51,9 +51,6 @@ const HeaderPC = ({ alt, isMobile, isBlog }) => {
 	const handleOpenDrawer = (open) => {
 		setOpenDrawer(open)
 	}
-	const getLink = (screen) => {
-		return '/' + appNameId + (screen ? '/' + screen : '');
-	}
 	let a = ["Home", "Blog", "Support"];
 	let b = ["Home", "About us", "Blog"]
 	return (
@@ -94,13 +91,13 @@ const HeaderPC = ({ alt, isMobile, isBlog }) => {
 						</SwipeableDrawer>
 					</div>) : (
 						<div style={{ marginLeft: "auto", display: "flex", alignItems: "center" }}>
-							<a href={getLink} onClick={() => {
+							<a href={isBlog ? "/" : "/" + appNameId} onClick={() => {
 								isBlog ? router.push("/") : router.push("/" + appNameId)
 							}}>{isBlog ? "Home" : "Learn"}</a>
-							<a href={getLink} onClick={() => {
+							<a href={isBlog ? "/" : "/" + appNameId} onClick={() => {
 								isBlog ? router.push("/") : router.push("/" + appNameId)
 							}}>{isBlog ? "About us" : "Home"}</a>
-							<a href={getLink} onClick={() => {
+							<a href={isBlog ? "/blog" : "/"} onClick={() => {
 								isBlog ? router.push("/blog") : router.push("/")
 							}}>{isBlog ? "Blog" : "Study Guide"}</a>
 							{/* {!isStudy ? <a href="">

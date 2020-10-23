@@ -43,5 +43,7 @@ class Config {
 
     static TEST_TOTAL_QUESTION = 50;
     static TEST_ALLOW_MISTAKE = 15;
+
+    static RECENT_POSTS_KEY = "RECENT_POSTS_KEY";
 }
 export default Config;

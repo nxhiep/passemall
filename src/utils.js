@@ -1,3 +1,5 @@
+import Config from '../src/config';
+
 export function shuffle(list) {
     return list.sort((a, b) => {
         let num = Math.floor(Math.random() * 101);
@@ -121,4 +123,58 @@ export function stringReplaceUrl(str, regexReplace) {
         result += c;
     }
     return result.replace(/[^a-zA-Z0-9_-]/g, regexReplace ? regexReplace : '-').replace(/-{2,}/g, '-').replaceAll(/--/g, '-').toLowerCase();
+}
+
+export function getCookie(key) {
+    if (typeof window !== "undefined") {
+        var name = key + "=";
+        var decodedCookie = decodeURIComponent(document.cookie);
+        var ca = decodedCookie.split(';');
+        for (var i = 0; i < ca.length; i++) {
+            var c = ca[i];
+            while (c.charAt(0) == ' ') {
+                c = c.substring(1);
+            }
+            if (c.indexOf(name) == 0) {
+                return c.substring(name.length, c.length);
+            }
+        }
+        return '';
+    }
+    return '';
+}
+
+export function setCookie(key, value, exdays) {
+    if (typeof window !== "undefined") {
+        if (!exdays) {
+            exdays = 1;
+        }
+        var d = new Date();
+        d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
+        var expires = "expires=" + d.toUTCString();
+        document.cookie = key + "=" + value + ";" + expires + ";path=/";
+    }
+}
+
+export function addRecentPost(id) {
+    if(id){
+        var ids = getRecentPosts();
+        if(ids.indexOf(id) == -1){
+            if(ids.length == 5){
+                ids[0] = id;
+            } else {
+                ids.push(id);
+            }
+        }
+        setCookie(Config.RECENT_POSTS_KEY, JSON.stringify(ids), 30);
+    }
+}
+
+export function getRecentPosts() {
+    var json = getCookie(Config.RECENT_POSTS_KEY);
+    // console.log("getRecentPosts json", json)
+    if(json){
+        return JSON.parse(json);
+    }
+    return [];
 }

@@ -5,6 +5,7 @@
   display: flex;
   position: relative;
 }
+
 .list-social {
   position: absolute;
   bottom: 40px;
@@ -12,9 +13,11 @@
   flex-direction: column;
   right: 40px;
 }
+
 .background-blog {
   position: relative;
 }
+
 .name-blog {
   position: absolute;
   bottom: 40px;
@@ -22,6 +25,7 @@
   left: 40px;
   font-size: 48px;
 }
+
 .list-blog-container {
   margin-bottom: 40px;
   display: flex;
@@ -33,4 +37,47 @@
   .list-blog-container {
     margin-left: 0px;
   }
+}
+
+.post-item {
+  width: 100%;
+  margin-bottom: 40px;
+}
+
+.post-item a:hover {
+  text-decoration: none !important;
+}
+
+.wrapper-image {
+  position: relative;
+  height: 0;
+  width: 100%;
+  padding-bottom: 62.25%;
+}
+
+.wrapper-image img {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  left: 0;
+  top: 0;
+}
+
+.post-item p {
+  color: black;
+}
+
+.post-item h2,
+.post-item p {
+  margin: 0;
+
+}
+
+.recent-posts .recent-post-item {
+margin-bottom: 16px;
+
+}
+
+.recent-posts a:hover {
+  text-decoration: none !important;
 }

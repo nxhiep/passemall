@@ -21,22 +21,9 @@
   width: 44%;
   margin: auto;
 }
-.blog-content {
-  width: 75%;
-  margin-left: 40px;
-}
-.blog-content h1,
-h2,
-h3,
-h4,
-h5 {
-  font-size: 20px;
-}
-.blog-content p {
-  font-size: 18px;
+#post-menu-auto-gen {
+  border: 1px solid #ddd;
+  border-radius: 10px;
 }
 @media screen and (max-width: 780px) {
-  .related-post {
-    width: 90%;
-  }
 }

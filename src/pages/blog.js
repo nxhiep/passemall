@@ -1,12 +1,13 @@
 import React, { useEffect } from 'react';
 import ReactGA from 'react-ga';
 import Head from 'next/head';
-import LinkIcon from '@material-ui/icons/Link';
 import NavigateNextIcon from '@material-ui/icons/NavigateNext';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
-import { Container, Divider, IconButton, useMediaQuery, useTheme } from '@material-ui/core';
+import { Container, Divider, Grid, IconButton, Link, useMediaQuery, useTheme } from '@material-ui/core';
 import { useRouter } from 'next/router';
+import { getRecentPosts } from '../utils';
+import { SocialWidget } from '../components/SocialWidget';
 function initializeReactGA() {
     ReactGA.initialize('UA-167769768-1');
 }
@@ -27,6 +28,7 @@ const ListBlog = ({ data }) => {
                 <title>ABC Learning</title>
                 <link rel="icon" href="/images/logo.svg" />
                 <link href="https://fonts.googleapis.com/css2?family=Russo+One&display=swap" rel="stylesheet"></link>
+                <link rel="stylesheet" type="text/css" href="/styles/index.css" />
                 <link rel="stylesheet" type="text/css" href="/styles/header.css" />
                 <link rel="stylesheet" type="text/css" href="/styles/listblog.css" />
                 <link rel="preconnect" href="https://storage.googleapis.com" />
@@ -40,96 +42,121 @@ const ListBlog = ({ data }) => {
             </Head>
             <div className="body-panel">
                 <Header isBlog={true}></Header>
-                <section className="background-header">
-                    <div className="list-social">
-                        <IconButton >
-                            <img src="/images/twitter.svg" alt="twitter"></img>
-                        </IconButton>
-                        <IconButton>
-                            <img src="/images/likedin.svg" alt="likedin"></img>
-                        </IconButton>
-                        <IconButton>
-                            <img src="/images/snapchat.svg" alt="snapchat"></img>
-                        </IconButton>
-                        <IconButton>
-                            <img src="images/facebook.svg" alt="facebook"></img>
-                        </IconButton>
-                        <IconButton>
-                            <LinkIcon style={{ color: "#fff", fontSize: "30px" }}></LinkIcon>
-                        </IconButton>
-                    </div>
-                    <h1 className="name-blog">Passemall Blog</h1>
-                </section>
-                <div className="list-blog-container">
-
-                    <div style={displayNone ? { width: "100%", marginTop: "100px" } : { width: "70%", marginTop: "100px" }} >
-                        {data.map(el => {
-                            return (
-                                <BlogItem data={el} isMobile={isMobile} key={el.id}></BlogItem>
-                            )
-                        })}
-                        <Divider style={displayNone ? { backgroundColor: "rgba(250, 142, 69, 0.3)", marginTop: "40px", width: "100%", marginLeft: "auto" } : { backgroundColor: "rgba(250, 142, 69, 0.3)", marginTop: "40px", width: "calc(100% - 230px )", marginLeft: "auto" }}></Divider>
-                        <IconButton style={{ display: "block", borderRadius: "0px", backgroundColor: "#4E63BD", color: "#fff", padding: "8px", fontSize: "18px", marginTop: "32px", marginLeft: "auto" }}>
-                            Next Page<NavigateNextIcon></NavigateNextIcon>
-                        </IconButton>
-                    </div>
-                    <div style={displayNone ? { display: "none" } : { maxWidth: "20%", marginLeft: "100px", marginTop: "36px", marginRight: "60px" }}>
-                        <h2 style={{ fontSize: "20px", marginBottom: "16px", fontWeight: "400" }}>Recent Posts</h2>
-                        <a style={{ display: "flex", marginBottom: "16px" }}>
-                            <img src="https://s3.amazonaws.com/utpimg.com/test-prep/test-prep.jpg" height="60px" width="60px"></img>
-                            <div style={{ whiteSpace: "nowrap", marginLeft: "16px", overflow: "hidden" }}>
-                                <p style={{ marginTop: "0px", fontSize: "16px", textOverflow: "ellipsis", overflow: "hidden", fontWeight: "bold" }}>Ten Tips and Tricks for Successful Test-Taking</p>
-                                <p style={{ fontSize: "14px", textOverflow: "ellipsis", overflow: "hidden" }}>xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx</p>
-                            </div>
-                        </a>
-                        <a style={{ display: "flex", marginBottom: "16px" }}>
-                            <img src="https://s3.amazonaws.com/utpimg.com/test-prep/test-prep.jpg" height="60px" width="60px"></img>
-                            <div style={{ whiteSpace: "nowrap", marginLeft: "16px", overflow: "hidden" }}>
-                                <p style={{ marginTop: "0px", fontSize: "16px", textOverflow: "ellipsis", overflow: "hidden", fontWeight: "bold" }}>Ten Tips and Tricks for Successful Test-Taking</p>
-                                <p style={{ fontSize: "14px", textOverflow: "ellipsis", overflow: "hidden" }}>xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx</p>
-                            </div>
-                        </a>
-                        <a style={{ display: "flex", marginBottom: "16px" }}>
-                            <img src="https://s3.amazonaws.com/utpimg.com/test-prep/test-prep.jpg" height="60px" width="60px"></img>
-                            <div style={{ whiteSpace: "nowrap", marginLeft: "16px", overflow: "hidden" }}>
-                                <p style={{ marginTop: "0px", fontSize: "16px", textOverflow: "ellipsis", overflow: "hidden", fontWeight: "bold" }}>Ten Tips and Tricks for Successful Test-Taking</p>
-                                <p style={{ fontSize: "14px", textOverflow: "ellipsis", overflow: "hidden" }}>xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx</p>
-                            </div>
-                        </a>
-                    </div>
-                </div>
+                <SocialWidget />
+                <div style={{ height: "20px" }}></div>
+                <Container maxWidth="lg">
+                    <Grid container spacing={2}>
+                        <Grid container item xs={12} sm={9}>
+                            {data.map(el => {
+                                return (
+                                    <BlogItem data={el} isMobile={isMobile} key={el.id}></BlogItem>
+                                )
+                            })}
+                            <Divider style={displayNone ? { backgroundColor: "rgba(250, 142, 69, 0.3)", marginTop: "40px", width: "100%", marginLeft: "auto" } : { backgroundColor: "rgba(250, 142, 69, 0.3)", marginTop: "40px", width: "calc(100% - 230px )", marginLeft: "auto" }}></Divider>
+                            <IconButton style={{ display: "block", borderRadius: "0px", backgroundColor: "#4E63BD", color: "#fff", padding: "8px", fontSize: "18px", marginTop: "32px", marginLeft: "auto" }}>
+                                Next Page<NavigateNextIcon></NavigateNextIcon>
+                            </IconButton>
+                        </Grid>
+                        <Grid container item xs={12} sm={3} direction="column">
+                            <RecentPosts data={data} />
+                        </Grid>
+                    </Grid>
+                </Container>
                 <Footer color="#4E63BD"></Footer>
             </div>
         </>
     )
 }
+
+const getLink = (name, id) => {
+    return ("/blog/" + name.toLowerCase().replace("?", "").replace(/ /g, "-") + "-").replace("--", "-") + id
+}
+
 const BlogItem = ({ isMobile, data }) => {
     const router = useRouter();
-    const getLink = (name, id) => {
-        return ("/blog/" + name.toLowerCase().replace("?", "").replace(/ /g, "-") + "-").replace("--", "-") + id
+    if (!data.bannerImage) {
+        data.bannerImage = 'https://storage.googleapis.com/micro-enigma-235001.appspot.com/resources/images/how-to-pass-the-ged-math-test.jpg';
     }
     return (
-        <a href={getLink(data.title, data.id)} style={{ display: "flex", marginBottom: "40px", textDecoration: "none", color: "#000" }}>
-            <div style={isMobile ? { display: "none" } : { marginRight: "48px" }}>
-                <div style={{ position: "relative", backgroundColor: "#F37E5F" }}>
-                    <img src={data.bannerImage} style={{ maxHeight: "169px", position: "relative", bottom: "8px", right: "8px", marginLeft: "auto", display: "block", marginTop: "20px", width: "275px" }}></img>
-                </div>
-            </div>
-            <div style={isMobile ? { padding: "0 24px" } : {}}>
-                <h2 style={{ color: "#4E63BD" }}>{data.title}</h2>
-                <p style={{ fontSize: "18px" }}>{data.description}</p>
-                <IconButton
-                    style={{ borderRadius: "0px", backgroundColor: "#4E63BD", color: "#fff", padding: "8px", fontSize: "18px" }}
-                    onClick={() => router.push("/blog/blog")}>
-                    Read More<NavigateNextIcon></NavigateNextIcon>
-                </IconButton>
-            </div>
-        </a>
+        <div className="post-item">
+            <Link href={getLink(data.title, data.id)} >
+                <Grid container spacing={2}>
+                    <Grid container item xs={12} sm={4}>
+                        <div className="wrapper-image">
+                            <img src={data.bannerImage}></img>
+                        </div>
+                    </Grid>
+                    <Grid container item xs={12} sm={8} alignContent="flex-start" direction="column">
+                        <h2 style={{ color: "#4E63BD" }}>{data.title}</h2>
+                        <p style={{ fontSize: "18px" }} className="dot-5">{data.description}</p>
+                        <div style={{marginTop: "auto",}}>
+                            <IconButton
+                                style={{ 
+                                    borderRadius: "0px", 
+                                    backgroundColor: "#4E63BD", 
+                                    color: "#fff", 
+                                    padding: "8px 16px", 
+                                    fontSize: "18px" }}
+                                onClick={() => router.push(getLink(data.title, data.id))}>
+                                Read More<NavigateNextIcon></NavigateNextIcon>
+                            </IconButton>
+                        </div>
+                    </Grid>
+                </Grid>
+            </Link>
+        </div>
     )
 }
+
+const RecentPosts = ({ data }) => {
+    let recentPostIds = getRecentPosts();
+    // console.log("recentPostIds", recentPostIds, 'data', data);
+    if (!recentPostIds || recentPostIds.length == 0) {
+        return null;
+    }
+    let recentPosts = [];
+    data && data.forEach(element => {
+        if(recentPostIds.indexOf(element.id) > -1){
+            recentPosts.push(element);
+        } 
+    });
+    console.log("recentPosts ", recentPosts, 'recentPostIds', recentPostIds);
+    return <div className="recent-posts">
+        <h2 style={{ fontSize: "20px", marginBottom: "16px", fontWeight: "400" }}>Recent Posts</h2>
+        <div>
+            {recentPosts.map((item, index) => {
+                return (
+                    <div key={index} className="recent-post-item">
+                        <Link href={getLink(item.title, item.id)} >
+                            <Grid container spacing={1}>
+                                <Grid container item xs={12}>
+                                    <div className="wrapper-image">
+                                        <img src={item.bannerImage}></img>
+                                    </div>
+                                </Grid>
+                                <Grid container item xs={12}>
+                                    <div style={{ color: "#4E63BD" }}><strong>{item.title}</strong></div>
+                                    <div style={{height: "8px", width: "100%"}}></div>
+                                    <div style={{ fontSize: "16px" }} className="dot-3">{item.description}</div>
+                                    <div style={{height: "8px", width: "100%"}}></div>
+                                    <IconButton
+                                        style={{ borderRadius: "0px", backgroundColor: "#4E63BD", color: "#fff", padding: "4px 8px", fontSize: "16px" }}
+                                        onClick={() => router.push(getLink(item.title, item.id))}>
+                                        Read More<NavigateNextIcon></NavigateNextIcon>
+                                    </IconButton>
+                                </Grid>
+                            </Grid>
+                        </Link>
+                    </div>
+                );
+            })}
+        </div>
+    </div>
+}
+
 export async function getServerSideProps() {
     const res = await fetch("https://micro-enigma-235001.appspot.com/new/api?type=get-all-new-info");
-    const data = await res.json()
+    const data = await res.json();
 
     return { props: { data } }
 }

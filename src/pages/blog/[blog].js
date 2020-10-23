@@ -2,21 +2,24 @@ import React, { useEffect, useState } from 'react';
 import ReactGA from 'react-ga';
 import ReactHtmlParser from 'react-html-parser';
 import Head from 'next/head';
-import LinkIcon from '@material-ui/icons/Link';
+import NavigateNextIcon from '@material-ui/icons/NavigateNext';
 import Header from '../../components/Header';
 import Footer from '../../components/Footer';
-import { IconButton } from '@material-ui/core';
+import { Container, Grid, IconButton, Link } from '@material-ui/core';
 import { useRouter } from 'next/router';
+import { addRecentPost } from '../../utils';
+import { SocialWidget } from '../../components/SocialWidget';
 function initializeReactGA() {
     ReactGA.initialize('UA-167769768-1');
 }
 
 initializeReactGA();
-const Blog = ({ data }) => {
+const Blog = ({ newInfo, relativeds }) => {
     const description = "With thousands of our FREE practice questions, we are here to help you achieve your gate of success with our test prep solutions."
     const title = "ABC Learning"
     useEffect(() => {
         ReactGA.pageview('/homepage');
+        addRecentPost(newInfo.id);
     }, [])
     return (
         <>
@@ -25,8 +28,10 @@ const Blog = ({ data }) => {
                 <title>ABC Learning</title>
                 <link rel="icon" href="/images/logo.svg" />
                 <link href="https://fonts.googleapis.com/css2?family=Russo+One&display=swap" rel="stylesheet"></link>
+                <link rel="stylesheet" type="text/css" href="/styles/index.css" />
                 <link rel="stylesheet" type="text/css" href="/styles/header.css" />
                 <link rel="stylesheet" type="text/css" href="/styles/blog.css" />
+                <link rel="stylesheet" type="text/css" href="/styles/listblog.css" />
                 <link rel="preconnect" href="https://storage.googleapis.com" />
                 <link rel="canonical" href="https://passemall.com"></link>
                 <meta property="og:type" content="website" />
@@ -44,103 +49,115 @@ const Blog = ({ data }) => {
                         <strong style={{ fontSize: "72px" }}>5 top questions</strong>
                         <span style={{ fontSize: "32px" }}>Ready for your practical driving test</span>
                     </div>
-                    <div className="list-social">
-                        <IconButton >
-                            <img src="/images/twitter.svg" alt="twitter"></img>
-                        </IconButton>
-                        <IconButton>
-                            <img src="/images/likedin.svg" alt="likedin"></img>
-                        </IconButton>
-                        <IconButton>
-                            <img src="/images/snapchat.svg" alt="snapchat"></img>
-                        </IconButton>
-                        <IconButton>
-                            <img src="/images/facebook.svg" alt="facebook"></img>
-                        </IconButton>
-                        <IconButton>
-                            <LinkIcon style={{ color: "#fff", fontSize: "30px" }}></LinkIcon>
-                        </IconButton>
-                    </div>
+                    <SocialWidget />
                 </div>
-                <section style={{ boxSizing: "border-box", padding: "40px 175px 40px 40px" }}>
-                    <div style={{ display: "flex", }}>
-                        <div style={{ width: "25%", border: "2px solid rgba(78, 99, 189, 0.46)", borderRadius: "15px", display: "flex", flexDirection: "column", textAlign: "start", wordBreak: "keep-all" }}>
-                            <span style={{ marginLeft: "24px", marginTop: "24px", color: "#4E63BD" }}>Table of contents</span>
-                            <a style={{ margin: "4px 41px 4px 41px" }}>1. Can you drive independently without instruction?</a>
-                            <a style={{ margin: "4px 41px 4px 41px" }}>2. Can you drive independently without instruction?</a>
-                            <a style={{ margin: "4px 41px 4px 41px" }}>3. Can you drive independently without instruction?</a>
-                            <a style={{ margin: "4px 41px 4px 41px" }}>4. Can you drive independently without instruction?</a>
-                            <a style={{ margin: "4px 41px 4px 41px" }}>5. Can you drive independently without instruction?</a>
-
-                        </div>
-                        <div className="blog-content">
-                            {ReactHtmlParser(data.content)}
-                        </div>
-                    </div>
-                </section>
-                <section style={{ marginBottom: "60px", marginTop: "40px" }}>
-                    <h2 className="related-post">Related stories</h2>
-                    <div style={{ display: "flex", marginRight: "40px", marginLeft: "40px", justifyContent: "space-between" }}>
-                        <a style={{ display: "flex", flexDirection: "column", justifyContent: "center", width: "33.33%", marginRight: "40px", marginLeft: "40px", border: "1px solid #dadce0" }}>
-                            <div style={{ maxHeight: "250px" }}>
-                                <img src="https://s3.amazonaws.com/utpimg.com/test-prep/test-prep.jpg" alt="blog" height="100%" width="100%"></img>
-                            </div>
-                            <div style={{ padding: "0 40px 40px 40px" }}>
-                                <div >
-                                    <h4 style={{ fontSize: "14px", marginBottom: "8px", marginTop: "30px", letterSpacing: "1.5px", fontWeight: 400 }}>ASVAB PRACTICE TEST</h4>
-                                </div>
-                                <div>
-                                    <h3 style={{ fontSize: "22px", marginTop: "0px", fontWeight: 400 }}>Computer science education still has diversity gaps</h3>
-                                </div>
-                                <div style={{ marginBottom: "32px" }}>When preparing for a test, people often pay close attention to the long-term aspects,
-                                such as studying, keeping healthy, and making sure everything is ready to take the actual</div>
-                                <div style={{ margin: "auto 0px 16px 0px" }}>By Jennie Magiera - Sep 24,2020</div>
-                            </div>
-                        </a>
-                        <a style={{ display: "flex", flexDirection: "column", justifyContent: "center", width: "33.33%", marginRight: "40px", marginLeft: "40px", border: "1px solid #dadce0" }}>
-                            <div style={{ maxHeight: "250px" }}>
-                                <img src="https://s3.amazonaws.com/utpimg.com/test-prep/test-prep.jpg" alt="blog" height="100%" width="100%"></img>
-                            </div>
-                            <div style={{ padding: "0 40px 40px 40px" }}>
-                                <div >
-                                    <h4 style={{ fontSize: "14px", marginBottom: "8px", marginTop: "30px", letterSpacing: "1.5px", fontWeight: 400 }}>ASVAB PRACTICE TEST</h4>
-                                </div>
-                                <div>
-                                    <h3 style={{ fontSize: "22px", marginTop: "0px", fontWeight: 400 }}>Computer science education still has diversity gaps</h3>
-                                </div>
-                                <div style={{ marginBottom: "32px" }}>When preparing for a test, people often pay close attention to the long-term aspects,
-                                such as studying, keeping healthy, and making sure everything is ready to take the actual</div>
-                                <div style={{ margin: "auto 0px 16px 0px" }}>By Jennie Magiera - Sep 24,2020</div>
-                            </div>
-                        </a>
-                        <a style={{ display: "flex", flexDirection: "column", justifyContent: "center", width: "33.33%", marginRight: "40px", marginLeft: "40px", border: "1px solid #dadce0" }}>
-                            <div style={{ maxHeight: "250px" }}>
-                                <img src="https://s3.amazonaws.com/utpimg.com/test-prep/test-prep.jpg" alt="blog" height="100%" width="100%"></img>
-                            </div>
-                            <div style={{ padding: "0 40px 40px 40px" }}>
-                                <div >
-                                    <h4 style={{ fontSize: "14px", marginBottom: "8px", marginTop: "30px", letterSpacing: "1.5px", fontWeight: 400 }}>ASVAB PRACTICE TEST</h4>
-                                </div>
-                                <div>
-                                    <h3 style={{ fontSize: "22px", marginTop: "0px", fontWeight: 400 }}>Computer science education still has diversity gaps</h3>
-                                </div>
-                                <div style={{ marginBottom: "32px" }}>When preparing for a test, people often pay close attention to the long-term aspects,
-                                such as studying, keeping healthy, and making sure everything is ready to take the actual</div>
-                                <div style={{ margin: "auto 0px 16px 0px" }}>By Jennie Magiera - Sep 24,2020</div>
-                            </div>
-                        </a>
-                    </div>
-                </section>
+                <PostContent content={newInfo.content} />
+                <RelatedStories relativeds={relativeds} />
                 <Footer color="#4E63BD"></Footer>
             </div>
         </>
     );
 }
+
+const RelatedStories = ({ relativeds }) => {
+    if(!relativeds){
+        return null;
+    }
+    return <Container style={{ paddingTop: '40px', paddingBottom: '40px' }}>
+        <h2 style={{textAlign: "center"}}>Related Stories</h2>
+        <Grid wrap="wrap" container spacing={3}>
+            {relativeds.map(e => {
+                return <BlogItem item={e} key={e.id} />
+            })}
+        </Grid>
+    </Container>
+}
+
+const getLink = (name, id) => {
+    return ("/blog/" + name.toLowerCase().replace("?", "").replace(/ /g, "-") + "-").replace("--", "-") + id
+}
+
+const BlogItem = ({ item }) => {
+    const router = useRouter();
+    if (!item.bannerImage) {
+        item.bannerImage = 'https://storage.googleapis.com/micro-enigma-235001.appspot.com/resources/images/how-to-pass-the-ged-math-test.jpg';
+    }
+    return (
+        <Grid className="recent-post-item post-item" item container xs={12} sm={6} lg={4}>
+            <Link href={getLink(item.title, item.id)} style={{width: "100%"}}>
+                <Grid container spacing={1}>
+                    <Grid container item xs={12}>
+                        <div className="wrapper-image">
+                            <img src={item.bannerImage}></img>
+                        </div>
+                    </Grid>
+                    <Grid container item xs={12}>
+                        <div style={{ color: "#4E63BD" }}><strong>{item.title}</strong></div>
+                        <div style={{height: "8px", width: "100%"}}></div>
+                        <div style={{ fontSize: "16px" }} className="dot-3">{item.description}</div>
+                        <div style={{height: "8px", width: "100%"}}></div>
+                        <IconButton
+                            style={{ borderRadius: "0px", backgroundColor: "#4E63BD", color: "#fff", padding: "4px 8px", fontSize: "16px" }}
+                            onClick={() => router.push(getLink(item.title, item.id))}>
+                            Read More<NavigateNextIcon></NavigateNextIcon>
+                        </IconButton>
+                    </Grid>
+                </Grid>
+            </Link>
+        </Grid>
+    );
+}
+
+const PostContent = ({content}) => {
+    let hasMenu = content.includes('h1') || content.includes('h2') || content.includes('h3');
+    let elementId = 'ssadasdasdszcx';
+    useEffect(() => {
+        replaceHTML(elementId);
+    }, []);
+    return <Container style={{ paddingTop: '40px', paddingBottom: '40px' }}>
+        <Grid container alignItems="flex-start" spacing={3}>
+            { hasMenu ? <Grid item container xs={12} sm={4} direction="column">
+                <h3>Menu</h3>
+                <div id="post-menu-auto-gen"></div> 
+            </Grid> : null}
+            <Grid item container xs={12} sm={hasMenu ? 8 : 12} id={elementId}>
+                {ReactHtmlParser(content)}
+            </Grid>
+        </Grid>
+    </Container>
+}
+
+function replaceHTML(elementId) {
+    if(typeof window !== 'undefined'){
+        // window.location.hash = '';
+        let element = document.getElementById(elementId);
+        let h1s = element.querySelectorAll("h1,h2,h3");
+        let panel = document.getElementById('post-menu-auto-gen');
+        panel.innerHTML = '';
+        h1s.forEach(function(e) {
+            let text = e.innerText;
+            let id = text.replace(/[^a-zA-Z0-9]/g,'_').toLowerCase();
+            e.setAttribute('id', id);
+            let item = document.createElement("a");
+            item.innerHTML = text;
+            item.setAttribute('href', '#' + id);
+            let itemP = document.createElement("div");
+            itemP.appendChild(item);
+            panel.appendChild(itemP);
+        });
+    }
+}
+
 export async function getServerSideProps(context) {
     let blogId = context.params.blog.substring(context.params.blog.length - 16)
-    console.log("xxx", blogId);
     const res = await fetch(`https://micro-enigma-235001.appspot.com/new/api?type=get-new-info-by-id&id=${blogId}`);
-    const data = await res.json();
-    return { props: { data } }
+    const newInfo = await res.json();
+    console.log("newInfo", newInfo);
+    let relativeds;
+    if(newInfo){
+        const res2 = await fetch(`https://micro-enigma-235001.appspot.com/new/api?type=get-new-info-relatived&topicId=${newInfo.topicId}`);
+        relativeds = await res2.json();
+    }
+    return { props: { newInfo: newInfo, relativeds: relativeds } }
 }
 export default Blog;
