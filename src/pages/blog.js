@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import ReactGA from 'react-ga';
 import Head from 'next/head';
 import NavigateNextIcon from '@material-ui/icons/NavigateNext';
@@ -48,13 +48,13 @@ const ListBlog = ({ data, url }) => {
                 <meta property="og:image" content={seoInfo.image} />
 
             </Head>
-            <div className='body-panel landing-page'>
+            <div className='body-panel landing-page list-blog'>
                 <HeaderBlog />
                 <BannerBlog />
                 <div style={{ height: "40px", width: '100%' }}></div>
-                <Container maxWidth="lg">
+                <Container>
                     <Grid container spacing={2}>
-                        <Grid container item xs={12} sm={8}>
+                        <Grid container item xs={12} sm={12} md={8}>
                             {data.map(el => {
                                 return (
                                     <BlogItem data={el} isMobile={isMobile} key={el.id}></BlogItem>
@@ -67,7 +67,7 @@ const ListBlog = ({ data, url }) => {
                             </IconButton>
                             */}
                         </Grid>
-                        <Grid container item xs={12} sm={4} direction="column">
+                        <Grid container item xs={12} sm={12} md={4}>
                             <RecentPosts data={data} />
                         </Grid>
                     </Grid>
@@ -119,7 +119,10 @@ const BlogItem = ({ isMobile, data }) => {
 }
 
 const RecentPosts = ({ data }) => {
-    let recentPostIds = getRecentPosts();
+    const [recentPostIds, setRecentPostIds] = useState([]);
+    useEffect(() => {
+        setRecentPostIds(getRecentPosts());
+    }, [])
     // console.log("recentPostIds", recentPostIds, 'data', data);
     if (!recentPostIds || recentPostIds.length == 0) {
         return null;
@@ -130,22 +133,27 @@ const RecentPosts = ({ data }) => {
             recentPosts.push(element);
         } 
     });
-    console.log("recentPosts ", recentPosts, 'recentPostIds', recentPostIds);
-    return <div className="recent-posts">
-        <h2 style={{ fontSize: "20px", marginBottom: "16px", fontWeight: "400" }}>Recent Posts</h2>
+    // console.log("recentPosts ", recentPosts, 'recentPostIds', recentPostIds);
+    return (<div className="recent-posts">
+        <h2 style={{ 
+            fontSize: "20px", 
+            fontWeight: "600",
+            margiTop: "0",
+            textDecoration: 'underline',
+        }}>Recent Posts</h2>
         <div className="list-recent-posts">
             {recentPosts.map((item, index) => {
                 return (
                     <div key={index} className="recent-post-item">
                         <Link href={getLink(item.title, item.id)} >
                             <Grid container spacing={1}>
-                                <Grid container item xs={5}>
+                                <Grid container item xs={5} sm={4}>
                                     <div className="wrapper-image">
                                         <img src={item.bannerImage}></img>
                                     </div>
                                 </Grid>
-                                <Grid container item xs={7}>
-                                    <div style={{ color: "#4E63BD" }} className="dot-2"><strong>{item.title}</strong></div>
+                                <Grid container item xs={7} sm={8}>
+                                    <div style={{ color: "#4E63BD" }} className="dot-1"><strong>{item.title}</strong></div>
                                     <div style={{height: "8px", width: "100%"}}></div>
                                     <div style={{ fontSize: "16px" }} className="dot-2">{item.description}</div>
                                     <div style={{height: "8px", width: "100%"}}></div>
@@ -161,7 +169,7 @@ const RecentPosts = ({ data }) => {
                 );
             })}
         </div>
-    </div>
+    </div>);
 }
 
 export async function getServerSideProps(context) {

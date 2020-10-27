@@ -30,7 +30,7 @@ export const SocialWidget = () => {
             <img src="/images/likedin.svg" alt="likedin" />
         </Link>
         <Link href="https://www.tumblr.com/blog/view/abcelearningapps" target="_blank">
-            <img src="/images/snapchat.svg" alt="tumblr"></img>
+            <img src="/images/tumblr.svg" alt="tumblr" width="25px"></img>
         </Link>
         <Link href="https://www.facebook.com/ABC-E-learning-110654290809849" target="_blank">
             <img src="/images/facebook.svg" alt="facebook"></img>

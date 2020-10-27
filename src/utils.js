@@ -160,7 +160,7 @@ export function addRecentPost(id) {
     if(id){
         var ids = getRecentPosts();
         if(ids.indexOf(id) == -1){
-            if(ids.length == 5){
+            if(ids.length == 3){
                 ids[0] = id;
             } else {
                 ids.push(id);
