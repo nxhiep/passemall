@@ -54,7 +54,7 @@ const ListBlog = ({ data, url }) => {
                 <div style={{ height: "40px", width: '100%' }}></div>
                 <Container maxWidth="lg">
                     <Grid container spacing={2}>
-                        <Grid container item xs={12} sm={9}>
+                        <Grid container item xs={12} sm={8}>
                             {data.map(el => {
                                 return (
                                     <BlogItem data={el} isMobile={isMobile} key={el.id}></BlogItem>
@@ -67,7 +67,7 @@ const ListBlog = ({ data, url }) => {
                             </IconButton>
                             */}
                         </Grid>
-                        <Grid container item xs={12} sm={3} direction="column">
+                        <Grid container item xs={12} sm={4} direction="column">
                             <RecentPosts data={data} />
                         </Grid>
                     </Grid>
@@ -90,7 +90,7 @@ const BlogItem = ({ isMobile, data }) => {
     return (
         <div className="post-item">
             <Link href={getLink(data.title, data.id)} >
-                <Grid container spacing={2}>
+                <Grid container spacing={3}>
                     <Grid container item xs={12} sm={4}>
                         <div className="wrapper-image">
                             <img src={data.bannerImage}></img>
@@ -139,18 +139,18 @@ const RecentPosts = ({ data }) => {
                     <div key={index} className="recent-post-item">
                         <Link href={getLink(item.title, item.id)} >
                             <Grid container spacing={1}>
-                                <Grid container item xs={12}>
+                                <Grid container item xs={5}>
                                     <div className="wrapper-image">
                                         <img src={item.bannerImage}></img>
                                     </div>
                                 </Grid>
-                                <Grid container item xs={12}>
-                                    <div style={{ color: "#4E63BD" }}><strong>{item.title}</strong></div>
+                                <Grid container item xs={7}>
+                                    <div style={{ color: "#4E63BD" }} className="dot-2"><strong>{item.title}</strong></div>
                                     <div style={{height: "8px", width: "100%"}}></div>
-                                    <div style={{ fontSize: "16px" }} className="dot-3">{item.description}</div>
+                                    <div style={{ fontSize: "16px" }} className="dot-2">{item.description}</div>
                                     <div style={{height: "8px", width: "100%"}}></div>
                                     <IconButton
-                                        style={{ borderRadius: "0px", backgroundColor: "#4E63BD", color: "#fff", padding: "4px 8px", fontSize: "16px" }}
+                                        style={{ borderRadius: "0px", backgroundColor: "#4E63BD", color: "#fff", padding: "0px 6px", fontSize: "13px" }}
                                         onClick={() => router.push(getLink(item.title, item.id))}>
                                         Read More<NavigateNextIcon></NavigateNextIcon>
                                     </IconButton>

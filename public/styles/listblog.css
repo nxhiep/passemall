@@ -217,3 +217,13 @@ margin-bottom: 16px;
   justify-content: center;
   margin-bottom: 10px;
 }
+
+.post-item .wrapper-image:before {
+  content: "";
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: #FF9800;
+  bottom: -8px;
+  right: -8px;
+}
