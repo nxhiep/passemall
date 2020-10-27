@@ -11,15 +11,15 @@ import { addRecentPost } from '../../utils';
 import { SocialWidget } from '../../components/SocialWidget';
 import Slider from "react-slick";
 import { BannerBlog, HeaderBlog } from '../../components/blog/HeaderBlog';
+import SEOInfo from '../../models/SEOInfo';
 
 function initializeReactGA() {
     ReactGA.initialize('UA-167769768-1');
 }
 
 initializeReactGA();
-const Blog = ({ newInfo, relativeds }) => {
-    const description = "With thousands of our FREE practice questions, we are here to help you achieve your gate of success with our test prep solutions."
-    const title = "ABC Learning"
+const Blog = ({ newInfo, relativeds, url }) => {
+    const seoInfo = new SEOInfo(newInfo);
     useEffect(() => {
         ReactGA.pageview('/homepage');
         addRecentPost(newInfo.id);
@@ -28,7 +28,7 @@ const Blog = ({ newInfo, relativeds }) => {
         <>
             <Head>
                 <meta charSet="UTF-8" />
-                <title>ABC Learning</title>
+                <title>{seoInfo.title}</title>
                 <link rel="icon" href="/images/logo.svg" />
                 <link href="https://fonts.googleapis.com/css2?family=Russo+One&display=swap" rel="stylesheet"></link>
                 <link rel="stylesheet" type="text/css" href="/styles/index.css" />
@@ -38,18 +38,22 @@ const Blog = ({ newInfo, relativeds }) => {
                 <link rel="stylesheet" type="text/css" href="/styles/slick.css" />
                 <link rel="stylesheet" type="text/css" href="/styles/slick-theme.css" />
                 <link rel="preconnect" href="https://storage.googleapis.com" />
-                <link rel="canonical" href="https://passemall.com"></link>
+                <link rel="canonical" href={"https://passemall.com" + url}></link>
                 <meta property="og:type" content="website" />
                 <meta name="theme-color" content="#000000" />
-                <meta name="title" content={title} />
-                <meta name="description" content={description} />
                 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-                <meta name="keywords" content="Abc e-learning, abc elearning, study online,practice test, practice question,exam prepare,asvab,teas exam,cdl test,cdl practice,cissp exam,cissp practice,accuplacer,comptia practice test,comptia A+,compTIA Network,comptia security,dmv,dmv practice test,driving theory,driving theory UK,G1 test,GED,hesi,hesi A2,motorcycle permit,pmp,pmp exam,ptcb,ptce,real estate exam,practice app,practice test onl,free practice test,free practice questions,free practice app" />
+
+                <meta name="title" content={seoInfo.title} />
+                <meta name="description" content={seoInfo.description} />
+                <meta name="keywords" content={seoInfo.keyword} />
+                <meta property="og:title" content={seoInfo.titleSEO} />	
+                <meta property="og:description" content={seoInfo.descriptionSEO} />
+                <meta property="og:image" content={seoInfo.image} />
             </Head>
 
             <div className='body-panel landing-page'>
-                <HeaderBlog />
-                <BannerBlog />
+                <HeaderBlog appId={newInfo ? newInfo.appId : -1} />
+                <BannerBlog title={newInfo ? newInfo.title : ''} />
                 <PostContent content={newInfo.content} />
                 <RelatedStories relativeds={relativeds} />
                 <Footer color="#4E63BD"></Footer>
@@ -186,15 +190,16 @@ function replaceHTML(elementId) {
 }
 
 export async function getServerSideProps(context) {
+    // console.log("context.req", context.req);
     let blogId = context.params.blog.substring(context.params.blog.length - 16)
     const res = await fetch(`https://micro-enigma-235001.appspot.com/new/api?type=get-new-info-by-id&id=${blogId}`);
     const newInfo = await res.json();
-    console.log("newInfo", newInfo);
+    // console.log("newInfo", newInfo);
     let relativeds;
     if(newInfo){
         const res2 = await fetch(`https://micro-enigma-235001.appspot.com/new/api?type=get-new-info-relatived&topicId=${newInfo.topicId}`);
         relativeds = await res2.json();
     }
-    return { props: { newInfo: newInfo, relativeds: relativeds } }
+    return { props: { newInfo: newInfo, relativeds: relativeds, url: context.req.url } }
 }
 export default Blog;

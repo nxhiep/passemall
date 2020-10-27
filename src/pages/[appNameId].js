@@ -168,7 +168,7 @@ const Header = (props) => {
                             >
                                 <div style={{ width: "200px" }}>
                                     <List>
-                                        {["Learn", "Test", "Study Guide"].map((text, index) => (
+                                        {["Learn", "Test"].map((text, index) => (
                                             <ListItem button key={text}>
                                                 <a href={index === 0 ? "/" : (index === 1 ? "/blog" : "")} style={{ textDecoration: "none", color: "#4a4a4a", fontWeight: 400 }}>
                                                     <ListItemText primary={text} />
@@ -184,7 +184,7 @@ const Header = (props) => {
                             <div className="menu-nav">
                                 <a href="/" style={props.bucket === "cna" ? { color: "#000" } : {}}>Learn</a>
                                 <a href="/blog" style={props.bucket === "cna" ? { color: "#000" } : {}}>Test</a>
-                                <a href="" style={props.bucket === "cna" ? { color: "#000" } : {}}>Study Guide</a>
+                                {/*<a href="" style={props.bucket === "cna" ? { color: "#000" } : {}}>Study Guide</a>*/}
                             </div>
 
                         </div>

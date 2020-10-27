@@ -117,10 +117,7 @@ margin-bottom: 16px;
   position: relative;
 }
 
-.header-menu-pc a:hover {
-  text-decoration: underline;
-}
-
+.header-menu-pc a:hover::after,
 .header-menu-pc a.active::after {
   content: "";
   position: absolute;

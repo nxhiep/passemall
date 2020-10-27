@@ -9,13 +9,16 @@ import { useRouter } from 'next/router';
 import { getRecentPosts } from '../utils';
 import { SocialWidget } from '../components/SocialWidget';
 import { HeaderBlog, BannerBlog } from '../components/blog/HeaderBlog';
+import SEOInfo from '../models/SEOInfo';
 function initializeReactGA() {
     ReactGA.initialize('UA-167769768-1');
 }
 
 initializeReactGA();
-const ListBlog = ({ data }) => {
-    let a = [1, 2, 3, 4, 5, 6]
+    const seoInfo = new SEOInfo();
+const ListBlog = ({ data, url }) => {
+    const seoInfo = new SEOInfo();
+    seoInfo.title = 'ABC Learning - Blog';
     useEffect(() => {
         ReactGA.pageview('/homepage');
     }, [])
@@ -26,7 +29,7 @@ const ListBlog = ({ data }) => {
         <>
             <Head>
                 <meta charSet="UTF-8" />
-                <title>ABC Learning</title>
+                <title>ABC Learning - Blog</title>
                 <link rel="icon" href="/images/logo.svg" />
                 <link href="https://fonts.googleapis.com/css2?family=Russo+One&display=swap" rel="stylesheet"></link>
                 <link rel="stylesheet" type="text/css" href="/styles/index.css" />
@@ -35,10 +38,15 @@ const ListBlog = ({ data }) => {
                 <link rel="canonical" href="https://passemall.com"></link>
                 <meta property="og:type" content="website" />
                 <meta name="theme-color" content="#000000" />
-                <meta name="title" content="Passemall Blog" />
-                <meta name="description" content="xxxxx" />
-                <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-                <meta name="keywords" content="Abc e-learning, abc elearning, study online,practice test, practice question,exam prepare,asvab,teas exam,cdl test,cdl practice,cissp exam,cissp practice,accuplacer,comptia practice test,comptia A+,compTIA Network,comptia security,dmv,dmv practice test,driving theory,driving theory UK,G1 test,GED,hesi,hesi A2,motorcycle permit,pmp,pmp exam,ptcb,ptce,real estate exam,practice app,practice test onl,free practice test,free practice questions,free practice app" />
+                <link rel="canonical" href={"https://passemall.com" + url}></link>
+
+                <meta name="title" content={seoInfo.title} />
+                <meta name="description" content={seoInfo.description} />
+                <meta name="keywords" content={seoInfo.keyword} />
+                <meta property="og:title" content={seoInfo.title} />	
+                <meta property="og:description" content={seoInfo.descriptionSEO} />
+                <meta property="og:image" content={seoInfo.image} />
+
             </Head>
             <div className='body-panel landing-page'>
                 <HeaderBlog />
@@ -156,10 +164,10 @@ const RecentPosts = ({ data }) => {
     </div>
 }
 
-export async function getServerSideProps() {
+export async function getServerSideProps(context) {
     const res = await fetch("https://micro-enigma-235001.appspot.com/new/api?type=get-all-new-info");
     const data = await res.json();
 
-    return { props: { data } }
+    return { props: { data: data, url: context.req.url } }
 }
 export default ListBlog

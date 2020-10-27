@@ -98,9 +98,9 @@ const HeaderPC = ({ alt, isMobile, isBlog }) => {
 							<a href={isBlog ? "/" : "/" + appNameId} onClick={() => {
 								isBlog ? router.push("/") : router.push("/" + appNameId)
 							}}>{isBlog ? "About us" : "Home"}</a>
-							<a href={isBlog ? "/blog" : "/"} onClick={() => {
+							{/*<a href={isBlog ? "/blog" : "/"} onClick={() => {
 								isBlog ? router.push("/blog") : router.push("/")
-							}}>{isBlog ? "Blog" : "Study Guide"}</a>
+							}}>{isBlog ? "Blog" : "Study Guide"}</a>*/}
 							<Link href={'/faq?appId=' + appNameId}>FAQ</Link>
 						</div>
 					)}

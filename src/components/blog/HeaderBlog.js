@@ -8,7 +8,7 @@ import MenuIcon from '@material-ui/icons/Menu';
 import { SocialWidget } from '../SocialWidget';
 import MenuIconButton from '@material-ui/icons/Menu';
 
-export const HeaderBlog = () => {
+export const HeaderBlog = ({ appId, faq }) => {
     const theme = useTheme();
 	const isMobile = useMediaQuery(theme.breakpoints.between(0, 780));
     return <header className="header-blog">
@@ -20,7 +20,8 @@ export const HeaderBlog = () => {
             </a>
             {isMobile ? <MenuPanel /> : <div className="header-menu-pc">
                 <a href='/'>Home</a>
-                <a href='/blog' className="active">Blog</a>
+                <a href='/blog' className={faq ? "" : "active"}>Blog</a>
+                {appId && appId > 0 ? <a href={'/faq?appId=' + appId} className={faq ? "active" : ""}>FAQ</a> : null}
             </div>}
         </Container>
     </header>
@@ -31,7 +32,7 @@ const MenuPanel = () => {
     return <MyDrawer />
 }
 
-export const BannerBlog = () => {
+export const BannerBlog = ({title}) => {
     const theme = useTheme();
     const isMobile = useMediaQuery(theme.breakpoints.between(0, 780));
     const styles = { zIndex: "1000", position: "absolute", top: "50px", right: "80px", color: "#fff", display: "flex", flexDirection: "column" };
@@ -40,11 +41,17 @@ export const BannerBlog = () => {
         styles.textAlign = 'center';
         styles.marginTop = '20px';
     }
+    if(title){
+        styles.fontSize = '30px';
+        styles.fontWeight = '600';
+    }
     return <div className="banner-blog">
-        <div style={styles}>
-            <strong style={{ fontSize: isMobile ? "42px" : "52px" }}>5 top questions</strong>
-            <span style={{ fontSize: isMobile ? "20px" : "24px", fontStyle: 'normal', fontWeight: '300' }}>Ready for your practical driving test</span>
-        </div>
+        {
+            title ? <div style={styles}>{title}</div> : <div style={styles}>
+                <strong style={{ fontSize: isMobile ? "42px" : "52px" }}>5 top questions</strong>
+                <span style={{ fontSize: isMobile ? "20px" : "24px", fontStyle: 'normal', fontWeight: '300' }}>Ready for your practical driving test</span>
+            </div>
+        }
         <SocialWidget />
     </div>
 }
