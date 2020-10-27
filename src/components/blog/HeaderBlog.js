@@ -13,13 +13,14 @@ export const HeaderBlog = () => {
 	const isMobile = useMediaQuery(theme.breakpoints.between(0, 780));
     return <header className="header-blog">
         <Container style={{ display: "flex", height: '100%', alignItems: 'center', justifyContent: 'space-between' }}>
-            <div className="header-app" onClick={() => router.push("/")}>
-                <img src="/images/logo-landing.png" alt="logo-app"></img>
-            </div>
+            <a href='/'>
+                <div className="header-app">
+                    <img src="/images/logo-landing.png" alt="logo-app"></img>
+                </div>
+            </a>
             {isMobile ? <MenuPanel /> : <div className="header-menu-pc">
                 <a href='/'>Home</a>
                 <a href='/blog' className="active">Blog</a>
-                <a href='/faq'>FAQ</a>
             </div>}
         </Container>
     </header>

@@ -5,7 +5,7 @@ import Head from 'next/head';
 import NavigateNextIcon from '@material-ui/icons/NavigateNext';
 import Header from '../../components/Header';
 import Footer from '../../components/Footer';
-import { Container, Grid, IconButton, Link } from '@material-ui/core';
+import { Container, Grid, IconButton, Link, useMediaQuery, useTheme } from '@material-ui/core';
 import { useRouter } from 'next/router';
 import { addRecentPost } from '../../utils';
 import { SocialWidget } from '../../components/SocialWidget';
@@ -27,7 +27,7 @@ const Blog = ({ newInfo, relativeds }) => {
     return (
         <>
             <Head>
-                <meta charset="UTF-8" />
+                <meta charSet="UTF-8" />
                 <title>ABC Learning</title>
                 <link rel="icon" href="/images/logo.svg" />
                 <link href="https://fonts.googleapis.com/css2?family=Russo+One&display=swap" rel="stylesheet"></link>
@@ -62,23 +62,31 @@ const RelatedStories = ({ relativeds }) => {
     if(!relativeds){
         return null;
     }
-    if(relativeds.length > 4){
+    if(relativeds.length >= 4){
+        const theme = useTheme();
+	    const isMobile = useMediaQuery(theme.breakpoints.between(0, 780));
+	    const isTablet = useMediaQuery(theme.breakpoints.between(0, 1200));
         const settings = {
             dots: true,
             infinite: true,
             speed: 500,
-            slidesToShow: 3,
-            slidesToScroll: 3,
+            slidesToShow: isMobile ? 1 : (isTablet ? 2 : 3),
+            slidesToScroll: isMobile ? 1 : (isTablet ? 2 : 3),
             className: "related-stories-slider",
+            centerPadding: '20px'
         };
         return (
-            <Slider {...settings}>
-                {
-                    relativeds.map(e => {
-                        return <BlogItem item={e} key={e.id} />
-                    })
-                }
-            </Slider>
+            <Container style={{ paddingTop: '40px', paddingBottom: '40px' }}>
+                <Slider {...settings}>
+                    {
+                        relativeds.map(e => {
+                            return <div key={e.id} className="padding-10">
+                                <BlogItem item={e} />
+                            </div>
+                        })
+                    }
+                </Slider>
+            </Container>
         );
     }
     return <Container style={{ paddingTop: '40px', paddingBottom: '40px' }}>

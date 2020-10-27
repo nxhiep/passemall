@@ -9,6 +9,7 @@ class MyDocument extends Document {
         return (
             <Html lang="en">
                 <Head>
+                <meta charSet="UTF-8" />
                     <meta name="google-site-verification" content="X91De9MR3B7BNl2-ciF8EUnT2A2oybgrzwbNla4YdIA" />
                 </Head>
                 <body>

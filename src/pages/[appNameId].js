@@ -92,7 +92,7 @@ const Home = ({ appInfoState, userRateState }) => {
     return (
         <>
             <Head>
-                <meta charset="UTF-8" />
+                <meta charSet="UTF-8" />
                 <title>{appInfoState.title}</title>
                 <link rel="icon" href={appInfoState.avatar} />
                 <link rel="preconnect" href="https://webappapi-dot-micro-enigma-235001.appspot.com"></link>
@@ -168,7 +168,7 @@ const Header = (props) => {
                             >
                                 <div style={{ width: "200px" }}>
                                     <List>
-                                        {["Learn", "Test", "Study guide"].map((text, index) => (
+                                        {["Learn", "Test", "Study Guide"].map((text, index) => (
                                             <ListItem button key={text}>
                                                 <a href={index === 0 ? "/" : (index === 1 ? "/blog" : "")} style={{ textDecoration: "none", color: "#4a4a4a", fontWeight: 400 }}>
                                                     <ListItemText primary={text} />
@@ -184,7 +184,7 @@ const Header = (props) => {
                             <div className="menu-nav">
                                 <a href="/" style={props.bucket === "cna" ? { color: "#000" } : {}}>Learn</a>
                                 <a href="/blog" style={props.bucket === "cna" ? { color: "#000" } : {}}>Test</a>
-                                <a href="" style={props.bucket === "cna" ? { color: "#000" } : {}}>Study guide</a>
+                                <a href="" style={props.bucket === "cna" ? { color: "#000" } : {}}>Study Guide</a>
                             </div>
 
                         </div>

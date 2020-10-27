@@ -25,7 +25,7 @@ const ListBlog = ({ data }) => {
     return (
         <>
             <Head>
-                <meta charset="UTF-8" />
+                <meta charSet="UTF-8" />
                 <title>ABC Learning</title>
                 <link rel="icon" href="/images/logo.svg" />
                 <link href="https://fonts.googleapis.com/css2?family=Russo+One&display=swap" rel="stylesheet"></link>

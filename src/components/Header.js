@@ -33,6 +33,7 @@ const HeaderStudy = ({ isMobile, studying }) => {
 						<Link href={getLink()}><a>{studying ? "Learn" : "Home"}</a></Link>
 						<Link href={getLink("test")}><a>Test</a></Link>
 						<Link href={getLink("review")}><a>Review</a></Link>
+						<Link href={'/faq?appId=' + appNameId}>FAQ</Link>
 						{/* {!isStudy ? <a href="">
 						<div>FAQ</div>
 						<div></div>
@@ -100,11 +101,7 @@ const HeaderPC = ({ alt, isMobile, isBlog }) => {
 							<a href={isBlog ? "/blog" : "/"} onClick={() => {
 								isBlog ? router.push("/blog") : router.push("/")
 							}}>{isBlog ? "Blog" : "Study Guide"}</a>
-							{/* {!isStudy ? <a href="">
-						<div>FAQ</div>
-						<div></div>
-					</a> : null} */}
-
+							<Link href={'/faq?appId=' + appNameId}>FAQ</Link>
 						</div>
 					)}
 
