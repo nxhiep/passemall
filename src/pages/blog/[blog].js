@@ -9,6 +9,9 @@ import { Container, Grid, IconButton, Link } from '@material-ui/core';
 import { useRouter } from 'next/router';
 import { addRecentPost } from '../../utils';
 import { SocialWidget } from '../../components/SocialWidget';
+import Slider from "react-slick";
+import { BannerBlog, HeaderBlog } from '../../components/blog/HeaderBlog';
+
 function initializeReactGA() {
     ReactGA.initialize('UA-167769768-1');
 }
@@ -32,6 +35,8 @@ const Blog = ({ newInfo, relativeds }) => {
                 <link rel="stylesheet" type="text/css" href="/styles/header.css" />
                 <link rel="stylesheet" type="text/css" href="/styles/blog.css" />
                 <link rel="stylesheet" type="text/css" href="/styles/listblog.css" />
+                <link rel="stylesheet" type="text/css" href="/styles/slick.css" />
+                <link rel="stylesheet" type="text/css" href="/styles/slick-theme.css" />
                 <link rel="preconnect" href="https://storage.googleapis.com" />
                 <link rel="canonical" href="https://passemall.com"></link>
                 <meta property="og:type" content="website" />
@@ -43,14 +48,8 @@ const Blog = ({ newInfo, relativeds }) => {
             </Head>
 
             <div className='body-panel landing-page'>
-                <Header />
-                <div className="background-title-blog">
-                    <div style={{ zIndex: "1000", position: "absolute", top: "50px", right: "80px", color: "#fff", display: "flex", flexDirection: "column" }}>
-                        <strong style={{ fontSize: "72px" }}>5 top questions</strong>
-                        <span style={{ fontSize: "32px" }}>Ready for your practical driving test</span>
-                    </div>
-                    <SocialWidget />
-                </div>
+                <HeaderBlog />
+                <BannerBlog />
                 <PostContent content={newInfo.content} />
                 <RelatedStories relativeds={relativeds} />
                 <Footer color="#4E63BD"></Footer>
@@ -63,11 +62,32 @@ const RelatedStories = ({ relativeds }) => {
     if(!relativeds){
         return null;
     }
+    if(relativeds.length > 4){
+        const settings = {
+            dots: true,
+            infinite: true,
+            speed: 500,
+            slidesToShow: 3,
+            slidesToScroll: 3,
+            className: "related-stories-slider",
+        };
+        return (
+            <Slider {...settings}>
+                {
+                    relativeds.map(e => {
+                        return <BlogItem item={e} key={e.id} />
+                    })
+                }
+            </Slider>
+        );
+    }
     return <Container style={{ paddingTop: '40px', paddingBottom: '40px' }}>
         <h2 style={{textAlign: "center"}}>Related Stories</h2>
         <Grid wrap="wrap" container spacing={3}>
             {relativeds.map(e => {
-                return <BlogItem item={e} key={e.id} />
+                return <Grid key={e.id} className="recent-post-item post-item" item container xs={12} sm={6} lg={4}>
+                    <BlogItem item={e} />
+                </Grid>
             })}
         </Grid>
     </Container>
@@ -83,7 +103,6 @@ const BlogItem = ({ item }) => {
         item.bannerImage = 'https://storage.googleapis.com/micro-enigma-235001.appspot.com/resources/images/how-to-pass-the-ged-math-test.jpg';
     }
     return (
-        <Grid className="recent-post-item post-item" item container xs={12} sm={6} lg={4}>
             <Link href={getLink(item.title, item.id)} style={{width: "100%"}}>
                 <Grid container spacing={1}>
                     <Grid container item xs={12}>
@@ -104,7 +123,6 @@ const BlogItem = ({ item }) => {
                     </Grid>
                 </Grid>
             </Link>
-        </Grid>
     );
 }
 
@@ -115,10 +133,20 @@ const PostContent = ({content}) => {
         replaceHTML(elementId);
     }, []);
     return <Container style={{ paddingTop: '40px', paddingBottom: '40px' }}>
-        <Grid container alignItems="flex-start" spacing={3}>
+        <Grid container alignItems="flex-start" spacing={3} alignItems='stretch'>
             { hasMenu ? <Grid item container xs={12} sm={4} direction="column">
-                <h3>Menu</h3>
-                <div id="post-menu-auto-gen"></div> 
+                <div
+                    style={{ 
+                    padding: '24px', 
+                    border: '2px solid rgba(78, 99, 189, 0.46)',
+                    boxSizing: 'border-box',
+                    borderRadius: '16px',
+                    height: '100%'
+                    }}
+                >
+                    <h3 style={{ color: '#4E63BD' }}>Table of contents</h3>
+                    <div id="post-menu-auto-gen"></div>
+                </div> 
             </Grid> : null}
             <Grid item container xs={12} sm={hasMenu ? 8 : 12} id={elementId}>
                 {ReactHtmlParser(content)}
@@ -142,6 +170,7 @@ function replaceHTML(elementId) {
             item.innerHTML = text;
             item.setAttribute('href', '#' + id);
             let itemP = document.createElement("div");
+            itemP.classList.add('item');
             itemP.appendChild(item);
             panel.appendChild(itemP);
         });

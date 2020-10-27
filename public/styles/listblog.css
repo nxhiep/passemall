@@ -81,3 +81,113 @@ margin-bottom: 16px;
 .recent-posts a:hover {
   text-decoration: none !important;
 }
+
+.background-title-blog {
+  background: url(/images/blog-background.png) no-repeat;
+  background-size: cover;
+  height: 100%;
+  width: 100%;
+  min-height: 800px;
+  position: relative;
+}
+.list-social {
+  position: absolute;
+  bottom: 40px;
+  display: flex;
+  flex-direction: column;
+  right: 40px;
+}
+.related-post {
+  font-size: 36px;
+  text-align: center;
+  padding: 40px 0px;
+  border-top: 1px solid #e0e0e0;
+  width: 44%;
+  margin: auto;
+}
+#post-menu-auto-gen .item {
+  margin-bottom: 10px;
+}
+
+#post-menu-auto-gen .item a {
+  color: black;
+  text-decoration: none;
+}
+
+.header-blog {
+  background: url(/images/background-header.png);
+  background-size: cover;
+  background-position: 0 0;
+  height: 90px;
+  width: 100%;
+}
+
+.header-menu-pc a {
+  color: white;
+  font-weight: 600;
+  font-size: 24px;
+  text-decoration: none;
+  padding: 0 20px;
+  position: relative;
+}
+
+.header-menu-pc a:hover {
+  text-decoration: underline;
+}
+
+.header-menu-pc a.active::after {
+  content: "";
+  position: absolute;
+  border: 0;
+  width: 30px;
+  height: 3px;
+  background: orange;
+  bottom: -2px;
+  left: 20px;
+  border-radius: 5px;
+}
+
+.banner-blog {
+  background: url(/images/blog-background.png) no-repeat;
+  background-size: cover;
+  width: 100%;
+  min-height: 700px;
+  position: relative;
+}
+
+
+@media screen and (max-width: 780px) {
+  .list-social {
+    position: static;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: row;
+  }
+  .list-social a {
+    padding: 10px !important;
+  }
+  .banner-blog {
+    min-height: 200px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-direction: column;
+  }
+  .header-menu-mobile {
+    min-width: 200px;
+    padding-top: 50px;
+  }
+  .header-menu-mobile div {
+    margin-bottom: 1px;
+    padding: 10px;
+    text-align: center;
+    background-color: #4E63BD;
+  }
+  .header-menu-mobile div a {
+    text-decoration: none;
+    display: block;
+    color: white;
+    text-transform: uppercase;
+  }
+}

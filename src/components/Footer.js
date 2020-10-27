@@ -121,7 +121,7 @@ const FooterStudy = ({ isMobile }) => {
     const classes = useStyles();
     return (
         <div className="footer-mobile">
-            <IconButton
+            <div
                 onClick={() => {
                     if (index !== 1) {
                         router.push("/" + appNameId)
@@ -134,8 +134,8 @@ const FooterStudy = ({ isMobile }) => {
                     <HomeIcon style={index === 1 ? { fontSize: "30px", color: "#3f51b5" } : { fontSize: "30px" }}></HomeIcon>
                     {index === 1 ? null : <span style={{ fontSize: "14px" }}>Home</span>}
                 </span>
-            </IconButton>
-            <IconButton
+            </div>
+            <div
                 onClick={() => {
                     if (index !== 2) {
                         router.push("/" + appNameId + "/" + "test")
@@ -148,8 +148,8 @@ const FooterStudy = ({ isMobile }) => {
                     <LibraryBooksIcon style={index === 2 ? { fontSize: "30px", color: "#3f51b5" } : { fontSize: "30px" }}></LibraryBooksIcon>
                     {index === 2 ? null : <span style={{ fontSize: "14px" }}>Test</span>}
                 </span>
-            </IconButton>
-            <IconButton
+            </div>
+            <div
                 onClick={() => {
                     if (index !== 3) {
                         router.push("/" + appNameId + "/" + "review")
@@ -162,7 +162,7 @@ const FooterStudy = ({ isMobile }) => {
                     <VisibilityIcon style={index === 3 ? { fontSize: "30px", color: "#3f51b5" } : { fontSize: "30px" }}></VisibilityIcon>
                     {index === 3 ? null : <span style={{ fontSize: "14px" }}>Reivew</span>}
                 </span>
-            </IconButton>
+            </div>
         </div >
     )
 

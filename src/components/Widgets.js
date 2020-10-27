@@ -1,4 +1,5 @@
 import { Box, CircularProgress, Container, Grid, Typography } from '@material-ui/core';
+import { Rating } from '@material-ui/lab';
 import React from 'react';
 import Image from './Image';
 const FixedContainer = (props) => {
@@ -13,16 +14,18 @@ const FixedContainer = (props) => {
     );
 }
 const LoadingWidget = (props) => {
-    let { color, width, height, fixed } = props;
+    let { color, width, height, fixed, style } = (props ? props : {});
     if (!color) {
         color = "var(--main-color)"
     }
-    let style = { color: color, textAlign: "center", margin: "15px auto" };
-    if (width) {
-        style.width = width;
-    }
-    if (height) {
-        style.height = height;
+    if(!style){
+        style = { color: color, textAlign: "center", margin: "15px auto" };
+        if (width) {
+            style.width = width;
+        }
+        if (height) {
+            style.height = height;
+        }
     }
     if (fixed) {
         return (
@@ -106,7 +109,7 @@ const ConnectAppStore = ({ appInfo }) => {
         <div className="app-info-name">
             <Image src={appInfo.avatar} alt={appInfo.appName} width="100px" height="100px" />
             <div className="app-child-name">
-                <div><strong>{appInfo.appName}</strong></div>
+                <div className="title"><strong>{appInfo.appName}</strong></div>
                 <Rating name="read-only" value={5} readOnly size="small" style={{ marginTop: '10px' }} />
             </div>
         </div>
