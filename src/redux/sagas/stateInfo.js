@@ -10,7 +10,7 @@ function* getStateInfoSaga() {
     while (true) {
         try {
             let action = yield take(Types.GET_STATE_INFO);
-            let appId = action.parentId;
+            let appId = action ? action.parentId : -1;
             let stateInfoState = yield select((appState) => appState.stateInfoState);
             let stateInfos = new Array();
             if (stateInfoState && stateInfoState.list) {

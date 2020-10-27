@@ -161,7 +161,7 @@ const FAQsWidget = ({ appInfo }) => {
 }
 
 export async function getServerSideProps(context) {
-    let appNameId = context.query.appId;
+    let appNameId = context.query ? context.query.appId : null;
     if(!appNameId){
         return {};
     }

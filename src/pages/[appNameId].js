@@ -451,7 +451,7 @@ export async function getStaticProps(context) {
     let userRateState = [];
     useRateJSON.forEach((u) => {
         let userRate = UserRate.fromJS(u);
-        if (appId === userRate.appId) {
+        if (appId === (userRate ? userRate.appId : -1)) {
             userRateState.push(userRate);
         }
     });

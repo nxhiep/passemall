@@ -9,6 +9,9 @@ export const removeLastGame = (appId, topicId, gameType) => {
     };
 };
 export const startNewExamTest = (props) => {
+    if(!props){
+        props = {}
+    }
     const { gameType, topicId, appId, setting } = props;
     return {
         type: Types.START_NEW_TEST,
@@ -26,6 +29,9 @@ export const resetQuestionProgress = () => {
 }
 
 export const loadGame = (params) => {
+    if(!params){
+        params = {}
+    }
     return {
         type: Types.GAME_LOAD_GAME,
         payload: params.topicId,
@@ -36,6 +42,9 @@ export const loadGame = (params) => {
     };
 };
 export const startNewGame = (params) => {
+    if(!params){
+        params = {}
+    }
     return {
         type: Types.START_NEW_GAME,
         payload: params.cards,
