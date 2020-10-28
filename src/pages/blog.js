@@ -93,12 +93,12 @@ const BlogItem = ({ isMobile, data }) => {
                 <Grid container spacing={3}>
                     <Grid container item xs={12} sm={4}>
                         <div className="wrapper-image">
-                            <img src={data.bannerImage}></img>
+                            <img src={data.bannerImage} alt={data.title}></img>
                         </div>
                     </Grid>
                     <Grid container item xs={12} sm={8} alignContent="flex-start" direction="column">
-                        <h2 style={{ color: "#4E63BD" }}>{data.title}</h2>
-                        <p style={{ fontSize: "18px", marginBottom: "10px" }} className="dot-5">{data.description}</p>
+                        <h2 style={{ color: "#4E63BD" }} title={data.title}>{data.title}</h2>
+                        <p style={{ fontSize: "18px", marginBottom: "10px" }} className="dot-5" title={data.description}>{data.description}</p>
                         <div style={{marginTop: "auto",}}>
                             <IconButton
                                 style={{ 
@@ -138,7 +138,7 @@ const RecentPosts = ({ data }) => {
         <h2 style={{ 
             fontSize: "20px", 
             fontWeight: "600",
-            margiTop: "0",
+            marginTop: "0",
             textDecoration: 'underline',
         }}>Recent Posts</h2>
         <div className="list-recent-posts">
@@ -149,13 +149,13 @@ const RecentPosts = ({ data }) => {
                             <Grid container spacing={1}>
                                 <Grid container item xs={5} sm={4}>
                                     <div className="wrapper-image">
-                                        <img src={item.bannerImage}></img>
+                                        <img src={item.bannerImage} alt={item.title}></img>
                                     </div>
                                 </Grid>
                                 <Grid container item xs={7} sm={8}>
-                                    <div style={{ color: "#4E63BD" }} className="dot-1"><strong>{item.title}</strong></div>
+                                    <div style={{ color: "#4E63BD" }} className="dot-1" title={item.title}><strong>{item.title}</strong></div>
                                     <div style={{height: "8px", width: "100%"}}></div>
-                                    <div style={{ fontSize: "16px" }} className="dot-2">{item.description}</div>
+                                    <div style={{ fontSize: "16px" }} className="dot-1" title={item.description}>{item.description}</div>
                                     <div style={{height: "8px", width: "100%"}}></div>
                                     <IconButton
                                         style={{ borderRadius: "0px", backgroundColor: "#4E63BD", color: "#fff", padding: "0px 6px", fontSize: "13px" }}

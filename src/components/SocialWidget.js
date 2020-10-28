@@ -2,18 +2,17 @@ import { IconButton, Link } from "@material-ui/core";
 import React, { useEffect, useState } from 'react';
 import IconArrowUpward from '@material-ui/icons/ArrowUpward';
 import { scrollToTop } from '../models/Utils';
+import { GmailFooter } from "./Icons";
 
 export const SocialWidget = () => {
-    const [fixed, setSixed] = useState(false);
     const [checkScrollToTop, setScrollToTop] = useState(false);
     useEffect(() => {
         typeof window !== 'undefined' && window.addEventListener('scroll', (event) => {
-            setSixed(document.body.scrollTop > 100 || document.documentElement.scrollTop > 100);
             setScrollToTop(document.body.scrollTop > 500 || document.documentElement.scrollTop > 500);
         });
     }, []);
 
-    return <div className="list-social" style={{ position: fixed ? 'fixed' : 'absolute' }}>
+    return <div className="list-social" style={{ position: 'fixed' }}>
         {checkScrollToTop ? <IconButton aria-label="arrow_upward" style={{
             color: 'black',
             backgroundColor: 'white',
@@ -30,10 +29,13 @@ export const SocialWidget = () => {
             <img src="/images/likedin.svg" alt="likedin" />
         </Link>
         <Link href="https://www.tumblr.com/blog/view/abcelearningapps" target="_blank">
-            <img src="/images/tumblr.svg" alt="tumblr" width="25px"></img>
+            <img src="/images/tumblr.svg" alt="tumblr" width="30px"></img>
         </Link>
         <Link href="https://www.facebook.com/ABC-E-learning-110654290809849" target="_blank">
             <img src="/images/facebook.svg" alt="facebook"></img>
+        </Link>
+        <Link href="mailto:abc.elearningapps@gmail.com" target="_blank">
+            <GmailFooter margin={false} color="black"></GmailFooter>
         </Link>
     </div>
 }

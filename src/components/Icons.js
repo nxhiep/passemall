@@ -71,9 +71,9 @@ const InstaFooter = ({ color = "#4E63BD" }) => {
 
     )
 }
-const GmailFooter = ({ color = "#4E63BD" }) => {
+const GmailFooter = ({ color = "#4E63BD", margin }) => {
     return (
-        <SvgIcon style={{ width: "35", height: "35", marginRight: "16px" }} viewBox="0 0 35 35" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <SvgIcon style={{ width: "35", height: "35", marginRight: margin === false ? "" : "16px" }} viewBox="0 0 35 35" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path d="M17.5 35C27.165 35 35 27.165 35 17.5C35 7.83502 27.165 0 17.5 0C7.83501 0 0 7.83502 0 17.5C0 27.165 7.83501 35 17.5 35Z" fill="white" />
             <path fillRule="evenodd" clipRule="evenodd" d="M9 10H25C26.1 10 27 10.9 27 12V24C27 25.1 26.1 26 25 26H9C7.9 26 7 25.1 7 24L7.01 12C7.01 10.9 7.9 10 9 10ZM17.53 18.67L24.6 14.25C24.85 14.09 25 13.82 25 13.53C25 12.86 24.27 12.46 23.7 12.81L17 17L10.3 12.81C9.73 12.46 9 12.86 9 13.53C9 13.82 9.15 14.09 9.4 14.25L16.47 18.67C16.79 18.87 17.21 18.87 17.53 18.67Z" fill={color} />
         </SvgIcon>
@@ -107,4 +107,26 @@ const PenIcon = ({ color }) => {
 
     )
 }
-export { Youtube, TotalQuestions, FreeCircle, PeopleIcon, Clock, TwitterFooter, InstaFooter, FacebookFooter, GmailFooter, FreeIcon, LoginIcon, PenIcon }
+const TumblrIcon = ({ color, bgColor }) => {
+    return (
+        <SvgIcon style={{ width: "35", height: "35", marginRight: '16px' }} viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <g id="Tumblr">
+                <g id="Tumblr_2">
+                    <rect id="Rectangle" width="48" height="48" rx="24" fill={bgColor ? bgColor : "#FFFFFF"} />
+                    <path id="Path" d="M25.8221 29.5755C25.8221 31.7505 26.9249 32.4858 28.6405 32.4858H31.1218V38H26.4348C22.2378 38 19.0825 35.8249 19.0825 30.6477V22.3457H15.2531V17.8424C19.4501 16.7396 21.2269 13.1247 21.4413 10H25.8221V17.1379H30.9074V22.3457H25.8221V29.5755Z" fill={color ? color : "black"} />
+                </g>
+            </g>
+        </SvgIcon>
+    )
+}
+const LinkedInFooter = ({ color }) => {
+    return (
+        <SvgIcon width="35px" height="35px" style={{ width: "35", height: "35", marginRight: '16px' }} viewBox="0 0 35 35" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M14.9606 30C6.69291 30 0 23.3071 0 15.0394C0 6.69291 6.69291 0 14.9606 0C23.2283 0 29.9213 6.69291 29.9213 14.9606C30 23.2283 23.2283 30 14.9606 30Z" fill="white"/>
+        <path d="M11.2598 11.6535H8.18896V21.6535H11.2598V11.6535Z" fill={color ? color : "black"}/>
+        <path d="M9.76378 10.315C10.764 10.315 11.5748 9.50414 11.5748 8.50394C11.5748 7.50374 10.764 6.69292 9.76378 6.69292C8.76358 6.69292 7.95276 7.50374 7.95276 8.50394C7.95276 9.50414 8.76358 10.315 9.76378 10.315Z" fill={color ? color : "black"}/>
+        <path d="M16.2205 16.378C16.2205 14.9606 16.8504 14.0945 18.1102 14.0945C19.2126 14.0945 19.7638 14.8819 19.7638 16.378C19.7638 17.7953 19.7638 21.6535 19.7638 21.6535H22.8346C22.8346 21.6535 22.8346 18.0315 22.8346 15.2756C22.8346 12.5984 21.3386 11.2598 19.2126 11.2598C17.0866 11.2598 16.2205 12.9134 16.2205 12.9134V11.5748H13.2283V21.5748H16.2205C16.2205 21.6535 16.2205 17.9528 16.2205 16.378Z" fill={color ? color : "black"}/>
+        </SvgIcon>
+    )
+}
+export { LinkedInFooter, TumblrIcon, Youtube, TotalQuestions, FreeCircle, PeopleIcon, Clock, TwitterFooter, InstaFooter, FacebookFooter, GmailFooter, FreeIcon, LoginIcon, PenIcon }

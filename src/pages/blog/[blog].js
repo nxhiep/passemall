@@ -53,7 +53,7 @@ const Blog = ({ newInfo, relativeds, url }) => {
 
             <div className='body-panel landing-page'>
                 <HeaderBlog appId={newInfo ? newInfo.appId : -1} />
-                <BannerBlog title={newInfo ? newInfo.title : ''} />
+                <BannerBlog title={newInfo ? newInfo.title : ''} bannerImage={newInfo.bannerImage} />
                 <PostContent content={newInfo.content} />
                 <RelatedStories relativeds={relativeds} />
                 <Footer color="#4E63BD"></Footer>
@@ -145,8 +145,8 @@ const PostContent = ({content}) => {
         replaceHTML(elementId);
     }, []);
     return <Container style={{ paddingTop: '40px', paddingBottom: '40px' }}>
-        <Grid container alignItems="flex-start" spacing={3} alignItems='stretch'>
-            { hasMenu ? <Grid item container xs={12} sm={4} direction="column">
+        <Grid container alignItems="flex-start" spacing={3}>
+            { hasMenu ? <Grid item container xs={12} sm={3} direction="column">
                 <div
                     style={{ 
                     padding: '24px', 
@@ -160,7 +160,7 @@ const PostContent = ({content}) => {
                     <div id="post-menu-auto-gen"></div>
                 </div> 
             </Grid> : null}
-            <Grid item container xs={12} sm={hasMenu ? 8 : 12} id={elementId}>
+            <Grid item container xs={12} sm={hasMenu ? 9 : 12} id={elementId}>
                 {ReactHtmlParser(content)}
             </Grid>
         </Grid>

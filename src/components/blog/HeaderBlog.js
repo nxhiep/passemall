@@ -1,12 +1,13 @@
 import { Container, Drawer, IconButton, List, ListItem, ListItemText, SwipeableDrawer } from '@material-ui/core';
 import { useTheme } from '@material-ui/core/styles';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
-import React, { Fragment, useState } from 'react';
+import React, { Fragment, useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import Link from 'next/link'
 import MenuIcon from '@material-ui/icons/Menu';
 import { SocialWidget } from '../SocialWidget';
 import MenuIconButton from '@material-ui/icons/Menu';
+import ReactHtmlParser from 'react-html-parser';
 
 export const HeaderBlog = ({ appId, faq }) => {
     const theme = useTheme();
@@ -32,26 +33,35 @@ const MenuPanel = () => {
     return <MyDrawer />
 }
 
-export const BannerBlog = ({title}) => {
+export const BannerBlog = ({title, bannerImage}) => {
     const theme = useTheme();
     const isMobile = useMediaQuery(theme.breakpoints.between(0, 780));
-    const styles = { zIndex: "1000", position: "absolute", top: "50px", right: "80px", color: "#fff", display: "flex", flexDirection: "column" };
+    const styles = { zIndex: "1000", position: "absolute", top: "100px", right: "80px", color: "#fff", display: "flex", flexDirection: "column" };
     if(isMobile){
         styles.position = '';
         styles.textAlign = 'center';
         styles.marginTop = '20px';
     }
     if(title){
-        styles.fontSize = '30px';
+        styles.fontSize = '40px';
         styles.fontWeight = '600';
     }
-    return <div className="banner-blog">
-        {
-            title ? <div style={styles}>{title}</div> : <div style={styles}>
-                <strong style={{ fontSize: isMobile ? "42px" : "52px" }}>5 top questions</strong>
-                <span style={{ fontSize: isMobile ? "20px" : "24px", fontStyle: 'normal', fontWeight: '300' }}>Ready for your practical driving test</span>
-            </div>
+    let arr = title ? title.split(" ") : [];
+    if(title && arr.length > 7){
+        let temp = [];
+        for(let s of title.split(arr[4])){
+            temp.push(s + (temp.length == 0 ? arr[4] : ''));
         }
+        title = temp;
+        styles.textAlign = 'center';
+    }
+    return <div className="banner-blog" style={bannerImage ? { backgroundImage: 'url('+bannerImage+')' } : {}}>
+        <div className="wrapper-banner-image">
+        </div>
+        {typeof title === 'string' ? <div style={styles}>{title}</div> : 
+        (typeof title === 'object' ? <div style={styles}>{title.map((e, i) => {
+            return <div key={i}>{e}</div>
+        })}</div> : null)}
         <SocialWidget />
     </div>
 }
@@ -63,7 +73,7 @@ const MyDrawer = () => {
     if (typeof event === 'undefined' || event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
       return;
     }
-    console.log("xxxxxxx open", open);
+    // console.log("xxxxxxx open", open);
     setOpen(open);
   };
 

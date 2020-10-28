@@ -6,7 +6,7 @@ import { useRouter } from 'next/router';
 import LibraryBooksIcon from '@material-ui/icons/LibraryBooks';
 import HomeIcon from '@material-ui/icons/Home';
 import VisibilityIcon from '@material-ui/icons/Visibility';
-import { FacebookFooter, GmailFooter, InstaFooter, TwitterFooter, Youtube } from './Icons';
+import { FacebookFooter, GmailFooter, InstaFooter, TwitterFooter, Youtube, TumblrIcon, LinkedInFooter } from './Icons';
 const useStyles = makeStyles({
     root: {
         "&:hover": {
@@ -39,8 +39,8 @@ const Footer = ({ alt = '', isStudy, color, bucket = "" }) => {
                                 </div>
                                 <div className="resources">
                                     <div>Resources</div>
-                                    <a href="">Blog</a>
-                                    <a href="">Support</a>
+                                    <a href="/blog">Blog</a>
+                                    <a href="mailto:abc.elearningapps@gmail.com">Support</a>
                                 </div>
                             </div>
                             <div className="social">
@@ -73,26 +73,29 @@ const Footer = ({ alt = '', isStudy, color, bucket = "" }) => {
                                     <a href="">Support</a>
                                 </div>
                                 <div className="social">
-                                    <a>
+                                    <a href="https://twitter.com/abcelearningapp" target="_blank">
                                         <TwitterFooter color={color}></TwitterFooter>
-                                        <span style={{ marginLeft: "8px" }}>ABC E-learning</span>
+                                        <span style={{ marginLeft: "8px" }}>Twitter</span>
                                     </a>
-                                    <a>
+                                    <a href="https://www.facebook.com/ABC-E-learning-110654290809849" target="_blank">
                                         <FacebookFooter color={color}></FacebookFooter>
-                                        <span style={{ marginLeft: "8px" }}>ABC E-learning</span>
+                                        <span style={{ marginLeft: "8px" }}>Facebook</span>
                                     </a>
-                                    <a>
-                                        <InstaFooter color={color}></InstaFooter>
-                                        <span style={{ marginLeft: "8px" }}>ABC E-learning</span>
-                                    </a>
-                                    <a>
+                                    <a href="https://www.youtube.com/channel/UCkLKqup_8asTJGtQIgXCOZg" target="_blank">
                                         <Youtube color={color}></Youtube>
-                                        <span style={{ marginLeft: "8px" }}>ABC E-learning</span>
+                                        <span style={{ marginLeft: "8px" }}>Youtube channel</span>
                                     </a>
-
-                                    <a>
+                                    <a href="https://www.tumblr.com/blog/view/abcelearningapps" target="_blank">
+                                        <TumblrIcon color={color} bgColor="white"></TumblrIcon>
+                                        <span style={{ marginLeft: "8px" }}>Tumblr</span>
+                                    </a>
+                                    <a href="https://www.linkedin.com/in/abc-elearningapps-ab9a231b8" target="_blank">
+                                        <LinkedInFooter color={color}></LinkedInFooter>
+                                        <span style={{ marginLeft: "8px" }}>LinkedIn</span>
+                                    </a>
+                                    <a href="mailto:abc.elearningapps@gmail.com" target="_blank">
                                         <GmailFooter color={color}></GmailFooter>
-                                        <span style={{ marginLeft: "8px" }}>abc.elearningapps@gmail.com</span>
+                                        <span style={{ marginLeft: "8px" }}>Gmail</span>
                                     </a>
                                 </div>
                             </div>
