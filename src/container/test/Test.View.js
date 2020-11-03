@@ -355,7 +355,7 @@ const TestInfoItem = ({ testInfo, onChangeTestInfo, index, level, reverse, lengt
                     ))}
                 <div className="test-info-item-content">
                     <div className="circle-progress">
-                        {testInfo.lock ? null : <div className="circle-progress-content" style={status === Config.GAME_STATUS_FAILED ? { background: "red", boxShadow: "none" } : { background: "linear-gradient(108.3deg, #3a95dc 23.49%, #96d9ff 76.7%)" }}>{status === Config.TEST_STATUS_NOTHING ? <PlayArrow style={{ margin: "auto" }}></PlayArrow> : (
+                        {testInfo.lock ? null : <div className="circle-progress-content" style={status === Config.GAME_STATUS_FAILED ? { background: "#FE6D6D", boxShadow: "none" } : { background: "linear-gradient(108.3deg, #3a95dc 23.49%, #96d9ff 76.7%)" }}>{status === Config.TEST_STATUS_NOTHING ? <PlayArrow style={{ margin: "auto" }}></PlayArrow> : (
                             status === Config.GAME_STATUS_PASSED ? <Done></Done> : (status === Config.GAME_STATUS_FAILED ? <CloseIcon style={{ color: "#fff" }}></CloseIcon> : (level === -1 ? testInfo.progress + "%" : testInfo.calculateProgress(level) + "%"))
                         )}</div>}
                         {testInfo.lock ? <LockIcon style={{ color: "#DADADA", margin: "auto" }}></LockIcon> : null}
