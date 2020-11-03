@@ -1,0 +1,261 @@
+.background-header {
+  background: url(/images/background-header-blog.png) no-repeat;
+  background-size: cover;
+  min-height: 790px;
+  display: flex;
+  position: relative;
+}
+
+.background-blog {
+  position: relative;
+}
+
+.name-blog {
+  position: absolute;
+  bottom: 40px;
+  color: #fff;
+  left: 40px;
+  font-size: 48px;
+}
+
+.list-blog-container {
+  margin-bottom: 40px;
+  display: flex;
+  margin-left: 64px;
+  position: relative;
+}
+
+@media screen and (max-width: 780px) {
+  .list-blog-container {
+    margin-left: 0px;
+  }
+}
+
+.post-item {
+  width: 100%;
+  margin-bottom: 40px;
+}
+
+.post-item a:hover {
+  text-decoration: none !important;
+}
+
+.wrapper-image {
+  position: relative;
+  height: 0;
+  width: 100%;
+  padding-bottom: 62.25%;
+}
+
+.wrapper-image img {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  left: 0;
+  top: 0;
+}
+
+.post-item p {
+  color: black;
+}
+
+.post-item h2,
+.post-item p {
+  margin: 0;
+
+}
+
+.recent-posts .recent-post-item {
+margin-bottom: 16px;
+
+}
+
+.recent-posts a:hover {
+  text-decoration: none !important;
+}
+
+.background-title-blog {
+  background: url(/images/blog-background.png) no-repeat;
+  background-size: cover;
+  height: 100%;
+  width: 100%;
+  min-height: 800px;
+  position: relative;
+}
+
+.related-post {
+  font-size: 36px;
+  text-align: center;
+  padding: 40px 0px;
+  border-top: 1px solid #e0e0e0;
+  width: 44%;
+  margin: auto;
+}
+#post-menu-auto-gen .item {
+  margin-bottom: 10px;
+}
+
+#post-menu-auto-gen .item a {
+  color: black;
+  text-decoration: none;
+}
+
+.header-blog {
+  background: url(/images/background-header.png);
+  background-size: cover;
+  background-position: 0 0;
+  height: 90px;
+  width: 100%;
+}
+
+.header-menu-pc a {
+  color: white;
+  font-weight: 600;
+  font-size: 24px;
+  text-decoration: none;
+  padding: 0 20px;
+  position: relative;
+}
+
+.header-menu-pc a:hover::after,
+.header-menu-pc a.active::after {
+  content: "";
+  position: absolute;
+  border: 0;
+  width: 30px;
+  height: 3px;
+  background: orange;
+  bottom: -2px;
+  left: 20px;
+  border-radius: 5px;
+}
+
+.banner-blog {
+  background: url(/images/blog-background.png) no-repeat;
+  background-size: cover;
+  width: 100%;
+  position: relative;
+}
+
+
+.list-social {
+  position: fixed;
+  bottom: 40px;
+  display: flex;
+  flex-direction: column;
+  right: 40px;
+  z-index: 9999;
+}
+
+.padding-10 {
+  padding: 10px;
+  box-sizing: border-box;
+}
+.related-stories-slider a {
+  text-decoration: none;
+}
+
+.slick-dots li.slick-active {
+  border: 1px solid #4e63bd;
+  border-radius: 100%;
+  padding: 0px;
+}
+.slick-dots li.slick-active button:before {
+  color: #4e63bd !important;
+}
+.slick-dots li button:before {
+  font-size: 35px;
+}
+
+.list-social a {
+  box-shadow: 0px 0px 6px 2px #838383;
+  border-radius: 100%;
+  width: 50px;
+  height: 50px;
+  text-align: center;
+  padding: 0;
+  background: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 10px;
+}
+
+.list-blog .post-item .wrapper-image:before {
+  content: "";
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: #FF9800;
+  bottom: -8px;
+  right: -8px;
+}
+
+@media screen and (max-width: 780px) {
+  .list-social {
+    position: static;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: row;
+    width: 100%;
+  }
+  .list-social a {
+    padding: 10px !important;
+    width: 30px;
+    height: 30px;
+    margin-right: 10px;
+    margin-bottom: 0;
+  }
+  .banner-blog {
+    min-height: 200px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-direction: column;
+  }
+  .header-menu-mobile {
+    min-width: 200px;
+    padding-top: 50px;
+  }
+  .header-menu-mobile div {
+    margin-bottom: 1px;
+    padding: 10px;
+    text-align: center;
+    background-color: #4E63BD;
+  }
+  .header-menu-mobile div a {
+    text-decoration: none;
+    display: block;
+    color: white;
+    text-transform: uppercase;
+  }
+  .list-social {
+    bottom: 10px;
+    left: 0;
+  }
+
+  .list-social button[aria-label="arrow_upward"] {
+    margin-right: 10px;
+    margin-bottom: 0px !important;
+  }
+}
+
+.wrapper-banner-image {
+  position: relative;
+  padding-bottom: 50.25%;
+  height: 0;
+  width: 100%;
+  background: url(/images/blog-background.png) no-repeat;
+  background-size: cover;
+}
+
+.wrapper-banner-image::after {
+  position: absolute;
+  content: "";
+  top: 0;
+  left: 0;
+  background: rgb(0 0 0 / 0.4);
+  width: 100%;
+  height: 100%;
+}
