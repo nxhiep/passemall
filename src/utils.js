@@ -24,7 +24,9 @@ export function convertTime(time) {
     let hours = parseInt(time / 3600);
     let minutes = parseInt((time - hours * 3600) / 60);
     let seconds = time - hours * 3600 - minutes * 60;
-    return hours.toString() + " : " + minutes.toString() + " : " + seconds.toString()
+    return (hours.toString().length == 2 ? hours.toString() : "0" + hours.toString()) + " : " +
+        (minutes.toString().length == 2 ? minutes.toString() : "0" + minutes.toString()) + " : " +
+        (seconds.toString().length == 2 ? seconds.toString() : "0" + seconds.toString())
 }
 export function isMobileFunctions() {
     if (typeof window !== 'undefined') {
@@ -171,10 +173,10 @@ export function setCookie(key, value, exdays) {
 }
 
 export function addRecentPost(id) {
-    if(id){
+    if (id) {
         var ids = getRecentPosts();
-        if(ids.indexOf(id) == -1){
-            if(ids.length == 3){
+        if (ids.indexOf(id) == -1) {
+            if (ids.length == 3) {
                 ids[0] = id;
             } else {
                 ids.push(id);
@@ -187,7 +189,7 @@ export function addRecentPost(id) {
 export function getRecentPosts() {
     var json = getCookie(Config.RECENT_POSTS_KEY);
     // console.log("getRecentPosts json", json)
-    if(json){
+    if (json) {
         return JSON.parse(json);
     }
     return [];

@@ -132,7 +132,7 @@ const AlertDialogSlide = ({ dialogInfo }) => {
         </Dialog>
     );
 }
-const ReportDialog = ({ appId, appName, questionId }) => {
+const ReportDialog = ({ appId, appName, questionId, handleClosePopover }) => {
     let reason = 1;
     let details = "";
     let imgBase64 = ""
@@ -145,6 +145,7 @@ const ReportDialog = ({ appId, appName, questionId }) => {
 
     const handleClose = () => {
         setOpen(false);
+        handleClosePopover()
     };
     const handleReport = async () => {
         await html2canvas(document.getElementById("canvas"), { scrollY: -window.scrollY, height: 700, logging: false, letterRendering: true }).then(canvas => {

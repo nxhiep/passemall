@@ -15,6 +15,8 @@ import { convertTime, isMobileFunctions } from '../../utils';
 import { setTimeLeftState } from '../../redux/actions/timeLeft';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import CancelIcon from '@material-ui/icons/Cancel';
+import TimerIcon from '@material-ui/icons/Timer';
+import { CongratulationAlert } from '../game/Game.ViewTS';
 var arrayIndex = new Array();
 const CountDownUI = ({ timeLeftReducer, id, setTimeLeftState, onContinue, endTest, level }) => {
     useEffect(() => {
@@ -37,14 +39,16 @@ const CountDownUI = ({ timeLeftReducer, id, setTimeLeftState, onContinue, endTes
         }
     });
     return (
-        <div style={{ background: "#3f51b5", height: "40px", width: "140px", marginLeft: "auto", color: "#fff", display: "flex", alignItems: "center", justifyContent: "center" }}>
-            {convertTime(timeLeftReducer.data[id] ? timeLeftReducer.data[id].timeLeft : -1)}
+        <div style={{ background: "#0008ff91", borderRadius: "20px", height: "40px", width: "140px", margin: "0px auto 20px", color: "#fff", display: "flex", alignItems: "center", justifyContent: "center" }}>
+            <TimerIcon></TimerIcon>
+            <div style={{ marginLeft: "8px" }}>
+                {convertTime(timeLeftReducer.data[id] ? timeLeftReducer.data[id].timeLeft : -1)}
+            </div>
         </div>
     )
 }
-const TestQuestionPanelUI = ({ endTest = () => { }, setShowLeftPanel = () => { }, questionProgress = {}, className = "", loadGame = () => { }, gameState, testInfoId, appId, timeTest, passPercent, questionIds, index = 0, onBookmark, appInfoState, onContinue = () => { } }) => {
+const TestQuestionPanelUI = ({ showLeftPanel, endTest = () => { }, setShowLeftPanel = () => { }, questionProgress = {}, className = "", loadGame = () => { }, gameState, testInfoId, appId, timeTest, passPercent, questionIds, index = 0, onBookmark, appInfoState, onContinue = () => { } }) => {
     const isMobile = isMobileFunctions();
-    console.log("running in testComponent")
     let currentQuestion = gameState.currentQuestion;
     let isSkip = currentQuestion && currentQuestion.questionStatus == Config.QUESTION_NOT_ANSWERED;
     useEffect(() => {
@@ -54,10 +58,6 @@ const TestQuestionPanelUI = ({ endTest = () => { }, setShowLeftPanel = () => { }
         questionProgress = {};
     }
     let loading = gameState.isLoading === 2;
-
-    if ((gameState.isFinish && loading) || (currentQuestion && loading) || (gameState.level < 0)) {
-        return <div>Select you level</div>
-    }
     if (!currentQuestion || loading) {
         return <LoadingWidget></LoadingWidget>
     }
@@ -74,18 +74,19 @@ const TestQuestionPanelUI = ({ endTest = () => { }, setShowLeftPanel = () => { }
             index = i;
         }
     }
+    console.log("xxx showLeft", showLeftPanel)
     return (
         <div
             className={"questions-panel" + (className ? " " + className : "") + (gameState.isFinish ? " end-game" : "")}
             style={gameState.isFinish && !isMobile ? { maxHeight: 500 } : {}}
             id="canvas">
-            {gameState.isFinish ? <ArrowBackIcon onClick={() => setShowLeftPanel()} style={{ color: "#4E63BD", marginRight: "16px", marginTop: "20px" }} /> : null}
-            { ((gameState.level === Config.EASY_LEVEL || gameState.isFinish === true) ? false : true) ?
-                <CountDown onContinue={onContinue}
+            {gameState.isFinish && isMobile ? <ArrowBackIcon onClick={() => setShowLeftPanel()} style={{ color: "#4E63BD", marginRight: "16px", marginTop: "20px" }} /> : null}
+            { (gameState.level === Config.EASY_LEVEL || gameState.isFinish === true || showLeftPanel === true) ?
+                null : <CountDown onContinue={onContinue}
                     endTest={endTest}
                     level={gameState.level}
                     id={testInfoId + "-" + gameState.level} >
-                </CountDown> : null
+                </CountDown>
             }
             {
                 questions.map((question) => {
@@ -263,6 +264,7 @@ const TestProgressPanelUI = ({ gameState, appInfo, onBookmark, setShowLeftPanel,
     if ((gameState.isFinish && loading) || (gameState.currentQuestion && loading) || (gameState.level < 0)) {
         return null
     }
+    const [showAlert, setShowAlert] = useState(false)
     const theme = useTheme();
     const isMobile = useMediaQuery(theme.breakpoints.between(0, 780));
     const [anchorEl, setAnchorEl] = useState(null);
@@ -280,11 +282,13 @@ const TestProgressPanelUI = ({ gameState, appInfo, onBookmark, setShowLeftPanel,
     return (
         <>
             {isMobile ? (
-                <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", padding: "0 8px", background: "#e5e5e5" }}>
+                <div div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", padding: "0 8px", background: "#e5e5e5" }}>
+                    { !showAlert ? null : <CongratulationAlert onBookmark={true} onClose={() => setShowAlert(false)}></CongratulationAlert>}
+
                     <ArrowBackIcon onClick={() => setShowLeftPanel()} style={{ color: "#4E63BD", marginRight: "16px", marginTop: "20px" }} />
                     <div className="test-progress-panel" >
                         <div className="progress-panel">
-                            <div className="content-line-progress" style={{ left: 'calc(' + size + '% - 10px)' }}>{gameState.indexActive} / {progress.total}</div>
+                            <div className="content-line-progress" style={{ left: 'calc(' + size + '% - 10px)' }}>{gameState.indexActive} / {gameState.questions.length}</div>
                             <div style={{ visibility: 'hidden' }}>X</div>
                             <div className="parent-content-panel">
                                 <div className="content-progress" style={{ width: size + '%' }}></div>
@@ -311,32 +315,34 @@ const TestProgressPanelUI = ({ gameState, appInfo, onBookmark, setShowLeftPanel,
                                 elevation={4}
                                 style={{
                                     width: "200px",
-                                    height: "140px",
+                                    height: "160px",
                                     padding: "10px",
                                     fontSize: "16px",
                                 }}
                             >
-                                <Button fullWidth={true} style={{ display: "flex", justifyContent: "flex-start", alignItems: "center", padding: "0px 10px" }} onClick={() => {
+                                <Button fullWidth={true} style={{ display: "flex", justifyContent: "flex-start", alignItems: "center", padding: "16px" }} onClick={() => {
+                                    if (!gameState.currentQuestion.progress.bookmark) {
+                                        setShowAlert(true);
+                                    }
                                     onBookmark(gameState.currentQuestion);
+                                    handleClose()
                                 }}>
                                     {gameState.currentQuestion.progress.bookmark ?
-                                        <IconButton >
-                                            <HeartIcon color="primary" />
-                                        </IconButton> :
-                                        <IconButton >
-                                            <UnHeartIcon color="primary" />
-                                        </IconButton>}
+                                        <HeartIcon color="primary" /> : <UnHeartIcon color="primary" />
+                                    }
                                     <div style={{ marginLeft: "16px" }}>Favorite</div>
                                 </Button>
                                 <ReportDialog
                                     questionId={gameState.currentQuestion.id}
                                     appId={appInfo.id}
-                                    appName={appInfo.appName}>
+                                    appName={appInfo.appName}
+                                    handleClosePopover={() => handleClose()}>
                                 </ReportDialog>
-                                <Button onClick={() => endTest()} fullWidth={true} style={{ display: "flex", justifyContent: "flex-start", alignItems: "center", padding: "0px 10px" }}>
-                                    <IconButton >
-                                        <CancelIcon></CancelIcon>
-                                    </IconButton>
+                                <Button onClick={() => {
+                                    endTest();
+                                    handleClose()
+                                }} fullWidth={true} style={{ display: "flex", justifyContent: "flex-start", alignItems: "center", padding: "16px" }}>
+                                    <CancelIcon color="primary"></CancelIcon>
                                     <div style={{ marginLeft: "16px" }}>End Test</div>
                                 </Button>
                             </Paper>
@@ -356,7 +362,8 @@ const TestProgressPanelUI = ({ gameState, appInfo, onBookmark, setShowLeftPanel,
                             </div>
                         </div>
                     </div>
-                )}
+                )
+            }
 
         </>
 

@@ -271,17 +271,15 @@ const QuestionsPanelx = ({ questionProgress, className, topicId, loadGame, gameS
         </div>
     );
 }
-const CongratulationAlert = ({ topicName = "", onClose = () => { }, onBookmark = false }) => {
+const CongratulationAlert = ({ topicName = "", onClose = () => { }, onBookmark = false, page = "" }) => {
     const theme = useTheme();
     const isMobile = useMediaQuery(theme.breakpoints.between(0, 780));
     useEffect(() => {
-        let time = setTimeout(() => {
-            onClose();
-        }, 2500);
+        let time = setTimeout(() => onClose(), 2500);
         return () => {
             clearTimeout(time);
         };
-    }, [topicName]);
+    }, []);
     return (
         <Grid
             container
@@ -290,11 +288,11 @@ const CongratulationAlert = ({ topicName = "", onClose = () => { }, onBookmark =
             className="congratulation-alert-panel"
             style={{
                 backgroundColor: onBookmark ? "green" : "#ffff40",
-                top: onBookmark ? "53%" : "60px",
+                top: onBookmark ? "53%" : (isMobile ? "0px" : "60px"),
                 width: onBookmark ? (isMobile ? "150px" : "200px") : "100%",
                 textAlign: "center",
                 color: onBookmark ? "#fff" : "#000",
-                zIndex: 1,
+                zIndex: 100,
                 justifyContent: onBookmark ? "center" : "",
                 left: onBookmark ? (isMobile ? "calc(50% - 75px )" : "57%") : "0",
                 borderRadius: onBookmark ? "20px" : "0px"
@@ -302,7 +300,7 @@ const CongratulationAlert = ({ topicName = "", onClose = () => { }, onBookmark =
             <div></div>
             <div className="title">
                 {onBookmark ? null : <UnLockIcon></UnLockIcon>}
-                <span style={{ fontSize: onBookmark ? "14px" : "18px" }}>{onBookmark ? "Added to favorites" : "You must complete previous topic!"}</span>
+                <span style={{ fontSize: onBookmark ? "14px" : "18px" }}>{onBookmark ? "Added to favorites" : `You must complete previous ${page}!`}</span>
             </div>
             { onBookmark ? null : <IconButton style={{ fontSize: isMobile ? "14px" : "18px" }} onClick={() => onClose()}><CloseIcon /></IconButton>}
         </Grid>

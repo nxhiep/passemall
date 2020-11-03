@@ -1,4 +1,5 @@
-import { Button, Container, makeStyles, useMediaQuery, useTheme } from '@material-ui/core';
+import { Button, Container, IconButton, makeStyles, useMediaQuery, useTheme } from '@material-ui/core';
+import { ArrowBack } from '@material-ui/icons';
 import React from 'react';
 import { connect } from 'react-redux';
 import { resetQuestionProgress, setGameIsLoading } from '../../redux/actions';
@@ -11,7 +12,7 @@ const useStyles = makeStyles({
         position: "fixed"
     }
 })
-const EndTestView = ({ gameState, testInfoState, topicState, bucket, resetQuestionProgress, setGameIsLoading }) => {
+const EndTestView = ({ gameState, testInfoState, topicState, bucket, resetQuestionProgress, setGameIsLoading, setShowLeftPanel }) => {
     const classes = useStyles();
     let listTopicProgress = new Array();
     if (topicState.list.length > 0 && testInfoState.list.length > 0) {
@@ -30,6 +31,11 @@ const EndTestView = ({ gameState, testInfoState, topicState, bucket, resetQuesti
     return (
         <Container>
             <div className="end-test-view">
+                {isMobile ?
+                    <IconButton onClick={() => setShowLeftPanel()} style={{ marginTop: "8px" }}
+                    ><ArrowBack color="primary" style={{ fontSize: "30px" }}>
+                        </ArrowBack>
+                    </IconButton> : null}
                 <div className="image-finish">
                     <img src="/images/finish.png" alt="finsih"></img>
                 </div>

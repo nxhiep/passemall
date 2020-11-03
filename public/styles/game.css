@@ -116,8 +116,8 @@ body {
   .answer-button.correct
   .answered-content
   .answer-button-title {
-  background: linear-gradient(108.3deg, #11c744 23.49%, #8af778 76.7%);
-  box-shadow: inset 5px -4px 10px #3bce07;
+  background: #79e785;
+  box-shadow: none;
   color: #fff;
 }
 .questions-panel
@@ -158,8 +158,8 @@ body {
   .answered-content
   .answer-button-background
   .answer-button-title {
-  background: linear-gradient(108.3deg, #e81717 23.49%, #f77878 76.7%);
-  box-shadow: inset 5px -4px 10px #fa8b8b;
+  background: #fe6d6d;
+  box-shadow: none;
 }
 .questions-panel
   .question-item-panel

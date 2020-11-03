@@ -18,6 +18,7 @@ import EndTestView from "./EndTest";
 import ArrowRightAltIcon from '@material-ui/icons/ArrowRightAlt';
 import SelectTopicPopUp from '../../components/SelectTopicPopUp';
 import Footer from '../../components/Footer';
+import { CongratulationAlert } from "../game/Game.ViewTS"
 const TestViewScreen = ({ appInfoState, topicId = -1 }) => {
     const theme = useTheme()
     const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
@@ -76,7 +77,7 @@ const TestViewUI = ({ stateInfoState, testInfoState, appInfoState, getTestInfoBy
                 <Container className="test-game-panel">
                     {showGame ?
                         <>
-                            {(gameState.isFinish && gameState.isLoading === 7) ? <EndTestView bucket={appInfoState.bucket}></EndTestView>
+                            {(gameState.isFinish && gameState.isLoading === 7 && !showLeftPanel) ? <EndTestView setShowLeftPanel={() => setShowLeftPanel(true)} bucket={appInfoState.bucket}></EndTestView>
                                 : null}
                             <Grid item xs={12} sm={12} md={7} lg={8} className="right-panel" style={{ display: isHaveRightPanel && !showLeftPanel && gameState.isLoading !== 7 ? "block" : "none" }}>
                                 <div className="box-question-panel">
@@ -90,6 +91,7 @@ const TestViewUI = ({ stateInfoState, testInfoState, appInfoState, getTestInfoBy
                                         passPercent={currentTestInfo.passPercent}
                                         questionIds={currentTestInfo.questionIds}
                                         appInfoState={appInfoState}
+                                        showLeftPanel={showLeftPanel}
                                         setShowLeftPanel={() => setShowLeftPanel(true)}
                                     ></TestQuestionPanel>
                                 </div>
@@ -114,7 +116,7 @@ const TestViewUI = ({ stateInfoState, testInfoState, appInfoState, getTestInfoBy
                                 {Config.LISTBUCKET.indexOf(appInfoState.bucket) !== -1 ? <Button
                                     variant="contained"
                                     color="primary"
-                                    style={{ marginBottom: "16px", display: "block", marginLeft: "auto", marginRight: "auto" }}
+                                    style={{ background: "#8496EA", color: "#fff", marginTop: isMobile ? "16px" : "", borderRadius: "20px", marginBottom: "16px", display: "block", marginLeft: "auto", marginRight: "auto" }}
                                     onClick={() => setOpenSelectTopic(true)}
                                 >Change Topic</Button> : null}
                                 <ListTestInfo appId={appInfoState.id}
@@ -329,19 +331,20 @@ const ListTestInfoUI = ({ testInfoState, appId, onChangeTestInfo, level, bucket 
 }
 const TestInfoItem = ({ testInfo, onChangeTestInfo, index, level, reverse, length }) => {
     let status = testInfo.statusProgress
-    console.log("xxx", status)
     const theme = useTheme();
+    const [showAlert, setShowAlert] = useState();
     const isMobile = useMediaQuery(theme.breakpoints.between(0, 600));
     const isIPad = useMediaQuery(theme.breakpoints.between(600, 780));
     return (
         <Grid item xs={isMobile ? 6 : (isIPad ? 3 : 2)} style={{ maxWidth: isMobile ? "180px" : (isIPad ? "" : "") }} onClick={() => {
             if (testInfo.lock) {
-                alert("lockkkk!")
+                setShowAlert(true)
             } else {
                 onChangeTestInfo(testInfo)
             }
         }} className="test-info-item" >
             <div className="test-info-item-container" style={(isMobile && index % 2 === 0 || isIPad && index % 4 !== 3 || !isMobile && !isIPad && index % 6 !== 5) ? { display: "block" } : { display: "flex", width: (isMobile || isIPad) ? "154px" : "" }}>
+                {showAlert ? <CongratulationAlert page="test" onClose={() => setShowAlert(false)}></CongratulationAlert> : null}
                 {((!isMobile && !isIPad && index % 6 !== 5) || (isMobile && index % 2 === 0) || (isIPad && index % 4 !== 3) ? (
                     <>
                         <div className="test-info-item-top" style={{ border: index === 0 ? "2px solid #4e63bd" : "2px dashed #4e63bd" }}></div>
