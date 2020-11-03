@@ -69,3 +69,8 @@ export const endTest = () => {
         type: Types.GAME_END_GAME,
     };
 };
+export const setGameIsLoading = () => {
+    return {
+        type : Types.SET_GAME_IS_LOADING,
+    }
+}

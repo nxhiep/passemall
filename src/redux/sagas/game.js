@@ -173,8 +173,15 @@ function* onResetQuestion() {
                 yield put(resetProgressInTopic(topicId))
                 yield put(resetTopicProgress(topicProgress));
             } else {
+                if (gameState.level === Config.VERY_HARD_LEVEL) {
+                    yield put(setTimeLeftState({ id: gameState.id, timeLeft: Math.round(gameState.timeTest / gameState.questions.length) }))
+                }
+                if (gameState.level === Config.HARD_LEVEL) {
+                    yield put(setTimeLeftState({ id: gameState.id, timeLeft: gameState.timeTest }))
+                }
                 yield put(resetTestInfoCorrectQuestions(gameState.id.substring(0, gameState.id.length - 2)));
             }
+
         }
         catch {
 

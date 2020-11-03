@@ -150,6 +150,8 @@ const gameReducer = (state = GameState.init(), action) => {
             state.isFinish = true;
             state.isLoading = 7;
             return Object.assign({}, state);
+        case Types.SET_GAME_IS_LOADING:
+            state.isLoading = 9;
         default: return state;
     }
 };

@@ -21,8 +21,8 @@ body {
 }
 .end-test-view .circle-progress {
   background: #f5f5f5;
-  box-shadow: -5px -5px 10px rgba(255, 255, 255, 0.7),
-    5px 5px 10px rgba(174, 174, 192, 0.25);
+  box-shadow: 5px 5px 10px rgba(255, 255, 255, 0.7),
+    5px 5px 10px rgba(174, 174, 192, 0.7);
   border-radius: 20px;
   display: flex;
   align-items: center;
@@ -43,7 +43,7 @@ body {
 }
 .end-test-view .list-topic-progress {
   background: #fafafa;
-  box-shadow: inset -2px -2px 5px rgba(255, 255, 255, 0.7),
+  box-shadow: inset 2px 2px 5px rgba(255, 255, 255, 0.7),
     inset 2px 2px 10px rgba(174, 174, 192, 0.4);
   border-radius: 10px;
   padding: 16px;
@@ -350,6 +350,10 @@ body {
   justify-content: center;
 }
 @media screen and (max-width: 780px) {
+  .end-test-view .list-topic-progress {
+    max-height: 300px;
+    overflow: scroll;
+  }
   .test-game-panel .button-level {
     margin-bottom: 20px;
     margin-left: auto;

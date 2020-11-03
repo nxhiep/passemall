@@ -1,9 +1,18 @@
-import { Button } from '@material-ui/core';
+import { Button, Container, makeStyles, useMediaQuery, useTheme } from '@material-ui/core';
 import React from 'react';
 import { connect } from 'react-redux';
-import { resetQuestionProgress } from '../../redux/actions';
+import { resetQuestionProgress, setGameIsLoading } from '../../redux/actions';
 
-const EndTestView = ({ gameState, testInfoState, topicState, bucket, resetQuestionProgress }) => {
+const useStyles = makeStyles({
+    button: {
+        borderRadius: "20px",
+        width: "90%",
+        left: "5%",
+        position: "fixed"
+    }
+})
+const EndTestView = ({ gameState, testInfoState, topicState, bucket, resetQuestionProgress, setGameIsLoading }) => {
+    const classes = useStyles();
     let listTopicProgress = new Array();
     if (topicState.list.length > 0 && testInfoState.list.length > 0) {
         let testId = gameState.id.substring(0, gameState.id.length - 2);
@@ -16,37 +25,62 @@ const EndTestView = ({ gameState, testInfoState, topicState, bucket, resetQuesti
             })
         })
     }
+    const theme = useTheme();
+    const isMobile = useMediaQuery(theme.breakpoints.between(0, 780));
     return (
-        <div className="end-test-view">
-            <div className="image-finish">
-                <img src="/images/finish.png" alt="finsih"></img>
-            </div>
-            <div className="circle-progress">
-                <div className="circle">
-                    <div className="circle2">{Math.round(gameState.progress.correct / gameState.progress.total * 100)}%</div>
+        <Container>
+            <div className="end-test-view">
+                <div className="image-finish">
+                    <img src="/images/finish.png" alt="finsih"></img>
                 </div>
-                <div className="content-progress">
-                    <div className="correct">
-                        <div style={{ width: "20px", marginRight: "24px", color: "#3A95DC", fontSize: "18px", fontWeight: 800 }}>{gameState.progress.correct}</div>
-                        <div style={{ fontSize: "13px" }}>Correct</div>
+                <div style={{ marginTop: "16px" }}>
+                    <div style={{ fontSize: "18px", fontWeight: "bold", marginBottom: "4px", textAlign: "center" }}>{gameState.isFinish ? "Not enough to pass :(" : ""}</div>
+                    <div style={{ fontSize: "9px", fontWeight: "500", maxWidth: "200px", marginLeft: "auto", marginRight: "auto" }}>{gameState.isFinish ? `Yowch! That hurt. Failing an exam always does. But hey, 
+                        that was just one try. Get your notes together and try again. You can do this! ` : `Congratulations, you have
+                        successfully completed this test. Your
+                        rank is 2 out of two thousand`}</div>
+                </div>
+                <div className="circle-progress">
+                    <div className="circle">
+                        <div className="circle2">{Math.round(gameState.progress.correct / gameState.progress.total * 100)}%</div>
                     </div>
-                    <div className="mistake">
-                        <div style={{ width: "20px", marginRight: "24px", color: "#56CCF2", fontSize: "18px", fontWeight: 800 }}>{gameState.progress.total - gameState.progress.correct}</div>
-                        <div style={{ fontSize: "13px" }} >Mistake</div>
+                    <div className="content-progress">
+                        <div className="correct">
+                            <div style={{ width: "20px", marginRight: "24px", color: "#3A95DC", fontSize: "18px", fontWeight: 800 }}>{gameState.progress.correct}</div>
+                            <div style={{ fontSize: "13px" }}>Correct</div>
+                        </div>
+                        <div className="mistake">
+                            <div style={{ width: "20px", marginRight: "24px", color: "#56CCF2", fontSize: "18px", fontWeight: 800 }}>{gameState.progress.total - gameState.progress.correct}</div>
+                            <div style={{ fontSize: "13px" }} >Mistake</div>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <Button style={{ margin: "16px auto 0px auto", display: "block" }} color="primary" variant="contained" onClick={() => {
-                resetQuestionProgress()
-            }}>Try Again</Button>
-            <div className="list-topic-progress">
-                {listTopicProgress.map(topicProgress => {
-                    return (
-                        <TopicProgressItem topicProgress={topicProgress} bucket={bucket} key={topicProgress.topicName}></TopicProgressItem>
-                    )
-                })}
-            </div>
-        </div >
+                {!isMobile ? <Button style={{ margin: "16px auto 0px auto", display: "block" }} color="primary" variant="contained" onClick={() => {
+                    resetQuestionProgress()
+                }}>Try Again</Button> : null}
+                <div className="list-topic-progress">
+                    {listTopicProgress.map(topicProgress => {
+                        return (
+                            <TopicProgressItem topicProgress={topicProgress} bucket={bucket} key={topicProgress.topicName}></TopicProgressItem>
+                        )
+                    })}
+                </div>
+
+            </div >
+            {isMobile ? (
+                <div style={{ display: "flex", flexDirection: "column" }}>
+                    <Button style={{ bottom: "60px", background: "#4E63BD", color: "#fff" }}
+                        className={classes.button}
+                        onClick={() => {
+                            resetQuestionProgress()
+                        }}>Try Again</Button>
+                    <Button style={{ bottom: "10px", background: "#fff", color: "#4E63BD" }}
+                        className={classes.button}
+                        onClick={() => setGameIsLoading()}
+                    >Review</Button>
+                </div>
+            ) : null}
+        </Container>
     );
 }
 const TopicProgressItem = ({ bucket, topicProgress }) => {
@@ -72,7 +106,8 @@ const mapStateToProps = (state, ownProps) => ({
 })
 const mapDispatchToProps = (dispatch) => {
     return {
-        resetQuestionProgress: () => dispatch(resetQuestionProgress())
+        resetQuestionProgress: () => dispatch(resetQuestionProgress()),
+        setGameIsLoading: () => dispatch(setGameIsLoading())
     }
 }
 export default connect(mapStateToProps, mapDispatchToProps)(EndTestView);
