@@ -36,14 +36,22 @@ const MenuPanel = () => {
 export const BannerBlog = ({title, bannerImage}) => {
     const theme = useTheme();
     const isMobile = useMediaQuery(theme.breakpoints.between(0, 780));
+    const smallest = useMediaQuery(theme.breakpoints.between(0, 450));
     const styles = { zIndex: "1000", position: "absolute", top: "100px", right: "80px", color: "#fff", display: "flex", flexDirection: "column" };
+    const styleImage = {};
     if(isMobile){
-        styles.position = '';
+        styles.top = '0';
+        styles.left = '0';
+        styles.right = '0';
+        styles.bottom = '0';
+        styles.width = '100%';
+        styles.height = '100%';
         styles.textAlign = 'center';
         styles.marginTop = '20px';
+        styleImage.position = '';
     }
     if(title){
-        styles.fontSize = '40px';
+        styles.fontSize = isMobile ? (smallest ? '1.5em' : '2em') : '40px';
         styles.fontWeight = '600';
     }
     let arr = title ? title.split(" ") : [];
@@ -56,7 +64,7 @@ export const BannerBlog = ({title, bannerImage}) => {
         styles.textAlign = 'center';
     }
     return <div className="banner-blog" style={bannerImage ? { backgroundImage: 'url('+bannerImage+')' } : {}}>
-        <div className="wrapper-banner-image">
+        <div className="wrapper-banner-image" style={styleImage}>
         </div>
         {typeof title === 'string' ? <div style={styles}>{title}</div> : 
         (typeof title === 'object' ? <div style={styles}>{title.map((e, i) => {
