@@ -35,7 +35,7 @@ const EndTestView = ({ gameState, testInfoState, topicState, bucket, resetQuesti
                 </div>
                 <div style={{ marginTop: "16px" }}>
                     <div style={{ fontSize: "18px", fontWeight: "bold", marginBottom: "4px", textAlign: "center" }}>{gameState.isFinish ? "Not enough to pass :(" : ""}</div>
-                    <div style={{ fontSize: "9px", fontWeight: "500", maxWidth: "200px", marginLeft: "auto", marginRight: "auto" }}>{gameState.isFinish ? `Yowch! That hurt. Failing an exam always does. But hey, 
+                    <div style={{ fontSize: "9px", fontWeight: "500", maxWidth: "200px", marginLeft: "auto", marginRight: "auto", textAlign: "center" }}>{gameState.isFinish ? `Yowch! That hurt. Failing an exam always does. But hey, 
                         that was just one try. Get your notes together and try again. You can do this! ` : `Congratulations, you have
                         successfully completed this test. Your
                         rank is 2 out of two thousand`}</div>
