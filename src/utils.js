@@ -12,6 +12,24 @@ export function shuffle(list) {
         return 0;
     })
 }
+export function setScrollDownAuto(screen) {
+    if (typeof window !== "undefined") {
+        if (screen === "home") {
+            if (localStorage.getItem("lastPage") !== null) {
+                let temp = localStorage.getItem("lastPage")
+                if (!parseInt(isNaN(temp.substring(temp.length - 15, temp.length)))) {
+                    document.onreadystatechange = () => {
+                        if (document.readyState === 'complete') {
+                            scrollToTopic()
+                        }
+                      };
+                }
+            }
+        } else {
+            localStorage.setItem("lastPage", window.location.href)
+        }
+    }
+}
 export function oldUser() {
     if (typeof window !== "undefined") {
         if (localStorage.getItem("checkOldUser") === null) {
@@ -41,12 +59,15 @@ export function scrollDown() {
     });
 }
 export function scrollToTopic() {
-    if (typeof window !== "undefined") {
+    if (typeof window !== 'undefined') {
         let childElement = document.querySelector(".content-home-page");
-        window.scroll({
-            top: childElement.offsetTop,
-            behavior: "smooth"
-        })
+        if (childElement) {
+            window.scroll({
+                top: childElement.offsetTop,
+                behavior: "smooth"
+            })
+        }
+
     }
 }
 export function checkLoadedReceiveProps(prevProps, nextProps) {

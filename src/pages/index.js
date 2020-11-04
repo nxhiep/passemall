@@ -10,7 +10,7 @@ import path from 'path'
 import Head from 'next/head';
 import MenuIcon from '@material-ui/icons/Menu';
 import Footer from '../components/Footer';
-import { oldUser, scrollDown } from '../utils';
+import { oldUser, scrollDown, setScrollDownAuto } from '../utils';
 import { useRouter } from 'next/router';
 import { Modal } from "../components/Widgets";
 import { callApi } from '../services';
@@ -36,6 +36,7 @@ const LandingPage = ({ appInfoState, userRateState }) => {
     const description = "With thousands of our FREE practice questions, we are here to help you achieve your gate of success with our test prep solutions."
     const title = "ABC Learning"
     useEffect(() => {
+        setScrollDownAuto()
         oldUser();
         ReactGA.pageview('/homepage');
     }, [])

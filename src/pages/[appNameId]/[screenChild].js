@@ -6,13 +6,11 @@ const ReviewViewScreen = dynamic(() => import('../../container/review/Review.Vie
 import Head from 'next/head';
 import configStore from '../../redux/store';
 import { Provider } from 'react-redux';
-import fs from 'fs';
-import path from 'path';
 import { PersistGate } from 'redux-persist/integration/react';
 import { useRouter } from 'next/router';
 import Routes from '../../routes';
 import ReactGA from 'react-ga';
-import { oldUser } from '../../utils';
+import { oldUser, setScrollDownAuto } from '../../utils';
 import { callApi } from '../../services';
 initializeReactGA();
 function initializeReactGA() {
@@ -20,6 +18,7 @@ function initializeReactGA() {
 }
 const Screen = ({ appInfoState }) => {
     useEffect(() => {
+        setScrollDownAuto()
         oldUser()
     }, [])
     const store = configStore();

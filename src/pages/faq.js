@@ -11,11 +11,13 @@ import ReactHtmlParser from 'react-html-parser';
 import Routes from "../routes";
 import { HeaderBlog } from '../components/blog/HeaderBlog';
 import SEOInfo from '../models/SEOInfo';
+import { setScrollDownAuto } from '../utils';
 
 const FAQ = ({ appInfo, url }) => {
     let seoInfo = new SEOInfo();
     seoInfo.title = 'ABC Learning - FAQ';
     useEffect(() => {
+        setScrollDownAuto()
         ReactGA.pageview(Routes.FAQ_SCREEN);
     }, [])
     return (
