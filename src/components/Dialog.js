@@ -56,7 +56,6 @@ const DialogForMobile = ({ handleInstalled, appInfoState }) => {
             userAgent = "IOS"
         }
     }
-    console.log("xxxx userAgent ", userAgent)
     const [open, setOpen] = useState(true);
     const handleClose = () => {
         setOpen(false);
@@ -78,7 +77,7 @@ const DialogForMobile = ({ handleInstalled, appInfoState }) => {
             <DialogContent>Do you want install app?</DialogContent>
             <div style={{ display: "flex", justifyContent: "space-between", padding: "0px 8px" }}>
                 <DialogActions>
-                    <Button component={Link} href={userAgent === "Android" ? appInfoState.urlAndroid : appInfoState.urlIos} target="_blank" onClick={handleClickInstalled} color="primary">Install</Button>
+                    <Button component={Link} href={userAgent === "Android" ? appInfoState.urlAndroid : appInfoState.urlIos} onClick={handleClickInstalled} color="primary">Install</Button>
                 </DialogActions>
                 <DialogActions>
                     <Button onClick={handleClose} color="primary">No,Thanks!</Button>
@@ -296,10 +295,10 @@ const ShowImageUI = ({ appValueState, showImageDialog, }) => {
     return (
         <Dialog onClose={handleClose} aria-labelledby="simple-dialog-title" open={open}>
             <div style={{ width: isMobile ? '100%' : 600, position: 'relative' }}>
-                <IconButton onClick={handleClose} aria-label="close" style={{ position: 'absolute', top: "0", right: "0", padding: "4px" }}>
+                <Button onClick={handleClose} aria-label="close" style={{ position: 'absolute', 'top': 0, right: '0' }}>
                     <IconClose fontSize="small" style={{ color: 'red' }} />
-                </IconButton>
-                <img width="90%" src={appValueState.image} alt="dialog" height="auto" style={{ display: "block", marginLeft: "auto", marginRight: "auto" }} />
+                </Button>
+                <img width="100%" src={appValueState.image} alt="dialog" />
             </div>
         </Dialog>
     );
