@@ -3,7 +3,6 @@ import React from 'react';
 import ReactHtmlParser from 'react-html-parser';
 import { connect } from 'react-redux';
 import { showImageDialog } from '../redux/actions/appValue';
-import Image from './Image';
 import { useRouter } from 'next/router';
 
 export var TextContentType;
@@ -15,9 +14,8 @@ export var TextContentType;
 
 const QuestionContentPanel = ({ content, image = '', type = TextContentType.question, showImageDialog, appInfoState }) => {
     const router = useRouter();
-    const { appNameId } = router.query;
     let bucket = appInfoState.bucket;
-    // content = content.replace(/\n/g, "<br/>").replace(/\\u(....)/g, "&#x$1;");
+    content = content.replace(/\n/g, "<br/>").replace(/\\u(....)/g, "&#x$1;");
     if (type === TextContentType.question) {
         return <TextContentQuestion content={content} image={image} showImageDialog={showImageDialog} type={type} bucket={bucket} />
     }

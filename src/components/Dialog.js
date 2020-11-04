@@ -296,10 +296,10 @@ const ShowImageUI = ({ appValueState, showImageDialog, }) => {
     return (
         <Dialog onClose={handleClose} aria-labelledby="simple-dialog-title" open={open}>
             <div style={{ width: isMobile ? '100%' : 600, position: 'relative' }}>
-                <Button onClick={handleClose} aria-label="close" style={{ position: 'absolute', 'top': 0, right: '0' }}>
+                <IconButton onClick={handleClose} aria-label="close" style={{ position: 'absolute', top: "0", right: "0", padding: "4px" }}>
                     <IconClose fontSize="small" style={{ color: 'red' }} />
-                </Button>
-                <img width="100%" src={appValueState.image} alt="dialog" />
+                </IconButton>
+                <img width="90%" src={appValueState.image} alt="dialog" height="auto" style={{ display: "block", marginLeft: "auto", marginRight: "auto" }} />
             </div>
         </Dialog>
     );
