@@ -54,10 +54,8 @@ const Screen = ({ appInfoState }) => {
 }
 
 export async function getStaticProps(context) {
-    const { appNameId, screen } = context.params;
-    const directoryAppInfo = path.join(process.cwd(), `src/data/${appNameId}.json`)
-    var appInfoFile = fs.readFileSync(directoryAppInfo);
-    const appInfoState = JSON.parse(appInfoFile);
+    const { appNameId } = context.params;
+    const appInfoState = await callApi({ url: '/data?type=get_app_info&appNameId=' + appNameId, params: null, method: 'post' })
 
     return {
         props: {
