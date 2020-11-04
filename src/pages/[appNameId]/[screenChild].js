@@ -52,26 +52,6 @@ const Screen = ({ appInfoState }) => {
 }
 
 export async function getStaticProps(context) {
-    const directoryUserRate = path.join(process.cwd(), 'src/data/userRatePerfect.json')
-    let userRateFile = fs.readFileSync(directoryUserRate);
-    const useRateJSON = Object.values(JSON.parse(userRateFile));
-
-    let appId = appInfoState.id
-    let userRateState = [];
-    useRateJSON.forEach((u) => {
-        let userRate = UserRate.fromJS(u);
-        if (appId === userRate.appId) {
-            userRateState.push(userRate);
-        }
-    });
-    return {
-        props: {
-            appInfoState: appInfoState, appInfoState: appInfoState,
-            userRateState: JSON.stringify(userRateState),
-        }
-    }
-}
-export async function getStaticProps(context) {
     const { appNameId, screen } = context.params;
     const directoryAppInfo = path.join(process.cwd(), `src/data/${appNameId}.json`)
     var appInfoFile = fs.readFileSync(directoryAppInfo);
@@ -79,10 +59,27 @@ export async function getStaticProps(context) {
 
     return {
         props: {
-            appInfoState: appInfoState, appInfoState: appInfoState,
+            appInfoState: appInfoState
         }
     }
 
+}
+export async function getStaticPaths() {
+    const directorytopicNameId = path.join(process.cwd(), 'src/data/topicNameId.json')
+    let topicNameIdFile = fs.readFileSync(directorytopicNameId);
+    let topicNameIdJson = JSON.parse(topicNameIdFile)
+    let arrayTopicNameId = [];
+    for (let appNameId in topicNameIdJson) {
+        topicNameIdJson[appNameId].forEach(ele => {
+            arrayTopicNameId.push({ params: { appNameId: appNameId, screenChild: ele } });
+        })
+        arrayTopicNameId.push({ params: { appNameId: appNameId, screenChild: "review" } });
+        arrayTopicNameId.push({ params: { appNameId: appNameId, screenChild: "test" } });
+    }
+    return {
+        paths: arrayTopicNameId,
+        fallback: false
+    };
 }
 function ScreenChild({ appInfoState }) {
     const router = useRouter();
