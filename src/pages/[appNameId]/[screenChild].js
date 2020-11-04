@@ -10,7 +10,7 @@ import { PersistGate } from 'redux-persist/integration/react';
 import { useRouter } from 'next/router';
 import Routes from '../../routes';
 import ReactGA from 'react-ga';
-import { oldUser } from '../../utils';
+import { oldUser, setScrollDownAuto } from '../../utils';
 import path from "path";
 import fs from "fs"
 import { callApi } from '../../services';
@@ -20,7 +20,7 @@ function initializeReactGA() {
 }
 const Screen = ({ appInfoState }) => {
     useEffect(() => {
-        // setScrollDownAuto()
+        setScrollDownAuto()
         oldUser()
     }, [])
     console.log("xxx appInfoState,", appInfoState)

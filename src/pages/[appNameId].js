@@ -15,7 +15,7 @@ import NavigateNextIcon from '@material-ui/icons/NavigateNext';
 import NavigateBeforeIcon from '@material-ui/icons/NavigateBefore';
 import MenuIcon from '@material-ui/icons/Menu';
 import { Rating } from '@material-ui/lab';
-import { oldUser, scrollToTopic } from '../utils';
+import { oldUser, scrollToTopic, setScrollDownAuto } from '../utils';
 import ArrowDownwardIcon from '@material-ui/icons/ArrowDownward';
 import { callApi } from '../services';
 initializeReactGA();
@@ -43,7 +43,7 @@ const Home = ({ appInfoState }) => {
     const theme = useTheme();
     const isMobile = useMediaQuery(theme.breakpoints.between(0, 780));
     useEffect(() => {
-        // setScrollDownAuto("home")
+        setScrollDownAuto("home")
         oldUser()
     }, [])
     const canonical = `https://passemall.com/${appInfoState.appNameId}`;

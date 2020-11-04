@@ -12,26 +12,26 @@ export function shuffle(list) {
         return 0;
     })
 }
-// export function setScrollDownAuto(screen) {
-//     if (typeof window !== "undefined") {
-//         if (screen === "home") {
-//             let currentHome = window.location.href;
-//             if (localStorage.getItem("lastPage")) {
-//                 let temp = localStorage.getItem("lastPage")
-//                 if (temp.search(currentHome) !== -1 && temp.length > currentHome.length) {
-//                     document.onreadystatechange = () => {
-//                         if (document.readyState === 'complete') {
-//                             scrollToTopic()
-//                         }
-//                     };
-//                 }
-//                 localStorage.setItem("lastPage", window.location.href)
-//             }
-//         } else {
-//             localStorage.setItem("lastPage", window.location.href)
-//         }
-//     }
-// }
+export function setScrollDownAuto(screen) {
+    if (typeof window !== "undefined") {
+        if (screen === "home") {
+            let currentHome = window.location.href;
+            if (localStorage.getItem("lastPage")) {
+                let temp = localStorage.getItem("lastPage")
+                if (temp.search(currentHome) !== -1 && temp.length > currentHome.length) {
+                    document.onreadystatechange = () => {
+                        if (document.readyState === 'complete') {
+                            scrollToTopic()
+                        }
+                    };
+                }
+                localStorage.setItem("lastPage", window.location.href)
+            }
+        } else {
+            localStorage.setItem("lastPage", window.location.href)
+        }
+    }
+}
 export function oldUser() {
     if (typeof window !== "undefined") {
         if (localStorage.getItem("checkOldUser") === null) {
