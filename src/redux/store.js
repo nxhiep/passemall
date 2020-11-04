@@ -19,6 +19,7 @@ localforage.config({
     storeName: 'data',
     description: 'offline data for web',
 });
+
 const encryptor = createEncryptor({
     secretKey: Config.SECRET_KEY,
     onError: function (error) {

@@ -86,14 +86,15 @@ const LandingPage = ({ appInfoState, userRateState }) => {
                 <Modal show={open} click={handleClose}>
                     <div style={{ marginLeft: "auto", marginRight: "auto" }}>
                         {listSearch.length > 0 ? listSearch.map(el => {
-                            let link = "http://localhost:3000/" + appInfoState[el].appNameId
+                            let app = appInfoState[el] || {};
+                            let link = "/" + app.appNameId
                             return (
-                                <a href={link} key={appInfoState[el].appName} style={{ fontSize: "16px", marginTop: "36px", color: "#1155CC", display: "flex", marginLeft: "auto", marginRight: "auto", textDecoration: "none" }}>
+                                <a href={link} key={app.appName} style={{ fontSize: "16px", marginTop: "36px", color: "#1155CC", display: "flex", marginLeft: "auto", marginRight: "auto", textDecoration: "none" }}>
                                     <div style={{ marginRight: "16px", display: "flex" }}>
-                                        <img src={appInfoState[el].avatar} alt={appInfoState[el].appNameId} style={isMobile ? { display: "none" } : { height: "100px" }}></img>
-                                        <div style={isMobile ? { textDecoration: "none" } : { marginLeft: "40px", textDecoration: "none" }}>{appInfoState[el].appName.toUpperCase()}
+                                        <img src={app.avatar} alt={app.appNameId} style={isMobile ? { display: "none" } : { height: "100px" }}></img>
+                                        <div style={isMobile ? { textDecoration: "none" } : { marginLeft: "40px", textDecoration: "none" }}>{app.appName.toUpperCase()}
                                             <div style={{ fontSize: "14px", color: "#009933" }}>{link}</div>
-                                            <div style={{ fontSize: "14px", color: "#000" }}>{appInfoState[el].description}</div>
+                                            <div style={{ fontSize: "14px", color: "#000" }}>{app.description}</div>
                                         </div>
                                     </div>
 

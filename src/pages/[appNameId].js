@@ -46,7 +46,7 @@ const Home = ({ appInfoState }) => {
         setScrollDownAuto("home")
         oldUser()
     }, [])
-    const canonical = `https://passemall.com/${appInfoState.appNameId}`;
+    const canonical = `https://passemall.com/${(appInfoState || '').appNameId}`;
     let color = [];
     color["ged"] = {
         colorFooter: "#E07730",

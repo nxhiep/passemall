@@ -9,7 +9,7 @@ import Config from '../config';
 import rootSagaHome from './sagas/sagaInHome';
 const sagaMiddleware = createSagaMiddleware();
 const middlewares = [sagaMiddleware];
-localforage.config({
+typeof localforage !== 'undefined' && localforage.config({
     driver: localforage.LOCALSTORAGE,
     name: 'uTest',
     version: 1.0,

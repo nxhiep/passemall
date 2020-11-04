@@ -344,7 +344,7 @@ const TopicInfoPanelUI = ({ topicState, appInfo }) => {
         return (
             <Grid container alignItems="center" style={{ display: "inline-block", backgroundColor: "var(--main-color)", color: "#fff" }}>
                 <IconButton style={{ color: "#fff" }} onClick={() => {
-                    router.push("/" + appInfo.appNameId);
+                    router.push("/" + (appInfo || '').appNameId);
                 }}><ArrowBackIcon /></IconButton>
                 <span style={{ textAlign: "left" }}>{name}</span>
             </Grid>

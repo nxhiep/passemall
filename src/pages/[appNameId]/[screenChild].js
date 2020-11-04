@@ -27,6 +27,7 @@ const Screen = ({ appInfoState }) => {
     return (
         <>
             <Head>
+                <meta charSet="UTF-8" />
                 <title>{appInfoState.title}</title>
                 <link rel="icon" href={appInfoState.avatar} />
                 <link rel="preconnect" href="https://webappapi-dot-micro-enigma-235001.appspot.com"></link>
