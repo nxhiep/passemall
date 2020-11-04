@@ -15,14 +15,15 @@ export function shuffle(list) {
 export function setScrollDownAuto(screen) {
     if (typeof window !== "undefined") {
         if (screen === "home") {
+            let currentHome = window.location.href;
             if (localStorage.getItem("lastPage") !== null) {
                 let temp = localStorage.getItem("lastPage")
-                if (!parseInt(isNaN(temp.substring(temp.length - 15, temp.length)))) {
+                if (temp.search(currentHome) !== -1 && temp.length > currentHome.length) {
                     document.onreadystatechange = () => {
                         if (document.readyState === 'complete') {
                             scrollToTopic()
                         }
-                      };
+                    };
                 }
             }
         } else {
