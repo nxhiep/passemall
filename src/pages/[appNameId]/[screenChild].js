@@ -10,7 +10,7 @@ import { PersistGate } from 'redux-persist/integration/react';
 import { useRouter } from 'next/router';
 import Routes from '../../routes';
 import ReactGA from 'react-ga';
-import { oldUser, setScrollDownAuto } from '../../utils';
+import { oldUser } from '../../utils';
 import { callApi } from '../../services';
 initializeReactGA();
 function initializeReactGA() {
@@ -26,7 +26,6 @@ const Screen = ({ appInfoState }) => {
     return (
         <>
             <Head>
-                <meta charset="UTF-8" />
                 <title>{appInfoState.title}</title>
                 <link rel="icon" href={appInfoState.avatar} />
                 <link rel="preconnect" href="https://webappapi-dot-micro-enigma-235001.appspot.com"></link>
@@ -54,6 +53,7 @@ const Screen = ({ appInfoState }) => {
 
 export async function getServerSideProps(context) {
     const { appNameId } = context.params;
+    console.log("xxxx appNameId", appNameId)
     const appInfoState = await callApi({ url: '/data?type=get_app_info&appNameId=' + appNameId, params: null, method: 'post' })
     return {
         props: {

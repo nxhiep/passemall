@@ -15,7 +15,7 @@ import NavigateNextIcon from '@material-ui/icons/NavigateNext';
 import NavigateBeforeIcon from '@material-ui/icons/NavigateBefore';
 import MenuIcon from '@material-ui/icons/Menu';
 import { Rating } from '@material-ui/lab';
-import { oldUser, scrollToTopic, setScrollDownAuto } from '../utils';
+import { oldUser, scrollToTopic } from '../utils';
 import ArrowDownwardIcon from '@material-ui/icons/ArrowDownward';
 import { callApi } from '../services';
 initializeReactGA();

@@ -10,7 +10,7 @@ import path from 'path'
 import Head from 'next/head';
 import MenuIcon from '@material-ui/icons/Menu';
 import Footer from '../components/Footer';
-import { oldUser, scrollDown, setScrollDownAuto } from '../utils';
+import { oldUser, scrollDown } from '../utils';
 import { useRouter } from 'next/router';
 import { Modal } from "../components/Widgets";
 import { callApi } from '../services';

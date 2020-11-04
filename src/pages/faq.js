@@ -5,13 +5,12 @@ import path from 'path';
 import React, { useEffect, useState } from 'react';
 import ReactGA from 'react-ga';
 import Footer from '../components/Footer';
-import Header from '../components/Header';
 import { ConnectAppStore, LoadingWidget } from '../components/Widgets';
 import ReactHtmlParser from 'react-html-parser';
 import Routes from "../routes";
 import { HeaderBlog } from '../components/blog/HeaderBlog';
 import SEOInfo from '../models/SEOInfo';
-import { setScrollDownAuto } from '../utils';
+// import { setScrollDownAuto } from '../utils';
 
 const FAQ = ({ appInfo, url }) => {
     let seoInfo = new SEOInfo();
