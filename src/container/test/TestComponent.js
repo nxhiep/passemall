@@ -115,7 +115,8 @@ const TestQuestionPanelUI = ({ showLeftPanel, endTest = () => { }, setShowLeftPa
                             position: isMobile ? "fixed" : "",
                             bottom: isMobile ? "20px" : "",
                             left: isMobile ? "calc(50% - 100px)" : "",
-                            border: isSkip ? "2px solid #A7B5EF" : ""
+                            border: isSkip ? "2px solid #A7B5EF" : "",
+                            zIndex: 100
                         }}
                         onClick={() => {
                             if (gameState.indexActive === (gameState.questions.length - 1)) {

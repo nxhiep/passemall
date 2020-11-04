@@ -1,8 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import path from 'path';
 import Head from 'next/head';
-import fs from 'fs';
-import UserRate from '../models/UserRate';
 import ReactGA from 'react-ga';
 import { Button, Container, Grid, IconButton, List, ListItem, ListItemText, makeStyles, SwipeableDrawer, useMediaQuery, useTheme } from '@material-ui/core';
 import Footer from '../components/Footer';
@@ -19,6 +16,7 @@ import NavigateBeforeIcon from '@material-ui/icons/NavigateBefore';
 import MenuIcon from '@material-ui/icons/Menu';
 import { Rating } from '@material-ui/lab';
 import { oldUser, scrollToTopic } from '../utils';
+import ArrowDownwardIcon from '@material-ui/icons/ArrowDownward';
 import { callApi } from '../services';
 initializeReactGA();
 const store = configStore();
@@ -84,14 +82,6 @@ const Home = ({ appInfoState, userRateState }) => {
         mainColor: "#495EBF",
         screenShotColor: "#6679CC",
         buttonHeader: "#FAFAFA"
-    }
-    let userRates = [];
-    for (let i = 0; i < userRateState.length; i++) {
-        if (i < 3) {
-            userRates.push(userRateState[i]);
-        } else {
-            break;
-        }
     }
     const [openPopupChangeState, setOpenPopupChangeState] = useState(false);
     return (
@@ -378,7 +368,19 @@ const ListInfoGraphic = (props) => {
                 care topics and personal care skills that are taught in
                 traditional nursing programs and included in the official
                 exam without any classroom instruction</p>
-                    <Button className={classes.root} onClick={() => scrollToTopic()}> Start your test</Button>
+                    <div style={{ display: "flex", flexDirection: "column", justifyContent: "flex-start", width: "200px" }}>
+                        <Button className={classes.root} onClick={() => scrollToTopic()} fullWidth={false}> Start your test</Button>
+                        <ArrowDownwardIcon style={
+                            {
+                                marginTop: "20px",
+                                color: props.color ? props.color : "",
+                                fontSize: "32px",
+                                display: "block",
+                                marginLeft: "auto",
+                                marginRight: "auto"
+                            }
+                        }></ArrowDownwardIcon>
+                    </div>
                 </div>
                 <div className="image-info">
                     <img src={srcImage2} alt="infographic-2" style={{ display: "block" }}></img>
@@ -389,7 +391,7 @@ const ListInfoGraphic = (props) => {
 }
 const ListTopic = () => {
     return (
-        <Container style={{ textAlign: "center" }}>
+        <Container style={{ textAlign: "center", marginTop: "70px" }}>
             <h2 style={{ fontSize: "36px" }}>Start your TEAS Practice Test</h2>
         </Container>
     )

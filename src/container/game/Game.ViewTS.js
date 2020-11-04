@@ -45,7 +45,7 @@ const ReviewQuestionPanelUI = ({ questions, questionProgress, onBookmark, appInf
     );
 }
 
-const QuestionsPanelx = ({ questionProgress, className, topicId, loadGame, gameState, gameType, currentIndex, onBookmark, questionIds, appInfo, onContinue, congratulationTopic, onNextPart, setShowGame }) => {
+const QuestionsPanelx = ({ questionProgress, className, topicId, loadGame = () => { }, gameState, gameType, currentIndex, onBookmark, questionIds, appInfo, onContinue, congratulationTopic, onNextPart, setShowGame }) => {
     const [showAlert, setShowAlert] = useState(false);
     useEffect(() => {
         loadGame({ appId: appInfo.id, id: topicId, gameType: gameType, questionIds: questionIds });
@@ -59,10 +59,10 @@ const QuestionsPanelx = ({ questionProgress, className, topicId, loadGame, gameS
     const handleClick = (event) => {
         setAnchorEl(event.currentTarget);
     };
-    if (gameState.isLoading == 1 || gameState.isLoading == 2) {
+    if (gameState.isLoading === 1 || gameState.isLoading === 2) {
         return <LoadingWidget color={null} />;
     }
-    let size = gameState.progress.getPercentComplete() * 100
+    let size = gameState.progress.getPercentComplete() * 100;
     if (gameType === Config.REVIEW_GAME) {
         let questions = gameState.questions;
         if (!questions) {
@@ -192,7 +192,7 @@ const QuestionsPanelx = ({ questionProgress, className, topicId, loadGame, gameS
                     <div style={{ marginTop: "auto" }}></div>
                     <Button
                         variant="contained"
-                        style={{ display: checkChoice ? "flex" : "none", backgroundColor: "#8496EA", color: "#fff", boxShadow: "inset 0px 4px 4px rgba(255, 255, 255, 0.25)", borderRadius: "20px" }}
+                        style={{ display: checkChoice ? "flex" : "none", backgroundColor: "#8496EA", color: "#fff", boxShadow: "inset 0px 4px 4px rgba(255, 255, 255, 0.25)", borderRadius: "20px", zIndex: 1000 }}
                         className="next-part-button"
                         onClick={() => {
                             if (congratulationTopic) {

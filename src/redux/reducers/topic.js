@@ -24,6 +24,7 @@ const topicReducer = (state = InitialTopisState, action) => {
                     state.loading = true;
                     state.data = mapTopic;
                     state.list = list;
+                    state.name = action.payload['topicReducer']['name'];
                     // state.totalQuestion = action.payload['topicReducer']["totalQuestion"];
                     // state.name = action.payload["topicReducer"]["name"]
                 }

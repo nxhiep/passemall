@@ -56,6 +56,7 @@ const DialogForMobile = ({ handleInstalled, appInfoState }) => {
             userAgent = "IOS"
         }
     }
+    console.log("xxxx userAgent ", userAgent)
     const [open, setOpen] = useState(true);
     const handleClose = () => {
         setOpen(false);
@@ -77,7 +78,7 @@ const DialogForMobile = ({ handleInstalled, appInfoState }) => {
             <DialogContent>Do you want install app?</DialogContent>
             <div style={{ display: "flex", justifyContent: "space-between", padding: "0px 8px" }}>
                 <DialogActions>
-                    <Button component={Link} href={userAgent === "Android" ? appInfoState.urlAndroid : appInfoState.urlIos} onClick={handleClickInstalled} color="primary">Install</Button>
+                    <Button component={Link} href={userAgent === "Android" ? appInfoState.urlAndroid : appInfoState.urlIos} target="_blank" onClick={handleClickInstalled} color="primary">Install</Button>
                 </DialogActions>
                 <DialogActions>
                     <Button onClick={handleClose} color="primary">No,Thanks!</Button>
