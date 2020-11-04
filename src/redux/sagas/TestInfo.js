@@ -83,7 +83,7 @@ function* getTestInfoByAppIdAndParentId() {
             if (testInfo.currentTopic[action.appId]) {
                 data = yield call(getTestInfoByParentSaga, action.appId, testInfo.currentTopic[action.appId]);
             }
-            console.log("xxxxx data", data)
+            ("xxxxx data", data)
             if (data) {
                 data.forEach(el => {
                     let testInfo = TestInfo.fromJS(el);

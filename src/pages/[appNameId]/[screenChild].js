@@ -23,7 +23,6 @@ const Screen = ({ appInfoState }) => {
         setScrollDownAuto()
         oldUser()
     }, [])
-    console.log("xxx appInfoState,", appInfoState)
     const store = configStore();
     return (
         <>

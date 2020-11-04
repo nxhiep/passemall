@@ -128,14 +128,13 @@ const FAQsWidget = ({ appInfo }) => {
             stateId = -1;
         }
         let url = "https://hiep-dot-micro-enigma-235001.appspot.com/new/api?type=get-faq&appId=" + appId + "&stateId=" + stateId;
-        console.log("getFAQByStateIdAndAppId url", url, 'appId', appId, 'stateId', stateId)
         fetch(url).then((res) => res.json()).then(data => {
-            console.log('faqs data', data);
+            ('faqs data', data);
             setStatusFAQ(4);
             setFaqs(data && data.length > 0 ? data : []);
         })
     }
-    console.log("states -----", states.length, 'statusFAQ', statusFAQ, 'statusState', statusState);
+    ("states -----", states.length, 'statusFAQ', statusFAQ, 'statusState', statusState);
     return <Container>
         <h2>FAQs</h2>
         {appInfo.hasState ? <Grid className="list-state-selector" 
@@ -149,7 +148,6 @@ const FAQsWidget = ({ appInfo }) => {
                 onChange={(e) => {
                     let stateId = e.target.value;
                     setStateId(stateId);
-                    console.log("getFAQByStateIdAndAppId url",stateId)
                     getFAQByStateIdAndAppId(stateId, appInfo.id);
                 }}
                 input={<Input />}
@@ -177,7 +175,7 @@ export async function getServerSideProps(context) {
     if(!appNameId){
         return {};
     }
-    console.log("appNameId", appNameId);
+    ("appNameId", appNameId);
     let appId = -1;
     if(appNameId.length < 20){
         try {

@@ -445,12 +445,10 @@ const TopicTreePanelUI = ({ topicState, parentId, currentQuestionId, onChangeTop
 
 
     if (childs.length > 0) {
-        console.log("thua''''''")
         if (count % 2 === 0) {
             let row = <div className="parent-topics-row" key={'topic-row-' + parentId + '-' + count}><div className="topics-row">{[...childs]}</div></div>;
             widgets.push(row);
         } else {
-            console.log("index", childs.length)
             let row = <div className="parent-topics-row" key={'topic-row-' + parentId + '-' + count}><div style={{ justifyContent: "flex-end", marginRight: "35px" }} className="topics-row">{[...childs]}</div></div>;
             widgets.push(row);
         }

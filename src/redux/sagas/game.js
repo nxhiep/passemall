@@ -51,7 +51,7 @@ function* startGame() {
         });
     }
 
-    console.log("xxxxx", currentGame, "xxxxx", level)
+    ("xxxxx", currentGame, "xxxxx", level)
     if (currentGame == null || currentGame == undefined) {
         if (gameType === Config.STUDY_GAME || gameType === Config.REVIEW_GAME) {
             let cards;
@@ -72,7 +72,6 @@ function* startGame() {
         }
         else {
             if (level >= 0) {
-                console.log("xxx running")
                 yield put(setTestInfoStatusPlaying(id))
                 const cards = yield call(CARD_API.getCardForTest, id);
                 yield put(getCardsByIdsSuccess(cards));
@@ -170,7 +169,7 @@ function* onResetQuestion() {
             if (gameState.gameType !== Config.TEST_GAME) {
                 let topicId = gameState.id;
                 let topicProgress = topicProgressReducer.data[topicId];
-                console.log("xxxxx topicProgress", topicProgress)
+                ("xxxxx topicProgress", topicProgress)
                 yield put(resetProgressInTopic(topicId))
                 yield put(resetTopicProgress(topicProgress));
             } else {

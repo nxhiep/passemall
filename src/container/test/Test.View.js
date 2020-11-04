@@ -70,8 +70,6 @@ const TestViewUI = ({ stateInfoState, testInfoState, appInfoState, getTestInfoBy
         }
     }, [appInfoState.id, getTestInfoByAppId, setTestInfoPlaying, setCurrentTestInfo, getTestInfoByAppIdAndParentId, testInfoState.currentTopic[appInfoState.id], stateInfoState.mapCurrentStateInfo[appInfoState.id]]);
     if (isMobile) {
-        console.log("xxxx", isHaveRightPanel && !showLeftPanel);
-        console.log("xxxxx show end Test", gameState.isFinish && gameState.isLoading === 7)
         return (
             <div className="body-panel test-page">
                 <Container className="test-game-panel">

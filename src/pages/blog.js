@@ -122,7 +122,6 @@ const RecentPosts = ({ data }) => {
     useEffect(() => {
         setRecentPostIds(getRecentPosts());
     }, [])
-    // console.log("recentPostIds", recentPostIds, 'data', data);
     if (!recentPostIds || recentPostIds.length == 0) {
         return null;
     }
@@ -132,7 +131,6 @@ const RecentPosts = ({ data }) => {
             recentPosts.push(element);
         } 
     });
-    // console.log("recentPosts ", recentPosts, 'recentPostIds', recentPostIds);
     return (<div className="recent-posts">
         <h2 style={{ 
             fontSize: "20px", 

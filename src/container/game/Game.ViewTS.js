@@ -94,7 +94,6 @@ const QuestionsPanelx = ({ questionProgress, className, topicId, loadGame = () =
         currentIndex = 0;
     }
     let checkChoice = gameState.currentQuestion.questionStatus === Config.QUESTION_ANSWERED_CORRECT || gameState.currentQuestion.questionStatus === Config.QUESTION_ANSWERED_INCORRECT
-    console.log("xxxx", checkChoice)
     let questions = [currentQuestion];
     if (isMobile) {
         return (

@@ -15,7 +15,7 @@ export class AppValueState {
 const appValueState = (state = AppValueState.init(), action) => {
     switch (action.type) {
         case Types.SHOW_IMAGE_DIALOG: {
-            console.log("xxxxx running ")
+            ("xxxxx running ")
             return Object.assign(Object.assign({}, state), { image: action.url });
         }
         case Types.SHOW_ALERT: {

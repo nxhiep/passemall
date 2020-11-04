@@ -7,7 +7,6 @@ const Transition = React.forwardRef(function Transition(props, ref) {
     return <Slide direction="up" ref={ref} {...props} />;
 });
 const SelectTopic = ({ currentTopic, stateInfoState, appInfoState, topicState, getTopicsByParentId = () => { }, setCurrentTopic = () => { }, openSelectTopic, setOpenSelectTopic = () => { } }) => {
-    console.log("xxxxxxx")
     const [open, setOpen] = useState(!currentTopic[appInfoState.id]);
     useEffect(() => {
         let parentId = appInfoState.id;
@@ -31,7 +30,6 @@ const SelectTopic = ({ currentTopic, stateInfoState, appInfoState, topicState, g
         setOpenSelectTopic()
         setOpen(false);
     }
-    console.log("topicstatexxxxx", topicState)
     return (
         <Dialog
             fullWidth={true}

@@ -26,7 +26,6 @@ const EndTestView = ({ gameState, testInfoState, topicState, bucket, resetQuesti
             })
         })
     }
-    console.log("xxxxxx listtopic progress", listTopicProgress)
     const theme = useTheme();
     const isMobile = useMediaQuery(theme.breakpoints.between(0, 780));
     return (

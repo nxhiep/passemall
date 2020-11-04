@@ -81,7 +81,6 @@ const MyDrawer = () => {
     if (typeof event === 'undefined' || event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
       return;
     }
-    // console.log("xxxxxxx open", open);
     setOpen(open);
   };
 

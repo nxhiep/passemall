@@ -74,7 +74,6 @@ const TestQuestionPanelUI = ({ showLeftPanel, endTest = () => { }, setShowLeftPa
             index = i;
         }
     }
-    console.log("xxx showLeft", showLeftPanel)
     return (
         <div
             className={"questions-panel" + (className ? " " + className : "") + (gameState.isFinish ? " end-game" : "")}
@@ -234,7 +233,6 @@ const AnswerButtonUI = ({ check, index = 0, showResult = false, choice = new Cho
             showCss = (choice.isCorrect ? " correct" : "");
         }
     }
-    console.log()
     return (
         <button className={"answer-button" + (!showResult && choice.selected ? " selected" : "") + showCss + (Config.TEST_MODE && choice.isCorrect ? " test-true" : "")}
             onClick={() => {

@@ -211,7 +211,6 @@ export function addRecentPost(id) {
 
 export function getRecentPosts() {
     var json = getCookie(Config.RECENT_POSTS_KEY);
-    // console.log("getRecentPosts json", json)
     if (json) {
         return JSON.parse(json);
     }
