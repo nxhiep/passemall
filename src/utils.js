@@ -16,7 +16,7 @@ export function setScrollDownAuto(screen) {
     if (typeof window !== "undefined") {
         if (screen === "home") {
             let currentHome = window.location.href;
-            if (localStorage.getItem("lastPage") !== null) {
+            if (localStorage.getItem("lastPage")) {
                 let temp = localStorage.getItem("lastPage")
                 if (temp.search(currentHome) !== -1 && temp.length > currentHome.length) {
                     document.onreadystatechange = () => {
@@ -25,6 +25,7 @@ export function setScrollDownAuto(screen) {
                         }
                     };
                 }
+                localStorage.setItem("lastPage", window.location.href)
             }
         } else {
             localStorage.setItem("lastPage", window.location.href)
