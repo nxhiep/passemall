@@ -43,7 +43,7 @@ const Home = ({ appInfoState }) => {
     const theme = useTheme();
     const isMobile = useMediaQuery(theme.breakpoints.between(0, 780));
     useEffect(() => {
-        setScrollDownAuto("home")
+        // setScrollDownAuto("home")
         oldUser()
     }, [])
     const canonical = `https://passemall.com/${appInfoState.appNameId}`;

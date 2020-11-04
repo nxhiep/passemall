@@ -17,7 +17,7 @@ const FAQ = ({ appInfo, url }) => {
     let seoInfo = new SEOInfo();
     seoInfo.title = 'ABC Learning - FAQ';
     useEffect(() => {
-        setScrollDownAuto()
+        // setScrollDownAuto()
         ReactGA.pageview(Routes.FAQ_SCREEN);
     }, [])
     return (

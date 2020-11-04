@@ -18,9 +18,10 @@ function initializeReactGA() {
 }
 const Screen = ({ appInfoState }) => {
     useEffect(() => {
-        setScrollDownAuto()
+        // setScrollDownAuto()
         oldUser()
     }, [])
+    console.log("xxx appInfoState,", appInfoState)
     const store = configStore();
     return (
         <>

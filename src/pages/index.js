@@ -36,7 +36,7 @@ const LandingPage = ({ appInfoState, userRateState }) => {
     const description = "With thousands of our FREE practice questions, we are here to help you achieve your gate of success with our test prep solutions."
     const title = "ABC Learning"
     useEffect(() => {
-        setScrollDownAuto()
+        // setScrollDownAuto()
         oldUser();
         ReactGA.pageview('/homepage');
     }, [])
