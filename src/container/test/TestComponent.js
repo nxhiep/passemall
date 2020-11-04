@@ -78,7 +78,7 @@ const TestQuestionPanelUI = ({ showLeftPanel, endTest = () => { }, setShowLeftPa
     return (
         <div
             className={"questions-panel" + (className ? " " + className : "") + (gameState.isFinish ? " end-game" : "")}
-            style={gameState.isFinish && !isMobile ? { maxHeight: 500 } : {}}
+            style={gameState.isFinish && !isMobile ? { maxHeight: 550 } : {}}
             id="canvas">
             {gameState.isFinish && isMobile ? <ArrowBackIcon onClick={() => setShowLeftPanel()} style={{ color: "#4E63BD", marginRight: "16px", marginTop: "20px" }} /> : null}
             { (gameState.level === Config.EASY_LEVEL || gameState.isFinish === true || showLeftPanel === true) ?
@@ -353,7 +353,7 @@ const TestProgressPanelUI = ({ gameState, appInfo, onBookmark, setShowLeftPanel,
                     <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", padding: "0 8px", background: "#f0f0f3" }}>
                         <div className="test-progress-panel" >
                             <div className="progress-panel">
-                                <div className="content-line-progress" style={{ left: 'calc(' + size + '% - 10px)' }}>{gameState.indexActive} / {progress.total}</div>
+                                <div className="content-line-progress" style={{ left: 'calc(' + size + '% - 10px)' }}>{gameState.indexActive} / {gameState.questions.length}</div>
                                 <div style={{ visibility: 'hidden' }}>X</div>
                                 <div className="parent-content-panel">
                                     <div className="content-progress" style={{ width: size + '%' }}></div>
@@ -384,7 +384,7 @@ const ButtonLevelUI = ({ showLeftPanel, isHaveRightPanel, setShowLeftPanel, test
                     }
                 }));
             } else {
-                if (levelClick !== currentLevel) {
+                if (id != testInfoId) {
                     setShowLeftPanel();
                     loadGame({ gameType: Config.TEST_GAME, level: levelClick, appId: appId, id: testInfoId, timeTest: timeTest, passPercent: passPercent, questionIds: questionIds })
                 }

@@ -15,17 +15,16 @@ const useStyles = makeStyles({
 const EndTestView = ({ gameState, testInfoState, topicState, bucket, resetQuestionProgress, setGameIsLoading, setShowLeftPanel }) => {
     const classes = useStyles();
     let listTopicProgress = new Array();
-    if (topicState.list.length > 0 && testInfoState.list.length > 0) {
-        let testId = gameState.id.substring(0, gameState.id.length - 2);
-        let testInfo = testInfoState.data[testId];
-        testInfo.testQuestionData.forEach(el => {
-            listTopicProgress.push({
-                topicName: topicState.data[el.topicId].name,
-                correctQuestion: el.correctQuestion[gameState.level - 1],
-                questionNum: el.questionNum
-            })
+    let testId = gameState.id.substring(0, gameState.id.length - 2);
+    let testInfo = testInfoState.data[testId];
+    testInfo.testQuestionData.forEach(el => {
+        listTopicProgress.push({
+            topicName: topicState.data[el.topicId].name,
+            correctQuestion: el.correctQuestion[gameState.level - 1],
+            questionNum: el.questionNum
         })
-    }
+    })
+    console.log("xxxxxx listtopic progress", listTopicProgress)
     const theme = useTheme();
     const isMobile = useMediaQuery(theme.breakpoints.between(0, 780));
     return (

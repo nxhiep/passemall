@@ -82,6 +82,7 @@ const testInfoReducer = (state = InitialTopisState, action) => {
                     el.correctQuestion[action.level - 1] += 1;
                 }
             })
+            testInfo.calculateProgress(action.level)
             mapTestInfo[testInfo.id] = testInfo;
             replaceItem(state.list, 'id', testInfo);
             return { ...state, data: mapTestInfo, loading: false, error: null };

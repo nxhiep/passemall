@@ -50,6 +50,6 @@ class Config {
 
     static TEST_STATUS_NOTHING = 1;
     static TEST_STATUS_PLAYING = 3;
-    static LISTBUCKET = ["ged", "cdl", "hesia2", "comptiaa"]
+    static LISTBUCKET = ["ged", "cdl", "hesia2"]
 }
 export default Config;

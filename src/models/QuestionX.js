@@ -69,20 +69,22 @@ class Question {
                 }));
                 listChoices.push(wrongChoice);
             }
-        }
-        else if (choices) {
-            for (let i = 0; i < choices.length; i++) {
-                let wrongChoice = Choice.fromJS(Object.assign({}, {
-                    content: choices[i]['content'],
-                    isCorrect: choices[i]['isCorrect'],
-                    questionId: choices[i]['questionId'],
-                    selected: !!choices[i]['selected'],
-                    id: (_a = choices[i]['id']) !== null && _a !== void 0 ? _a : i,
-                }));
-                listChoices.push(wrongChoice);
+        } else {
+            if (choices) {
+                for (let i = 0; i < choices.length; i++) {
+                    let wrongChoice = Choice.fromJS(Object.assign({}, {
+                        content: choices[i]['content'],
+                        isCorrect: choices[i]['isCorrect'],
+                        questionId: choices[i]['questionId'],
+                        selected: !!choices[i]['selected'],
+                        id: (_a = choices[i]['id']) !== null && _a !== void 0 ? _a : i,
+                    }));
+                    listChoices.push(wrongChoice);
+                }
+            } else {
+                
             }
-        }
-        else {
+
         }
         return shuffle(listChoices);
     }

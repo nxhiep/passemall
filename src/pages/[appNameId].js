@@ -447,40 +447,13 @@ const Feedback = ({ isMobile }) => {
     );
 }
 
-export async function getStaticProps(context) {
+export async function getServerSideProps(context) {
     const { appNameId } = context.params;
     const appInfoState = await callApi({ url: '/data?type=get_app_info&appNameId=' + appNameId, params: null, method: 'post' })
-
-    const directoryUserRate = path.join(process.cwd(), 'src/data/userRatePerfect.json')
-    let userRateFile = fs.readFileSync(directoryUserRate);
-    const useRateJSON = Object.values(JSON.parse(userRateFile));
-
-    let appId = appInfoState.id
-    let userRateState = [];
-    useRateJSON.forEach((u) => {
-        let userRate = UserRate.fromJS(u);
-        if (appId === userRate.appId) {
-            userRateState.push(userRate);
-        }
-    });
     return {
         props: {
             appInfoState: appInfoState,
-            userRateState: JSON.stringify(userRateState),
         }
-    }
-}
-export async function getStaticPaths() {
-
-    const arrayAppNameId = ["dmv-permit-practice-test-2020", "ati-teas-vi-practice-test", "ged-practice-test-free-2020", "comptia-network-exam-training"
-        , "comptia-a-exam-training", "hesi-a2-practice-test-free-2020", "pmp-exam-prep-6th-edition", "cissp-practice-test-free-2020", "g1-practice-test-2020", "motorcycle-permit-practice-test",
-        "driving-theory-uk-practice-test-2020", "comptia-security-exam-training", "ptcb-pharmacy-technician-certification-exam-prep", "cdl-practice-test-2020", "asvab-practice-test-2020", "dkt-nsw-learner-car-practice-test-2020"
-        , "cna-practice-test-free-2020", "real-estate-license-exam-prep", "college-board-accuplacer-study-app"]
-    return {
-        paths: arrayAppNameId.map(id => (
-            { params: { appNameId: id } }
-        )),
-        fallback: false
     }
 }
 export default Home;

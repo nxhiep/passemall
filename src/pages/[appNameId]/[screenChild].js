@@ -13,6 +13,7 @@ import { useRouter } from 'next/router';
 import Routes from '../../routes';
 import ReactGA from 'react-ga';
 import { oldUser } from '../../utils';
+import { callApi } from '../../services';
 initializeReactGA();
 function initializeReactGA() {
     ReactGA.initialize('UA-167769768-1');
@@ -20,7 +21,7 @@ function initializeReactGA() {
 const Screen = ({ appInfoState }) => {
     useEffect(() => {
         oldUser()
-    },[])
+    }, [])
     const store = configStore();
     return (
         <>
@@ -51,37 +52,16 @@ const Screen = ({ appInfoState }) => {
     )
 }
 
-export async function getStaticProps(context) {
-    const { appNameId, screen } = context.params;
-
-    const directoryAppInfo = path.join(process.cwd(), `src/data/${appNameId}.json`)
-    var appInfoFile = fs.readFileSync(directoryAppInfo);
-    const appInfoState = JSON.parse(appInfoFile);
-
+export async function getServerSideProps(context) {
+    const { appNameId } = context.params;
+    const appInfoState = await callApi({ url: '/data?type=get_app_info&appNameId=' + appNameId, params: null, method: 'post' })
     return {
         props: {
             appInfoState: appInfoState,
         }
     }
+}
 
-}
-export async function getStaticPaths() {
-    const directorytopicNameId = path.join(process.cwd(), 'src/data/topicNameId.json')
-    let topicNameIdFile = fs.readFileSync(directorytopicNameId);
-    let topicNameIdJson = JSON.parse(topicNameIdFile)
-    let arrayTopicNameId = [];
-    for (let appNameId in topicNameIdJson) {
-        topicNameIdJson[appNameId].forEach(ele => {
-            arrayTopicNameId.push({ params: { appNameId: appNameId, screenChild: ele } });
-        })
-        arrayTopicNameId.push({ params: { appNameId: appNameId, screenChild: "review" } });
-        arrayTopicNameId.push({ params: { appNameId: appNameId, screenChild: "test" } });
-    }
-    return {
-        paths: arrayTopicNameId,
-        fallback: false
-    };
-}
 function ScreenChild({ appInfoState }) {
     const router = useRouter();
     const { practice, appNameId, screenChild } = router.query

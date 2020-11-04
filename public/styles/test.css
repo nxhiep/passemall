@@ -34,12 +34,13 @@ body {
   margin-left: 24px;
 }
 .test-page .left-panel {
-  max-height: 600px !important;
+  height: 612px !important;
   overflow-y: auto;
   box-shadow: 2px 2px 20px rgba(0, 0, 0, 0.1);
   border-radius: 5px;
   margin-top: 24px;
   background: #f0f0f3;
+  box-shadow: 0 0 6px 4px rgba(185, 185, 185, 0.5);
 }
 .end-test-view .list-topic-progress {
   background: #fafafa;

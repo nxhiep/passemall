@@ -215,7 +215,7 @@ const QuestionsPanelx = ({ questionProgress, className, topicId, loadGame, gameS
             <div style={{ display: "flex", flexDirection: "column", width: "100%", padding: "0px 20px 0px 0px", }}>
                 <div style={{ display: "flex", width: "60%", justifyContent: "space-around", marginLeft: "auto", marginRight: "auto", fontWeight: 600, color: "#3f51b5" }}>
                     <div style={{ position: "relative" }}>
-                        <span>{gameState.progress.total - gameState.progress.familiar - gameState.progress.mastered}</span>
+                        <span>{gameState.questions.length - gameState.progress.familiar - gameState.progress.mastered}</span>
                     </div>
                     <ArrowForwardIcon style={{ fontSize: "16px" }}></ArrowForwardIcon>
                     <div>

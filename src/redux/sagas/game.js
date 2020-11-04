@@ -142,12 +142,13 @@ function* onContinue() {
     while (true) {
         try {
             yield take(Types.GAME_ON_CONTINUE);
-            let gameState = yield select((state) => state.gameState);
+            const gameState = yield select((state) => state.gameState);
             yield put(updateListGame(gameState.appId, gameState.id, gameState));
             if (gameState.gameType === Config.TEST_GAME && gameState.level !== Config.EASY_LEVEL) {
+
                 let questionId = gameState.currentQuestion.id;
                 let testId = gameState.id.substring(0, gameState.id.length - 2);
-                if (gameState.currentQuestion.questionStatus === Config.QUESTION_ANSWERED_CORRECT) {
+                if (gameState.questions[gameState.indexActive - 1].questionStatus === Config.QUESTION_ANSWERED_CORRECT) {
                     yield put(updateTestInfoProgress(testId, questionId, gameState.level));
                 }
             }

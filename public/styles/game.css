@@ -5,7 +5,7 @@ body {
   background-color: #f0f0f3;
   padding: 30px 40px;
   overflow-y: auto;
-  max-height: 550px;
+  height: 550px;
 }
 .questions-panel .question-item-panel {
   margin-bottom: 40px;
