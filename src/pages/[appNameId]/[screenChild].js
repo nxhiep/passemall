@@ -11,6 +11,8 @@ import { useRouter } from 'next/router';
 import Routes from '../../routes';
 import ReactGA from 'react-ga';
 import { oldUser } from '../../utils';
+import path from "path";
+import fs from "fs"
 import { callApi } from '../../services';
 initializeReactGA();
 function initializeReactGA() {
