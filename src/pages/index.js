@@ -261,7 +261,7 @@ const Header = ({ setOpen, showResult, isMobile }) => {
                     </Grid>
                 </Container>
             </div>
-        </header >
+        </header>
     );
 }
 

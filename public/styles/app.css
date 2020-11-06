@@ -31,9 +31,12 @@ header .menu-appbar .menu-nav {
   align-items: center;
   justify-content: space-between;
   display: flex !important;
-  height: 321px;
-  margin-bottom: 200px !important;
+  margin-bottom: 150px !important;
   overflow: hidden;
+  background: #f2f6fe;
+  border-bottom-left-radius: 100%;
+  border-bottom-right-radius: 100%;
+  padding: 30px 0;
 }
 .feedback-container .feedback-content {
   width: 70%;
@@ -67,7 +70,7 @@ header .container-header .header-title p {
 }
 .features-container {
   margin-top: 126px;
-  margin-bottom: 160px;
+  margin-bottom: 120px;
 }
 .features-container .list-features {
   width: 100%;
@@ -85,7 +88,7 @@ header .container-header .header-title p {
   color: #383838;
 }
 .overview-container {
-  margin-bottom: 168px;
+  margin-bottom: 120px;
 }
 .overview-container .overview-title {
   margin-bottom: 80px;
@@ -166,7 +169,7 @@ header .container-header .header-title p {
   backdrop-filter: blur(10px);
   border-radius: 20px;
   margin-top: 92px;
-  margin-bottom: 200px;
+  margin-bottom: 150px;
   display: flex !important;
   padding: 0px !important;
 }

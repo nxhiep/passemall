@@ -197,7 +197,7 @@ const Header = (props) => {
                     <Button className={classes.root} onClick={() => scrollToTopic()}>Start your test</Button>
                 </div>
             </Container>
-        </header >
+        </header>
     )
 }
 const Features = ({ color }) => {
@@ -304,28 +304,31 @@ const ListInfoGraphic = (props) => {
     let srcImage2 = `/images/apps/${bucketUrl}infographic/infographic-2.png `;
     return (
         <>
-            <div className="big-image">
-                <div className="image-info">
-                    <img src={srcImage1} alt="infographic-1" style={{ display: "block" }}></img>
-                </div>
-                <div className="big-image-content">
-                    <h2>Scientifically proven</h2>
-                    <p>Research shows that studying in the same way that
-                    you’ll be tested can increase your self-assurance, as
-                    well as your ability to focus on the test questions.
-                <br />
+            <Container>
+                <Grid container alignItems="stretch">
+                    <Grid item xs={12} sm={6}>
+                        <img width="100%" src={srcImage1} alt="infographic-1" style={{ display: "block" }}></img>
+                    </Grid>
+                    <Grid item xs={12} sm={6}>
+                        <h2>Scientifically proven</h2>
+                        <p>Research shows that studying in the same way that
+                        you’ll be tested can increase your self-assurance, as
+                        well as your ability to focus on the test questions.
                         <br />
-                We’ve designed our website training course to
-                duplicate the exam experience, so it becomes familiar.
-                <br />
+                                <br />
+                        We’ve designed our website training course to
+                        duplicate the exam experience, so it becomes familiar.
                         <br />
-                Our TEAS practice tests cover all the patient
-                care topics and personal care skills that are taught in
-                traditional nursing programs and included in the official
-                exam without any classroom instruction</p>
-                    <Button className={classes.root} onClick={() => scrollToTopic()}>Start your test</Button>
-                </div>
-            </div>
+                                <br />
+                        Our TEAS practice tests cover all the patient
+                        care topics and personal care skills that are taught in
+                        traditional nursing programs and included in the official
+                        exam without any classroom instruction</p>
+                        <Button className={classes.root} style={{marginTop: '50px'}} onClick={() => scrollToTopic()}>Start your test</Button>
+                    </Grid>
+                </Grid>
+            </Container>
+            <div style={{height: "100px", width: "100%"}}></div>
             <Container className="infographic-container">
                 <h2>Exam experience, duplicated</h2>
                 <p>Our TEAS Certification Exam Simulator is an effective way to practice for the actual exam.</p>
@@ -353,22 +356,23 @@ const ListInfoGraphic = (props) => {
 
                 </div>
             </Container>
-            <div className="big-image">
-                <div className="big-image-content">
-                    <h2 style={{ fontSize: "36px" }}>Total confidence.<br></br>This is what you get</h2>
-                    <p>Research shows that studying in the same way that
-                    you’ll be tested can increase your self-assurance, as
-                    well as your ability to focus on the test questions.
-                <br />
-                        <br />
-                We’ve designed our website training course to
-                duplicate the exam experience, so it becomes familiar.
-                <br />
-                        <br />
-                Our TEAS practice tests cover all the patient
-                care topics and personal care skills that are taught in
-                traditional nursing programs and included in the official
-                exam without any classroom instruction</p>
+            <Container>
+                <Grid container alignItems="stretch">
+                    <Grid item xs={12} sm={7} >
+                        <h2 style={{ fontSize: "36px" }}>Total confidence.<br></br>This is what you get</h2>
+                        <p>Research shows that studying in the same way that
+                        you’ll be tested can increase your self-assurance, as
+                        well as your ability to focus on the test questions.
+                    <br />
+                            <br />
+                    We’ve designed our website training course to
+                    duplicate the exam experience, so it becomes familiar.
+                    <br />
+                            <br />
+                    Our TEAS practice tests cover all the patient
+                    care topics and personal care skills that are taught in
+                    traditional nursing programs and included in the official
+                    exam without any classroom instruction</p>
                     <div style={{ display: "flex", flexDirection: "column", justifyContent: "flex-start", width: "200px" }}>
                         <Button className={classes.root} onClick={() => scrollToTopic()} fullWidth={false}> Start your test</Button>
                         <ArrowDownwardIcon style={
@@ -382,11 +386,12 @@ const ListInfoGraphic = (props) => {
                             }
                         }></ArrowDownwardIcon>
                     </div>
-                </div>
-                <div className="image-info">
-                    <img src={srcImage2} alt="infographic-2" style={{ display: "block" }}></img>
-                </div>
-            </div>
+                </Grid>
+                <Grid item xs={12} sm={5}>
+                    <img src={srcImage2} alt="infographic-2" style={{ display: "block", width: "100%" }}></img>
+                </Grid>
+                </Grid>
+            </Container>
         </>
     )
 }
@@ -403,7 +408,7 @@ const MobileDescription = ({ appInfoState, color = "#FFA86C" }) => {
     return (
         <Container className="mobile-description-container" style={{ backgroundColor: color }}>
             <Grid container spacing={3}>
-                <Grid item xs={isMobile ? 8 : 6}>
+                <Grid item xs={8} sm={6}>
                     <div className="mobile-description-content">
                         <h3>Practice offline & on the go with the free GED Test Genie app</h3>
                         <p>Available for IOS and Android devices.</p>
@@ -425,7 +430,7 @@ const MobileDescription = ({ appInfoState, color = "#FFA86C" }) => {
                         </div>
                     </div>
                 </Grid>
-                <Grid item xs={isMobile ? 4 : 6}>
+                <Grid item xs={4} sm={6}>
                     <div className="mobile-description-image">
                     </div>
                 </Grid>
