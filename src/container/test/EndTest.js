@@ -93,7 +93,7 @@ const TopicProgressItem = ({ bucket, topicProgress }) => {
     return (
         <div >
             <div style={{ display: "flex" }}>
-                <div style={{ fontSize: "12px", fontWeight: 500 }}>{bucket.toUpperCase() + " " + topicProgress.topicName}</div>
+                <div style={{ fontSize: "12px", fontWeight: 500 }}>{topicProgress.topicName}</div>
                 <div style={{ marginLeft: "auto", display: "flex" }}>
                     <div style={{ fontSize: "12px" }}>({topicProgress.correctQuestion}/{topicProgress.questionNum})</div>
                 </div>

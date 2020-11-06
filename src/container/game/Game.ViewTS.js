@@ -10,6 +10,7 @@ import { onBookmark } from '../../redux/actions';
 import { ReportDialog } from '../../components/Dialog'
 import { loadGame, onSelectedChoice } from '../../redux/actions/game';
 import { isMobileFunctions } from '../../utils';
+import { useRouter } from 'next/router';
 
 const mapStateToProps = (state, ownProps) => ({
     gameState: state.gameState,
@@ -27,23 +28,7 @@ const mapDispatchChoiceToProps = {
     onChoiceSelected: (choice) => onSelectedChoice(choice)
 }
 
-const ReviewQuestionPanelUI = ({ questions, questionProgress, onBookmark, appInfo }) => {
-    if (!questionProgress) {
-        questionProgress = new Map();
-    }
-    return (
-        <div className='questions-panel'>
-            {
-                questions.map((question, index) => {
-                    if (questionProgress.has(question.id)) {
-                        question.progress = questionProgress.get(question.id) ?? new QuestionProgress();
-                    }
-                    return <QuestionItemTS question={question} key={'question-item-' + question.id} index={index} onBookmark={onBookmark} />;
-                })
-            }
-        </div>
-    );
-}
+
 
 const QuestionsPanelx = ({ questionProgress, className, topicId, loadGame = () => { }, gameState, gameType, currentIndex, onBookmark, questionIds, appInfo, onContinue, congratulationTopic, onNextPart, setShowGame }) => {
     const [showAlert, setShowAlert] = useState(false);
@@ -273,12 +258,15 @@ const QuestionsPanelx = ({ questionProgress, className, topicId, loadGame = () =
 const CongratulationAlert = ({ topicName = "", onClose = () => { }, onBookmark = false, page = "" }) => {
     const theme = useTheme();
     const isMobile = useMediaQuery(theme.breakpoints.between(0, 780));
+
     useEffect(() => {
         let time = setTimeout(() => onClose(), 2500);
         return () => {
             clearTimeout(time);
         };
     }, []);
+    const router = useRouter();
+    const { screenChild } = router.query
     return (
         <Grid
             container
@@ -287,7 +275,7 @@ const CongratulationAlert = ({ topicName = "", onClose = () => { }, onBookmark =
             className="congratulation-alert-panel"
             style={{
                 backgroundColor: onBookmark ? "green" : "#ffff40",
-                top: onBookmark ? "53%" : (isMobile ? "0px" : "60px"),
+                top: screenChild === "review" ? "39%" : (onBookmark ? "53%" : (isMobile ? "0px" : "60px")),
                 width: onBookmark ? (isMobile ? "150px" : "200px") : "100%",
                 textAlign: "center",
                 color: onBookmark ? "#fff" : "#000",
@@ -456,6 +444,5 @@ const ProgressQuestionTS = ({ progress, questionId }) => {
 }
 const AnswerButtonTS = connect(null, mapDispatchChoiceToProps)(AnswerButton2);
 const QuestionsPanelTS = connect(mapStateToProps, mapDispatchToProps)(QuestionsPanelx);
-const ReviewQuestionPanel = connect(null, mapDispatchReviewQuestionToProps)(ReviewQuestionPanelUI);
-export { CongratulationAlert, ReviewQuestionPanel, QuestionsPanelTS, QuestionItemTS, ChoicesPanelTS, AnswerButtonTS, ProgressQuestionTS };
+export { CongratulationAlert, QuestionsPanelTS, QuestionItemTS, ChoicesPanelTS, AnswerButtonTS, ProgressQuestionTS };
 

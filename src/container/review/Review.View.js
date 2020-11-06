@@ -139,7 +139,7 @@ class ReviewViewScreenUI extends React.Component {
                         </Grid>
                     </Grid>
                 </Container>
-                {this.state.isMobile ? <Footer isStudy={true}></Footer> : null}
+                {this.state.isMobile && !this.state.showReview ? <Footer isStudy={true}></Footer> : null}
                 <ShowImage />
             </div>
         );

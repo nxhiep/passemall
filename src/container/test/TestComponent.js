@@ -150,7 +150,7 @@ const QuestionItem = ({ level, question = new Question(), index = 0, onBookmark,
                     className="question-header-panel"
                 >
                     <span style={{ fontWeight: "bold" }}>Question {index + 1}:</span>
-                    <span style={{ 'marginLeft': 'auto', display: "flex" }} >
+                    <span style={{ marginLeft: "auto", display: "flex" }} >
                         <ReportDialog
                             questionId={question.id}
                             appId={appInfoState.id}
@@ -281,7 +281,7 @@ const TestProgressPanelUI = ({ gameState, appInfo, onBookmark, setShowLeftPanel,
     return (
         <>
             {isMobile ? (
-                <div div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", padding: "0 8px", background: "#e5e5e5" }}>
+                <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", padding: "0 8px", background: "#e5e5e5" }}>
                     { !showAlert ? null : <CongratulationAlert onBookmark={true} onClose={() => setShowAlert(false)}></CongratulationAlert>}
 
                     <ArrowBackIcon onClick={() => setShowLeftPanel()} style={{ color: "#4E63BD", marginRight: "16px", marginTop: "20px" }} />
