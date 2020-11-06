@@ -256,9 +256,6 @@
   background: url(/images/great-apps.png) no-repeat;
   background-size: 100% 100%;
 }
-.landing-page .list-great-apps .app-info-item {
-  width: 33.3333%;
-}
 .landing-page .list-great-apps .app-info-item > a {
   padding: 0;
   height: 100%;
@@ -275,6 +272,15 @@
   width: 100%;
   height: 1px;
   background: rgba(250, 142, 69, 0.3);
+}
+.AccordionSummaryxxx {
+  padding: 0 !important;
+  border: none !important;
+  min-height: 30px;
+}
+.AccordionSummaryxxx .MuiAccordionSummary-content {
+  border: none !important;
+  margin: 4px 0 !important;
 }
 @media (max-width: 1280px) {
   .landing-page header .header-content div {
@@ -361,9 +367,6 @@
   .landing-page header .logo strong {
     font-size: 18px;
   }
-  .landing-page .list-great-apps .app-info-item {
-    width: 50%;
-  }
   .landing-page header .header-tab-panel .menu-appbar {
     flex-direction: column;
   }
@@ -410,4 +413,24 @@
     overflow-x: auto;
     white-space: nowrap;
   }
+}
+
+.header-banner {
+  width: 100%;
+}
+.header-media {
+  color: white;
+}
+.header-text-content {
+  position: relative;
+}
+.header-text-content:after {
+  content: "";
+  background-color: rgb(149 87 126 / 0.65);
+  position: absolute;
+  top: 0;
+  right: -100px;
+  width: 10000px;
+  height: 100%;
+  z-index: 0;
 }

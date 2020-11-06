@@ -129,6 +129,10 @@ const Header = ({ setOpen, showResult, isMobile }) => {
             }
         }
     }
+    const theme = useTheme();
+    const mdUp = useMediaQuery(theme.breakpoints.up('md'));
+    const smDown = useMediaQuery(theme.breakpoints.down('sm'));
+
     const [showInput, setShowInput] = useState(false);
     return (
         <header>
@@ -136,7 +140,7 @@ const Header = ({ setOpen, showResult, isMobile }) => {
                 <div className="header-tab-panel">
                     <div className="parent-logo">
                         <a href="/" className="logo">
-                            <img src="/images/logo-landing.png" style={isMobile ? { height: showInput ? "40px" : "50px" } : { height: "80px" }} alt="logo-landing"></img>
+                            <img src="/images/logo-landing.png" style={isMobile ? { height: showInput ? "40px" : "45px" } : { height: "70px" }} alt="logo-landing"></img>
                         </a>
                     </div>
                     {isMobile ?
@@ -237,22 +241,44 @@ const Header = ({ setOpen, showResult, isMobile }) => {
                         </div>}
                 </div>
             </Container>
-            <Grid container alignItems="center" justify="space-between" className="header-media">
-                <Grid item sm={isMobile ? 12 : 6} className="header-content">
-                    <div className="xxx">
-                        <h1>Make your study great with our thousands of free practice questions</h1>
-                        <p>You want to get 100% ready for your important day? You desire to pass your exam at your first try?
-                        You are wondering if you should pay a charge of money buying some practice materials?
-                            That’s why we are here to support you achieve the gate of success with our test prep solutions.</p>
-                    </div>
-                </Grid>
-                <Grid item sm={isMobile ? 12 : 6} className="header-image-content">
-                    <img alt='Make your study great with our thousands of free practice questions' width="100%" height="100%" src="/images/test3.png" />
-                </Grid>
-            </Grid>
+
+            <div className="header-banner">
+                <Container>
+                    <Grid container alignItems="center" justify="space-between" className="header-media">
+                        <Grid item sm={12} md={6} className="header-text-content">
+                            <div style={{zIndex: '1', position: 'relative' }}>
+                                <h1>Make your study great with our thousands of free practice questions</h1>
+                                <p>You want to get 100% ready for your important day? You desire to pass your exam at your first try?
+                                    You are wondering if you should pay a charge of money buying some practice materials?
+                                    That’s why we are here to support you achieve the gate of success with our test prep solutions.</p>
+                            </div>
+                        </Grid>
+                        {mdUp ? null : <Grid item xs={1} sm={3} md={false}></Grid>}
+                        <Grid item xs={10} sm={6} md={6}>
+                            <img style={smDown ? {} : {position: "relative", bottom: "-120px"}} alt='Make your study great with our thousands of free practice questions' width="100%" height="100%" src="/images/test3.png" />
+                        </Grid>
+                        <Grid item xs={1} sm={3} md={false}></Grid>
+                    </Grid>
+                </Container>
+            </div>
         </header >
     );
 }
+
+// <Grid container alignItems="center" justify="space-between" className="header-media">
+//                 <Grid item xs={12} sm={8} md={7} className="header-content">
+//                     <div className="xxx">
+//                         <h1>Make your study great with our thousands of free practice questions</h1>
+//                         <p>You want to get 100% ready for your important day? You desire to pass your exam at your first try?
+//                         You are wondering if you should pay a charge of money buying some practice materials?
+//                             That’s why we are here to support you achieve the gate of success with our test prep solutions.</p>
+//                     </div>
+//                 </Grid>
+//                 <Grid item xs={12} sm={4} md={5} className="header-image-content">
+//                     <img alt='Make your study great with our thousands of free practice questions' width="100%" height="100%" src="/images/test3.png" />
+//                 </Grid>
+//             </Grid>
+
 export async function getStaticProps(context) {
     const appInfoState = await callApi({ url: '/data?type=get_all_app_info', params: null, method: 'post' });
     const directoryUserRate = path.join(process.cwd(), 'src/data/userRatePerfect.json')
