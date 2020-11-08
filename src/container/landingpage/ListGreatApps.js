@@ -47,7 +47,7 @@ const ListAppMobile = ({ appInfos }) => {
     let appInfos1 = appInfos.slice(0, 5);
     let appInfos2 = appInfos.slice(6, appInfos.length);
     return <div>
-            <div>
+        <div>
             {
                 appInfos1
                     .sort((a, b) => a.appName.localeCompare(b.appName))
@@ -55,17 +55,17 @@ const ListAppMobile = ({ appInfos }) => {
                         return <AppInfoItem appInfo={appInfo} index={index} key={"AppInfoItem-" + index} />
                     })
             }
-            </div>
-            <Accordion style={{
-                border: 'none',
-                boxShadow: 'none',
-                background: 'transparent',
-            }}>
-                <AccordionSummary expandIcon={<ExpandMoreIcon />} className="AccordionSummaryxxx">
-                    Show more
+        </div>
+        <Accordion style={{
+            border: 'none',
+            boxShadow: 'none',
+            background: 'transparent',
+        }}>
+            <AccordionSummary expandIcon={<ExpandMoreIcon />} className="AccordionSummaryxxx">
+                Show more
                 </AccordionSummary>
-                <AccordionDetails style={{padding: '0'}}>
-                    <div>
+            <AccordionDetails style={{ padding: '0' }}>
+                <div>
                     {
                         appInfos2
                             .sort((a, b) => a.appName.localeCompare(b.appName))
@@ -73,9 +73,9 @@ const ListAppMobile = ({ appInfos }) => {
                                 return <AppInfoItem appInfo={appInfo} index={index} key={"AppInfoItem-" + index} />
                             })
                     }
-                    </div>
-                </AccordionDetails>
-            </Accordion>
+                </div>
+            </AccordionDetails>
+        </Accordion>
     </div>
 }
 
@@ -86,6 +86,20 @@ const AppInfoItem = ({ appInfo, index }) => {
     let appNameId = appInfo.appNameId;
     let appName = appInfo.appName ? appInfo.appName : appInfo.title;
     let link = "/" + appNameId
+    switch (appNameId) {
+        case ("asvab-practice-test-2020"): {
+            link = "https://asvab-prep.com/"
+        }
+        case ("cdl-practice-test-2020"): {
+            link = "https://cdl-prep.com/"
+        }
+        case("ati-teas-vi-practice-test") : {
+            link = "https://teas-prep.com"
+        }
+        case("ged-practice-test-free-2020") : {
+            link = "https://ged-testprep.com"
+        }
+    }
     return (
         <>
             <Grid item xs={12} sm={3} md={4} className="app-info-item" >
