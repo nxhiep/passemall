@@ -27,25 +27,6 @@ header .menu-appbar .menu-nav {
   flex-direction: column;
   align-items: center;
 }
-.feedback-container {
-  align-items: center;
-  justify-content: space-between;
-  display: flex !important;
-  margin-bottom: 150px !important;
-  overflow: hidden;
-  background: #f2f6fe;
-  border-bottom-left-radius: 100%;
-  border-bottom-right-radius: 100%;
-  padding: 30px 0;
-}
-.feedback-container .feedback-content {
-  width: 70%;
-  display: flex;
-  flex-direction: column;
-}
-.feedback-container .feedback-content div:first-child {
-  font-size: 24px;
-}
 header .menu-appbar .menu-nav a {
   display: flex;
   font-size: 18px;
@@ -258,13 +239,64 @@ header .container-header .header-title p {
   }
 }
 
+.feedback-container {
+  background-color: #f1f1f1;
+  border-bottom-right-radius: 60%;
+  border-bottom-left-radius: 60%;
+}
+
+.feedback-container .feedbacks-slider {
+  display: flex;
+  align-items: center;
+}
+
+.feedback-container .feedback-item {
+    padding: 30px 20px;
+    text-align: center;
+}
+
+.feedback-container .slick-next, .slick-prev {
+  position: static !important;
+  height: inherit !important;
+  width: inherit !important;
+}
+
+.feedback-container .slick-next:before, .feedback-container .slick-prev:before {
+  color: #383838 !important;
+  font-size: 90px;
+}
+
+.feedback-container .slick-list {
+  width: 100%;
+}
+
+.feedback-container .slick-next:before {
+  content: "›" !important;
+}
+
+.feedback-container .slick-prev:before {
+  content: "‹" !important;
+}
+
+.feedback-container .feedback-item .content {
+  font-weight: 500;
+  font-size: 1.2em;
+  margin: 10px auto;
+}
+.feedback-container .feedback-item .avatar {
+  margin: 30px auto;
+}
+
+.feedback-container .feedback-item .name {
+  margin: 10px auto;
+  font-weight: 600;
+}
+
+.feedback-container .feedback-item .date {
+  margin-top: 10px;
+}
+
 @media (max-width: 780px) {
-  .feedback-container .feedback-content div:first-child {
-    font-size: 18px;
-  }
-  .feedback-container {
-    margin-bottom: 50px;
-  }
   header .container-header .header-title {
     width: 95%;
     margin-right: auto;

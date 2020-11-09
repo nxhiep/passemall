@@ -1,4 +1,4 @@
-import { Button, Container, Grid, IconButton, List, ListItem, ListItemText, makeStyles, SwipeableDrawer, useMediaQuery, useTheme } from '@material-ui/core';
+import { Button, CircularProgress, Container, Grid, IconButton, List, ListItem, ListItemText, makeStyles, SwipeableDrawer, useMediaQuery, useTheme } from '@material-ui/core';
 import ArrowDownwardIcon from '@material-ui/icons/ArrowDownward';
 import MenuIcon from '@material-ui/icons/Menu';
 import NavigateBeforeIcon from '@material-ui/icons/NavigateBefore';
@@ -10,6 +10,7 @@ import { useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react';
 import ReactGA from 'react-ga';
 import { Provider } from 'react-redux';
+import Slider from 'react-slick';
 import { PersistGate } from 'redux-persist/integration/react';
 import Footer from '../components/Footer';
 import { Clock, FreeCircle, FreeIcon, LoginIcon, PenIcon, PeopleIcon, TotalQuestions } from '../components/Icons';
@@ -187,7 +188,7 @@ const Home = ({ appInfoState }) => {
                     </PersistGate>
                 </Provider>
                 <MobileDescription appInfoState={appInfoState} color={myColor.screenShotColor}></MobileDescription>
-                <Feedback isMobile={isMobile}></Feedback>
+                <Feedback isMobile={isMobile} appId={appInfoState.id}></Feedback>
                 <Footer bucket={appInfoState.bucket} color={myColor.colorFooter}></Footer>
             </div>
         </>
@@ -197,7 +198,7 @@ const Header = (props) => {
     let onStartTest = props.onStartTest ? props.onStartTest : () => {}
     let appId = props.appId ? props.appId : -1;
     const classes = useStyles(props);
-    const [openDrawer, setOpenDrawer] = useState();
+    const [openDrawer, setOpenDrawer] = useState(false);
     const router = useRouter();
     const appNameId = props.appNameId ? props.appNameId : router.query.appNameId;
     const bucketUrl = (props.bucket ? props.bucket + "/" : "");
@@ -513,21 +514,59 @@ const MobileDescription = ({ appInfoState, color = "#FFA86C" }) => {
         </Container>
     )
 }
-const Feedback = ({ isMobile }) => {
-    return (
-        <Container className="feedback-container">
-            <NavigateBeforeIcon style={isMobile ? { fontSize: "40px", marginRight: "0px", position: "relative", bottom: "-50px" } : { marginRight: "40px", fontSize: "60px" }}></NavigateBeforeIcon>
-            <div className="feedback-content">
-                <div >This site helped me so much. I was super nervous about taking my CNA state exam. So when I passed yesterday, I was ecstatic and couldn’t help but tell like everyone I knew.</div>
-                <div className="info-feedback">
-                    <img src="/images/avatar-feedback.jpg" alt="avatar" style={{ marginTop: "20px", marginBottom: "10px", width: "72px", borderRadius: "50%", height: "auto" }}></img>
-                    <div style={{ fontSize: "20px", fontWeight: "bold", lineHeight: 1.33 }}>Karen Worrell</div>
-                    <div style={{ fontSize: "20px" }}>Florida</div>
-                </div>
-            </div>
-            <NavigateNextIcon style={isMobile ? { fontSize: "40px", marginRight: "0px", position: "relative", bottom: "-50px" } : { marginRight: "40px", fontSize: "60px" }}></NavigateNextIcon>
-        </Container >
-    );
+const Feedback = ({ isMobile, appId }) => {
+    const [loading, setLoading] = useState(true);
+    const [feedbacks, setFeedbacks] = useState([]);
+    useEffect(() => {
+        callApi({ url: '/data?type=get_user_rates&appId=' + appId, params: null, method: 'post' }).then((data) => {
+            setLoading(false);
+            setFeedbacks(data);
+        });
+    }, [appId])
+    if(loading){
+        return <CircularProgress />
+    }
+    if(feedbacks.length == 0){
+        return null;
+    }
+    const settings = {
+        infinite: true,
+        speed: 500,
+        slidesToShow: 1,
+        slidesToScroll: 1,
+        className: "feedbacks-slider",
+        autoPlay: true,
+        autoplaySpeed: 1500,
+        arrows: true
+    };
+    return <Container className="feedback-container"> 
+        <div style={{position: 'relative'}}>
+            <Slider {...settings}>
+                {
+                    feedbacks.map((feedback, index) => {
+                        return <FeedbackItem
+                            key={"XX-FeedbackItem-" + feedback.id + "-" + index}
+                            content={feedback.content}
+                            name={feedback.userName}
+                            createTime={feedback.createDate}
+                            index={index}   
+                        />
+                    })
+                }
+            </Slider>
+        </div>
+    </Container>
+}
+
+const FeedbackItem = ({ content, name, createTime, index }) => {
+    return <div className="feedback-item">
+        <div className="content">{content}</div>
+        <div className="infos">
+            <img className="avatar" src={index % 3 === 0 ? "/images/avatar-1.png" : (index % 3 === 1 ? "/images/avatar-2.png" : "/images/avatar-3.png")} alt="avatar"></img>
+            <div className="name">{name}</div>
+            <div className="date">{createTime}</div>
+        </div>
+    </div>
 }
 
 export async function getServerSideProps(context) {
