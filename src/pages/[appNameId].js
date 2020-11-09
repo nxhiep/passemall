@@ -137,6 +137,7 @@ const Home = ({ appInfoState }) => {
                     bucket={appInfoState.bucket} 
                     isMobile={isMobile} 
                     appId={appInfoState.id} 
+                    appNameId={appInfoState.appNameId} 
                     onStartTest={() => {
                         if(!selectedState){
                             setTimeout(() => {
@@ -198,12 +199,13 @@ const Header = (props) => {
     const classes = useStyles(props);
     const [openDrawer, setOpenDrawer] = useState();
     const router = useRouter();
-    const { appNameId } = router.query
+    const appNameId = props.appNameId ? props.appNameId : router.query.appNameId;
     const bucketUrl = (props.bucket ? props.bucket + "/" : "");
     let bannerUrl = `url(/images/apps/${bucketUrl}header-background.png) no-repeat`;
     if(!isSuperApp(appId)){
         bannerUrl = `url(/images/landing.svg)`;
     }
+    console.log('appNameId', appNameId);
     return (
         <header style={{ background: bannerUrl, backgroundSize: "cover", backgroundPosition: props.bucket === "cna" ? "100px 100px" : (props.isMobile ? "left" : "center"), minHeight: (props.bucket === "dmv" || props.bucket === "motocycle") ? "690px" : "630px" }}>
             <Container className="container-header">
