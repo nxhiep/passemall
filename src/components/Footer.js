@@ -15,6 +15,9 @@ const useStyles = makeStyles({
     }
 })
 const Footer = ({ alt = '', isStudy, color, bucket = "" }) => {
+    if(!color){
+        color = "#495ebf";
+    }
     const theme = useTheme();
     const isMobile = useMediaQuery(theme.breakpoints.between(0, 780));
     if (isMobile && isStudy) {

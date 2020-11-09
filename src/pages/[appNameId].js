@@ -1,23 +1,23 @@
-import React, { useEffect, useState } from 'react';
-import Head from 'next/head';
-import ReactGA from 'react-ga';
 import { Button, Container, Grid, IconButton, List, ListItem, ListItemText, makeStyles, SwipeableDrawer, useMediaQuery, useTheme } from '@material-ui/core';
-import Footer from '../components/Footer';
-import { useRouter } from 'next/router';
+import ArrowDownwardIcon from '@material-ui/icons/ArrowDownward';
+import MenuIcon from '@material-ui/icons/Menu';
+import NavigateBeforeIcon from '@material-ui/icons/NavigateBefore';
+import NavigateNextIcon from '@material-ui/icons/NavigateNext';
+import { Rating } from '@material-ui/lab';
 import dynamic from 'next/dynamic';
-const HomeContent = dynamic(() => import("../container/home/HomeContent"), { ssr: false })
-const SelectStatePopup = dynamic(() => import("../components/SelectStatePopup"), { ssr: false })
+import Head from 'next/head';
+import { useRouter } from 'next/router';
+import React, { useEffect, useState } from 'react';
+import ReactGA from 'react-ga';
 import { Provider } from 'react-redux';
 import { PersistGate } from 'redux-persist/integration/react';
+import Footer from '../components/Footer';
+import { Clock, FreeCircle, FreeIcon, LoginIcon, PenIcon, PeopleIcon, TotalQuestions } from '../components/Icons';
 import configStore from '../redux/storeInHome';
-import { FreeCircle, TotalQuestions, PeopleIcon, Clock, FreeIcon, LoginIcon, PenIcon } from '../components/Icons';
-import NavigateNextIcon from '@material-ui/icons/NavigateNext';
-import NavigateBeforeIcon from '@material-ui/icons/NavigateBefore';
-import MenuIcon from '@material-ui/icons/Menu';
-import { Rating } from '@material-ui/lab';
-import { oldUser, scrollToTopic, setScrollDownAuto } from '../utils';
-import ArrowDownwardIcon from '@material-ui/icons/ArrowDownward';
 import { callApi } from '../services';
+import { isAppASVAB, isAppCDL, isAppCNA, isAppDMV, isAppGED, isAppMotorcycle, isSuperApp, oldUser, scrollToTopic, setScrollDownAuto } from '../utils';
+const HomeContent = dynamic(() => import("../container/home/HomeContent"), { ssr: false })
+const SelectStatePopup = dynamic(() => import("../components/SelectStatePopup"), { ssr: false })
 initializeReactGA();
 const store = configStore();
 function initializeReactGA() {
@@ -37,53 +37,81 @@ const useStyles = makeStyles({
             backgroundColor: props => props.color,
         }
     },
-
+    button: {
+        borderRadius: "40px",
+        marginTop: "40px",
+        padding: "8px 24px",
+        fontWeight: "bold"
+    }
 })
 const Home = ({ appInfoState }) => {
+    if(!appInfoState){
+        appInfoState = {};
+        console.error("xxxxxxxxxxxxxxxxxxxxxxxx appInfo null");
+    }
     const theme = useTheme();
     const isMobile = useMediaQuery(theme.breakpoints.between(0, 780));
     useEffect(() => {
         setScrollDownAuto("home")
         oldUser()
     }, [])
-    const canonical = `https://passemall.com/${(appInfoState || '').appNameId}`;
-    let color = [];
-    color["ged"] = {
+    const canonical = `https://passemall.com/${appInfoState.appNameId}`;
+
+    let myColor = {
         colorFooter: "#E07730",
         mainColor: "#FA8E45",
         screenShotColor: "#FFA86C",
-        buttonHeader: "#FA8E45"
+        buttonHeader: "#FA8E45" 
+    };
+    if(isAppGED(appInfoState.id)){
+        myColor = {
+            colorFooter: "#E07730",
+            mainColor: "#FA8E45",
+            screenShotColor: "#FFA86C",
+            buttonHeader: "#FA8E45"
+        };
     }
-    color["cna"] = {
-        colorFooter: "#1C7BBE",
-        mainColor: "#1C7BBE",
-        screenShotColor: "#82AFD1",
-        buttonHeader: "#1C7BBE"
+    if(isAppCNA(appInfoState.id)){
+        myColor = {
+            colorFooter: "#1C7BBE",
+            mainColor: "#1C7BBE",
+            screenShotColor: "#82AFD1",
+            buttonHeader: "#1C7BBE"
+        };
     }
-    color["asvab"] = {
-        colorFooter: "#8A8862",
-        mainColor: "#8A8862",
-        screenShotColor: "#A6A480",
-        buttonHeader: "#FAFAFA"
+    if(isAppASVAB(appInfoState.id)){
+        myColor = {
+            colorFooter: "#8A8862",
+            mainColor: "#8A8862",
+            screenShotColor: "#A6A480",
+            buttonHeader: "#FAFAFA"
+        };
     }
-    color["motocycle"] = {
-        colorFooter: "#4E63BD",
-        mainColor: "#495EBF",
-        screenShotColor: "#6679CC",
-        buttonHeader: "#FAFAFA"
+    if(isAppMotorcycle(appInfoState.id)){
+        myColor = {
+            colorFooter: "#4E63BD",
+            mainColor: "#495EBF",
+            screenShotColor: "#6679CC",
+            buttonHeader: "#FAFAFA"
+        };
     }
-    color["cdl"] = {
-        colorFooter: "#5B6695",
-        mainColor: "#5B6695",
-        screenShotColor: "#5B6695",
-        buttonHeader: "#FAFAFA"
+    if(isAppCDL(appInfoState.id)){
+        myColor = {
+            colorFooter: "#5B6695",
+            mainColor: "#5B6695",
+            screenShotColor: "#5B6695",
+            buttonHeader: "#FAFAFA"
+        };
     }
-    color["dmv"] = {
-        colorFooter: "#4E63BD",
-        mainColor: "#495EBF",
-        screenShotColor: "#6679CC",
-        buttonHeader: "#FAFAFA"
+    if(isAppDMV(appInfoState.id)) {
+        myColor = {
+            colorFooter: "#4E63BD",
+            mainColor: "#495EBF",
+            screenShotColor: "#6679CC",
+            buttonHeader: "#FAFAFA"
+        };
     }
+    const [selectedState, setSelectedState] = useState(true);
     const [openPopupChangeState, setOpenPopupChangeState] = useState(false);
     return (
         <>
@@ -104,11 +132,37 @@ const Home = ({ appInfoState }) => {
                 <meta name="keywords" content={appInfoState.keywords} />
             </Head>
             <div className="body-panel app">
-                <Header color={color[appInfoState.bucket] ? color[appInfoState.bucket].buttonHeader : ""} bucket={color[appInfoState.bucket] ? appInfoState.bucket : ""} isMobile={isMobile}></Header>
-                <Features color={color[appInfoState.bucket] ? color[appInfoState.bucket].mainColor : ""}></Features>
-                <ExamOverview></ExamOverview>
-                <ListInfoGraphic color={color[appInfoState.bucket] ? color[appInfoState.bucket].mainColor : ""} appInfoState={appInfoState} bucket={color[appInfoState.bucket] ? appInfoState.bucket : ""}></ListInfoGraphic>
-                <ListTopic></ListTopic>
+                <Header 
+                    color={myColor.buttonHeader} 
+                    bucket={appInfoState.bucket} 
+                    isMobile={isMobile} 
+                    appId={appInfoState.id} 
+                    onStartTest={() => {
+                        if(!selectedState){
+                            setTimeout(() => {
+                                setOpenPopupChangeState(true);
+                            }, 300)
+                        }
+                    }}
+                />
+                <Features 
+                    color={myColor.mainColor} 
+                />
+                <ExamOverview />
+                <ListInfoGraphic 
+                    appId={appInfoState.id} 
+                    color={myColor.mainColor} 
+                    appInfoState={appInfoState} 
+                    bucket={appInfoState.bucket}
+                    onStartTest={() => {
+                        if(!selectedState){
+                            setTimeout(() => {
+                                setOpenPopupChangeState(true);
+                            }, 300)
+                        }
+                    }}
+                />
+                <ListTopic />
                 <Provider store={store.store}>
                     <PersistGate persistor={store.persistor}>
                         <HomeContent
@@ -120,6 +174,10 @@ const Home = ({ appInfoState }) => {
                         />
                         {appInfoState && appInfoState.hasState ?
                             <SelectStatePopup
+                                onLoaded={(selectedState) => {
+                                    setSelectedState(selectedState)
+                                }}
+                                openDefault={false}
                                 appInfo={appInfoState}
                                 openPopupChangeState={openPopupChangeState}
                                 onHidden={() => {
@@ -127,21 +185,27 @@ const Home = ({ appInfoState }) => {
                                 }} /> : ''}
                     </PersistGate>
                 </Provider>
-                <MobileDescription appInfoState={appInfoState} color={color[appInfoState.bucket] ? color[appInfoState.bucket].screenShotColor : ""}></MobileDescription>
+                <MobileDescription appInfoState={appInfoState} color={myColor.screenShotColor}></MobileDescription>
                 <Feedback isMobile={isMobile}></Feedback>
-                <Footer bucket={appInfoState.bucket} color={color[appInfoState.bucket] ? color[appInfoState.bucket].colorFooter : ""}></Footer>
+                <Footer bucket={appInfoState.bucket} color={myColor.colorFooter}></Footer>
             </div>
         </>
     )
 }
 const Header = (props) => {
+    let onStartTest = props.onStartTest ? props.onStartTest : () => {}
+    let appId = props.appId ? props.appId : -1;
     const classes = useStyles(props);
     const [openDrawer, setOpenDrawer] = useState();
     const router = useRouter();
     const { appNameId } = router.query
     const bucketUrl = (props.bucket ? props.bucket + "/" : "");
+    let bannerUrl = `url(/images/apps/${bucketUrl}header-background.png) no-repeat`;
+    if(!isSuperApp(appId)){
+        bannerUrl = `url(/images/landing.svg)`;
+    }
     return (
-        <header style={{ background: `url(/images/apps/${bucketUrl}header-background.png) no-repeat`, backgroundSize: "cover", backgroundPosition: props.bucket === "cna" ? "100px 100px" : (props.isMobile ? "left" : "center"), minHeight: (props.bucket === "dmv" || props.bucket === "motocycle") ? "690px" : "630px" }}>
+        <header style={{ background: bannerUrl, backgroundSize: "cover", backgroundPosition: props.bucket === "cna" ? "100px 100px" : (props.isMobile ? "left" : "center"), minHeight: (props.bucket === "dmv" || props.bucket === "motocycle") ? "690px" : "630px" }}>
             <Container className="container-header">
                 <Grid container alignItems="center" justify="space-between" className="header-tab-panel">
                     <div className="parent-logo">
@@ -194,7 +258,9 @@ const Header = (props) => {
                     together a list of the most recent official motorcycle
                     handbooks for every U.S. state. Select your state in the
                     drop-down above to find the latest official rider's manual (2020).</p>
-                    <Button className={classes.root} onClick={() => scrollToTopic()}>Start your test</Button>
+                    <Button 
+                        variant="contained"
+                        className={classes.button} onClick={() => {scrollToTopic(); onStartTest()} }>START YOUR TEST</Button>
                 </div>
             </Container>
         </header>
@@ -298,17 +364,23 @@ const ExamOverview = () => {
     )
 }
 const ListInfoGraphic = (props) => {
+    let onStartTest = props.onStartTest ? props.onStartTest : () => {}
     const classes = useStyles(props);
     const bucketUrl = (props.bucket ? props.bucket + "/" : "");
     let srcImage1 = `/images/apps/${bucketUrl}infographic/infographic-1.png`;
     let srcImage2 = `/images/apps/${bucketUrl}infographic/infographic-2.png `;
+    if(!isSuperApp(props.appId)){
+        srcImage1 = '/images/apps/all/scientifically-proven1.jpg';
+        srcImage2 = '/images/apps/all/scientifically-proven2.jpg';
+    }
     return (
         <>
             <Container>
                 <Grid container alignItems="stretch">
-                    <Grid item xs={12} sm={6}>
+                    <Grid item xs={12} sm={5}>
                         <img width="100%" src={srcImage1} alt="infographic-1" style={{ display: "block" }}></img>
                     </Grid>
+                    <Grid item xs={12} sm={1}></Grid>
                     <Grid item xs={12} sm={6}>
                         <h2>Scientifically proven</h2>
                         <p>Research shows that studying in the same way that
@@ -324,7 +396,7 @@ const ListInfoGraphic = (props) => {
                         care topics and personal care skills that are taught in
                         traditional nursing programs and included in the official
                         exam without any classroom instruction</p>
-                        <Button className={classes.root} style={{marginTop: '50px'}} onClick={() => scrollToTopic()}>Start your test</Button>
+                        <Button className={classes.root} style={{marginTop: '50px'}} onClick={() => {scrollToTopic(); onStartTest(); }}>Start your test</Button>
                     </Grid>
                 </Grid>
             </Container>
@@ -358,7 +430,7 @@ const ListInfoGraphic = (props) => {
             </Container>
             <Container>
                 <Grid container alignItems="stretch">
-                    <Grid item xs={12} sm={7} >
+                    <Grid item xs={12} sm={6}>
                         <h2 style={{ fontSize: "36px" }}>Total confidence.<br></br>This is what you get</h2>
                         <p>Research shows that studying in the same way that
                         you’ll be tested can increase your self-assurance, as
@@ -374,7 +446,7 @@ const ListInfoGraphic = (props) => {
                     traditional nursing programs and included in the official
                     exam without any classroom instruction</p>
                     <div style={{ display: "flex", flexDirection: "column", justifyContent: "flex-start", width: "200px" }}>
-                        <Button className={classes.root} onClick={() => scrollToTopic()} fullWidth={false}> Start your test</Button>
+                        <Button className={classes.root} onClick={() =>{ scrollToTopic(); onStartTest(); }} fullWidth={false}> Start your test</Button>
                         <ArrowDownwardIcon style={
                             {
                                 marginTop: "20px",
@@ -387,6 +459,7 @@ const ListInfoGraphic = (props) => {
                         }></ArrowDownwardIcon>
                     </div>
                 </Grid>
+                <Grid item xs={12} sm={1}></Grid>
                 <Grid item xs={12} sm={5}>
                     <img src={srcImage2} alt="infographic-2" style={{ display: "block", width: "100%" }}></img>
                 </Grid>

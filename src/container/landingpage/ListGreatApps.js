@@ -3,6 +3,7 @@ import { useRouter } from 'next/router';
 import React from 'react';
 import { FixedContainer, TitleBlock } from '../../components/Widgets';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore'
+import { isAppASVAB, isAppCDL, isAppGED, isAppTEAS, isLocalhost } from '../../utils';
 
 const ListGreatApps = ({ appInfoState }) => {
     let appInfos = appInfoState
@@ -85,19 +86,16 @@ const AppInfoItem = ({ appInfo, index }) => {
     const isMobile = useMediaQuery(theme.breakpoints.between(0, 780));
     let appNameId = appInfo.appNameId;
     let appName = appInfo.appName ? appInfo.appName : appInfo.title;
-    let link = "/" + appNameId
-    switch (appNameId) {
-        case ("asvab-practice-test-2020"): {
-            link = "https://asvab-prep.com/"
-        }
-        case ("cdl-practice-test-2020"): {
-            link = "https://cdl-prep.com/"
-        }
-        case("ati-teas-vi-practice-test") : {
-            link = "https://teas-prep.com"
-        }
-        case("ged-practice-test-free-2020") : {
-            link = "https://ged-testprep.com"
+    let link = "/" + appNameId;
+    if(!isLocalhost()){
+        if(isAppASVAB(appInfo.id)){
+            link = "https://asvab-prep.com/";
+        } else if(isAppCDL(appInfo.id)) {
+            link = "https://cdl-prep.com/";
+        } else if(isAppTEAS(appInfo.id)) {
+            link = "https://teas-prep.com";
+        } else if(isAppGED(appInfo.id)) {
+            link = "https://ged-testprep.com";
         }
     }
     return (

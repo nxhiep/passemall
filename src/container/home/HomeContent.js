@@ -9,8 +9,10 @@ import { stringReplaceUrl } from "../../utils";
 import { useRouter } from "next/router";
 const HomeContent = ({ appInfo, appNameId, topicState, getTopicsByParentId, hasState, onChangeState, stateInfoState }) => {
     let parentId = appInfo.id;
+    let currentState;
     if (appInfo && appInfo.hasState && stateInfoState.mapCurrentStateInfo[appInfo.id]) {
-        parentId = stateInfoState.mapCurrentStateInfo[appInfo.id].id;
+        currentState = stateInfoState.mapCurrentStateInfo[appInfo.id];
+        parentId = currentState.id;
     }
     useEffect(() => {
         getTopicsByParentId(parentId);
@@ -30,6 +32,7 @@ const HomeContent = ({ appInfo, appNameId, topicState, getTopicsByParentId, hasS
             <Container>
                 <h2 className="main-title">
                     <span>All categories</span>
+                    {hasState && currentState ? <div style={{ marginLeft: "auto", marginRight: "20px" }}>{currentState.name}</div> : null}
                     {hasState ? <Button
                         variant="outlined"
                         color="primary"

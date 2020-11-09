@@ -216,3 +216,19 @@ export function getRecentPosts() {
     }
     return [];
 }
+
+export const isLocalhost = () => {
+    return process.env.NODE_ENV == 'development';
+}
+
+export const isAppASVAB = (appId) => appId == 5734055144325120;
+export const isAppCDL = (appId) => appId == 5722070642065408;
+export const isAppTEAS = (appId) => appId == 5186025303310336;
+export const isAppGED = (appId) => appId == 5296397775536128;
+export const isAppCNA = (appId) => appId == 5747415311187968;
+export const isAppMotorcycle = (appId) => appId == 5685506780168192;
+export const isAppDMV = (appId) => appId == 5082322646859776;
+
+export function isSuperApp(appId) {
+    return isAppASVAB(appId) || isAppCDL(appId) || isAppTEAS(appId) || isAppGED(appId);
+}
