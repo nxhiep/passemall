@@ -19,7 +19,7 @@ class TestInfo {
         this.index = index >= 0 ? index : -1;
         this.timeTest = timeTest ? timeTest : -1;
         this.topicId = topicId ? topicId : -1;
-        this.lock = index === 0 ? false : (lock === false ? false : true);
+        this.lock = lock === false ? false : true;
         this.playing = playing ? playing : false;
         this.statusProgress = statusProgress ? statusProgress : 1;
         this.progress = progress ? progress : 0;

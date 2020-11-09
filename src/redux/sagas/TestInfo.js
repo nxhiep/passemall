@@ -58,9 +58,9 @@ function* getTestInfo() {
             let data = yield call(getTestInfoApiCall, action.appId, action.stateId);
             let testInfos = new Array();
             if (data) {
-                data.forEach(el => {
+                data.sort((a, b) => a.index - b.index).forEach((el,index) => {
                     let testInfo = TestInfo.fromJS(el);
-                    if (testInfo.index === 0 && testInfo.lock === true) {
+                    if (index === 0 && testInfo.lock === true) {
                         testInfo.lock = false;
                     }
                     testInfos.push(testInfo);
@@ -85,9 +85,9 @@ function* getTestInfoByAppIdAndParentId() {
             }
             ("xxxxx data", data)
             if (data) {
-                data.forEach(el => {
+                data.sort((a, b) => a.index - b.index).forEach((el,index) => {
                     let testInfo = TestInfo.fromJS(el);
-                    if (testInfo.index === 0 && testInfo.lock === true) {
+                    if (index === 0 && testInfo.lock === true) {
                         testInfo.lock = false;
                     }
                     testInfos.push(testInfo);
