@@ -14,6 +14,7 @@ import Slider from 'react-slick';
 import { PersistGate } from 'redux-persist/integration/react';
 import Footer from '../components/Footer';
 import { Clock, FreeCircle, FreeIcon, LoginIcon, PenIcon, PeopleIcon, TotalQuestions } from '../components/Icons';
+import WebAppInfo from '../models/WebAppInfo';
 import configStore from '../redux/storeInHome';
 import { callApi } from '../services';
 import { isAppASVAB, isAppCDL, isAppCNA, isAppDMV, isAppGED, isAppMotorcycle, isSuperApp, oldUser, scrollToTopic, setScrollDownAuto } from '../utils';
@@ -114,6 +115,7 @@ const Home = ({ appInfoState }) => {
     }
     const [selectedState, setSelectedState] = useState(true);
     const [openPopupChangeState, setOpenPopupChangeState] = useState(false);
+    let webAppInfo = WebAppInfo.getAppInfo(appInfoState.id);
     return (
         <>
             <Head>
@@ -134,6 +136,8 @@ const Home = ({ appInfoState }) => {
             </Head>
             <div className="body-panel app">
                 <Header 
+                    webAppInfo={webAppInfo}
+                    appName={appInfoState.name} 
                     color={myColor.buttonHeader} 
                     bucket={appInfoState.bucket} 
                     isMobile={isMobile} 
@@ -148,10 +152,14 @@ const Home = ({ appInfoState }) => {
                     }}
                 />
                 <Features 
+                    webAppInfo={webAppInfo}
+                    appName={appInfoState.name} 
                     color={myColor.mainColor} 
                 />
-                <ExamOverview />
+                <ExamOverview webAppInfo={webAppInfo} />
                 <ListInfoGraphic 
+                    webAppInfo={webAppInfo}
+                    appName={appInfoState.name} 
                     appId={appInfoState.id} 
                     color={myColor.mainColor} 
                     appInfoState={appInfoState} 
@@ -195,6 +203,7 @@ const Home = ({ appInfoState }) => {
     )
 }
 const Header = (props) => {
+    let webAppInfo = props.webAppInfo ? props.webAppInfo : new WebAppInfo({ appName: props.appName });
     let onStartTest = props.onStartTest ? props.onStartTest : () => {}
     let appId = props.appId ? props.appId : -1;
     const classes = useStyles(props);
@@ -206,14 +215,14 @@ const Header = (props) => {
     if(!isSuperApp(appId)){
         bannerUrl = `url(/images/landing.svg)`;
     }
-    console.log('appNameId', appNameId);
+    console.log('appNameId', appNameId, 'webAppInfo', webAppInfo);
     return (
-        <header style={{ background: bannerUrl, backgroundSize: "cover", backgroundPosition: props.bucket === "cna" ? "100px 100px" : (props.isMobile ? "left" : "center"), minHeight: (props.bucket === "dmv" || props.bucket === "motocycle") ? "690px" : "630px" }}>
+        <header style={{ background: bannerUrl, backgroundSize: "cover", backgroundPosition: isAppCNA(appId) ? "100px 100px" : (props.isMobile ? "left" : "center"), minHeight: (isAppDMV(appId) || isAppMotorcycle(appId)) ? "690px" : "630px" }}>
             <Container className="container-header">
                 <Grid container alignItems="center" justify="space-between" className="header-tab-panel">
                     <div className="parent-logo">
                         <a href="/" className="logo">
-                            <img src={props.bucket === "cna" ? "/images/logo-landing-2.png" : "/images/logo-landing.png"} style={props.isMobile ? { height: "50px", paddingTop: "16px" } : { height: "80px" }} alt="logo-landing"></img>
+                            <img src={isAppCNA(appId) ? "/images/logo-landing-2.png" : "/images/logo-landing.png"} style={props.isMobile ? { height: "50px", paddingTop: "16px" } : { height: "80px" }} alt="logo-landing"></img>
                         </a>
                     </div>
                     {props.isMobile ?
@@ -245,22 +254,17 @@ const Header = (props) => {
                         :
                         <div className="menu-appbar">
                             <div className="menu-nav">
-                                <a href="#" onClick={() => scrollToTopic()} style={props.bucket === "cna" ? { color: "#000" } : {}}>Learn</a>
-                                <a href={"/" + appNameId + "/test"} style={props.bucket === "cna" ? { color: "#000" } : {}}>Test</a>
-                                <a href="" style={props.bucket === "cna" ? { color: "#000" } : {}}>Study guide</a>
+                                <a href="#" onClick={() => scrollToTopic()} style={isAppCNA(appId) ? { color: "#000" } : {}}>Learn</a>
+                                <a href={"/" + appNameId + "/test"} style={isAppCNA(appId) ? { color: "#000" } : {}}>Test</a>
+                                <a href="" style={isAppCNA(appId) ? { color: "#000" } : {}}>Study guide</a>
                             </div>
 
                         </div>
                     }
                 </Grid>
                 <div className="header-title">
-                    <h1 style={props.bucket === "cna" ? { color: "#000" } : { color: "#fff" }}>FREE 2020 GED PRACTICE TEST!</h1>
-                    <p style={props.bucket === "cna" ? { color: "#2282C4" } : { color: "#fff" }}>Getting ready for your motorcycle license test is tough
-                    Sometimes it's hard to find the official source, among
-                    other things. We've done the hard part for you and put
-                    together a list of the most recent official motorcycle
-                    handbooks for every U.S. state. Select your state in the
-                    drop-down above to find the latest official rider's manual (2020).</p>
+                    <h1 style={isAppCNA(appId) ? { color: "#000" } : { color: "#fff" }}>{webAppInfo.header.title}</h1>
+                    <p style={isAppCNA(appId) ? { color: "#2282C4" } : { color: "#fff" }}>{webAppInfo.header.description}</p>
                     <Button 
                         variant="contained"
                         className={classes.button} onClick={() => {scrollToTopic(); onStartTest()} }>START YOUR TEST</Button>
@@ -269,97 +273,55 @@ const Header = (props) => {
         </header>
     )
 }
-const Features = ({ color }) => {
+const Features = ({ color, webAppInfo, appName }) => {
+    if(!webAppInfo){
+        webAppInfo = new WebAppInfo({ appName: appName });
+    }
     const router = useRouter();
     return (
         <Container className="features-container">
             <div className="list-features">
                 <div>
                     <FreeIcon color={color}></FreeIcon>
-                    <h2>Free & Premium GED Test Practice</h2>
-                    <p>More effective than traditional MOTORCYCLE
-                    classes. Every practice test is based on
-                    authentic exam questions, and you can
-                    study at your own pace. We'll shuffle the
-                    questions every time you restart a test.</p>
+                    <h2>{webAppInfo.block1[0].title}</h2>
+                    <p>{webAppInfo.block1[0].description}</p>
                 </div>
                 <div >
                     <LoginIcon color={color}></LoginIcon>
-                    <h2>No Registration or Login Required</h2>
-                    <p>In the free mode, your test progress is
-                    saved without an account, even if you
-                    close your browser. No usernames or
-                    passwords to remember - just frictionless MORTORCYCLE training.</p>
+                    <h2>{webAppInfo.block1[1].title}</h2>
+                    <p>{webAppInfo.block1[1].description}</p>
                 </div>
                 <div>
                     <PenIcon color={color}></PenIcon>
-                    <h2>Exam Simulator - Just Like the Real Test</h2>
-                    <p>See if you're ready for the real thing with
-                    the MOTORCYCLE Exam Simulator
-                    Same number of questions presented
-                    the same way as the Nurse Aide exam.</p>
+                    <h2>{webAppInfo.block1[2].title}</h2>
+                    <p>{webAppInfo.block1[2].description}</p>
                 </div>
             </div>
         </Container>
     )
 }
-const ExamOverview = () => {
+const ExamOverview = ({ webAppInfo, appName }) => {
+    if(!webAppInfo){
+        webAppInfo = new WebAppInfo({ appName: appName });
+    }
     return (
         <Container className="overview-container">
             <div className="overview-title">
-                <h2>GED Exam Overview</h2>
-                <p>Every state in the USA administers their own ASVAB examination. Usually it's a two-part exam consisting of a written knowledge test
-                (a set of multiple-choice questions) and a skills evaluation. Depending on your state of residence, your MOTORCYCLE exam will be one of the
-            following third-party exam certification providers</p>
+                <h2>{webAppInfo.block2[0].title}</h2>
+                <p>{webAppInfo.block2[0].description}</p>
             </div>
             <div className="list-overview">
                 <div className="overview-item">
-                    <h2>Pearson Vue's National NNAAP</h2>
-                    <p>The National Nurse Assistant Assessment
-                    Program (NNAAP) is the nation's largest
-                    MOTORCYCLE exam assessment program.
-                    Their written knowledge exam is 70 multiple
-                    choice questions with four answer options.
-                    <br></br>
-                        <br></br>
-                    You can take the NNAAP Nurse Aid exam in
-                    the following jurisdictions: Alabama, Alaska,
-                    California, Colorado, DC, Georgia, Maryland,
-                    Minnesota, Mississippi, New Hampshire, North
-                    Carolina, Pennsylvania, Rhode Island,
-                    South Carolina, Texas, Virgin Islands, Virginia,
-                    Washington</p>
+                    <h2>{webAppInfo.block2[1].title}</h2>
+                    <p>{webAppInfo.block2[1].description}</p>
                 </div>
                 <div className="overview-item">
-                    <h2>Prometric's MOTORCYCLE Exam (Nurse Aide exam)</h2>
-                    <p>You'll be given 90 minutes to complete a
-                    60-question written examination, and
-                    30-40 minutes - to complete the clinical
-                    skills exam.
-                    <br></br>
-                        <br></br>
-                    If you live in one of the following eleven
-                    states, your CNA exam will most likely be
-                    administered by Prometric: Alabama
-                    Arkansas, Connecticut, Delaware, Florida
-                    Hawaii, Idaho, Michigan, New Mexico
-                    New York, Oklahoma.</p>
+                    <h2>{webAppInfo.block2[2].title}</h2>
+                    <p>{webAppInfo.block2[2].description}</p>
                 </div>
                 <div className="overview-item">
-                    <h2>HDMaster (D&S Diversified Technologies)</h2>
-                    <p>Just like the other test providers, the Headmaster
-                    MOTORCYCLE exam is administered in two stages:
-                    a written exam and a manual skills exam. The written
-                    MOTORCYCLE examination is 75 multiple-choice
-                    questions while the clinical skills exam is 3-4
-                    selected skills.
-                    <br />
-                        <br />
-                    The following twelve states use HDMaster to
-                    administer their MOTORCYCLE exam: Arizona,
-                    Montana, New Hampshire, North Dakota, New
-                    Jersey, Nevada, Ohio, Oklahoma, Oregon, South
-                    Dakota, Tennessee, Utah, Wisconsin.</p>
+                    <h2>{webAppInfo.block2[3].title}</h2>
+                    <p>{webAppInfo.block2[3].description}</p>
                 </div>
             </div>
 
@@ -376,6 +338,8 @@ const ListInfoGraphic = (props) => {
         srcImage1 = '/images/apps/all/scientifically-proven1.jpg';
         srcImage2 = '/images/apps/all/scientifically-proven2.jpg';
     }
+    let appName = props.appName ? props.appName : '';
+    let webAppInfo = props.webAppInfo ? props.webAppInfo : new WebAppInfo({ appName: props.appName });
     return (
         <>
             <Container>
@@ -385,20 +349,8 @@ const ListInfoGraphic = (props) => {
                     </Grid>
                     <Grid item xs={12} sm={1}></Grid>
                     <Grid item xs={12} sm={6}>
-                        <h2>Scientifically proven</h2>
-                        <p>Research shows that studying in the same way that
-                        you’ll be tested can increase your self-assurance, as
-                        well as your ability to focus on the test questions.
-                        <br />
-                                <br />
-                        We’ve designed our website training course to
-                        duplicate the exam experience, so it becomes familiar.
-                        <br />
-                                <br />
-                        Our TEAS practice tests cover all the patient
-                        care topics and personal care skills that are taught in
-                        traditional nursing programs and included in the official
-                        exam without any classroom instruction</p>
+                        <h2>{webAppInfo.block3.title}</h2>
+                        <p>{webAppInfo.block3.description}</p>
                         <Button className={classes.root} style={{marginTop: '50px'}} onClick={() => {scrollToTopic(); onStartTest(); }}>Start your test</Button>
                     </Grid>
                 </Grid>
@@ -406,26 +358,21 @@ const ListInfoGraphic = (props) => {
             <div style={{height: "100px", width: "100%"}}></div>
             <Container className="infographic-container">
                 <h2>Exam experience, duplicated</h2>
-                <p>Our TEAS Certification Exam Simulator is an effective way to practice for the actual exam.</p>
+                <p>Our {appName} Certification Exam Simulator is an effective way to practice for the actual exam.</p>
                 <div className="list-infographic">
                     <div>
-                        <div style={{ fontSize: "36px", color: props.color }}>$0</div>
-                        <p style={{ fontSize: "14px" }}>There is no fee to take the TEAS (CAT)</p>
+                        <div style={{ fontSize: "36px", color: props.color }}>{webAppInfo.numberInfo.number1}</div>
+                        <p style={{ fontSize: "14px" }}>There is no fee to take the {appName}</p>
                         <FreeCircle color={props.color} ></FreeCircle>
                     </div>
                     <div>
-                        <div style={{ fontSize: "24px", color: props.color }}>Total<br />questions</div>
-                        <p style={{ fontSize: "14px", lineHeight: "17px" }}><strong>145</strong> in TEAS (CAT)<br /><strong>225 </strong>in paper-base ASVAB</p>
+                        <div style={{ fontSize: "24px", color: props.color }}>{webAppInfo.numberInfo.number2}</div>
+                        <p style={{ fontSize: "14px", lineHeight: "17px" }}>Total questions</p>
                         <TotalQuestions color={props.color}></TotalQuestions>
                     </div>
-                    <div >
-                        <div style={{ fontSize: "36px", color: props.color }}>172k</div>
-                        <p style={{ fontSize: "14px" }}>Approx. number of annual enlistees in US millitary</p>
-                        <PeopleIcon color={props.color}></PeopleIcon>
-                    </div>
                     <div>
-                        <div style={{ fontSize: "36px", color: props.color }}>154</div>
-                        <p style={{ fontSize: "14px" }}>Total time (minutes) to take the GED</p>
+                        <div style={{ fontSize: "36px", color: props.color }}>{webAppInfo.numberInfo.number3}</div>
+                        <p style={{ fontSize: "14px" }}>Total time (minutes) to take the {appName}</p>
                         <Clock color={props.color}></Clock>
                     </div>
 
@@ -434,20 +381,8 @@ const ListInfoGraphic = (props) => {
             <Container>
                 <Grid container alignItems="stretch">
                     <Grid item xs={12} sm={6}>
-                        <h2 style={{ fontSize: "36px" }}>Total confidence.<br></br>This is what you get</h2>
-                        <p>Research shows that studying in the same way that
-                        you’ll be tested can increase your self-assurance, as
-                        well as your ability to focus on the test questions.
-                    <br />
-                            <br />
-                    We’ve designed our website training course to
-                    duplicate the exam experience, so it becomes familiar.
-                    <br />
-                            <br />
-                    Our TEAS practice tests cover all the patient
-                    care topics and personal care skills that are taught in
-                    traditional nursing programs and included in the official
-                    exam without any classroom instruction</p>
+                        <h2>{webAppInfo.block5.title}</h2>
+                        <p>{webAppInfo.block5.description}</p>
                     <div style={{ display: "flex", flexDirection: "column", justifyContent: "flex-start", width: "200px" }}>
                         <Button className={classes.root} onClick={() =>{ scrollToTopic(); onStartTest(); }} fullWidth={false}> Start your test</Button>
                         <ArrowDownwardIcon style={

@@ -9,7 +9,7 @@ const Transition = React.forwardRef(function Transition(props, ref) {
     return <Slide direction="up" ref={ref} {...props} />;
 });
 
-const SelectStatePopup = ({ stateInfoState, getStateInfo, setCurrentStateInfo, appInfo, openPopupChangeState, onHidden, openDefault=true, onLoaded }) => {
+const SelectStatePopup = ({ stateInfoState, getStateInfo, setCurrentStateInfo, appInfo, openPopupChangeState, onHidden, openDefault, onLoaded }) => {
     const [open, setOpen] = useState(!stateInfoState.mapCurrentStateInfo[appInfo.id] && openDefault);
     useEffect(() => {
         if (appInfo.hasState) {

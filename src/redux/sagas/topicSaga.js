@@ -117,7 +117,7 @@ function* getTopicByIdSaga() {
             let action = yield take(Types.GET_TOPIC_BY_ID);
             let bucket = action.bucket;
             let topic = yield call(getTopicByIdAPI, action.params);
-            ("xxxxx bucket", bucket)
+            // ("xxxxx bucket", bucket)
             if (Config.LISTBUCKET.indexOf(bucket) !== -1) {
                 yield put(setCurrentTopic(action.params, action.appId))
             }

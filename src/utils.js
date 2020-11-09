@@ -228,6 +228,11 @@ export const isAppGED = (appId) => appId == 5296397775536128;
 export const isAppCNA = (appId) => appId == 5747415311187968;
 export const isAppMotorcycle = (appId) => appId == 5685506780168192;
 export const isAppDMV = (appId) => appId == 5082322646859776;
+export const isAppComptiaA = (appId) => appId == 5655480462475264;
+export const isAppDrivingTheory = (appId) => appId == 5708468430307328;
+export const isAppPMP = (appId) => appId == 5738309204574208;
+export const isAppAccuplacer = (appId) => appId == 6425502466179072;
+export const isAppG1 = (appId) => appId == 5681717746597888;
 
 export function isSuperApp(appId) {
     return isAppASVAB(appId) || isAppCDL(appId) || isAppTEAS(appId) || isAppGED(appId);
