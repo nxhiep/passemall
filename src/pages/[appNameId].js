@@ -366,7 +366,7 @@ const ListInfoGraphic = (props) => {
 const ListTopic = () => {
     return (
         <Container style={{ textAlign: "center", marginTop: "70px" }}>
-            <h2 style={{ fontSize: "36px" }}>Start your TEAS Practice Test</h2>
+            <h2 style={{ fontSize: "36px" }}>Start your Practice Test</h2>
         </Container>
     )
 }
