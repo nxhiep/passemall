@@ -33,14 +33,12 @@ const SelectStatePopup = ({ stateInfoState, getStateInfo, setCurrentStateInfo, a
     let currentStateInfo = stateInfoState.mapCurrentStateInfo[appInfo.id];
     useEffect(() => {
         if(!currentStateInfo && stateInfos && stateInfos.length > 0){
-            stateInfos.forEach((element, index) => {
-                if(index == 4){
-                    currentStateInfo = element
-                }
-            });
-            setTimeout(() => {
-                currentStateInfo && setCurrentStateInfo(currentStateInfo);
-            }, 300)
+            if(stateInfos.length > 3){
+                setTimeout(() => {
+                    currentStateInfo = stateInfos[4];
+                    setCurrentStateInfo(currentStateInfo);
+                }, 300);
+            }
         }
     }, [stateInfos.length, !!currentStateInfo])
     useEffect(() => {
