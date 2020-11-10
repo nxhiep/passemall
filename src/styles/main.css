@@ -240,7 +240,9 @@ footer .footer-content .line {
     margin-bottom: 16px;
   }
   footer .footer-content {
-    margin-top: 16px;
+    margin-top: 0px;
+    padding: 20px;
+    box-sizing: border-box;
   }
   footer .footer-content .social {
     cursor: pointer;

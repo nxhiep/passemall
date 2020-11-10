@@ -1,4 +1,4 @@
-import { isAppASVAB, isAppCDL, isAppComptiaA, isAppDMV, isAppGED, isAppTEAS } from "../utils";
+import { isAppAccuplacer, isAppASVAB, isAppCDL, isAppCNA, isAppComptiaA, isAppDMV, isAppDrivingTheory, isAppG1, isAppGED, isAppMotorcycle, isAppPMP, isAppTEAS } from "../utils";
 
 class Info {
     constructor({title, description}){
@@ -15,6 +15,15 @@ class NumberInfo {
     }
 }
 
+class MainColor {
+    constructor({ colorFooter, mainColor, screenShotColor, buttonHeader }){
+        this.colorFooter = colorFooter;
+        this.mainColor = mainColor;
+        this.screenShotColor = screenShotColor;
+        this.buttonHeader = buttonHeader;
+    }
+}
+
 export default class WebAppInfo {
     constructor({
         header,
@@ -23,7 +32,8 @@ export default class WebAppInfo {
         block3,
         block5,
         numberInfo,
-        appName
+        appName,
+        mainColor
     }) {
         if(!appName){
             appName = ''
@@ -99,11 +109,19 @@ export default class WebAppInfo {
             })
         }
         if(!numberInfo){
-            this.numberInfo = new NumberInfo({
+            numberInfo = new NumberInfo({
                 number1: 0,
                 number2: 50,
                 number3: 120
             });
+        }
+        if(!mainColor){
+            mainColor = new MainColor({
+                colorFooter: "#5B6695",
+                mainColor: "#5B6695",
+                screenShotColor: "#5B6695",
+                buttonHeader: "#FAFAFA"
+            })
         }
         this.header = header;
         this.block1 = block1;
@@ -111,9 +129,10 @@ export default class WebAppInfo {
         this.block3 = block3;
         this.block5 = block5;
         this.numberInfo = numberInfo;
+        this.mainColor = mainColor;
     }
 
-    static getAppInfo(appId) {
+    static getAppInfo(appId, appName) {
         if(isAppTEAS(appId)){
             return this.getTEAS();
         }
@@ -144,7 +163,24 @@ export default class WebAppInfo {
         if(isAppG1(appId)){
             return this.getG1();
         }
-        return this;
+        let _this = new WebAppInfo({ appName: appName });
+        if(isAppCNA(appId)){
+            _this.mainColor = new MainColor({
+                colorFooter: "#1C7BBE",
+                mainColor: "#1C7BBE",
+                screenShotColor: "#82AFD1",
+                buttonHeader: "#1C7BBE"
+            })
+        }
+        if(isAppMotorcycle(appId)){
+            _this.mainColor = new MainColor({
+                colorFooter: "#4E63BD",
+                mainColor: "#495EBF",
+                screenShotColor: "#6679CC",
+                buttonHeader: "#FAFAFA"
+            })
+        }
+        return _this;
     }
 
     static getTEAS() {
@@ -296,6 +332,12 @@ export default class WebAppInfo {
                 number1: "Varies depending on state",
                 number2: "20-50 varies depending on state",
                 number3: "45-60 minutes"
+            }),
+            mainColor: new MainColor({
+                colorFooter: "#5B6695",
+                mainColor: "#5B6695",
+                screenShotColor: "#5B6695",
+                buttonHeader: "#FAFAFA"
             })
         });
     }
@@ -367,6 +409,12 @@ export default class WebAppInfo {
                 number1: "Free",
                 number2: "154 in computer-based and 225 in paper-based ASVAB",
                 number3: "154 minutes"
+            }),
+            mainColor: new MainColor({
+                colorFooter: "#8A8862",
+                mainColor: "#8A8862",
+                screenShotColor: "#A6A480",
+                buttonHeader: "#FAFAFA"
             })
         });
     }
@@ -439,6 +487,12 @@ export default class WebAppInfo {
                 number1: "Varies depending on state",
                 number2: "20-50 varies depending on state",
                 number3: "20-20 minutes"
+            }),
+            mainColor: new MainColor({
+                colorFooter: "#4E63BD",
+                mainColor: "#495EBF",
+                screenShotColor: "#6679CC",
+                buttonHeader: "#FAFAFA"
             })
         });
     }
@@ -511,6 +565,12 @@ export default class WebAppInfo {
                 number1: "120 for 4 sections",
                 number2: "Maximum 161 questions",
                 number3: "445 minutes"
+            }),
+            mainColor: new MainColor({
+                colorFooter: "#E07730",
+                mainColor: "#FA8E45",
+                screenShotColor: "#FFA86C",
+                buttonHeader: "#FA8E45"
             })
         });
     }

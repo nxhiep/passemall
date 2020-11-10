@@ -1,10 +1,22 @@
-import React from 'react';
-import Slider from "react-slick";
-import { TitleBlock } from '../../components/Widgets';
+import { CircularProgress, Container } from '@material-ui/core';
 import { useTheme } from '@material-ui/core/styles';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
-import { Container } from '@material-ui/core';
-const FeedbackAppsUI = ({ userRateState }) => {
+import React, { useEffect, useState } from 'react';
+import Slider from "react-slick";
+import { TitleBlock } from '../../components/Widgets';
+import { callApi } from '../../services';
+const FeedbackAppsUI = () => {
+    const [userRates, setUserRates] = useState(null);
+    useEffect(() => {
+        callApi({ url: '/data?type=get_user_rates_perfectest', params: null, method: 'post' }).then((data) => {
+            if(data){
+                setUserRates(data.slice(0, 3))
+            } else {
+                setUserRates([])
+            };
+        })
+    }, []);
+
     const theme = useTheme();
     const isMobile = useMediaQuery(theme.breakpoints.between(0, 960));
     const settings = {
@@ -18,13 +30,11 @@ const FeedbackAppsUI = ({ userRateState }) => {
         autoplaySpeed: 1500,
         arrows: false
     };
-    let userRates = [];
-    for (let i = 0; i < userRateState.length; i++) {
-        if (i < 3) {
-            userRates.push(userRateState[i]);
-        } else {
-            break;
-        }
+    if(!userRates){
+        return <CircularProgress />
+    }
+    if(userRates.length == 0){
+        return null
     }
     return (
         <section className="feedback-apps">

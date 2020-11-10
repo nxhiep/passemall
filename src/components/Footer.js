@@ -1,4 +1,4 @@
-import { Container, Divider, IconButton } from '@material-ui/core';
+import { Container, Divider, Grid, IconButton } from '@material-ui/core';
 import React from 'react';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
@@ -31,88 +31,97 @@ const Footer = ({ alt = '', isStudy, color, bucket = "" }) => {
         <footer style={{ backgroundColor: color }}>
             {isMobile ? (
                 <div className="footer-content">
-                    <div className="footer-main" >
-                        <div className="logo-footer">
-                            <img src={srcImage} alt="logo-footer" style={{ cursor: "pointer" }} ></img>
-                        </div>
-                        <div className="container-content">
-                            <div style={{ display: "flex", justifyContent: "space-between" }}>
-                                <div className="company">
-                                    <div>Company</div>
-                                    <a href="">About</a>
-                                    <a href="">Privacy</a>
-                                    <a href="">Terms of service</a>
-                                </div>
-                                <div className="resources">
-                                    <div>Resources</div>
-                                    <a href="/blog">Blog</a>
-                                    <a href="mailto:abc.elearningapps@gmail.com">Support</a>
-                                </div>
+                    <Grid container spacing={2}>
+                        <Grid item xs={12} sm={6} md={3}>
+                            <div className="logo-footer">
+                                <img src={srcImage} alt="logo-footer" style={{ cursor: "pointer" }} ></img>
                             </div>
-                            <div className="social">
-                                <TwitterFooter color={color}></TwitterFooter>
-                                <FacebookFooter color={color}></FacebookFooter>
-                                <InstaFooter color={color}></InstaFooter>
-                                <Youtube color={color}></Youtube>
-                                <GmailFooter color={color}></GmailFooter>
+                        </Grid>
+                        <Grid item xs={12} sm={6} md={3}>
+                            <div className="resources">
+                                <div><strong>Resources</strong></div>
+                                <div><a href="/blog">Blog</a></div>
+                                <div><a href="mailto:abc.elearningapps@gmail.com">abc.elearningapps@gmail.com</a></div>
                             </div>
-                        </div>
-                    </div>
+                        </Grid>
+                        <Grid item xs={12} sm={12} md={6}>
+                            <div className="company">
+                                <div><strong>Social</strong></div>
+                                <SocialWidget color={color} />
+                            </div>
+                        </Grid>
+                    </Grid>
                 </div>
             ) : (
                     <Container >
                         <div className="footer-content">
-                            <div className="footer-main" >
-                                <div className="logo-footer">
-                                    <img src={srcImage} alt="logo-footer" height="72px" style={{ cursor: "pointer" }} ></img>
-                                </div>
-                                <div className="company">
-                                    <div>Company</div>
-
-                                    <a href="">About</a>
-                                    <a href="">Privacy</a>
-                                    <a href="">Terms of service</a>
-                                </div>
-                                <div className="resources">
-                                    <div>Resources</div>
-                                    <a href="">Blog</a>
-                                    <a href="">Support</a>
-                                </div>
-                                <div className="social">
-                                    <a href="https://twitter.com/abcelearningapp" target="_blank">
-                                        <TwitterFooter color={color}></TwitterFooter>
-                                        <span style={{ marginLeft: "8px" }}>Twitter</span>
-                                    </a>
-                                    <a href="https://www.facebook.com/ABC-E-learning-110654290809849" target="_blank">
-                                        <FacebookFooter color={color}></FacebookFooter>
-                                        <span style={{ marginLeft: "8px" }}>Facebook</span>
-                                    </a>
-                                    <a href="https://www.youtube.com/channel/UCkLKqup_8asTJGtQIgXCOZg" target="_blank">
-                                        <Youtube color={color}></Youtube>
-                                        <span style={{ marginLeft: "8px" }}>Youtube channel</span>
-                                    </a>
-                                    <a href="https://www.tumblr.com/blog/view/abcelearningapps" target="_blank">
-                                        <TumblrIcon color={color} bgColor="white"></TumblrIcon>
-                                        <span style={{ marginLeft: "8px" }}>Tumblr</span>
-                                    </a>
-                                    <a href="https://www.linkedin.com/in/abc-elearningapps-ab9a231b8" target="_blank">
-                                        <LinkedInFooter color={color}></LinkedInFooter>
-                                        <span style={{ marginLeft: "8px" }}>LinkedIn</span>
-                                    </a>
-                                    <a href="mailto:abc.elearningapps@gmail.com" target="_blank">
-                                        <GmailFooter color={color}></GmailFooter>
-                                        <span style={{ marginLeft: "8px" }}>Gmail</span>
-                                    </a>
-                                </div>
-                            </div>
-
+                            <Grid container spacing={2}>
+                                <Grid item xs={12} sm={6} md={4}>
+                                    <div className="logo-footer">
+                                        <img src={srcImage} alt="logo-footer" style={{ cursor: "pointer" }} ></img>
+                                    </div>
+                                </Grid>
+                                <Grid item xs={12} sm={6} md={4}>
+                                    <div className="resources">
+                                        <div><strong>Resources</strong></div>
+                                        <div><a href="/blog">Blog</a></div>
+                                        <div><a href="mailto:abc.elearningapps@gmail.com">abc.elearningapps@gmail.com</a></div>
+                                    </div>
+                                </Grid>
+                                <Grid item xs={12} sm={12} md={4}>
+                                    <div className="company">
+                                            <div><strong>Social</strong></div>
+                                            <SocialWidget color={color} />
+                                        </div>
+                                </Grid>
+                            </Grid>
                             <Divider className="line"></Divider>
-
                         </div>
                     </Container>
                 )}
         </footer>
     );
+}
+
+const SocialWidget = ({ color }) => {
+    return <Grid container spacing={2}>
+        <Grid item xs={12} sm={12} md={6}>
+            <a href="https://twitter.com/abcelearningapp" target="_blank">
+                <TwitterFooter color={color}></TwitterFooter>
+                <span style={{ marginLeft: "8px" }}>Twitter</span>
+            </a>
+        </Grid>
+        <Grid item xs={12} sm={12} md={6}>
+            <a href="https://www.facebook.com/ABC-E-learning-110654290809849" target="_blank">
+                <FacebookFooter color={color}></FacebookFooter>
+                <span style={{ marginLeft: "8px" }}>Facebook</span>
+            </a>
+        </Grid>
+        <Grid item xs={12} sm={12} md={6}>
+            <a href="https://www.youtube.com/channel/UCkLKqup_8asTJGtQIgXCOZg" target="_blank">
+                <Youtube color={color}></Youtube>
+                <span style={{ marginLeft: "8px" }}>Youtube</span>
+            </a>
+        </Grid>
+        <Grid item xs={12} sm={12} md={6}>
+            <a href="https://www.tumblr.com/blog/view/abcelearningapps" target="_blank">
+                <TumblrIcon color={color} bgColor="white"></TumblrIcon>
+                <span style={{ marginLeft: "8px" }}>Tumblr</span>
+            </a>
+        </Grid>
+        <Grid item xs={12} sm={12} md={6}>
+            <a href="https://www.linkedin.com/in/abc-elearningapps-ab9a231b8" target="_blank">
+                <LinkedInFooter color={color}></LinkedInFooter>
+                <span style={{ marginLeft: "8px" }}>LinkedIn</span>
+            </a>
+        </Grid>
+        <Grid item xs={12} sm={12} md={6}>
+            <a href="mailto:abc.elearningapps@gmail.com" target="_blank">
+                <GmailFooter color={color}></GmailFooter>
+                <span style={{ marginLeft: "8px" }}>abc.elearningapps@gmail.com</span>
+            </a>
+        </Grid>
+    </Grid>
 }
 const FooterStudy = ({ isMobile }) => {
     const router = useRouter();

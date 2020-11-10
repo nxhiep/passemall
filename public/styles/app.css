@@ -39,6 +39,7 @@ header .menu-appbar .menu-nav a {
 header .container-header .header-title {
   padding-left: 8px;
   width: 30%;
+  color: white;
 }
 header .container-header .header-title h1 {
   font-weight: 700;
@@ -235,6 +236,7 @@ header .container-header .header-title p {
 }
 @media (max-width: 960px) {
   .MuiContainer-root.infographic-container {
+    margin-bottom: 50px;
     display: none;
   }
 }
@@ -385,4 +387,28 @@ header .container-header .header-title p {
     .app-info-right {
     margin-left: 8px;
   }
+}
+
+.list-infographic-new .MuiGrid-root.MuiGrid-item > div{
+  background-color: #F7F8FF;
+  box-shadow: 2px 2px 20px rgba(0, 0, 0, 0.1);
+  border-radius: 5px;
+  padding: 20px;
+}
+
+.list-infographic-new .titlex {
+  font-weight: bold;
+  font-size: 36px;
+  line-height: 43px;
+  letter-spacing: -0.02em;
+  padding: 0 20px;
+  min-height: 130px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.list-infographic-new .descriptionx {
+  font-size: 14px;
+  min-height: 34px;
 }

@@ -235,5 +235,8 @@ export const isAppAccuplacer = (appId) => appId == 6425502466179072;
 export const isAppG1 = (appId) => appId == 5681717746597888;
 
 export function isSuperApp(appId) {
-    return isAppASVAB(appId) || isAppCDL(appId) || isAppTEAS(appId) || isAppGED(appId);
+    return isAppASVAB(appId) || isAppCDL(appId) 
+        || isAppTEAS(appId) || isAppGED(appId)
+        || isAppCNA(appId) || isAppDMV(appId)
+        || isAppMotorcycle(appId);
 }

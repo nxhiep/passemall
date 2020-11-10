@@ -1,19 +1,19 @@
 import { Container, Grid, IconButton, InputAdornment, List, ListItem, ListItemText, makeStyles, SwipeableDrawer, TextField, useMediaQuery, useTheme } from '@material-ui/core';
+import MenuIcon from '@material-ui/icons/Menu';
+import SearchIcon from '@material-ui/icons/Search';
+import fs from 'fs';
+import { useRouter } from 'next/router';
+import path from 'path';
 import React, { useEffect, useState } from 'react';
+import ReactGA from 'react-ga';
+import Footer from '../components/Footer';
+import SEO from '../components/SEO';
+import { Modal } from "../components/Widgets";
 import FeedbackApps from '../container/landingpage/FeedbackApps';
 import ListGreatApps from '../container/landingpage/ListGreatApps';
 import StatictisApps from '../container/landingpage/StatictisApps';
-import SearchIcon from '@material-ui/icons/Search';
-import ReactGA from 'react-ga';
-import fs from 'fs';
-import path from 'path'
-import Head from 'next/head';
-import MenuIcon from '@material-ui/icons/Menu';
-import Footer from '../components/Footer';
-import { oldUser, scrollDown, setScrollDownAuto } from '../utils';
-import { useRouter } from 'next/router';
-import { Modal } from "../components/Widgets";
 import { callApi } from '../services';
+import { oldUser, scrollDown, setScrollDownAuto } from '../utils';
 function initializeReactGA() {
     ReactGA.initialize('UA-167769768-1');
 }
@@ -32,9 +32,7 @@ const useStyles = makeStyles({
     }
 })
 initializeReactGA();
-const LandingPage = ({ appInfoState, userRateState }) => {
-    const description = "With thousands of our FREE practice questions, we are here to help you achieve your gate of success with our test prep solutions."
-    const title = "ABC Learning"
+const LandingPage = ({ appInfoState, url }) => {
     useEffect(() => {
         setScrollDownAuto()
         oldUser();
@@ -64,24 +62,11 @@ const LandingPage = ({ appInfoState, userRateState }) => {
     const isMobile = useMediaQuery(theme.breakpoints.between(0, 780));
     return (
         <>
-            <Head>
-                <title>ABC Learning</title>
-                <link rel="icon" href="images/logo.svg" />
-                <link href="https://fonts.googleapis.com/css2?family=Russo+One&display=swap" rel="stylesheet"></link>
-                <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;500;900&display=swap" rel="stylesheet"></link>
+            <SEO url={url}>
                 <link rel="stylesheet" type="text/css" href="/styles/slick.css" />
                 <link rel="stylesheet" type="text/css" href="/styles/slick-theme.css" />
                 <link rel="stylesheet" type="text/css" href="/styles/landing-page.css" />
-                <link rel="preconnect" href="https://storage.googleapis.com" />
-                <link rel="canonical" href="https://passemall.com"></link>
-                <meta property="og:type" content="website" />
-                <meta name="theme-color" content="#000000" />
-                <meta name="title" content={title} />
-                <meta name="description" content={description} />
-                <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-                <meta name="keywords" content="Abc e-learning, abc elearning, study online,practice test, practice question,exam prepare,asvab,teas exam,cdl test,cdl practice,cissp exam,cissp practice,accuplacer,comptia practice test,comptia A+,compTIA Network,comptia security,dmv,dmv practice test,driving theory,driving theory UK,G1 test,GED,hesi,hesi A2,motorcycle permit,pmp,pmp exam,ptcb,ptce,real estate exam,practice app,practice test onl,free practice test,free practice questions,free practice app" />
-            </Head>
-
+            </SEO>
             <div className='body-panel landing-page'>
                 <Modal show={open} click={handleClose}>
                     <div style={{ marginLeft: "auto", marginRight: "auto" }}>
@@ -107,7 +92,7 @@ const LandingPage = ({ appInfoState, userRateState }) => {
                 <Header setOpen={setOpen} showResult={showResult} isMobile={isMobile} />
                 <ListGreatApps appInfoState={appInfoState} />
                 <StatictisApps />
-                <FeedbackApps userRateState={userRateState} />
+                <FeedbackApps />
                 <Footer color="#4E63BD"></Footer>
             </div>
         </>
@@ -279,15 +264,12 @@ const Header = ({ setOpen, showResult, isMobile }) => {
 //                 </Grid>
 //             </Grid>
 
-export async function getStaticProps(context) {
+export async function getServerSideProps(context) {
     const appInfoState = await callApi({ url: '/data?type=get_all_app_info', params: null, method: 'post' });
-    const directoryUserRate = path.join(process.cwd(), 'src/data/userRatePerfect.json')
-    let userRateFile = fs.readFileSync(directoryUserRate);
-    const useRateState = Object.values(JSON.parse(userRateFile));
     return {
         props: {
             appInfoState: appInfoState,
-            userRateState: useRateState
+            url: context.req.headers.referer
         }
 
     }
