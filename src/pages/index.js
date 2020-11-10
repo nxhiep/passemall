@@ -265,15 +265,9 @@ const Header = ({ setOpen, showResult, isMobile }) => {
 //             </Grid>
 
 export async function getServerSideProps(context) {
+    // console.log("context.req.headers", context.req.headers)
     const appInfoState = await callApi({ url: '/data?type=get_all_app_info', params: null, method: 'post' });
     let url = context.req.headers.referer;
-    if(!url){
-        if(isLocalhost()){
-            url = "http://" + context.req.headers.host;
-        } else {
-            url = "https://" + context.req.headers.host;
-        }
-    }
     return {
         props: {
             appInfoState: appInfoState ? appInfoState : [],

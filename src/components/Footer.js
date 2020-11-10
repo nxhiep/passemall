@@ -41,7 +41,6 @@ const Footer = ({ alt = '', isStudy, color, bucket = "" }) => {
                             <div className="resources">
                                 <div><strong>Resources</strong></div>
                                 <div><a href="/blog">Blog</a></div>
-                                <div><a href="mailto:abc.elearningapps@gmail.com">abc.elearningapps@gmail.com</a></div>
                             </div>
                         </Grid>
                         <Grid item xs={12} sm={12} md={6}>
@@ -65,7 +64,6 @@ const Footer = ({ alt = '', isStudy, color, bucket = "" }) => {
                                     <div className="resources">
                                         <div><strong>Resources</strong></div>
                                         <div><a href="/blog">Blog</a></div>
-                                        <div><a href="mailto:abc.elearningapps@gmail.com">abc.elearningapps@gmail.com</a></div>
                                     </div>
                                 </Grid>
                                 <Grid item xs={12} sm={12} md={4}>
@@ -115,7 +113,7 @@ const SocialWidget = ({ color }) => {
                 <span style={{ marginLeft: "8px" }}>LinkedIn</span>
             </a>
         </Grid>
-        <Grid item xs={12} sm={12} md={6}>
+        <Grid item xs={12} sm={12} md={12}>
             <a href="mailto:abc.elearningapps@gmail.com" target="_blank">
                 <GmailFooter color={color}></GmailFooter>
                 <span style={{ marginLeft: "8px" }}>abc.elearningapps@gmail.com</span>
