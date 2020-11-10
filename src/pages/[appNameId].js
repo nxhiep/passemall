@@ -15,7 +15,7 @@ import SEO from '../components/SEO';
 import WebAppInfo from '../models/WebAppInfo';
 import configStore from '../redux/storeInHome';
 import { callApi } from '../services';
-import { isAppDMV, isAppMotorcycle, isSuperApp, oldUser, scrollToTopic, setScrollDownAuto } from '../utils';
+import { isAppASVAB, isAppCDL, isAppDMV, isAppGED, isAppMotorcycle, isAppTEAS, isSuperApp, oldUser, scrollToTopic, setScrollDownAuto } from '../utils';
 const HomeContent = dynamic(() => import("../container/home/HomeContent"), { ssr: false })
 const SelectStatePopup = dynamic(() => import("../components/SelectStatePopup"), { ssr: false })
 initializeReactGA();
@@ -55,13 +55,24 @@ const Home = ({ appInfoState, url }) => {
         setScrollDownAuto("home")
         oldUser()
     }, [])
-    const canonical = `https://passemall.com/${appInfoState.appNameId}`;
-
     const [selectedState, setSelectedState] = useState(true);
     const [openPopupChangeState, setOpenPopupChangeState] = useState(false);
     let webAppInfo = WebAppInfo.getAppInfo(appInfoState.id, appInfoState.name);
     let myColor = webAppInfo.mainColor;
-    console.log("appInfoState.bucket", appInfoState.bucket)
+    // console.log("appInfoState.bucket", appInfoState.bucket)
+    if(!url){
+        if(isAppASVAB(appInfoState.id)){
+            url = 'http://asvab-prep.com/';
+        } else if(isAppCDL(appInfoState.id)){
+            url = 'http://cdl-prep.com/';
+        } else if(isAppTEAS(appInfoState.id)){
+            url = 'https://teas-prep.com/';
+        } else if(isAppGED(appInfoState.id)){
+            url = 'https://ged-testprep.com/';
+        } else {
+            url = 'http://passemall.com/' + appInfoState.appNameId;
+        }
+    }
     return (
         <>
             <SEO appInfo={appInfoState} url={url}>
@@ -456,10 +467,11 @@ const FeedbackItem = ({ content, name, createTime, index }) => {
 export async function getServerSideProps(context) {
     const { appNameId } = context.params;
     const appInfoState = await callApi({ url: '/data?type=get_app_info&appNameId=' + appNameId, params: null, method: 'post' })
+    let url = context.req.headers.referer;
     return {
         props: {
-            appInfoState: appInfoState,
-            url: context.req.headers.referer
+            appInfoState: appInfoState ? appInfoState : {},
+            url: url ? url : ''
         }
     }
 }

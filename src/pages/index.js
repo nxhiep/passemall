@@ -13,7 +13,7 @@ import FeedbackApps from '../container/landingpage/FeedbackApps';
 import ListGreatApps from '../container/landingpage/ListGreatApps';
 import StatictisApps from '../container/landingpage/StatictisApps';
 import { callApi } from '../services';
-import { oldUser, scrollDown, setScrollDownAuto } from '../utils';
+import { isLocalhost, oldUser, scrollDown, setScrollDownAuto } from '../utils';
 function initializeReactGA() {
     ReactGA.initialize('UA-167769768-1');
 }
@@ -62,7 +62,7 @@ const LandingPage = ({ appInfoState, url }) => {
     const isMobile = useMediaQuery(theme.breakpoints.between(0, 780));
     return (
         <>
-            <SEO url={url}>
+            <SEO url={url ? url : 'http://passemall.com/'}>
                 <link rel="stylesheet" type="text/css" href="/styles/slick.css" />
                 <link rel="stylesheet" type="text/css" href="/styles/slick-theme.css" />
                 <link rel="stylesheet" type="text/css" href="/styles/landing-page.css" />
@@ -266,10 +266,18 @@ const Header = ({ setOpen, showResult, isMobile }) => {
 
 export async function getServerSideProps(context) {
     const appInfoState = await callApi({ url: '/data?type=get_all_app_info', params: null, method: 'post' });
+    let url = context.req.headers.referer;
+    if(!url){
+        if(isLocalhost()){
+            url = "http://" + context.req.headers.host;
+        } else {
+            url = "https://" + context.req.headers.host;
+        }
+    }
     return {
         props: {
-            appInfoState: appInfoState,
-            url: context.req.headers.referer
+            appInfoState: appInfoState ? appInfoState : [],
+            url: url ? url : ''
         }
 
     }

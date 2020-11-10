@@ -218,7 +218,12 @@ export function getRecentPosts() {
 }
 
 export const isLocalhost = () => {
+    // return true; // TODO
     return process.env.NODE_ENV == 'development';
+}
+
+export const redirectToNewDomain = () => {
+    return false;
 }
 
 export const isAppASVAB = (appId) => appId == 5734055144325120;

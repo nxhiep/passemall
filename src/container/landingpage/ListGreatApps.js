@@ -3,7 +3,7 @@ import { useRouter } from 'next/router';
 import React from 'react';
 import { FixedContainer, TitleBlock } from '../../components/Widgets';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore'
-import { isAppASVAB, isAppCDL, isAppGED, isAppTEAS, isLocalhost } from '../../utils';
+import { isAppASVAB, isAppCDL, isAppGED, isAppTEAS, isLocalhost, redirectToNewDomain } from '../../utils';
 
 const ListGreatApps = ({ appInfoState }) => {
     let appInfos = appInfoState
@@ -87,7 +87,7 @@ const AppInfoItem = ({ appInfo, index }) => {
     let appNameId = appInfo.appNameId;
     let appName = appInfo.appName ? appInfo.appName : appInfo.title;
     let link = "/" + appNameId;
-    if(!isLocalhost()){
+    if(redirectToNewDomain){
         if(isAppASVAB(appInfo.id)){
             link = "https://asvab-prep.com/";
         } else if(isAppCDL(appInfo.id)) {
