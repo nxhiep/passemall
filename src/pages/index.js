@@ -264,6 +264,20 @@ const Header = ({ setOpen, showResult, isMobile }) => {
 //                 </Grid>
 //             </Grid>
 
+const AllApppPage = ({ appInfoState, url }) => {
+    return <>
+        <SEO url={url ? url : 'http://passemall.com/'}>
+            <link rel="stylesheet" type="text/css" href="/styles/slick.css" />
+            <link rel="stylesheet" type="text/css" href="/styles/slick-theme.css" />
+            <link rel="stylesheet" type="text/css" href="/styles/landing-page.css" />
+        </SEO>
+        <div>
+            <h1>Home</h1>
+
+        </div>
+    </>
+}
+
 export async function getServerSideProps(context) {
     // console.log("context.req.headers", context.req.headers)
     const appInfoState = await callApi({ url: '/data?type=get_all_app_info', params: null, method: 'post' });

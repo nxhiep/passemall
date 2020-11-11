@@ -1,47 +1,58 @@
+import { createWrapper } from "next-redux-wrapper";
+import { applyMiddleware, createStore } from 'redux';
+import createEncryptor from "redux-persist-transform-encrypt";
+import autoMergeLevel2 from 'redux-persist/lib/stateReconciler/autoMergeLevel2';
 import createSagaMiddleware from 'redux-saga';
-import { createStore, applyMiddleware, } from 'redux';
+import Config from '../config';
 import rootReducer from './reducers/index';
 import rootSaga from './sagas';
-import { persistReducer, persistStore } from 'redux-persist';
-import localforage from 'localforage';
-import autoMergeLevel2 from 'redux-persist/lib/stateReconciler/autoMergeLevel2';
-import createEncryptor from 'redux-persist-transform-encrypt';
-import Config from '../config';
-// import { logger } from 'redux-logger'
+
 const sagaMiddleware = createSagaMiddleware();
-const middlewares = [sagaMiddleware];
-// middlewares.push(logger)
-localforage.config({
-    driver: localforage.LOCALSTORAGE,
-    name: 'uTest',
-    version: 1.0,
-    size: 4980736,
-    storeName: 'data',
-    description: 'offline data for web',
-});
 
-const encryptor = createEncryptor({
-    secretKey: Config.SECRET_KEY,
-    onError: function (error) {
-    },
-});
-const persistConfig = {
-    key: 'root',
-    storage: localforage,
-    stateReconciler: autoMergeLevel2,
-    transform: [encryptor],
-    whitelist: ["cardReducer", "listGameState",
-        "cardProgressReducer", "topicReducer", "testSettingState",
-        "topicProgressReducer", "stateInfoState", "testInfoReducer", "timeLeftReducer"]
+const bindMiddleware = (middleware) => {
+    if (process.env.NODE_ENV !== "production") {
+        const { composeWithDevTools } = require("redux-devtools-extension");
+        return composeWithDevTools(applyMiddleware(...middleware));
+    }
+    return applyMiddleware(...middleware);
 };
-const pReducer = persistReducer(persistConfig, rootReducer);
 
-export default function configStore(
-) {
-    const store = createStore(
-        pReducer,
-        applyMiddleware(...middlewares));
-    const persistor = persistStore(store, null)
-    sagaMiddleware.run(rootSaga);
-    return { store, persistor };
-}
+const makeStore = ({ isServer }) => {
+    if (isServer) {
+        //If it's on server side, create a store
+        const store = createStore(rootReducer, bindMiddleware([sagaMiddleware]));
+        sagaMiddleware.run(rootSaga);
+        return store;
+    } else {
+        //If it's on client side, create a store which will persist
+        const { persistStore, persistReducer } = require("redux-persist");
+        const encryptor = createEncryptor({
+            secretKey: Config.SECRET_KEY,
+            onError: function (error) {
+            },
+        });
+        const storage = require("redux-persist/lib/storage").default;
+
+        const persistConfig = {
+            key: 'root',
+            storage,
+            stateReconciler: autoMergeLevel2,
+            transform: [encryptor],
+            whitelist: ["cardReducer", "listGameState",
+                "cardProgressReducer", "topicReducer", "testSettingState",
+                "topicProgressReducer", "stateInfoState", "testInfoReducer", "timeLeftReducer"]
+        };
+
+        const persistedReducer = persistReducer(persistConfig, rootReducer); // Create a new reducer with our existing reducer
+
+        const store = createStore(
+            persistedReducer,
+            bindMiddleware([sagaMiddleware])
+        ); // Creating the store again
+        store.__persistor = persistStore(store); // This creates a persistor object & push that persisted object to .__persistor, so that we can avail the persistability feature
+        sagaMiddleware.run(rootSaga);
+        return store;
+    }
+};
+
+export const wrapper = createWrapper(makeStore);

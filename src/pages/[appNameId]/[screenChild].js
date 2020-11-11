@@ -1,19 +1,16 @@
-import React, { useEffect } from 'react';
+import fs from "fs";
 import dynamic from 'next/dynamic';
+import Head from 'next/head';
+import { useRouter } from 'next/router';
+import path from "path";
+import React, { useEffect } from 'react';
+import ReactGA from 'react-ga';
+import Routes from '../../routes';
+import { callApi } from '../../services';
+import { oldUser, setScrollDownAuto } from '../../utils';
 const StudyViewScreen = dynamic(() => import('../../container/study/Study.View'), { ssr: false })
 const TestViewScreen = dynamic(() => import('../../container/test/Test.View'), { ssr: false })
 const ReviewViewScreen = dynamic(() => import('../../container/review/Review.View'), { ssr: false })
-import Head from 'next/head';
-import configStore from '../../redux/store';
-import { Provider } from 'react-redux';
-import { PersistGate } from 'redux-persist/integration/react';
-import { useRouter } from 'next/router';
-import Routes from '../../routes';
-import ReactGA from 'react-ga';
-import { oldUser, setScrollDownAuto } from '../../utils';
-import path from "path";
-import fs from "fs"
-import { callApi } from '../../services';
 initializeReactGA();
 function initializeReactGA() {
     ReactGA.initialize('UA-167769768-1');
@@ -23,7 +20,6 @@ const Screen = ({ appInfoState }) => {
         setScrollDownAuto()
         oldUser()
     }, [])
-    const store = configStore();
     return (
         <>
             <Head>
@@ -42,13 +38,7 @@ const Screen = ({ appInfoState }) => {
                 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
                 <meta name="keywords" content={appInfoState.keywords} />
             </Head>
-            <Provider store={store.store}>
-                <PersistGate
-                    persistor={store.persistor}
-                >
-                    <ScreenChild appInfoState={appInfoState} />
-                </PersistGate>
-            </Provider>
+            <ScreenChild appInfoState={appInfoState} />
         </>
     )
 }

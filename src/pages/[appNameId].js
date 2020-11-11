@@ -6,22 +6,17 @@ import dynamic from 'next/dynamic';
 import { useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react';
 import ReactGA from 'react-ga';
-import { Provider } from 'react-redux';
 import Slider from 'react-slick';
-import { PersistGate } from 'redux-persist/integration/react';
 import Footer from '../components/Footer';
 import { Clock, FreeCircle, FreeIcon, LoginIcon, PenIcon, TotalQuestions } from '../components/Icons';
 import SEO from '../components/SEO';
 import { FAQLink } from '../components/Widgets';
 import WebAppInfo from '../models/WebAppInfo';
-import { getTopicsByParentIdSuccess } from '../redux/actions';
-import configStore from '../redux/storeInHome';
 import { callApi } from '../services';
-import { getNewDomain, isAppDMV, isAppMotorcycle, isSuperApp, oldUser, scrollToTopic, setScrollDownAuto } from '../utils';
+import { getNewDomain, isSuperApp, oldUser, scrollToTopic, setScrollDownAuto } from '../utils';
 const HomeContent = dynamic(() => import("../container/home/HomeContent"), { ssr: false })
 const SelectStatePopup = dynamic(() => import("../components/SelectStatePopup"), { ssr: false })
 initializeReactGA();
-const store = configStore();
 function initializeReactGA() {
     ReactGA.initialize('UA-167769768-1');
 }
@@ -118,28 +113,24 @@ const Home = ({ appInfoState, url }) => {
                     }}
                 />
                 <ListTopic />
-                <Provider store={store.store}>
-                    <PersistGate persistor={store.persistor}>
-                        <HomeContent
-                            appInfo={appInfoState} appNameId={appInfoState.appNameId}
-                            hasState={appInfoState && appInfoState.hasState}
-                            onChangeState={() => {
-                                setOpenPopupChangeState(true);
-                            }}
-                        />
-                        {appInfoState && appInfoState.hasState ?
-                            <SelectStatePopup
-                                onLoaded={(selectedState) => {
-                                    setSelectedState(selectedState)
-                                }}
-                                openDefault={false}
-                                appInfo={appInfoState}
-                                openPopupChangeState={openPopupChangeState}
-                                onHidden={() => {
-                                    setOpenPopupChangeState(false);
-                                }} /> : ''}
-                    </PersistGate>
-                </Provider>
+                <HomeContent
+                    appInfo={appInfoState} appNameId={appInfoState.appNameId}
+                    hasState={appInfoState && appInfoState.hasState}
+                    onChangeState={() => {
+                        setOpenPopupChangeState(true);
+                    }}
+                />
+                {appInfoState && appInfoState.hasState ?
+                    <SelectStatePopup
+                        onLoaded={(selectedState) => {
+                            setSelectedState(selectedState)
+                        }}
+                        openDefault={false}
+                        appInfo={appInfoState}
+                        openPopupChangeState={openPopupChangeState}
+                        onHidden={() => {
+                            setOpenPopupChangeState(false);
+                        }} /> : ''}
                 <MobileDescription 
                     appInfoState={appInfoState} 
                     color={myColor.screenShotColor}
