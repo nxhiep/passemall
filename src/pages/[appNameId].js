@@ -14,6 +14,7 @@ import { Clock, FreeCircle, FreeIcon, LoginIcon, PenIcon, TotalQuestions } from 
 import SEO from '../components/SEO';
 import { FAQLink } from '../components/Widgets';
 import WebAppInfo from '../models/WebAppInfo';
+import { getTopicsByParentIdSuccess } from '../redux/actions';
 import configStore from '../redux/storeInHome';
 import { callApi } from '../services';
 import { getNewDomain, isAppDMV, isAppMotorcycle, isSuperApp, oldUser, scrollToTopic, setScrollDownAuto } from '../utils';
@@ -87,11 +88,12 @@ const Home = ({ appInfoState, url }) => {
                     appId={appInfoState.id} 
                     appNameId={appInfoState.appNameId} 
                     onStartTest={() => {
-                        if(!selectedState){
-                            setTimeout(() => {
-                                setOpenPopupChangeState(true);
-                            }, 300)
-                        }
+                        window.location.href = window.location.origin + window.location.pathname + '/test';
+                        // if(!selectedState){
+                        //     setTimeout(() => {
+                        //         setOpenPopupChangeState(true);
+                        //     }, 300)
+                        // }
                     }}
                 />
                 <Features 
@@ -159,9 +161,7 @@ const Header = (props) => {
     const appNameId = props.appNameId ? props.appNameId : router.query.appNameId;
     const bucketUrl = (props.bucket ? props.bucket + "/" : "");
     let imgUrl = `/images/apps/${bucketUrl}header-background.png`;
-    let bannerUrl = `url(/images/apps/${bucketUrl}header-background.png) no-repeat`;
     if(!isSuperApp(appId) || !props.bucket){
-        bannerUrl = `url(/images/landing.png) no-repeat`;
         imgUrl = `/images/landing.png`;
     }
     // console.log('appNameId', appNameId, 'webAppInfo', webAppInfo);
@@ -221,7 +221,7 @@ const Header = (props) => {
                         <Button 
                             style={{fontSize: '16px'}}
                             variant="contained"
-                            className={classes.button} onClick={() => {scrollToTopic(); onStartTest()} }>START YOUR TEST</Button>
+                            className={classes.button} onClick={() => { /*scrollToTopic()*/ onStartTest()} }>START YOUR TEST</Button>
                     </div>
                 </Container>
             </div>
@@ -299,7 +299,7 @@ const ListInfoGraphic = (props) => {
         <>
             <Container>
                 <Grid container alignItems="stretch">
-                    <Grid item xs={12} sm={5}>
+                    <Grid item xs={12} sm={4}>
                         <img width="100%" src={srcImage1} alt="infographic-1" style={{ display: "block" }}></img>
                     </Grid>
                     <Grid item xs={12} sm={1}></Grid>
@@ -308,9 +308,10 @@ const ListInfoGraphic = (props) => {
                         <p>{webAppInfo.block3.description}</p>
                         <Button className={classes.root} style={{marginTop: '50px'}} onClick={() => {scrollToTopic(); onStartTest(); }}>Start your test</Button>
                     </Grid>
+                    <Grid item xs={12} sm={1}></Grid>
                 </Grid>
             </Container>
-            <div style={{height: "100px", width: "100%"}}></div>
+            <div style={{height: "80px", width: "100%"}}></div>
             <Container className="infographic-container">
                 <h2>Exam experience, duplicated</h2>
                 <p>Our {appName} Certification Exam Simulator is an effective way to practice for the actual exam.</p>
@@ -341,7 +342,7 @@ const ListInfoGraphic = (props) => {
             </Container>
             <Container>
                 <Grid container alignItems="stretch">
-                    <Grid item xs={12} sm={6}>
+                    <Grid item xs={12} sm={5}>
                         <h2>{webAppInfo.block5.title}</h2>
                         <p>{webAppInfo.block5.description}</p>
                     <div style={{ display: "flex", flexDirection: "column", justifyContent: "flex-start", width: "200px" }}>
@@ -358,10 +359,11 @@ const ListInfoGraphic = (props) => {
                         }></ArrowDownwardIcon>
                     </div>
                 </Grid>
-                <Grid item xs={12} sm={1}></Grid>
-                <Grid item xs={12} sm={5}>
+                <Grid item xs={12} sm={2}></Grid>
+                <Grid item xs={12} sm={4}>
                     <img src={srcImage2} alt="infographic-2" style={{ display: "block", width: "100%" }}></img>
                 </Grid>
+                <Grid item xs={12} sm={1}></Grid>
                 </Grid>
             </Container>
         </>
@@ -369,7 +371,7 @@ const ListInfoGraphic = (props) => {
 }
 const ListTopic = () => {
     return (
-        <Container style={{ textAlign: "center", marginTop: "70px" }}>
+        <Container style={{ textAlign: "center", marginTop: "40px" }}>
             <h2 style={{ fontSize: "36px" }}>Start your Practice Test</h2>
         </Container>
     )
@@ -472,10 +474,13 @@ export async function getServerSideProps(context) {
     const { appNameId } = context.params;
     const appInfoState = await callApi({ url: '/data?type=get_app_info&appNameId=' + appNameId, params: null, method: 'post' })
     let url = context.req.headers.referer;
+    // let topics = [{ id: 1, name: "Topic 1"}, {id: 2, name: "Topic 2" }];
+    // context.store.dispatch.dispatch(getTopicsByParentIdSuccess(5722070642065408, topics))
     return {
         props: {
             appInfoState: appInfoState ? appInfoState : {},
-            url: url ? url : ''
+            url: url ? url : '',
+            // topics: topics,
         }
     }
 }

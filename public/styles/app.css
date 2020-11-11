@@ -177,8 +177,8 @@ header .container-header .header-title p {
 .mobile-description-container {
     backdrop-filter: blur(10px);
     border-radius: 20px;
-    margin-top: 92px;
-    margin-bottom: 150px;
+    margin-top: 70px;
+    margin-bottom: 120px;
     display: flex !important;
     padding: 0 !important
 }
