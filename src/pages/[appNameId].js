@@ -205,7 +205,7 @@ const Header = (props) => {
                         :
                         <div className="menu-appbar">
                             <div className="menu-nav">
-                                <a href="#" onClick={() => scrollToTopic()}>Learn</a>
+                                <span onClick={() => scrollToTopic()}>Learn</span>
                                 <a href={"/" + appNameId + "/test"}>Test</a>
                                 <a href="">Study guide</a>
                             </div>

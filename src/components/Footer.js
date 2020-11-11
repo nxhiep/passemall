@@ -84,31 +84,31 @@ const Footer = ({ alt = '', isStudy, color, bucket = "" }) => {
 const SocialWidget = ({ color }) => {
     return <Grid container spacing={2}>
         <Grid item xs={12} sm={12} md={6}>
-            <a href="https://twitter.com/abcelearningapp" target="_blank">
+            <a href="https://twitter.com/abcelearningapp" target="_blank" rel="noopener">
                 <TwitterFooter color={color}></TwitterFooter>
                 <span style={{ marginLeft: "8px" }}>Twitter</span>
             </a>
         </Grid>
         <Grid item xs={12} sm={12} md={6}>
-            <a href="https://www.facebook.com/ABC-E-learning-110654290809849" target="_blank">
+            <a href="https://www.facebook.com/ABC-E-learning-110654290809849" target="_blank" rel="noopener">
                 <FacebookFooter color={color}></FacebookFooter>
                 <span style={{ marginLeft: "8px" }}>Facebook</span>
             </a>
         </Grid>
         <Grid item xs={12} sm={12} md={6}>
-            <a href="https://www.youtube.com/channel/UCkLKqup_8asTJGtQIgXCOZg" target="_blank">
+            <a href="https://www.youtube.com/channel/UCkLKqup_8asTJGtQIgXCOZg" target="_blank" rel="noopener">
                 <Youtube color={color}></Youtube>
                 <span style={{ marginLeft: "8px" }}>Youtube</span>
             </a>
         </Grid>
         <Grid item xs={12} sm={12} md={6}>
-            <a href="https://www.tumblr.com/blog/view/abcelearningapps" target="_blank">
+            <a href="https://www.tumblr.com/blog/view/abcelearningapps" target="_blank" rel="noopener">
                 <TumblrIcon color={color} bgColor="white"></TumblrIcon>
                 <span style={{ marginLeft: "8px" }}>Tumblr</span>
             </a>
         </Grid>
         <Grid item xs={12} sm={12} md={6}>
-            <a href="https://www.linkedin.com/in/abc-elearningapps-ab9a231b8" target="_blank">
+            <a href="https://www.linkedin.com/in/abc-elearningapps-ab9a231b8" target="_blank" rel="noopener">
                 <LinkedInFooter color={color}></LinkedInFooter>
                 <span style={{ marginLeft: "8px" }}>LinkedIn</span>
             </a>
