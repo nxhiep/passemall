@@ -1,16 +1,15 @@
-import { Button, Container, Grid, Input, InputLabel, MenuItem, Select } from '@material-ui/core';
-import fs from 'fs';
+import { Button, Container, Grid, Input, MenuItem, Select } from '@material-ui/core';
 import Head from 'next/head';
-import path from 'path';
 import React, { useEffect, useState } from 'react';
 import ReactGA from 'react-ga';
+import ReactHtmlParser from 'react-html-parser';
+import { HeaderBlog } from '../components/blog/HeaderBlog';
 import Footer from '../components/Footer';
 import { ConnectAppStore, LoadingWidget } from '../components/Widgets';
-import ReactHtmlParser from 'react-html-parser';
-import Routes from "../routes";
-import { HeaderBlog } from '../components/blog/HeaderBlog';
 import SEOInfo from '../models/SEOInfo';
-import { setScrollDownAuto } from '../utils';
+import Routes from "../routes";
+import { callApi } from '../services';
+import { getNewDomain, setScrollDownAuto } from '../utils';
 
 const FAQ = ({ appInfo, url }) => {
     let seoInfo = new SEOInfo();
@@ -66,7 +65,9 @@ const FAQ = ({ appInfo, url }) => {
                 <section style={{
                     backgroundImage: "url(/images/background-header.png)",
                     height: "120px", 
-                    width: "100%"
+                    width: "100%",
+                    backgroundSize: "100%",
+                    backgroundRepeat: 'no-repeat'
                 }}>
                     <Container style={{ height: '100%' }}>
                         <Grid style={{ height: '100%' }} container alignItems="center" justify="space-between">
@@ -82,6 +83,14 @@ const FAQ = ({ appInfo, url }) => {
                                     fontSize: '18px',
                                     padding: '8px 16px',
                                     color: '#673AB7'
+                                }}
+                                onClick={() => {
+                                    let link = '/' + appInfo.appNameId + '/test';
+                                    let domain = getNewDomain(appInfo.id);
+                                    if(domain){
+                                        link = domain + '/test';
+                                    }
+                                    window.location.href = link;
                                 }}
                             >Start Practice Test</Button>
                         </Grid>
@@ -112,13 +121,18 @@ const FAQsWidget = ({ appInfo }) => {
     }, [appInfo]);
     const getStates = (appId) => {
         setStatusState(1);
-        let url = "https://hiep-dot-micro-enigma-235001.appspot.com/new/api?type=get-states&appId=" + appId;
+        let url = "https://micro-enigma-235001.appspot.com/new/api?type=get-states&appId=" + appId;
         fetch(url).then((res) => res.json()).then(data => {
             setStatusState(2);
             setStates(data && data.length > 0 ? data : []);
+            if(data && data.length > 4){
+                setStateId(data[5].id)
+                getFAQByStateIdAndAppId(data[5].id, appInfo.id);
+            }
         })
     };
     const getFAQByStateIdAndAppId = (stateId, appId) => {
+        console.log("getFAQByStateIdAndAppId stateId", stateId)
         if(stateId < 0){
             return;
         }
@@ -127,21 +141,20 @@ const FAQsWidget = ({ appInfo }) => {
             appId = 5638501471092736;
             stateId = -1;
         }
-        let url = "https://hiep-dot-micro-enigma-235001.appspot.com/new/api?type=get-faq&appId=" + appId + "&stateId=" + stateId;
+        let url = "https://micro-enigma-235001.appspot.com/new/api?type=get-faq&appId=" + appId + "&stateId=" + stateId;
         fetch(url).then((res) => res.json()).then(data => {
             ('faqs data', data);
             setStatusFAQ(4);
             setFaqs(data && data.length > 0 ? data : []);
         })
     }
-    ("states -----", states.length, 'statusFAQ', statusFAQ, 'statusState', statusState);
     return <Container>
         <h2>FAQs</h2>
         {appInfo.hasState ? <Grid className="list-state-selector" 
             container 
             alignItems="center" 
-            style={{ padding: "8px", marginBottom: "20px"}}>
-            <div style={{ marginRight: "16px" }}>Choose State</div>
+            style={{ padding: "8px 0", marginBottom: "20px"}}>
+            <div style={{ marginRight: "16px", fontWeight: '600' }}>Choose State</div>
             { statusState == 2 ? <Select
                 id="select-state"
                 value={stateId}
@@ -175,29 +188,30 @@ export async function getServerSideProps(context) {
     if(!appNameId){
         return {};
     }
-    ("appNameId", appNameId);
     let appId = -1;
     if(appNameId.length < 20){
         try {
             appId = parseInt(appNameId);
         } catch(e){}
     }
-    let appInfo;
-    if(typeof appId !== 'number' || appId < 0){
-        const directoryAppInfo = path.join(process.cwd(), `src/data/${appNameId}.json`)
-        var appInfoFile = fs.readFileSync(directoryAppInfo);
-        appInfo = JSON.parse(appInfoFile);
-    } else {
-        const directoryAppInfo = path.join(process.cwd(), 'src/data/appInfo.json')
-        var appInfoFile = fs.readFileSync(directoryAppInfo);
-        const appInfos = JSON.parse(appInfoFile);
-        for(let i = 0; i < appInfos.length; i++ ){
-            if(appInfos[i].id == appId){
-                appInfo = appInfos[i];
-                break;
-            }
-        }
-    }
+    const appInfo = await callApi({ url: '/data?type=get_app_info&appNameId=' + (appId > -1 ? appId : appNameId), params: null, method: 'post' })
+    // console.log("faq appInfo ", appInfo)
+    // if(typeof appId !== 'number' || appId < 0){
+    //     const directoryAppInfo = path.join(process.cwd(), `src/data/${appNameId}.json`)
+    //     var appInfoFile = fs.readFileSync(directoryAppInfo);
+    //     appInfo = JSON.parse(appInfoFile);
+    //     const appInfoState = await callApi({ url: '/data?type=get_app_info&appNameId=' + appNameId, params: null, method: 'post' })
+    // } else {
+    //     const directoryAppInfo = path.join(process.cwd(), 'src/data/appInfo.json')
+    //     var appInfoFile = fs.readFileSync(directoryAppInfo);
+    //     const appInfos = JSON.parse(appInfoFile);
+    //     for(let i = 0; i < appInfos.length; i++ ){
+    //         if(appInfos[i].id == appId){
+    //             appInfo = appInfos[i];
+    //             break;
+    //         }
+    //     }
+    // }
     return { props: { appInfo: appInfo, url: context.req.url } }
 }
 export default FAQ

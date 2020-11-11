@@ -5,7 +5,7 @@ class Config {
 
     static USER_ID = 'kienxxx';
     static SECRET_KEY = "koolsoft-web";
-    static BASE_URL = `https://webappapi-dot-micro-enigma-235001.appspot.com`;
+    static BASE_URL = `https://micro-enigma-235001.appspot.com`;
     // static BASE_URL = `https://utestwebapi-dot-micro-enigma-235001.appspot.com`;
     static NULL_STRING = "";
     static API_GET_CARDS_BY_IDS = "/get-card-by-ids";

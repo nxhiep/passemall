@@ -12,10 +12,11 @@ import { PersistGate } from 'redux-persist/integration/react';
 import Footer from '../components/Footer';
 import { Clock, FreeCircle, FreeIcon, LoginIcon, PenIcon, TotalQuestions } from '../components/Icons';
 import SEO from '../components/SEO';
+import { FAQLink } from '../components/Widgets';
 import WebAppInfo from '../models/WebAppInfo';
 import configStore from '../redux/storeInHome';
 import { callApi } from '../services';
-import { isAppASVAB, isAppCDL, isAppDMV, isAppGED, isAppMotorcycle, isAppTEAS, isSuperApp, oldUser, scrollToTopic, setScrollDownAuto } from '../utils';
+import { getNewDomain, isAppDMV, isAppMotorcycle, isSuperApp, oldUser, scrollToTopic, setScrollDownAuto } from '../utils';
 const HomeContent = dynamic(() => import("../container/home/HomeContent"), { ssr: false })
 const SelectStatePopup = dynamic(() => import("../components/SelectStatePopup"), { ssr: false })
 initializeReactGA();
@@ -61,14 +62,9 @@ const Home = ({ appInfoState, url }) => {
     let myColor = webAppInfo.mainColor;
     // console.log("appInfoState.bucket", appInfoState.bucket)
     if(!url){
-        if(isAppASVAB(appInfoState.id)){
-            url = 'http://asvab-prep.com/';
-        } else if(isAppCDL(appInfoState.id)){
-            url = 'http://cdl-prep.com/';
-        } else if(isAppTEAS(appInfoState.id)){
-            url = 'https://teas-prep.com/';
-        } else if(isAppGED(appInfoState.id)){
-            url = 'https://ged-testprep.com/';
+        let domain = getNewDomain(appInfoState.id);
+        if(domain){
+            url = domain;
         } else {
             url = 'http://passemall.com/' + appInfoState.appNameId;
         }
@@ -162,65 +158,73 @@ const Header = (props) => {
     const router = useRouter();
     const appNameId = props.appNameId ? props.appNameId : router.query.appNameId;
     const bucketUrl = (props.bucket ? props.bucket + "/" : "");
+    let imgUrl = `/images/apps/${bucketUrl}header-background.png`;
     let bannerUrl = `url(/images/apps/${bucketUrl}header-background.png) no-repeat`;
     if(!isSuperApp(appId) || !props.bucket){
         bannerUrl = `url(/images/landing.png) no-repeat`;
+        imgUrl = `/images/landing.png`;
     }
     // console.log('appNameId', appNameId, 'webAppInfo', webAppInfo);
     return (
-        <header style={{ background: bannerUrl, backgroundSize: "cover", backgroundPosition: (props.isMobile ? "left" : "center"), minHeight: (isAppDMV(appId) || isAppMotorcycle(appId)) ? "690px" : "630px" }}>
-            <Container className="container-header">
-                <Grid container alignItems="center" justify="space-between" className="header-tab-panel">
-                    <div className="parent-logo">
-                        <a href="/" className="logo">
-                            <img src="/images/logo-landing.png" style={props.isMobile ? { height: "50px", paddingTop: "16px" } : { height: "80px" }} alt="logo-landing"></img>
-                        </a>
-                    </div>
-                    {props.isMobile ?
-                        <div style={{ marginLeft: "auto" }}>
-                            <IconButton onClick={() => setOpenDrawer(true)}>
-                                <MenuIcon style={{ marginLeft: "auto", color: "#fff" }}></MenuIcon>
-                            </IconButton>
-                            <SwipeableDrawer
-                                anchor="right"
-                                open={openDrawer}
-                                onClose={() => {
-                                    setOpenDrawer(false);
-                                }}
-                                onOpen={() => setOpenDrawer(true)}
-                            >
-                                <div style={{ width: "200px" }}>
-                                    <List>
-                                        {["Learn", "Test", "Study guide"].map((text, index) => (
-                                            <ListItem button key={text}>
-                                                <a href={index === 0 ? "/" : (index === 1 ? "/blog" : "")} style={{ textDecoration: "none", color: "#4a4a4a", fontWeight: 400 }}>
-                                                    <ListItemText primary={text} />
-                                                </a>
-                                            </ListItem>
-                                        ))}
-                                    </List>
-                                </div>
-                            </SwipeableDrawer>
+        <header style={{ position: "relative" }}>
+            <img src={imgUrl} width="100%" style={{visibility: "hidden"}} />
+            <div style={{position: "absolute", top: "0", left: "0", width: "100%", height: "100%"}}>
+                <img src={imgUrl} width="100%" />
+            </div>
+            <div style={{position: "absolute", top: "0", left: "0", width: "100%", height: "100%"}}>
+                <Container className="container-header">
+                    <Grid container alignItems="center" justify="space-between" className="header-tab-panel">
+                        <div className="parent-logo">
+                            <a href="/" className="logo">
+                                <img src="/images/logo-landing.png" style={props.isMobile ? { height: "50px", paddingTop: "16px" } : { height: "80px" }} alt="logo-landing"></img>
+                            </a>
                         </div>
-                        :
-                        <div className="menu-appbar">
-                            <div className="menu-nav">
-                                <span onClick={() => scrollToTopic()}>Learn</span>
-                                <a href={"/" + appNameId + "/test"}>Test</a>
-                                <a href="">Study guide</a>
+                        {props.isMobile ?
+                            <div style={{ marginLeft: "auto" }}>
+                                <IconButton onClick={() => setOpenDrawer(true)}>
+                                    <MenuIcon style={{ marginLeft: "auto", color: "#fff" }}></MenuIcon>
+                                </IconButton>
+                                <SwipeableDrawer
+                                    anchor="right"
+                                    open={openDrawer}
+                                    onClose={() => {
+                                        setOpenDrawer(false);
+                                    }}
+                                    onOpen={() => setOpenDrawer(true)}
+                                >
+                                    <div style={{ width: "200px" }}>
+                                        <List>
+                                            {["Learn", "Test", "Study guide"].map((text, index) => (
+                                                <ListItem button key={text}>
+                                                    <a href={index === 0 ? "/" : (index === 1 ? "/blog" : "")} style={{ textDecoration: "none", color: "#4a4a4a", fontWeight: 400 }}>
+                                                        <ListItemText primary={text} />
+                                                    </a>
+                                                </ListItem>
+                                            ))}
+                                        </List>
+                                    </div>
+                                </SwipeableDrawer>
                             </div>
-
-                        </div>
-                    }
-                </Grid>
-                <div className="header-title">
-                    <h1>{webAppInfo.header.title}</h1>
-                    <p>{webAppInfo.header.description}</p>
-                    <Button 
-                        variant="contained"
-                        className={classes.button} onClick={() => {scrollToTopic(); onStartTest()} }>START YOUR TEST</Button>
-                </div>
-            </Container>
+                            :
+                            <div className="menu-appbar">
+                                <div className="menu-nav">
+                                    <span onClick={() => scrollToTopic()}>LEARN</span>
+                                    <a href={"/" + appNameId + "/test"}>TEST</a>
+                                    <FAQLink appId={appId} style={{textTransform: "uppercase"}} />
+                                </div>
+                            </div>
+                        }
+                    </Grid>
+                    <div className="header-title">
+                        <h1 style={{textTransform:"uppercase"}}>{webAppInfo.header.title}</h1>
+                        <h4 style={{fontWeight: "500"}}>{webAppInfo.header.description}</h4>
+                        <Button 
+                            style={{fontSize: '16px'}}
+                            variant="contained"
+                            className={classes.button} onClick={() => {scrollToTopic(); onStartTest()} }>START YOUR TEST</Button>
+                    </div>
+                </Container>
+            </div>
         </header>
     )
 }

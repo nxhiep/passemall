@@ -245,3 +245,17 @@ export function isSuperApp(appId) {
         || isAppCNA(appId) || isAppDMV(appId)
         || isAppMotorcycle(appId);
 }
+
+export const getNewDomain = (appId) => {
+    let link;
+    if(isAppASVAB(appId)){
+        link = "https://asvab-prep.com";
+    } else if(isAppCDL(appId)) {
+        link = "https://cdl-prep.com";
+    } else if(isAppTEAS(appId)) {
+        link = "https://teas-prep.com";
+    } else if(isAppGED(appId)) {
+        link = "https://ged-testprep.com";
+    }
+    return link;
+}

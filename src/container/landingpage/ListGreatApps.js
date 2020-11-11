@@ -1,9 +1,9 @@
 import { Accordion, AccordionDetails, AccordionSummary, Container, Divider, Grid, useMediaQuery, useTheme } from '@material-ui/core';
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import { useRouter } from 'next/router';
 import React from 'react';
-import { FixedContainer, TitleBlock } from '../../components/Widgets';
-import ExpandMoreIcon from '@material-ui/icons/ExpandMore'
-import { isAppASVAB, isAppCDL, isAppGED, isAppTEAS, isLocalhost, redirectToNewDomain } from '../../utils';
+import { TitleBlock } from '../../components/Widgets';
+import { getNewDomain, redirectToNewDomain } from '../../utils';
 
 const ListGreatApps = ({ appInfoState }) => {
     let appInfos = appInfoState
@@ -87,16 +87,9 @@ const AppInfoItem = ({ appInfo, index }) => {
     let appNameId = appInfo.appNameId;
     let appName = appInfo.appName ? appInfo.appName : appInfo.title;
     let link = "/" + appNameId;
-    if(redirectToNewDomain){
-        if(isAppASVAB(appInfo.id)){
-            link = "https://asvab-prep.com/";
-        } else if(isAppCDL(appInfo.id)) {
-            link = "https://cdl-prep.com/";
-        } else if(isAppTEAS(appInfo.id)) {
-            link = "https://teas-prep.com";
-        } else if(isAppGED(appInfo.id)) {
-            link = "https://ged-testprep.com";
-        }
+    let domain = getNewDomain(appInfo.id);
+    if(redirectToNewDomain && domain){
+        link = domain;
     }
     return (
         <>

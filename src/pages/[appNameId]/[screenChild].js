@@ -46,7 +46,7 @@ const Screen = ({ appInfoState }) => {
                 <PersistGate
                     persistor={store.persistor}
                 >
-                    <ScreenChild appInfoState={appInfoState} />;
+                    <ScreenChild appInfoState={appInfoState} />
                 </PersistGate>
             </Provider>
         </>

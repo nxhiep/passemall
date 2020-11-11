@@ -1,11 +1,11 @@
 import { Container, IconButton, List, ListItem, ListItemText, SwipeableDrawer } from '@material-ui/core';
 import { useTheme } from '@material-ui/core/styles';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
-import React, { useState } from 'react';
-import { useRouter } from 'next/router';
-import Link from 'next/link'
 import MenuIcon from '@material-ui/icons/Menu';
-
+import Link from 'next/link';
+import { useRouter } from 'next/router';
+import React, { useState } from 'react';
+import { FAQLink } from '../components/Widgets';
 const Header = ({ alt = '', isStudy = false, isBlog = false }) => {
 	const theme = useTheme();
 	const isMobile = useMediaQuery(theme.breakpoints.between(0, 780));
@@ -25,19 +25,15 @@ const HeaderStudy = ({ isMobile }) => {
 	return (
 		<header>
 			<Container style={{ display: "flex" }}>
-				<div className="header-app" onClick={() => router.push("/")}>
+				<a href="/">
 					<img src="/images/logo-landing.png" alt="logo-app"></img>
-				</div>
+				</a>
 				{isMobile ? null : (
 					<div style={isMobile ? { dispaly: "none" } : { marginLeft: "auto", display: "flex", alignItems: "center" }}>
 						<Link href={getLink()}><a>Home</a></Link>
 						<Link href={getLink("test")}><a>Test</a></Link>
 						<Link href={getLink("review")}><a>Review</a></Link>
-						<Link href={'/faq?appId=' + appNameId}>FAQ</Link>
-						{/* {!isStudy ? <a href="">
-						<div>FAQ</div>
-						<div></div>
-					</a> : null} */}
+						<FAQLink />
 					</div>
 				)}
 
@@ -45,6 +41,7 @@ const HeaderStudy = ({ isMobile }) => {
 		</header>
 	)
 }
+
 const HeaderPC = ({ alt, isMobile, isBlog }) => {
 	const router = useRouter();
 	const { practice, appNameId, screenChild } = router.query;
@@ -57,9 +54,9 @@ const HeaderPC = ({ alt, isMobile, isBlog }) => {
 	return (
 		<header>
 			<Container style={{ display: "flex" }}>
-				<div className="header-app" onClick={() => router.push("/")}>
+				<a href="/">
 					<img src="/images/logo-landing.png" alt="logo-app"></img>
-				</div>
+				</a>
 				{isMobile ? (
 					<div style={{ marginLeft: "auto" }}>
 						<IconButton>

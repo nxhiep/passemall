@@ -1,6 +1,7 @@
 import { Box, CircularProgress, Container, Grid, Typography } from '@material-ui/core';
 import { Rating } from '@material-ui/lab';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import { callApi } from '../services';
 import Image from './Image';
 const FixedContainer = (props) => {
     return (
@@ -125,4 +126,22 @@ const ConnectAppStore = ({ appInfo }) => {
     </div>
 }
 
-export { TitleBlock, FixedContainer, LoadingWidget, TabPanel, LineProgress, Modal, ConnectAppStore };
+const FAQLink = ({ style, className, appId }) => {
+    if(!appId){
+        return null;
+    }
+	const [hasFAQ, setHasFAQ] = useState(null);
+	useEffect(() => {
+		callApi({ url: '/new/api?type=detect-data&appId=' + appId, params: null, method: 'post' }).then((data) => {
+            console.log("FAQLink data ", data['TOPIC_TYPE_FAQ'])
+			data && setHasFAQ(!!data['TOPIC_TYPE_FAQ']);
+        });
+    }, [appId])
+    console.log("hasFAQ", hasFAQ)
+	if(!hasFAQ){
+		return null;
+	}
+	return <a style={style} className={className} href={"/faq?appId=" + appId} target="_blank">FAQ</a>
+}
+
+export { TitleBlock, FixedContainer, LoadingWidget, TabPanel, LineProgress, Modal, ConnectAppStore, FAQLink };
