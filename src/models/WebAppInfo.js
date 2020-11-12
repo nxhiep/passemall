@@ -1,14 +1,14 @@
 import { isAppAccuplacer, isAppASVAB, isAppCDL, isAppCNA, isAppComptiaA, isAppDMV, isAppDrivingTheory, isAppG1, isAppGED, isAppMotorcycle, isAppPMP, isAppTEAS } from "../utils";
 
 class Info {
-    constructor({title, description}){
+    constructor({ title, description }) {
         this.title = title;
         this.description = description;
     }
 }
 
 class NumberInfo {
-    constructor({ number1, number2, number3 }){
+    constructor({ number1, number2, number3 }) {
         this.number1 = number1;
         this.number2 = number2;
         this.number3 = number3;
@@ -16,7 +16,7 @@ class NumberInfo {
 }
 
 class MainColor {
-    constructor({ colorFooter, mainColor, screenShotColor, buttonHeader }){
+    constructor({ colorFooter, mainColor, screenShotColor, buttonHeader }) {
         this.colorFooter = colorFooter;
         this.mainColor = mainColor;
         this.screenShotColor = screenShotColor;
@@ -35,21 +35,21 @@ export default class WebAppInfo {
         appName,
         mainColor
     }) {
-        if(!appName){
+        if (!appName) {
             appName = ''
         }
-        if(!header){
+        if (!header) {
             header = new Info({
-                title: "FREE "+appName+" PRACTICE TEST",
+                title: "FREE " + appName + " PRACTICE TEST",
                 description: `These practice questions will give you an idea of what to study for the ${appName} exam. 
                     Start your preparation with our free ${appName} practice test questions.
                     Practice with us and get the resources you need to succeed on your first try!`,
             })
         }
-        if(!block1){
+        if (!block1) {
             block1 = [
                 new Info({
-                    title: "Free "+appName+" practice test",
+                    title: "Free " + appName + " practice test",
                     description: `More effective than traditional ${appName}
                     classes. Every practice test is based on
                     authentic exam questions, and you can
@@ -70,14 +70,14 @@ export default class WebAppInfo {
                 })
             ];
         }
-        if(!block2){
+        if (!block2) {
             block2 = [
                 new Info({
                     title: appName + " Exam Overview",
                     description: `The test measures your general knowledge.`,
                 }),
                 new Info({
-                    title: "Free "+appName+" practice test",
+                    title: "Free " + appName + " practice test",
                     description: `Our free practice test for the ${appName} test will help you find out where you 
                         need to work more and make the most of your study time.`,
                 }),
@@ -91,7 +91,7 @@ export default class WebAppInfo {
                 })
             ];
         }
-        if(!block3){
+        if (!block3) {
             block3 = new Info({
                 title: "Scientifically proven",
                 description: `Research shows that studying in the same way that you’ll be tested can increase 
@@ -99,7 +99,7 @@ export default class WebAppInfo {
                     We’ve designed our website training course to duplicate the exam experience, so it becomes familiar.`
             })
         }
-        if(!block5){
+        if (!block5) {
             block5 = new Info({
                 title: "Total confidence. This is what you get",
                 description: `You’ve finished your ${appName} course (or some other nursing assistant training program)
@@ -108,14 +108,14 @@ export default class WebAppInfo {
                     when you walk in to take the test? With our help, you can!`
             })
         }
-        if(!numberInfo){
+        if (!numberInfo) {
             numberInfo = new NumberInfo({
                 number1: 0,
                 number2: 50,
                 number3: 120
             });
         }
-        if(!mainColor){
+        if (!mainColor) {
             mainColor = new MainColor({
                 colorFooter: "#5B6695",
                 mainColor: "#5B6695",
@@ -130,41 +130,42 @@ export default class WebAppInfo {
         this.block5 = block5;
         this.numberInfo = numberInfo;
         this.mainColor = mainColor;
+        this.appName = appName;
     }
 
     static getAppInfo(appId, appName) {
-        if(isAppTEAS(appId)){
+        if (isAppTEAS(appId)) {
             return this.getTEAS();
         }
-        if(isAppCDL(appId)){
+        if (isAppCDL(appId)) {
             return this.getCDL();
         }
-        if(isAppASVAB(appId)){
+        if (isAppASVAB(appId)) {
             return this.getASVAB();
         }
-        if(isAppDMV(appId)){
+        if (isAppDMV(appId)) {
             return this.getDMV();
         }
-        if(isAppGED(appId)){
+        if (isAppGED(appId)) {
             return this.getGED();
         }
-        if(isAppComptiaA(appId)){
+        if (isAppComptiaA(appId)) {
             return this.getComptiaA();
         }
-        if(isAppDrivingTheory(appId)){
+        if (isAppDrivingTheory(appId)) {
             return this.getDrivingTheory();
         }
-        if(isAppPMP(appId)){
+        if (isAppPMP(appId)) {
             return this.getPMP();
         }
-        if(isAppAccuplacer(appId)){
+        if (isAppAccuplacer(appId)) {
             return this.getAccuplacer();
         }
-        if(isAppG1(appId)){
+        if (isAppG1(appId)) {
             return this.getG1();
         }
         let _this = new WebAppInfo({ appName: appName });
-        if(isAppCNA(appId)){
+        if (isAppCNA(appId)) {
             _this.mainColor = new MainColor({
                 colorFooter: "#1C7BBE",
                 mainColor: "#1C7BBE",
@@ -172,7 +173,7 @@ export default class WebAppInfo {
                 buttonHeader: "#1C7BBE"
             })
         }
-        if(isAppMotorcycle(appId)){
+        if (isAppMotorcycle(appId)) {
             _this.mainColor = new MainColor({
                 colorFooter: "#4E63BD",
                 mainColor: "#495EBF",
@@ -180,7 +181,7 @@ export default class WebAppInfo {
                 buttonHeader: "#FAFAFA"
             })
         }
-        if(isAppTEAS(appId)){
+        if (isAppTEAS(appId)) {
             _this.mainColor = new MainColor({
                 colorFooter: "#1C7BBE",
                 mainColor: "#1C7BBE",
@@ -263,7 +264,8 @@ export default class WebAppInfo {
                 number1: "$100",
                 number2: "Maximum 170 questions",
                 number3: "209 minutes"
-            })
+            }),
+            appName: "TEAS"
         });
     }
 
@@ -346,7 +348,8 @@ export default class WebAppInfo {
                 mainColor: "#5B6695",
                 screenShotColor: "#5B6695",
                 buttonHeader: "#FAFAFA"
-            })
+            }),
+            appName: "CDL"
         });
     }
 
@@ -423,7 +426,8 @@ export default class WebAppInfo {
                 mainColor: "#8A8862",
                 screenShotColor: "#A6A480",
                 buttonHeader: "#FAFAFA"
-            })
+            }),
+            appName: "ASVAB"
         });
     }
 
@@ -501,7 +505,8 @@ export default class WebAppInfo {
                 mainColor: "#495EBF",
                 screenShotColor: "#6679CC",
                 buttonHeader: "#FAFAFA"
-            })
+            }),
+            appName: "DMV"
         });
     }
 
@@ -579,7 +584,8 @@ export default class WebAppInfo {
                 mainColor: "#FA8E45",
                 screenShotColor: "#FFA86C",
                 buttonHeader: "#FA8E45"
-            })
+            }),
+            appName: "GED"
         });
     }
 
@@ -653,7 +659,8 @@ export default class WebAppInfo {
                 number1: "$340",
                 number2: "No more than 90 questions each core",
                 number3: "90 minutes"
-            })
+            }),
+            appName: "CompTIA A+"
         });
     }
 
@@ -724,7 +731,8 @@ export default class WebAppInfo {
                 number1: "$23",
                 number2: "Maximum 50 questions",
                 number3: "57 minutes"
-            })
+            }),
+            appName: "Driving Theory UK"
         });
     }
 
@@ -793,7 +801,8 @@ export default class WebAppInfo {
                 number1: "$405 for PMI members and $555 for non-PMI members",
                 number2: "Maximum 200 questions",
                 number3: "240 minutes"
-            })
+            }),
+            appName: "PMP"
         });
     }
 
@@ -801,7 +810,7 @@ export default class WebAppInfo {
         return new WebAppInfo({
             header: new Info({
                 title: "COLLEGE BOARD ACCUPLACER STUDY APP",
-                    description: `ACCUPLACER tests help colleges make accurate course placement decisions and 
+                description: `ACCUPLACER tests help colleges make accurate course placement decisions and 
                     set students up for success. So you need to prepare for this test. Our Accuplacer practice 
                     test will help you a lot. Let’s try it!`,
             }),
@@ -859,7 +868,8 @@ export default class WebAppInfo {
                 number1: "Ranging from about $15 to $50",
                 number2: "Maximum 40 questions",
                 number3: "90 minutes"
-            })
+            }),
+            appName: "COLLEGE BOARD ACCUPLACER STUDY"
         });
     }
 
@@ -925,7 +935,8 @@ export default class WebAppInfo {
                 number1: "$158.25",
                 number2: "Maximum 40 questions",
                 number3: "About 20-30 minutes but no hard limit"
-            })
+            }),
+            appName: "G1"
         });
     }
 }

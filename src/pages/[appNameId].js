@@ -17,7 +17,7 @@ import WebAppInfo from '../models/WebAppInfo';
 import configStore from '../redux/storeInHome';
 import { callApi } from '../services';
 import Image from "../components/Image"
-import { getNewDomain, isAppDMV, isAppMotorcycle, isSuperApp, oldUser, scrollToTopic, setScrollDownAuto } from '../utils';
+import { getNewDomain, isSuperApp, oldUser, scrollToTopic, setScrollDownAuto } from '../utils';
 const HomeContent = dynamic(() => import("../container/home/HomeContent"), { ssr: false })
 const SelectStatePopup = dynamic(() => import("../components/SelectStatePopup"), { ssr: false })
 initializeReactGA();
@@ -81,7 +81,7 @@ const Home = ({ appInfoState, url }) => {
             <div className="body-panel app">
                 <Header
                     webAppInfo={webAppInfo}
-                    appName={appInfoState.name}
+                    appName={webAppInfo.appName}
                     color={myColor.buttonHeader}
                     bucket={appInfoState.bucket}
                     isMobile={isMobile}
@@ -98,13 +98,13 @@ const Home = ({ appInfoState, url }) => {
                 />
                 <Features
                     webAppInfo={webAppInfo}
-                    appName={appInfoState.name}
+                    appName={webAppInfo.appName}
                     color={myColor.mainColor}
                 />
                 <ExamOverview webAppInfo={webAppInfo} isMobile={isMobile} />
                 <ListInfoGraphic
                     webAppInfo={webAppInfo}
-                    appName={appInfoState.name}
+                    appName={webAppInfo.appName}
                     appId={appInfoState.id}
                     color={myColor.mainColor}
                     appInfoState={appInfoState}
@@ -143,7 +143,7 @@ const Home = ({ appInfoState, url }) => {
                 <MobileDescription
                     appInfoState={appInfoState}
                     color={myColor.screenShotColor}
-                    appName={appInfoState.name}
+                    appName={webAppInfo.appName}
                 />
                 <Feedback isMobile={isMobile} appId={appInfoState.id}></Feedback>
                 <Footer bucket={appInfoState.bucket} color={myColor.colorFooter}></Footer>
@@ -236,7 +236,7 @@ const Features = ({ color, webAppInfo, appName }) => {
     return (
         <Container className="features-container">
             <div className="list-features">
-                <div>
+                <div >
                     <FreeIcon width="80px" height="80px" color={color}></FreeIcon>
                     <h2>{webAppInfo.block1[0].title}</h2>
                     <p>{webAppInfo.block1[0].description}</p>
@@ -317,21 +317,21 @@ const ListInfoGraphic = (props) => {
                 <p>Our {appName} Certification Exam Simulator is an effective way to practice for the actual exam.</p>
                 <Grid container spacing={3} className="list-infographic-new" alignItems="stretch" justify="space-evenly">
                     <Grid item xs={12} sm={3}>
-                        <div>
+                        <div style={{ display: "flex", flexDirection: "column" }}>
                             <div style={{ color: props.color }} className="titlex">{webAppInfo.numberInfo.number1}</div>
                             <p className="dot-2 descriptionx">There is no fee to take the {appName}</p>
                             <FreeCircle color={props.color} ></FreeCircle>
                         </div>
                     </Grid>
                     <Grid item xs={12} sm={3}>
-                        <div>
+                        <div style={{ display: "flex", flexDirection: "column" }}>
                             <div style={{ color: props.color }} className="titlex">{webAppInfo.numberInfo.number2}</div>
                             <p className="dot-2 descriptionx">Total questions</p>
                             <TotalQuestions color={props.color}></TotalQuestions>
                         </div>
                     </Grid>
                     <Grid item xs={12} sm={3}>
-                        <div>
+                        <div style={{ display: "flex", flexDirection: "column" }}>
                             <div style={{ color: props.color }} className="titlex">{webAppInfo.numberInfo.number3}</div>
                             <p className="dot-2 descriptionx">Total time (minutes) to take the {appName}</p>
                             <Clock color={props.color}></Clock>
