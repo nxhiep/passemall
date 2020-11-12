@@ -100,7 +100,7 @@ const gameReducer = (state = GameState.init(), action) => {
             return Object.assign({}, state);
         case Types.RESET_QUESTION_PROGRESS: {
             state.isFinish = false;
-            state.isLoading = 4;
+            state.isLoading = 9;
             onReload(state, true, false, true);
             state.currentQuestion = state.questions[state.indexActive]
             return Object.assign({}, state)

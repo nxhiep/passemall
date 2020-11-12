@@ -1,7 +1,7 @@
 import { call, fork, put, select, take } from 'redux-saga/effects';
 import Config from '../../config.js';
 import { getCardsByIdsSuccess, resetProgressInTopic, resetTestInfoCorrectQuestions, setTestInfoStatusEnd, setTestInfoStatusPlaying, setTestInfoUnlock, updateCardProgress, updateTestInfoProgress } from '../actions';
-import { resumeGame, startNewGame, updateListGame, } from '../actions/game';
+import { resetQuestionProgress, resumeGame, startNewGame, updateListGame, } from '../actions/game';
 import { setTimeLeftState } from '../actions/timeLeft.js';
 import * as Types from '../actions/types.js';
 import { calcularTopicsProgress, resetTopicProgress } from './../actions/topicProgress';
@@ -97,16 +97,16 @@ function* startGame() {
     else {
         yield put(resumeGame(currentGame));
         let gameState = yield select((state) => state.gameState);
-        // if (topic) {
-        //     if (topic.getPercentComplete() === 0) {
-        //         yield put(resetQuestionProgress());
-        //         yield put(updateListGame(gameState.appId, gameState.id, gameState));
-        //     }
-        // } else {
-        if (currentGame.gameType === Config.TEST_GAME) {
-            yield put(updateListGame(gameState.appId, gameState.id, gameState));
+        if (topic) {
+            if (topic.getPercentComplete() === 0) {
+                yield put(resetQuestionProgress());
+                yield put(updateListGame(gameState.appId, gameState.id, gameState));
+            }
+        } else {
+            if (currentGame.gameType === Config.TEST_GAME) {
+                yield put(updateListGame(gameState.appId, gameState.id, gameState));
+            }
         }
-        // }
 
     }
 }
@@ -127,7 +127,6 @@ function* onEndGame() {
             let action = yield take(Types.GAME_END_GAME);
             const gameState = yield select((state) => state.gameState);
             yield put(setTestInfoStatusEnd(gameState.id.substring(0, gameState.id.length - 2), gameState.status))
-            yield put(updateListGame(gameState.appId, gameState.id, gameState));
             if (gameState.gameType === Config.TEST_GAME) {
                 let id = gameState.id.substring(0, gameState.id.length - 2);
                 yield put(setTestInfoUnlock(id))

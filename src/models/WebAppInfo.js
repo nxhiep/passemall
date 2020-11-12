@@ -180,6 +180,14 @@ export default class WebAppInfo {
                 buttonHeader: "#FAFAFA"
             })
         }
+        if(isAppTEAS(appId)){
+            _this.mainColor = new MainColor({
+                colorFooter: "#1C7BBE",
+                mainColor: "#1C7BBE",
+                screenShotColor: "#82AFD1",
+                buttonHeader: "#1C7BBE"
+            })
+        }
         return _this;
     }
 

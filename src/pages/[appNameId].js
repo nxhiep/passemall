@@ -14,9 +14,9 @@ import { Clock, FreeCircle, FreeIcon, LoginIcon, PenIcon, TotalQuestions } from 
 import SEO from '../components/SEO';
 import { FAQLink } from '../components/Widgets';
 import WebAppInfo from '../models/WebAppInfo';
-import { getTopicsByParentIdSuccess } from '../redux/actions';
 import configStore from '../redux/storeInHome';
 import { callApi } from '../services';
+import Image from "../components/Image"
 import { getNewDomain, isAppDMV, isAppMotorcycle, isSuperApp, oldUser, scrollToTopic, setScrollDownAuto } from '../utils';
 const HomeContent = dynamic(() => import("../container/home/HomeContent"), { ssr: false })
 const SelectStatePopup = dynamic(() => import("../components/SelectStatePopup"), { ssr: false })
@@ -47,7 +47,7 @@ const useStyles = makeStyles({
     }
 })
 const Home = ({ appInfoState, url }) => {
-    if(!appInfoState){
+    if (!appInfoState) {
         appInfoState = {};
         console.error("xxxxxxxxxxxxxxxxxxxxxxxx appInfo null");
     }
@@ -62,9 +62,9 @@ const Home = ({ appInfoState, url }) => {
     let webAppInfo = WebAppInfo.getAppInfo(appInfoState.id, appInfoState.name);
     let myColor = webAppInfo.mainColor;
     // console.log("appInfoState.bucket", appInfoState.bucket)
-    if(!url){
+    if (!url) {
         let domain = getNewDomain(appInfoState.id);
-        if(domain){
+        if (domain) {
             url = domain;
         } else {
             url = 'http://passemall.com/' + appInfoState.appNameId;
@@ -79,14 +79,14 @@ const Home = ({ appInfoState, url }) => {
                 <link rel="stylesheet" type="text/css" href="/styles/home.css" />
             </SEO>
             <div className="body-panel app">
-                <Header 
+                <Header
                     webAppInfo={webAppInfo}
-                    appName={appInfoState.name} 
-                    color={myColor.buttonHeader} 
-                    bucket={appInfoState.bucket} 
-                    isMobile={isMobile} 
-                    appId={appInfoState.id} 
-                    appNameId={appInfoState.appNameId} 
+                    appName={appInfoState.name}
+                    color={myColor.buttonHeader}
+                    bucket={appInfoState.bucket}
+                    isMobile={isMobile}
+                    appId={appInfoState.id}
+                    appNameId={appInfoState.appNameId}
                     onStartTest={() => {
                         window.location.href = window.location.origin + window.location.pathname + '/test';
                         // if(!selectedState){
@@ -96,21 +96,21 @@ const Home = ({ appInfoState, url }) => {
                         // }
                     }}
                 />
-                <Features 
+                <Features
                     webAppInfo={webAppInfo}
-                    appName={appInfoState.name} 
-                    color={myColor.mainColor} 
+                    appName={appInfoState.name}
+                    color={myColor.mainColor}
                 />
-                <ExamOverview webAppInfo={webAppInfo} />
-                <ListInfoGraphic 
+                <ExamOverview webAppInfo={webAppInfo} isMobile={isMobile} />
+                <ListInfoGraphic
                     webAppInfo={webAppInfo}
-                    appName={appInfoState.name} 
-                    appId={appInfoState.id} 
-                    color={myColor.mainColor} 
-                    appInfoState={appInfoState} 
+                    appName={appInfoState.name}
+                    appId={appInfoState.id}
+                    color={myColor.mainColor}
+                    appInfoState={appInfoState}
                     bucket={appInfoState.bucket}
                     onStartTest={() => {
-                        if(!selectedState){
+                        if (!selectedState) {
                             setTimeout(() => {
                                 setOpenPopupChangeState(true);
                             }, 300)
@@ -140,8 +140,8 @@ const Home = ({ appInfoState, url }) => {
                                 }} /> : ''}
                     </PersistGate>
                 </Provider>
-                <MobileDescription 
-                    appInfoState={appInfoState} 
+                <MobileDescription
+                    appInfoState={appInfoState}
                     color={myColor.screenShotColor}
                     appName={appInfoState.name}
                 />
@@ -153,7 +153,7 @@ const Home = ({ appInfoState, url }) => {
 }
 const Header = (props) => {
     let webAppInfo = props.webAppInfo ? props.webAppInfo : new WebAppInfo({ appName: props.appName });
-    let onStartTest = props.onStartTest ? props.onStartTest : () => {}
+    let onStartTest = props.onStartTest ? props.onStartTest : () => { }
     let appId = props.appId ? props.appId : -1;
     const classes = useStyles(props);
     const [openDrawer, setOpenDrawer] = useState(false);
@@ -161,17 +161,17 @@ const Header = (props) => {
     const appNameId = props.appNameId ? props.appNameId : router.query.appNameId;
     const bucketUrl = (props.bucket ? props.bucket + "/" : "");
     let imgUrl = `/images/apps/${bucketUrl}header-background.png`;
-    if(!isSuperApp(appId) || !props.bucket){
+    if (!isSuperApp(appId) || !props.bucket) {
         imgUrl = `/images/landing.png`;
     }
     // console.log('appNameId', appNameId, 'webAppInfo', webAppInfo);
     return (
         <header style={{ position: "relative" }}>
-            <img src={imgUrl} width="100%" style={{visibility: "hidden"}} />
-            <div style={{position: "absolute", top: "0", left: "0", width: "100%", height: "100%"}}>
-                <img src={imgUrl} width="100%" />
+            <Image src={imgUrl} width="100%" style={{ visibility: "hidden", minHeight: "630px", objectFit: "cover" }} />
+            <div style={{ position: "absolute", top: "0", left: "0", width: "100%", height: "100%" }}>
+                <Image src={imgUrl} width="100%" style={{ minHeight: "630px", objectFit: "cover" }} />
             </div>
-            <div style={{position: "absolute", top: "0", left: "0", width: "100%", height: "100%"}}>
+            <div style={{ position: "absolute", top: "0", left: "0", width: "100%", height: "100%" }}>
                 <Container className="container-header">
                     <Grid container alignItems="center" justify="space-between" className="header-tab-panel">
                         <div className="parent-logo">
@@ -210,18 +210,18 @@ const Header = (props) => {
                                 <div className="menu-nav">
                                     <span onClick={() => scrollToTopic()}>LEARN</span>
                                     <a href={"/" + appNameId + "/test"}>TEST</a>
-                                    <FAQLink appId={appId} style={{textTransform: "uppercase"}} />
+                                    <FAQLink appId={appId} style={{ textTransform: "uppercase" }} />
                                 </div>
                             </div>
                         }
                     </Grid>
                     <div className="header-title">
-                        <h1 style={{textTransform:"uppercase"}}>{webAppInfo.header.title}</h1>
-                        <h4 style={{fontWeight: "500"}}>{webAppInfo.header.description}</h4>
-                        <Button 
-                            style={{fontSize: '16px'}}
+                        <h1 style={{ textTransform: "uppercase" }}>{webAppInfo.header.title}</h1>
+                        <h4 style={{ fontWeight: "500" }}>{webAppInfo.header.description}</h4>
+                        <Button
+                            style={{ fontSize: '16px' }}
                             variant="contained"
-                            className={classes.button} onClick={() => { /*scrollToTopic()*/ onStartTest()} }>START YOUR TEST</Button>
+                            className={classes.button} onClick={() => { /*scrollToTopic()*/ onStartTest() }}>START YOUR TEST</Button>
                     </div>
                 </Container>
             </div>
@@ -229,7 +229,7 @@ const Header = (props) => {
     )
 }
 const Features = ({ color, webAppInfo, appName }) => {
-    if(!webAppInfo){
+    if (!webAppInfo) {
         webAppInfo = new WebAppInfo({ appName: appName });
     }
     const router = useRouter();
@@ -255,15 +255,15 @@ const Features = ({ color, webAppInfo, appName }) => {
         </Container>
     )
 }
-const ExamOverview = ({ webAppInfo, appName }) => {
-    if(!webAppInfo){
+const ExamOverview = ({ webAppInfo, appName, isMobile }) => {
+    if (!webAppInfo) {
         webAppInfo = new WebAppInfo({ appName: appName });
     }
     return (
         <Container className="overview-container">
             <div className="overview-title">
-                <h2 style={{textAlign: "center"}}>{webAppInfo.block2[0].title}</h2>
-                <p style={{textAlign: "center"}}>{webAppInfo.block2[0].description}</p>
+                <h2 style={{ textAlign: "center" }}>{webAppInfo.block2[0].title}</h2>
+                <p style={{ textAlign: isMobile ? "left" : "center" }}>{webAppInfo.block2[0].description}</p>
             </div>
             <div className="list-overview">
                 <div className="overview-item">
@@ -284,12 +284,12 @@ const ExamOverview = ({ webAppInfo, appName }) => {
     )
 }
 const ListInfoGraphic = (props) => {
-    let onStartTest = props.onStartTest ? props.onStartTest : () => {}
+    let onStartTest = props.onStartTest ? props.onStartTest : () => { }
     const classes = useStyles(props);
     const bucketUrl = (props.bucket ? props.bucket + "/" : "");
     let srcImage1 = `/images/apps/${bucketUrl}infographic/infographic-1.png`;
     let srcImage2 = `/images/apps/${bucketUrl}infographic/infographic-2.png `;
-    if(!isSuperApp(props.appId) || !props.bucket){
+    if (!isSuperApp(props.appId) || !props.bucket) {
         srcImage1 = '/images/apps/all/scientifically-proven1.jpg';
         srcImage2 = '/images/apps/all/scientifically-proven2.jpg';
     }
@@ -300,18 +300,18 @@ const ListInfoGraphic = (props) => {
             <Container>
                 <Grid container alignItems="stretch">
                     <Grid item xs={12} sm={4}>
-                        <img width="100%" src={srcImage1} alt="infographic-1" style={{ display: "block" }}></img>
+                        <Image width="100%" src={srcImage1} alt="infographic-1" style={{ display: "block" }}></Image>
                     </Grid>
                     <Grid item xs={12} sm={1}></Grid>
                     <Grid item xs={12} sm={6}>
                         <h2>{webAppInfo.block3.title}</h2>
                         <p>{webAppInfo.block3.description}</p>
-                        <Button className={classes.root} style={{marginTop: '50px'}} onClick={() => {scrollToTopic(); onStartTest(); }}>Start your test</Button>
+                        <Button className={classes.root} style={{ marginTop: '50px' }} onClick={() => { scrollToTopic(); onStartTest(); }}>Start your test</Button>
                     </Grid>
                     <Grid item xs={12} sm={1}></Grid>
                 </Grid>
             </Container>
-            <div style={{height: "80px", width: "100%"}}></div>
+            <div style={{ height: "80px", width: "100%" }}></div>
             <Container className="infographic-container">
                 <h2>Exam experience, duplicated</h2>
                 <p>Our {appName} Certification Exam Simulator is an effective way to practice for the actual exam.</p>
@@ -345,25 +345,25 @@ const ListInfoGraphic = (props) => {
                     <Grid item xs={12} sm={5}>
                         <h2>{webAppInfo.block5.title}</h2>
                         <p>{webAppInfo.block5.description}</p>
-                    <div style={{ display: "flex", flexDirection: "column", justifyContent: "flex-start", width: "200px" }}>
-                        <Button className={classes.root} onClick={() =>{ scrollToTopic(); onStartTest(); }} fullWidth={false}> Start your test</Button>
-                        <ArrowDownwardIcon style={
-                            {
-                                marginTop: "20px",
-                                color: props.color ? props.color : "",
-                                fontSize: "32px",
-                                display: "block",
-                                marginLeft: "auto",
-                                marginRight: "auto"
-                            }
-                        }></ArrowDownwardIcon>
-                    </div>
-                </Grid>
-                <Grid item xs={12} sm={2}></Grid>
-                <Grid item xs={12} sm={4}>
-                    <img src={srcImage2} alt="infographic-2" style={{ display: "block", width: "100%" }}></img>
-                </Grid>
-                <Grid item xs={12} sm={1}></Grid>
+                        <div style={{ display: "flex", flexDirection: "column", justifyContent: "flex-start", width: "200px" }}>
+                            <Button className={classes.root} onClick={() => { scrollToTopic(); onStartTest(); }} fullWidth={false}> Start your test</Button>
+                            <ArrowDownwardIcon style={
+                                {
+                                    marginTop: "20px",
+                                    color: props.color ? props.color : "",
+                                    fontSize: "32px",
+                                    display: "block",
+                                    marginLeft: "auto",
+                                    marginRight: "auto"
+                                }
+                            }></ArrowDownwardIcon>
+                        </div>
+                    </Grid>
+                    <Grid item xs={12} sm={2}></Grid>
+                    <Grid item xs={12} sm={4}>
+                        <Image src={srcImage2} alt="infographic-2" style={{ display: "block", width: "100%" }}></Image>
+                    </Grid>
+                    <Grid item xs={12} sm={1}></Grid>
                 </Grid>
             </Container>
         </>
@@ -377,7 +377,7 @@ const ListTopic = () => {
     )
 }
 const MobileDescription = ({ appInfoState, color = "#FFA86C", appName }) => {
-    if(!appName){
+    if (!appName) {
         appName = ''
     }
     const theme = useTheme();
@@ -390,7 +390,7 @@ const MobileDescription = ({ appInfoState, color = "#FFA86C", appName }) => {
                         <h3>Practice offline & on the go with the free {appName} app</h3>
                         <p>Available for IOS and Android devices.</p>
                         <div className="app-info">
-                            <img src={appInfoState.avatar} alt="app-image" style={{ borderRadius: "15px", height: "100px" }}></img>
+                            <Image src={appInfoState.avatar} alt="app-image" style={{ borderRadius: "15px", height: "100px" }}></Image>
                             <div className="app-info-right">
                                 <h4>{appInfoState.appName}</h4>
                                 <Rating value={5} style={isMobile ? { color: "#fff", fontSize: "16px" } : { color: "#fff", fontSize: "20px" }} readOnly ></Rating>
@@ -424,10 +424,10 @@ const Feedback = ({ isMobile, appId }) => {
             setFeedbacks(data);
         });
     }, [appId])
-    if(loading){
+    if (loading) {
         return <CircularProgress />
     }
-    if(feedbacks.length == 0){
+    if (feedbacks.length == 0) {
         return null;
     }
     const settings = {
@@ -440,8 +440,8 @@ const Feedback = ({ isMobile, appId }) => {
         autoplaySpeed: 1500,
         arrows: true
     };
-    return <Container className="feedback-container"> 
-        <div style={{position: 'relative'}}>
+    return <Container className="feedback-container">
+        <div style={{ position: 'relative' }}>
             <Slider {...settings}>
                 {
                     feedbacks.map((feedback, index) => {
@@ -450,7 +450,7 @@ const Feedback = ({ isMobile, appId }) => {
                             content={feedback.content}
                             name={feedback.userName}
                             createTime={feedback.createDate}
-                            index={index}   
+                            index={index}
                         />
                     })
                 }
@@ -463,9 +463,8 @@ const FeedbackItem = ({ content, name, createTime, index }) => {
     return <div className="feedback-item">
         <div className="content">{content}</div>
         <div className="infos">
-            <img className="avatar" src={index % 3 === 0 ? "/images/avatar-1.png" : (index % 3 === 1 ? "/images/avatar-2.png" : "/images/avatar-3.png")} alt="avatar"></img>
+            <Image className="avatar" src={index % 3 === 0 ? "/images/avatar-1.png" : (index % 3 === 1 ? "/images/avatar-2.png" : "/images/avatar-3.png")} alt="avatar"></Image>
             <div className="name">{name}</div>
-            <div className="date">{createTime}</div>
         </div>
     </div>
 }
