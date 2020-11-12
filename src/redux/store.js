@@ -7,10 +7,10 @@ import localforage from 'localforage';
 import autoMergeLevel2 from 'redux-persist/lib/stateReconciler/autoMergeLevel2';
 import createEncryptor from 'redux-persist-transform-encrypt';
 import Config from '../config';
-// import { logger } from 'redux-logger'
+import { logger } from 'redux-logger'
 const sagaMiddleware = createSagaMiddleware();
 const middlewares = [sagaMiddleware];
-// middlewares.push(logger)
+middlewares.push(logger)
 localforage.config({
     driver: localforage.LOCALSTORAGE,
     name: 'uTest',

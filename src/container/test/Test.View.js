@@ -41,7 +41,8 @@ const TestViewScreen = ({ appInfoState, topicId = -1 }) => {
 const TestViewUI = ({ stateInfoState, testInfoState, appInfoState, getTestInfoByAppId = () => { }, gameState, getTestInfoByAppIdAndParentId = () => { }, setTestInfoPlaying = () => { }, endTest, getTopicsByParentId }) => {
     let loading = gameState.isLoading === 2;
     const [dialogInfo, setDialogInfo] = useState(DialogInfo.init());
-    const [clickReview, setClickReview] = useState(false);
+    const [selectedState, setSelectedState] = useState(true);
+    const [openPopupChangeState, setOpenPopupChangeState] = useState(false);
     const [currentTestInfo, setCurrentTestInfo] = useState(null);
     const [showGame, setShowGame] = useState(false);
     const [openSelectTopic, setOpenSelectTopic] = useState(false);
@@ -111,12 +112,22 @@ const TestViewUI = ({ stateInfoState, testInfoState, appInfoState, getTestInfoBy
                             </ButtonLevel>
                         </> : (
                             <>
-                                {Config.LISTBUCKET.indexOf(appInfoState.bucket) !== -1 ? <Button
-                                    variant="contained"
-                                    color="primary"
-                                    style={{ background: "#8496EA", color: "#fff", marginTop: isMobile ? "16px" : "", borderRadius: "20px", marginBottom: "16px", display: "block", marginLeft: "auto", marginRight: "auto" }}
-                                    onClick={() => setOpenSelectTopic(true)}
-                                >Change Topic</Button> : null}
+                                <div style={{ display: "flex", justifyContent: "center" }}>
+                                    {appInfoState.hasState ? <Button
+                                        variant="contained"
+                                        color="primary"
+                                        style={{ background: "#8496EA", color: "#fff", marginTop: isMobile ? "16px" : "", borderRadius: "20px", marginBottom: "16px", display: "block", marginRight: "16px" }}
+                                        onClick={() => setOpenPopupChangeState(true)}
+                                    >Change State</Button> : null}
+                                    {Config.LISTBUCKET.indexOf(appInfoState.bucket) !== -1 ? <Button
+                                        variant="contained"
+                                        color="primary"
+                                        style={{ background: "#8496EA", color: "#fff", marginTop: isMobile ? "16px" : "", borderRadius: "20px", marginBottom: "16px", display: "block", marginRight: "16px" }}
+                                        onClick={() => setOpenSelectTopic(true)}
+                                    >Change Topic</Button> : null}
+
+                                </div>
+
                                 <ListTestInfo appId={appInfoState.id}
                                     onChangeTestInfo={(testInfo) => {
                                         if (!testInfo.playing) {
@@ -140,8 +151,16 @@ const TestViewUI = ({ stateInfoState, testInfoState, appInfoState, getTestInfoBy
                         </SelectTopicPopUp> : null}
                     {appInfoState && appInfoState.hasState ?
                         <SelectStatePopup
+                            onLoaded={(selectedState) => {
+                                setSelectedState(selectedState)
+                            }}
+                            openDefault={false}
                             appInfo={appInfoState}
-                        /> : null}
+                            openPopupChangeState={openPopupChangeState}
+                            onHidden={() => {
+                                setOpenPopupChangeState(false);
+                                setOpenSelectTopic(true);
+                            }} /> : ''}
                 </Container>
                 {showGame ? null : <Footer isStudy={true}></Footer>}
             </div>
@@ -235,12 +254,21 @@ const TestViewUI = ({ stateInfoState, testInfoState, appInfoState, getTestInfoBy
                     </>
                 ) : (
                         <>
-                            {Config.LISTBUCKET.indexOf(appInfoState.bucket) !== -1 ? <Button
-                                variant="contained"
-                                color="primary"
-                                style={{ marginBottom: "16px", display: "block", marginLeft: "auto", marginRight: "auto" }}
-                                onClick={() => setOpenSelectTopic(true)}
-                            >Change Topic</Button> : null}
+                            <div style={{ display: "flex", justifyContent: "center" }}>
+                                {appInfoState.hasState ? <Button
+                                    variant="contained"
+                                    color="primary"
+                                    style={{ background: "#8496EA", color: "#fff", marginTop: isMobile ? "16px" : "", borderRadius: "20px", marginBottom: "16px", display: "block", marginRight: "16px" }}
+                                    onClick={() => setOpenPopupChangeState(true)}
+                                >Change State</Button> : null}
+                                {Config.LISTBUCKET.indexOf(appInfoState.bucket) !== -1 ? <Button
+                                    variant="contained"
+                                    color="primary"
+                                    style={{ background: "#8496EA", color: "#fff", marginTop: isMobile ? "16px" : "", borderRadius: "20px", marginBottom: "16px", display: "block" }}
+                                    onClick={() => setOpenSelectTopic(true)}
+                                >Change Topic</Button> : null}
+
+                            </div>
                             <ListTestInfo appId={appInfoState.id}
                                 onChangeTestInfo={(testInfo) => {
                                     if (!testInfo.playing) {
@@ -263,8 +291,16 @@ const TestViewUI = ({ stateInfoState, testInfoState, appInfoState, getTestInfoBy
                     </SelectTopicPopUp> : null}
                 {appInfoState && appInfoState.hasState ?
                     <SelectStatePopup
+                        onLoaded={(selectedState) => {
+                            setSelectedState(selectedState)
+                        }}
+                        openDefault={false}
                         appInfo={appInfoState}
-                    /> : null}
+                        openPopupChangeState={openPopupChangeState}
+                        onHidden={() => {
+                            setOpenPopupChangeState(false);
+                            setOpenSelectTopic(true)
+                        }} /> : ''}
             </Container >
             <ShowImage></ShowImage>
         </div >

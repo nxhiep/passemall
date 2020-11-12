@@ -9,6 +9,11 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 const SelectTopic = ({ currentTopic, stateInfoState, appInfoState, topicState, getTopicsByParentId = () => { }, setCurrentTopic = () => { }, openSelectTopic, setOpenSelectTopic = () => { } }) => {
     const [open, setOpen] = useState(!currentTopic[appInfoState.id]);
     useEffect(() => {
+        if (openSelectTopic) {
+            setOpen(true);
+        }
+    }, [openSelectTopic, stateInfoState.mapCurrentStateInfo[appInfoState.id]])
+    useEffect(() => {
         let parentId = appInfoState.id;
         if (appInfoState.hasState && appInfoState) {
             if (stateInfoState.mapCurrentStateInfo[appInfoState.id]) {
@@ -21,11 +26,6 @@ const SelectTopic = ({ currentTopic, stateInfoState, appInfoState, topicState, g
             getTopicsByParentId(parentId)
         }
     }, [getTopicsByParentId, setCurrentTopic, stateInfoState.mapCurrentStateInfo[appInfoState.id], currentTopic[appInfoState.id]])
-    useEffect(() => {
-        if (openSelectTopic) {
-            setOpen(true);
-        }
-    }, [openSelectTopic])
     const handleClose = () => {
         setOpenSelectTopic()
         setOpen(false);
