@@ -15,7 +15,6 @@ import SEO from '../components/SEO';
 import { FAQLink } from '../components/Widgets';
 import WebAppInfo from '../models/WebAppInfo';
 import { callApi } from '../services';
-import Image from "../components/Image"
 import { getNewDomain, isSuperApp, oldUser, scrollToTopic, setScrollDownAuto } from '../utils';
 import { wrapper } from '../redux/store';
 const HomeContent = dynamic(() => import("../container/home/HomeContent"), { ssr: false })
@@ -89,11 +88,6 @@ const Home = ({ appInfoState, url }) => {
                     appNameId={appInfoState.appNameId}
                     onStartTest={() => {
                         window.location.href = window.location.origin + window.location.pathname + '/test';
-                        // if(!selectedState){
-                        //     setTimeout(() => {
-                        //         setOpenPopupChangeState(true);
-                        //     }, 300)
-                        // }
                     }}
                 />
                 <Features
@@ -103,6 +97,7 @@ const Home = ({ appInfoState, url }) => {
                 />
                 <ExamOverview webAppInfo={webAppInfo} isMobile={isMobile} />
                 <ListInfoGraphic
+                    isMobile={isMobile}
                     webAppInfo={webAppInfo}
                     appName={webAppInfo.appName}
                     appId={appInfoState.id}
@@ -110,11 +105,7 @@ const Home = ({ appInfoState, url }) => {
                     appInfoState={appInfoState}
                     bucket={appInfoState.bucket}
                     onStartTest={() => {
-                        if (!selectedState) {
-                            setTimeout(() => {
-                                setOpenPopupChangeState(true);
-                            }, 300)
-                        }
+                        window.location.href = window.location.origin + window.location.pathname + '/test';
                     }}
                 />
                 <ListTopic />
@@ -164,12 +155,11 @@ const Header = (props) => {
     if (!isSuperApp(appId) || !props.bucket) {
         imgUrl = `/images/landing.png`;
     }
-    // console.log('appNameId', appNameId, 'webAppInfo', webAppInfo);
     return (
         <header style={{ position: "relative" }}>
-            <Image src={imgUrl} width="100%" style={{ visibility: "hidden", minHeight: "630px", objectFit: "cover" }} />
+            <img src={imgUrl} width="100%" style={{ visibility: "hidden", minHeight: "630px", objectFit: "cover" }} allt="image-header" />
             <div style={{ position: "absolute", top: "0", left: "0", width: "100%", height: "100%" }} className="header-background color-dark">
-                <Image src={imgUrl} width="100%" style={{ minHeight: "630px", objectFit: "cover" }} />
+                <img src={imgUrl} width="100%" style={{ minHeight: "630px", objectFit: "cover" }} alt="image-header-2" />
             </div>
             <div style={{ position: "absolute", top: "0", left: "0", width: "100%", height: "100%" }}>
                 <Container className="container-header">
@@ -194,13 +184,31 @@ const Header = (props) => {
                                 >
                                     <div style={{ width: "200px" }}>
                                         <List>
-                                            {["Learn", "Test", "Study guide"].map((text, index) => (
-                                                <ListItem button key={text}>
-                                                    <a href={index === 0 ? "/" : (index === 1 ? "/blog" : "")} style={{ textDecoration: "none", color: "#4a4a4a", fontWeight: 400 }}>
-                                                        <ListItemText primary={text} />
-                                                    </a>
-                                                </ListItem>
-                                            ))}
+                                            {["Learn", "Test", "Blog"].map((text, index) => {
+                                                if (index !== 2) {
+                                                    return (
+                                                        <ListItem button key={text}>
+                                                            <a href={index === 0 ? "#" : appNameId + "/test"}
+                                                                style={{ textDecoration: "none", color: "#4a4a4a", fontWeight: 400 }}
+                                                                onClick={index === 0 ? () => { scrollToTopic() } : null}>
+                                                                <ListItemText primary={text} />
+                                                            </a>
+                                                        </ListItem>
+                                                    )
+                                                } else {
+                                                    if (getNewDomain(appId).search("passemall") === -1) {
+                                                        return (
+                                                            <ListItem button key={text}>
+                                                                <a href="htpps://passemall.com/blog">
+                                                                    <ListItemText primary={text}></ListItemText>
+                                                                </a>
+                                                            </ListItem>
+                                                        )
+                                                    } else {
+                                                        return null
+                                                    }
+                                                }
+                                            })}
                                         </List>
                                     </div>
                                 </SwipeableDrawer>
@@ -210,6 +218,7 @@ const Header = (props) => {
                                 <div className="menu-nav">
                                     <span onClick={() => scrollToTopic()}>LEARN</span>
                                     <a href={"/" + appNameId + "/test"}>TEST</a>
+                                    {getNewDomain(appId).search("passemall") !== -1 ? null : <a href="https://passemall/blog">BLOG</a>}
                                     <FAQLink appId={appId} style={{ textTransform: "uppercase" }} />
                                 </div>
                             </div>
@@ -221,18 +230,17 @@ const Header = (props) => {
                         <Button
                             style={{ fontSize: '16px' }}
                             variant="contained"
-                            className={classes.button} onClick={() => { /*scrollToTopic()*/ onStartTest() }}>START YOUR TEST</Button>
+                            className={classes.button} onClick={() => { onStartTest() }}>START YOUR TEST</Button>
                     </div>
                 </Container>
             </div>
-        </header>
+        </header >
     )
 }
 const Features = ({ color, webAppInfo, appName }) => {
     if (!webAppInfo) {
         webAppInfo = new WebAppInfo({ appName: appName });
     }
-    const router = useRouter();
     return (
         <Container className="features-container">
             <div className="list-features">
@@ -300,13 +308,13 @@ const ListInfoGraphic = (props) => {
             <Container>
                 <Grid container alignItems="stretch">
                     <Grid item xs={12} sm={4}>
-                        <Image width="100%" src={srcImage1} alt="infographic-1" style={{ display: "block" }}></Image>
+                        <img width="100%" src={srcImage1} alt="infographic-1" style={{ display: "block" }}></img>
                     </Grid>
                     <Grid item xs={12} sm={1}></Grid>
                     <Grid item xs={12} sm={6}>
                         <h2>{webAppInfo.block3.title}</h2>
                         <p>{webAppInfo.block3.description}</p>
-                        <Button className={classes.root} style={{ marginTop: '50px' }} onClick={() => { scrollToTopic(); onStartTest(); }}>START YOUR TEST</Button>
+                        <Button className={classes.root} style={{ marginTop: '50px' }} onClick={() => { onStartTest(); }}>START YOUR TEST</Button>
                     </Grid>
                     <Grid item xs={12} sm={1}></Grid>
                 </Grid>
@@ -345,8 +353,8 @@ const ListInfoGraphic = (props) => {
                     <Grid item xs={12} sm={5}>
                         <h2>{webAppInfo.block5.title}</h2>
                         <p>{webAppInfo.block5.description}</p>
-                        <div style={{ display: "flex", flexDirection: "column", justifyContent: "flex-start", width: "200px" }}>
-                            <Button className={classes.root} onClick={() => { scrollToTopic(); onStartTest(); }} fullWidth={false}>START YOUR TEST</Button>
+                        <div style={{ display: "flex", flexDirection: "column", justifyContent: "flex-start", width: "240px" }}>
+                            <Button className={classes.root} style={{ display: props.isMobile ? "none" : "block" }} onClick={() => { onStartTest(); }} fullWidth={false}>START YOUR TEST</Button>
                             <ArrowDownwardIcon style={
                                 {
                                     marginTop: "20px",
@@ -361,7 +369,7 @@ const ListInfoGraphic = (props) => {
                     </Grid>
                     <Grid item xs={12} sm={2}></Grid>
                     <Grid item xs={12} sm={4}>
-                        <Image src={srcImage2} alt="infographic-2" style={{ display: "block", width: "100%" }}></Image>
+                        <img src={srcImage2} alt="infographic-2" style={{ display: "block", width: "100%" }}></img>
                     </Grid>
                     <Grid item xs={12} sm={1}></Grid>
                 </Grid>
@@ -390,7 +398,7 @@ const MobileDescription = ({ appInfoState, color = "#FFA86C", appName }) => {
                         <h3>Practice offline & on the go with the free {appName} app</h3>
                         <p>Available for IOS and Android devices.</p>
                         <div className="app-info">
-                            <Image src={appInfoState.avatar} alt="app-image" style={{ borderRadius: "15px", height: "100px" }}></Image>
+                            <img src={appInfoState.avatar} alt="app-image" style={{ borderRadius: "15px", height: "100px" }}></img>
                             <div className="app-info-right">
                                 <h4>{appInfoState.appName}</h4>
                                 <Rating value={5} style={isMobile ? { color: "#fff", fontSize: "16px" } : { color: "#fff", fontSize: "20px" }} readOnly ></Rating>
@@ -463,7 +471,7 @@ const FeedbackItem = ({ content, name, createTime, index }) => {
     return <div className="feedback-item">
         <div className="content">{content}</div>
         <div className="infos">
-            <Image className="avatar" src={index % 3 === 0 ? "/images/avatar-1.png" : (index % 3 === 1 ? "/images/avatar-2.png" : "/images/avatar-3.png")} alt="avatar"></Image>
+            <img className="avatar" src={index % 3 === 0 ? "/images/avatar-1.png" : (index % 3 === 1 ? "/images/avatar-2.png" : "/images/avatar-3.png")} alt="avatar"></img>
             <div className="name">{name}</div>
         </div>
     </div>
@@ -474,16 +482,12 @@ export async function getServerSideProps(context) {
     const { appNameId } = context.params;
     const appInfoState = await callApi({ url: '/data?type=get_app_info&appNameId=' + appNameId, params: null, method: 'post' })
     let url = context.req.headers.referer;
-    // let topics = [{ id: 1, name: "Topic 1"}, {id: 2, name: "Topic 2" }];
-    // context.store.dispatch.dispatch(getTopicsByParentIdSuccess(5722070642065408, topics))
     return {
         props: {
             appInfoState: appInfoState ? appInfoState : {},
             url: url ? url : '',
-            // topics: topics,
         }
     }
 }
-// )
 
 export default wrapper.withRedux(Home);
