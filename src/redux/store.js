@@ -10,7 +10,7 @@ import Config from '../config';
 import { logger } from 'redux-logger'
 const sagaMiddleware = createSagaMiddleware();
 const middlewares = [sagaMiddleware];
-middlewares.push(logger)
+// middlewares.push(logger)
 localforage.config({
     driver: localforage.LOCALSTORAGE,
     name: 'uTest',
