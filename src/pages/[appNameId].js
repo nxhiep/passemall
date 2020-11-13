@@ -6,7 +6,7 @@ import dynamic from 'next/dynamic';
 import { useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react';
 import ReactGA from 'react-ga';
-import { Provider } from 'react-redux';
+import { Provider, useStore } from 'react-redux';
 import Slider from 'react-slick';
 import { PersistGate } from 'redux-persist/integration/react';
 import Footer from '../components/Footer';
@@ -14,14 +14,13 @@ import { Clock, FreeCircle, FreeIcon, LoginIcon, PenIcon, TotalQuestions } from 
 import SEO from '../components/SEO';
 import { FAQLink } from '../components/Widgets';
 import WebAppInfo from '../models/WebAppInfo';
-import configStore from '../redux/storeInHome';
 import { callApi } from '../services';
 import Image from "../components/Image"
 import { getNewDomain, isSuperApp, oldUser, scrollToTopic, setScrollDownAuto } from '../utils';
+import { wrapper } from '../redux/store';
 const HomeContent = dynamic(() => import("../container/home/HomeContent"), { ssr: false })
 const SelectStatePopup = dynamic(() => import("../components/SelectStatePopup"), { ssr: false })
 initializeReactGA();
-const store = configStore();
 function initializeReactGA() {
     ReactGA.initialize('UA-167769768-1');
 }
@@ -70,6 +69,7 @@ const Home = ({ appInfoState, url }) => {
             url = 'http://passemall.com/' + appInfoState.appNameId;
         }
     }
+    const store = useStore((state) => state);
     return (
         <>
             <SEO appInfo={appInfoState} url={url}>
@@ -118,8 +118,8 @@ const Home = ({ appInfoState, url }) => {
                     }}
                 />
                 <ListTopic />
-                <Provider store={store.store}>
-                    <PersistGate persistor={store.persistor}>
+                <Provider store={store}>
+                    <PersistGate persistor={store.__persistor}>
                         <HomeContent
                             appInfo={appInfoState} appNameId={appInfoState.appNameId}
                             hasState={appInfoState && appInfoState.hasState}
@@ -469,6 +469,7 @@ const FeedbackItem = ({ content, name, createTime, index }) => {
     </div>
 }
 
+// export const getServerSideProps = wrapper.getServerSideProps(async (context) => {
 export async function getServerSideProps(context) {
     const { appNameId } = context.params;
     const appInfoState = await callApi({ url: '/data?type=get_app_info&appNameId=' + appNameId, params: null, method: 'post' })
@@ -483,4 +484,6 @@ export async function getServerSideProps(context) {
         }
     }
 }
-export default Home;
+// )
+
+export default wrapper.withRedux(Home);

@@ -4,8 +4,7 @@ const StudyViewScreen = dynamic(() => import('../../container/study/Study.View')
 const TestViewScreen = dynamic(() => import('../../container/test/Test.View'), { ssr: false })
 const ReviewViewScreen = dynamic(() => import('../../container/review/Review.View'), { ssr: false })
 import Head from 'next/head';
-import configStore from '../../redux/store';
-import { Provider } from 'react-redux';
+import { Provider, useStore } from 'react-redux';
 import { PersistGate } from 'redux-persist/integration/react';
 import { useRouter } from 'next/router';
 import Routes from '../../routes';
@@ -14,6 +13,7 @@ import { oldUser, setScrollDownAuto } from '../../utils';
 import path from "path";
 import fs from "fs"
 import { callApi } from '../../services';
+import { wrapper } from '../../redux/store';
 initializeReactGA();
 function initializeReactGA() {
     ReactGA.initialize('UA-167769768-1');
@@ -23,7 +23,7 @@ const Screen = ({ appInfoState }) => {
         setScrollDownAuto()
         oldUser()
     }, [])
-    const store = configStore();
+    const store = useStore((state) => state);
     return (
         <>
             <Head>
@@ -42,9 +42,9 @@ const Screen = ({ appInfoState }) => {
                 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
                 <meta name="keywords" content={appInfoState.keywords} />
             </Head>
-            <Provider store={store.store}>
+            <Provider store={store}>
                 <PersistGate
-                    persistor={store.persistor}
+                    persistor={store.__persistor}
                 >
                     <ScreenChild appInfoState={appInfoState} />
                 </PersistGate>
@@ -64,6 +64,7 @@ export async function getStaticProps(context) {
     }
 
 }
+
 export async function getStaticPaths() {
     const directorytopicNameId = path.join(process.cwd(), 'src/data/topicNameId.json')
     let topicNameIdFile = fs.readFileSync(directorytopicNameId);
@@ -102,4 +103,4 @@ function ScreenChild({ appInfoState }) {
         return <StudyViewScreen appInfoState={appInfoState} />
     }
 }
-export default Screen
+export default wrapper.withRedux(Screen)
