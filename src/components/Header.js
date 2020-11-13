@@ -26,7 +26,7 @@ const HeaderStudy = ({ isMobile }) => {
 		<header>
 			<Container style={{ display: "flex" }}>
 				<a href="/">
-					<img src="/images/logo-landing.png" alt="logo-app"></img>
+					<img src="/images/logo-landing.png" alt="logo-app" height="80px"></img>
 				</a>
 				{isMobile ? null : (
 					<div style={isMobile ? { dispaly: "none" } : { marginLeft: "auto", display: "flex", alignItems: "center" }}>
@@ -55,7 +55,7 @@ const HeaderPC = ({ alt, isMobile, isBlog }) => {
 		<header>
 			<Container style={{ display: "flex" }}>
 				<a href="/">
-					<img src="/images/logo-landing.png" alt="logo-app"></img>
+					<img src="/images/logo-landing.png" alt="logo-app" height="80px"></img>
 				</a>
 				{isMobile ? (
 					<div style={{ marginLeft: "auto" }}>
