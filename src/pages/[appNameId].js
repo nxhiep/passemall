@@ -155,6 +155,7 @@ const Header = (props) => {
     if (!isSuperApp(appId) || !props.bucket) {
         imgUrl = `/images/landing.png`;
     }
+    let domain = getNewDomain(appId);
     return (
         <header style={{ position: "relative" }}>
             <img src={imgUrl} width="100%" style={{ visibility: "hidden", minHeight: "630px", objectFit: "cover" }} allt="image-header" />
@@ -193,7 +194,7 @@ const Header = (props) => {
                                                 </a>
                                             </ListItem>
                                             {
-                                                getNewDomain(appId).search("passemall") === -1 ? <ListItem button>
+                                                domain && domain.search("passemall") === -1 ? <ListItem button>
                                                     <a href="htpps://passemall.com/blog" style={{ textDecoration: "none", color: "#4a4a4a", fontWeight: 400 }}>
                                                         <ListItemText primary="Blog"></ListItemText>
                                                     </a>
