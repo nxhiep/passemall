@@ -32,6 +32,7 @@ const useStyles = makeStyles({
         padding: "12px 32px",
         fontSize: "18px",
         fontWeight: 600,
+        margin: "0 auto",
         color: props => props.color === "#FAFAFA" ? "#383838" : "#fff",
         "&:hover": {
             backgroundColor: props => props.color,
@@ -155,7 +156,6 @@ const Header = (props) => {
     if (!isSuperApp(appId) || !props.bucket) {
         imgUrl = `/images/landing.png`;
     }
-    let domain = getNewDomain(appId);
     return (
         <header style={{ position: "relative" }}>
             <img src={imgUrl} width="100%" style={{ visibility: "hidden", minHeight: "630px", objectFit: "cover" }} allt="image-header" />
@@ -193,13 +193,9 @@ const Header = (props) => {
                                                     <ListItemText primary="Test" />
                                                 </a>
                                             </ListItem>
-                                            {
-                                                domain && domain.search("passemall") === -1 ? <ListItem button>
-                                                    <a href="htpps://passemall.com/blog" style={{ textDecoration: "none", color: "#4a4a4a", fontWeight: 400 }}>
-                                                        <ListItemText primary="Blog"></ListItemText>
-                                                    </a>
-                                                </ListItem> : null
-                                            }
+                                            <ListItem button>
+                                                <BlogWidget appId={appId} />
+                                            </ListItem>
                                             <ListItem button>
                                                 <FAQLink appId={appId} style={{ textTransform: "uppercase" }} />
                                             </ListItem>
@@ -212,7 +208,7 @@ const Header = (props) => {
                                 <div className="menu-nav">
                                     <span onClick={() => scrollToTopic()}>LEARN</span>
                                     <a href={"/" + appNameId + "/test"}>TEST</a>
-                                    {getNewDomain(appId).search("passemall") !== -1 ? null : <a href="https://passemall/blog">BLOG</a>}
+                                    <BlogWidget appId={appId} />
                                     <FAQLink appId={appId} style={{ textTransform: "uppercase" }} />
                                 </div>
                             </div>
@@ -224,13 +220,20 @@ const Header = (props) => {
                         <Button
                             style={{ fontSize: '16px' }}
                             variant="contained"
-                            className={classes.button} onClick={() => { onStartTest() }}>START YOUR TEST</Button>
+                            className={classes.button} onClick={() => { onStartTest() }} style={{ display: props.isMobile ? "flex" : "inline-flex", marginLeft: props.isMobile ? "auto" : "", marginRight: props.isMobile ? "auto" : "" }} >START YOUR PRACTICE TEST</Button>
                     </div>
                 </Container>
             </div>
         </header >
     )
 }
+
+const BlogWidget = ({ appId }) => {
+    return <a href={"/blog?appId=" + appId} style={{ textDecoration: "none", color: "white", textTransform: "uppercase" }}>
+        Blog
+    </a>
+}
+
 const Features = ({ color, webAppInfo, appName }) => {
     if (!webAppInfo) {
         webAppInfo = new WebAppInfo({ appName: appName });
@@ -240,17 +243,17 @@ const Features = ({ color, webAppInfo, appName }) => {
             <div className="list-features">
                 <div >
                     <FreeIcon width="80px" height="80px" color={color}></FreeIcon>
-                    <h2>{webAppInfo.block1[0].title}</h2>
+                    <h2 className="dot-2">{webAppInfo.block1[0].title}</h2>
                     <p>{webAppInfo.block1[0].description}</p>
                 </div>
                 <div >
                     <LoginIcon width="80px" height="80px" color={color}></LoginIcon>
-                    <h2>{webAppInfo.block1[1].title}</h2>
+                    <h2 className="dot-2">{webAppInfo.block1[1].title}</h2>
                     <p>{webAppInfo.block1[1].description}</p>
                 </div>
                 <div>
                     <PenIcon width="80px" height="80px" color={color}></PenIcon>
-                    <h2>{webAppInfo.block1[2].title}</h2>
+                    <h2 className="dot-2">{webAppInfo.block1[2].title}</h2>
                     <p>{webAppInfo.block1[2].description}</p>
                 </div>
             </div>
@@ -308,7 +311,7 @@ const ListInfoGraphic = (props) => {
                     <Grid item xs={12} sm={6}>
                         <h2>{webAppInfo.block3.title}</h2>
                         <p>{webAppInfo.block3.description}</p>
-                        <Button className={classes.root} style={{ marginTop: '50px' }} onClick={() => { onStartTest(); }}>START YOUR TEST</Button>
+                        <Button className={classes.root} style={{ marginTop: '50px' }} onClick={() => { onStartTest(); }}>START YOUR PRACTICE TEST</Button>
                     </Grid>
                     <Grid item xs={12} sm={1}></Grid>
                 </Grid>
@@ -348,7 +351,7 @@ const ListInfoGraphic = (props) => {
                         <h2>{webAppInfo.block5.title}</h2>
                         <p>{webAppInfo.block5.description}</p>
                         <div style={{ display: "flex", flexDirection: "column", justifyContent: "flex-start", width: "240px" }}>
-                            <Button className={classes.root} style={{ display: props.isMobile ? "none" : "block" }} onClick={() => { onStartTest(); }} fullWidth={false}>START YOUR TEST</Button>
+                            <Button className={classes.root} style={{ display: props.isMobile ? "none" : "block" }} onClick={() => { onStartTest(); }} fullWidth={false}>START YOUR PRACTICE TEST</Button>
                             <ArrowDownwardIcon style={
                                 {
                                     marginTop: "20px",

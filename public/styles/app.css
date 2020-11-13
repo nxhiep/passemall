@@ -77,10 +77,19 @@ header .container-header .header-title p {
 
 .features-container .list-features div p {
   color: #383838;
+  text-align: justify;
 }
 
 .overview-container {
   margin-bottom: 120px;
+}
+
+.list-overview .overview-item p {
+  text-align: justify;
+}
+
+.list-features h2 {
+  min-height: 55px;
 }
 
 .overview-container .overview-title {

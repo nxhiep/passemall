@@ -50,8 +50,7 @@ const ListBlog = ({ data, url }) => {
             <div className='body-panel landing-page list-blog'>
                 <HeaderBlog />
                 <BannerBlog />
-                <div style={{ height: "40px", width: '100%' }}></div>
-                <Container>
+                <Container style={{paddingTop: "40px"}}>
                     <Grid container spacing={2}>
                         <Grid container item xs={12} sm={12} md={8}>
                             {data.map(el => {
@@ -170,7 +169,11 @@ const RecentPosts = ({ data }) => {
 }
 
 export async function getServerSideProps(context) {
-    const res = await fetch("https://micro-enigma-235001.appspot.com/new/api?type=get-all-new-info");
+    let url = 'https://hiep-dot-micro-enigma-235001.appspot.com/new/api?type=get-all-new-info';
+    if(context.query.appId){
+        url += '&appId=' + context.query.appId;
+    }
+    const res = await fetch(url);
     const data = await res.json();
 
     return { props: { data: data, url: context.req.url } }

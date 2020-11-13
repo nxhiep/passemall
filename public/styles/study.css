@@ -664,7 +664,8 @@ body {
   }
 
   .study-game-panel .questions-panel.question-view-study-game {
-    height: calc(100% - 70px) !important;    
+    height: calc(100% - 70px) !important;   
+    margin-bottom: 60px; 
   }
 
   .button-continue-mobile {
