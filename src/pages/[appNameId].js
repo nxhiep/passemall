@@ -184,31 +184,24 @@ const Header = (props) => {
                                 >
                                     <div style={{ width: "200px" }}>
                                         <List>
-                                            {["Learn", "Test", "Blog"].map((text, index) => {
-                                                if (index !== 2) {
-                                                    return (
-                                                        <ListItem button key={text}>
-                                                            <a href={index === 0 ? "#" : appNameId + "/test"}
-                                                                style={{ textDecoration: "none", color: "#4a4a4a", fontWeight: 400 }}
-                                                                onClick={index === 0 ? () => { scrollToTopic() } : null}>
-                                                                <ListItemText primary={text} />
-                                                            </a>
-                                                        </ListItem>
-                                                    )
-                                                } else {
-                                                    if (getNewDomain(appId).search("passemall") === -1) {
-                                                        return (
-                                                            <ListItem button key={text}>
-                                                                <a href="htpps://passemall.com/blog">
-                                                                    <ListItemText primary={text}></ListItemText>
-                                                                </a>
-                                                            </ListItem>
-                                                        )
-                                                    } else {
-                                                        return null
-                                                    }
-                                                }
-                                            })}
+                                            <ListItem button>
+                                                <ListItemText primary="Learn" />
+                                            </ListItem>
+                                            <ListItem button>
+                                                <a href="/test" style={{ textDecoration: "none", color: "#4a4a4a", fontWeight: 400 }}>
+                                                    <ListItemText primary="Test" />
+                                                </a>
+                                            </ListItem>
+                                            {
+                                                getNewDomain(appId).search("passemall") === -1 ? <ListItem button key={text}>
+                                                    <a href="htpps://passemall.com/blog">
+                                                        <ListItemText primary={text}></ListItemText>
+                                                    </a>
+                                                </ListItem> : null
+                                            }
+                                            <ListItem button>
+                                                <FAQLink appId={appId} style={{ textTransform: "uppercase" }} />
+                                            </ListItem>
                                         </List>
                                     </div>
                                 </SwipeableDrawer>

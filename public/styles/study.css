@@ -1,8 +1,11 @@
 .study-game-panel {
   padding-top: 60px;
+  height: calc(100% - 70px);
+  box-sizing: border-box;
 }
 .left-panel {
   border-radius: 5px;
+  height: 100%;
 }
 body {
   background: #e5e5e5 !important;
@@ -189,9 +192,8 @@ body {
 }
 .parent-topic-tree-panel .box-topic-tree-panel {
   padding: 20px;
-  height: 400px !important;
+  height: 400px;
   overflow-y: auto;
-  margin-bottom: 20px;
   background: #f0f0f3;
   box-shadow: 2px 2px 20px rgba(0, 0, 0, 0.1);
   border-radius: 5px;
@@ -531,9 +533,6 @@ body {
     box-shadow: 2px 2px 20px rgba(0, 0, 0, 0.1);
     border-radius: 5px;
   }
-  .study-game-panel .next-part-button {
-    margin: 0px auto 15px auto;
-  }
 }
 @media screen and (max-width: 1300px) {
   .study-game-panel .topic-congratulations-panel {
@@ -592,12 +591,6 @@ body {
   .study-game-panel .question-view-study-game {
     margin-bottom: 0px;
   }
-  .study-game-panel .next-part-button {
-    position: fixed;
-    left: calc(50% - 87px);
-    bottom: 10px;
-    margin: 0px auto 8px auto !important;
-  }
   .study-game-panel {
     padding: 0 !important;
   }
@@ -640,5 +633,56 @@ body {
   }
   .question-result-info {
     border-radius: unset;
+  }
+}
+
+
+.study-game-panel .questions-panel.question-view-study-game {
+  height: 100% !important;
+  display: flex;
+  flex-direction: column;
+}
+
+.border-box {
+  height: 100%;
+  box-sizing: border-box;
+  
+}
+
+.parent-topic-tree-panel.border-box {
+  height: calc(100% - 100px);
+  display: flex;
+  flex-direction: column;
+}
+
+@media screen and (max-width: 780px) {
+  .study-game-panel > .MuiGrid-container .right-panel,
+  .study-game-panel > .MuiGrid-container,
+  .study-game-panel {
+    height: 100%;
+    box-sizing: border-box;
+  }
+
+  .study-game-panel .questions-panel.question-view-study-game {
+    height: calc(100% - 70px) !important;    
+  }
+
+  .button-continue-mobile {
+    height: 60px;
+    width: 100%;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .button-continue-mobile button {
+    width: calc(100% - 20px);
+    left: 0 !important;
+    position: static !important;
+    margin-bottom: 0 !important;
+    margin-right: 0 !important;
   }
 }

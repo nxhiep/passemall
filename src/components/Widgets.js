@@ -2,6 +2,7 @@ import { Box, CircularProgress, Container, Grid, Typography } from '@material-ui
 import { Rating } from '@material-ui/lab';
 import React, { useEffect, useState } from 'react';
 import { callApi } from '../services';
+import { isAppDMV } from '../utils';
 import Image from './Image';
 const FixedContainer = (props) => {
     return (
@@ -127,21 +128,38 @@ const ConnectAppStore = ({ appInfo }) => {
 }
 
 const FAQLink = ({ style, className, appId }) => {
-    if(!appId){
-        return null;
+    if(isAppDMV(appId)){
+        return <a style={style} className={className} href={"/faq?appId=" + appId} target="_blank">FAQ</a>
     }
-	const [hasFAQ, setHasFAQ] = useState(null);
-	useEffect(() => {
-		callApi({ url: '/new/api?type=detect-data&appId=' + appId, params: null, method: 'post' }).then((data) => {
-            console.log("FAQLink data ", data['TOPIC_TYPE_FAQ'])
-			data && setHasFAQ(!!data['TOPIC_TYPE_FAQ']);
-        });
-    }, [appId])
-    console.log("hasFAQ", hasFAQ)
-	if(!hasFAQ){
-		return null;
-	}
-	return <a style={style} className={className} href={"/faq?appId=" + appId} target="_blank">FAQ</a>
+    return null;
+    // if(!appId){
+    //     return null;
+    // }
+    // const [hasFAQ, setHasFAQ] = useState(null);
+    // let elementId = "xxxxx-asdasdas-" + appId;
+	// useEffect(() => {
+    //     try {
+    //         callApi({ url: '/new/api?type=detect-data&appId=' + appId, params: null, method: 'post' }).then((data) => {
+    //             console.log("FAQLink data ", data['TOPIC_TYPE_FAQ'])
+    //             data && setHasFAQ(!!data['TOPIC_TYPE_FAQ']);
+    //             setTimeout(() => {
+    //                 let element = document.createElement('div');
+    //                 element.innerHTML = '<a style={style} className={className} href={"/faq?appId=" + appId} target="_blank">FAQ</a>';
+    //                 document.getElementById(elementId).appendChild(element)
+    //             }, 1000);
+    //         }).catch((e) => {
+    //             console.log("e 1", e)
+    //         });
+    //     } catch (e) {
+    //         console.log("e 2", e)
+    //     };
+    // }, [appId])
+    // return <div id={elementId}></div>
+    // console.log("hasFAQ", hasFAQ)
+	// if(!hasFAQ){
+	// 	return null;
+	// }
+	// return <a style={style} className={className} href={"/faq?appId=" + appId} target="_blank">FAQ</a>
 }
 
 export { TitleBlock, FixedContainer, LoadingWidget, TabPanel, LineProgress, Modal, ConnectAppStore, FAQLink };

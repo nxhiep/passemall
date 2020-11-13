@@ -55,6 +55,7 @@ class StudyViewScreenUI extends Component {
             showAlertName: '',
             isMobile: isMobile,
             count: 0,
+            exitCongratulationsScreen: false
         }
         this.props.getTopicsByParentId(this.state.id);
         this.props.getTopicById(this.state.id, this.state.appInfo.id, this.state.appInfo.bucket);
@@ -152,6 +153,7 @@ class StudyViewScreenUI extends Component {
         }
         let congratulationTopic = (!!gameState.isFinish);
         if (!this.state.isMobile) {
+            console.log("PC congratulationTopic", congratulationTopic, 'currentTopic', (currentTopic ? currentTopic.name : ''))
             return (
                 <div className="body-panel">
                     <Header isStudy={true} />
@@ -163,8 +165,10 @@ class StudyViewScreenUI extends Component {
                             container
                             direction="row"
                             spacing={3}
+                            alignItems="stretch"
+                            className="border-box"
                         >
-                            <Grid item xs={12} sm={12} md={5} lg={4} className="left-panel" >
+                            <Grid item xs={12} sm={12} md={5} lg={4} className="left-panel border-box" >
                                 <TopicInfoPanel
                                     appInfo={this.state.appInfo}
                                 />
@@ -184,32 +188,8 @@ class StudyViewScreenUI extends Component {
                                     }}
                                 />
                             </Grid>
-                            <Grid item xs={12} sm={12} md={7} lg={8} className="right-panel">
+                            <Grid item xs={12} sm={12} md={7} lg={8} className="right-panel border-box">
                                 {this.renderRightContentPanel(currentTopic, currentQuestionIndex, congratulationTopic, this.state.appInfo, onContinue)}
-                                {congratulationTopic ? (
-                                    <Grid
-                                        container
-                                        alignItems="center"
-                                        justify="center"
-                                        style={{ display: "flex", marginTop: "16px" }}
-                                    >
-                                        <Button
-                                            variant="contained"
-                                            color="primary"
-                                            className="next-part-button"
-                                            onClick={() => this.onNextPart()}
-                                        >
-                                            Go To Part {this.state.currentTopic.orderIndex + 2} <ArrowRightAltIcon />
-                                        </Button>
-                                        <Button
-                                            variant="contained"
-                                            color="primary"
-                                            style={{ borderRadius: "5px" }}
-                                            onClick={() => this.props.resetQuestionProgress()}>
-                                            Try Again
-                                            </Button>
-                                    </Grid>
-                                ) : null}
                             </Grid>
                         </Grid>
                     </Container>
@@ -218,6 +198,10 @@ class StudyViewScreenUI extends Component {
             )
         }
         if (this.state.isMobile) {
+            if(this.state.isMobile && this.state.exitCongratulationsScreen){
+                congratulationTopic = false;
+            }
+            console.log("Mobile congratulationTopic", congratulationTopic, 'currentTopic', (currentTopic ? currentTopic.name : ''))
             return (
                 <div className="body-panel">
                     <Container className="study-game-panel">
@@ -228,6 +212,7 @@ class StudyViewScreenUI extends Component {
                             container
                             direction="row"
                             spacing={0}
+                            alignItems="stretch"
                         >
                             {!this.state.showGame ?
                                 <Grid item xs={12} sm={12} md={5} lg={4} className="left-panel">
@@ -251,30 +236,7 @@ class StudyViewScreenUI extends Component {
                                     />
                                 </Grid> :
                                 <Grid item xs={12} sm={12} md={7} lg={8} className="right-panel">
-                                    {this.renderRightContentPanel(currentTopic, currentQuestionIndex, congratulationTopic, this.state.appInfo, onContinue, this.state.isMobile)}
-                                    {congratulationTopic ? (
-                                        <Grid
-                                            container
-                                            alignItems="center"
-                                            justify="center"
-                                        >
-                                            <Button
-                                                variant="contained"
-                                                color="primary"
-                                                className="next-part-button"
-                                                onClick={() => this.onNextPart()}
-                                            >
-                                                Go To Part {this.state.currentTopic.orderIndex + 2} <ArrowRightAltIcon />
-                                            </Button>
-                                            <Button
-                                                variant="contained"
-                                                color="primary"
-                                                style={this.state.isMobile ? { position: "fixed", bottom: "66px", width: "157px", left: "calc(50% - 87px)" } : {}}
-                                                onClick={() => this.props.resetQuestionProgress()}>
-                                                Try Again
-                                            </Button>
-                                        </Grid>
-                                    ) : null}
+                                    {this.renderRightContentPanel(currentTopic, currentQuestionIndex, congratulationTopic, this.state.appInfo, onContinue, true)}
                                 </Grid>
                             }
                         </Grid>
@@ -302,13 +264,13 @@ class StudyViewScreenUI extends Component {
     }
     renderRightContentPanel(currentTopic, currentQuestionIndex, congratulationTopic, appInfo, onContinue, isMobile) {
         return (
-            <div style={{ display: "flex", flexDirection: "column" }}>
-                <div style={congratulationTopic ? { display: 'none' } : {}}>
+            <div style={{ display: "flex", flexDirection: "column" }} className="border-box">
+                <div style={congratulationTopic ? { display: 'none' } : {}} className="border-box">
                     {
                         currentTopic ?
                             <QuestionsPanelTS
                                 appInfo={appInfo}
-                                className="question-view-study-game"
+                                className="question-view-study-game border-box"
                                 topicId={currentTopic.id}
                                 gameType={Config.STUDY_GAME}
                                 currentIndex={currentQuestionIndex}
@@ -320,11 +282,42 @@ class StudyViewScreenUI extends Component {
                     }
 
                 </div>
-                { congratulationTopic ? <div className="topic-congratulations-panel" >
-                    <h1>Congratulations!</h1>
-                    <p>You have passed {currentTopic ? currentTopic.name : ''} with excellent performance</p>
-                    <div></div>
-                </div> : null}
+                {congratulationTopic ? <>
+                    <div className="topic-congratulations-panel" >
+                        <h1>Congratulations!</h1>
+                        <p>You have passed {currentTopic ? currentTopic.name : ''} with excellent performance</p>
+                        <div></div>
+                    </div>
+                    <Grid
+                        container
+                        alignItems="center"
+                        justify="center"
+                        style={{ display: "flex", marginTop: "16px" }}
+                    >
+                        <Button
+                            variant="contained"
+                            color="primary"
+                            className="next-part-button"
+                            onClick={() => {
+                                if(isMobile){
+                                    this.setState({
+                                        exitCongratulationsScreen: true
+                                    })
+                                }
+                                this.onNextPart()
+                            }}
+                        >
+                            Go To Part {this.state.currentTopic.orderIndex + 2} <ArrowRightAltIcon />
+                        </Button>
+                        <Button
+                            variant="contained"
+                            color="primary"
+                            style={{ borderRadius: "5px" }}
+                            onClick={() => this.props.resetQuestionProgress()}>
+                            Try Again
+                            </Button>
+                    </Grid>
+                </> : null}
             </div>
         );
     }
@@ -455,7 +448,7 @@ const TopicTreePanelUI = ({ topicState, parentId, currentQuestionId, onChangeTop
     }
 
     return (
-        <div className="parent-topic-tree-panel">
+        <div className="parent-topic-tree-panel border-box">
             {dialogInfo ? <AlertDialogSlide dialogInfo={dialogInfo} /> : ''}
             <Grid
                 container
@@ -479,7 +472,7 @@ const TopicTreePanelUI = ({ topicState, parentId, currentQuestionId, onChangeTop
                     <div>{mastered} <DoneAllIcon /></div>
                 </div>
             </Grid>
-            <div className="box-topic-tree-panel">
+            <div style={{height: "100%"}} className="box-topic-tree-panel border-box">
                 <div className="topic-tree-panel">
                     {widgets}
                 </div>
