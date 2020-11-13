@@ -1,0 +1,26 @@
+{
+	"name": "ABC Learning",
+	"short_name": "ABC Learning",
+	"icons": [
+		{
+			"src": "logo60.png",
+			"type": "image/png",
+			"sizes": "55x55"
+		},
+		{
+			"src": "logo192.png",
+			"type": "image/png",
+			"sizes": "192x192"
+		},
+		{
+			"src": "logo512.png",
+			"type": "image/png",
+			"sizes": "512x512"
+		}
+	],
+	"start_url": "/?source=pwa",
+	"display": "standalone",
+	"orientation": "natural",
+	"background_color": "#ffffff",
+	"theme_color": "#000000"
+}
