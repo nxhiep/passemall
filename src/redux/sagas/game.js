@@ -51,7 +51,6 @@ function* startGame() {
         });
     }
 
-    ("xxxxx", currentGame, "xxxxx", level)
     if (currentGame == null || currentGame == undefined) {
         if (gameType === Config.STUDY_GAME || gameType === Config.REVIEW_GAME) {
             let cards;

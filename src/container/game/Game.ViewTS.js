@@ -155,7 +155,6 @@ const QuestionsPanelx = ({ questionProgress, className, topicId, loadGame = () =
                                 </ReportDialog>
                             </Paper>
                         </Popover>
-
                     </span>
                 </Grid>
 
@@ -173,23 +172,30 @@ const QuestionsPanelx = ({ questionProgress, className, topicId, loadGame = () =
                                 onBookmark={onBookmark} />;
                         })
                     }
-                    <div style={{ marginTop: "auto" }}></div>
-                    <Button
-                        variant="contained"
-                        style={{ display: checkChoice ? "flex" : "none", backgroundColor: "#8496EA", color: "#fff", boxShadow: "inset 0px 4px 4px rgba(255, 255, 255, 0.25)", borderRadius: "20px", zIndex: 1000 }}
-                        className="next-part-button"
-                        onClick={() => {
-                            if (congratulationTopic) {
-                                onNextPart();
-                            } else {
-                                onContinue();
-                            }
-                        }}
-                    >
-                        Next Quesiton<ArrowRightAltIcon />
-                    </Button>
+                    <div style={{ marginTop: "auto" }} className="button-continue-mobile">
+                        <Button
+                            variant="contained"
+                            style={{ 
+                                display: checkChoice ? "flex" : "none", 
+                                backgroundColor: "#8496EA", 
+                                color: "#fff", 
+                                boxShadow: "inset 0px 4px 4px rgba(255, 255, 255, 0.25)", 
+                                borderRadius: "20px", 
+                                zIndex: 1000,
+                            }}
+                            className="next-part-button"
+                            onClick={() => {
+                                if (congratulationTopic) {
+                                    onNextPart();
+                                } else {
+                                    onContinue();
+                                }
+                            }}
+                        >
+                            Next Quesiton<ArrowRightAltIcon />
+                        </Button>
+                    </div>
                 </div >
-                <div style={{ height: "50px" }}></div>
             </>
         )
     }
@@ -240,7 +246,7 @@ const QuestionsPanelx = ({ questionProgress, className, topicId, loadGame = () =
                     container
                     alignItems="center"
                     justify="center"
-                    style={congratulationTopic ? { display: "none" } : {}}
+                    style={congratulationTopic ? { display: "none" } : { marginTop: "auto" }}
                 >
                     <Button
                         variant="contained"
