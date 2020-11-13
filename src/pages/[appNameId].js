@@ -193,9 +193,9 @@ const Header = (props) => {
                                                 </a>
                                             </ListItem>
                                             {
-                                                getNewDomain(appId).search("passemall") === -1 ? <ListItem button key={text}>
-                                                    <a href="htpps://passemall.com/blog">
-                                                        <ListItemText primary={text}></ListItemText>
+                                                getNewDomain(appId).search("passemall") === -1 ? <ListItem button>
+                                                    <a href="htpps://passemall.com/blog" style={{ textDecoration: "none", color: "#4a4a4a", fontWeight: 400 }}>
+                                                        <ListItemText primary="Blog"></ListItemText>
                                                     </a>
                                                 </ListItem> : null
                                             }
