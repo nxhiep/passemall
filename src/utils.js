@@ -222,9 +222,7 @@ export const isLocalhost = () => {
     return process.env.NODE_ENV == 'development';
 }
 
-export const redirectToNewDomain = () => {
-    return false;
-}
+export const redirectToNewDomain = false;
 
 export const isAppASVAB = (appId) => appId == 5734055144325120;
 export const isAppCDL = (appId) => appId == 5722070642065408;
