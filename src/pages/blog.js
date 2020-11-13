@@ -169,7 +169,7 @@ const RecentPosts = ({ data }) => {
 }
 
 export async function getServerSideProps(context) {
-    let url = 'https://hiep-dot-micro-enigma-235001.appspot.com/new/api?type=get-all-new-info';
+    let url = 'https://micro-enigma-235001.appspot.com/new/api?type=get-all-new-info';
     if(context.query.appId){
         url += '&appId=' + context.query.appId;
     }
