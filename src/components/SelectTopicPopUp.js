@@ -51,6 +51,7 @@ const SelectTopic = ({ currentTopic, stateInfoState, appInfoState, topicState, g
                                     if (topic.parentId === stateInfoState.mapCurrentStateInfo[appInfoState.id].id) {
                                         return (
                                             <Button
+                                                className="state-item-x"
                                                 color={currentTopic[appInfoState.id] === topic.id ? "primary" : "default"}
                                                 key={'state-item-' + topic.id}
                                                 variant="outlined"
@@ -66,6 +67,7 @@ const SelectTopic = ({ currentTopic, stateInfoState, appInfoState, topicState, g
                                     if (topic.parentId === appInfoState.id) {
                                         return (
                                             <Button
+                                                className="state-item-y"
                                                 color={currentTopic[appInfoState.id] === topic.id ? "primary" : "default"}
                                                 key={'state-item-' + topic.id}
                                                 variant={currentTopic[appInfoState.id] === topic.id ? "contained" : "outlined"}

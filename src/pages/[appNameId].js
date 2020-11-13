@@ -168,7 +168,7 @@ const Header = (props) => {
     return (
         <header style={{ position: "relative" }}>
             <Image src={imgUrl} width="100%" style={{ visibility: "hidden", minHeight: "630px", objectFit: "cover" }} />
-            <div style={{ position: "absolute", top: "0", left: "0", width: "100%", height: "100%" }}>
+            <div style={{ position: "absolute", top: "0", left: "0", width: "100%", height: "100%" }} className="header-background color-dark">
                 <Image src={imgUrl} width="100%" style={{ minHeight: "630px", objectFit: "cover" }} />
             </div>
             <div style={{ position: "absolute", top: "0", left: "0", width: "100%", height: "100%" }}>
@@ -217,7 +217,7 @@ const Header = (props) => {
                     </Grid>
                     <div className="header-title">
                         <h1 style={{ textTransform: "uppercase" }}>{webAppInfo.header.title}</h1>
-                        <h4 style={{ fontWeight: "500" }}>{webAppInfo.header.description}</h4>
+                        <div style={{ fontWeight: "500", fontSize: '1.1em' }}>{webAppInfo.header.description}</div>
                         <Button
                             style={{ fontSize: '16px' }}
                             variant="contained"
@@ -306,7 +306,7 @@ const ListInfoGraphic = (props) => {
                     <Grid item xs={12} sm={6}>
                         <h2>{webAppInfo.block3.title}</h2>
                         <p>{webAppInfo.block3.description}</p>
-                        <Button className={classes.root} style={{ marginTop: '50px' }} onClick={() => { scrollToTopic(); onStartTest(); }}>Start your test</Button>
+                        <Button className={classes.root} style={{ marginTop: '50px' }} onClick={() => { scrollToTopic(); onStartTest(); }}>START YOUR TEST</Button>
                     </Grid>
                     <Grid item xs={12} sm={1}></Grid>
                 </Grid>
@@ -346,7 +346,7 @@ const ListInfoGraphic = (props) => {
                         <h2>{webAppInfo.block5.title}</h2>
                         <p>{webAppInfo.block5.description}</p>
                         <div style={{ display: "flex", flexDirection: "column", justifyContent: "flex-start", width: "200px" }}>
-                            <Button className={classes.root} onClick={() => { scrollToTopic(); onStartTest(); }} fullWidth={false}> Start your test</Button>
+                            <Button className={classes.root} onClick={() => { scrollToTopic(); onStartTest(); }} fullWidth={false}>START YOUR TEST</Button>
                             <ArrowDownwardIcon style={
                                 {
                                     marginTop: "20px",

@@ -67,6 +67,7 @@ const SelectStatePopup = ({ stateInfoState, getStateInfo, setCurrentStateInfo, a
                                 .map((stateInfo) => {
                                     return (
                                         <Button
+                                            className="state-item-z"
                                             className={'state-item' + (currentStateInfo && currentStateInfo.id == stateInfo.id ? ' active' : '')}
                                             key={'state-item-' + stateInfo.id}
                                             variant="outlined" onClick={() => selectStateHandle(stateInfo)} >

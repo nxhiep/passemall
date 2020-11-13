@@ -92,7 +92,7 @@ const FAQ = ({ appInfo, url }) => {
                                     }
                                     window.location.href = link;
                                 }}
-                            >Start Practice Test</Button>
+                            >START PRACTICE TEST</Button>
                         </Grid>
                     </Container>
                 </section>
