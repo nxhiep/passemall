@@ -1,5 +1,5 @@
 import { Container, Grid, IconButton, SwipeableDrawer, useMediaQuery, useTheme } from "@material-ui/core";
-import { isSuperApp } from "../utils";
+import { isSuperApp, scrollToTopic } from "../utils";
 import { redirectToNewDomain } from '../utils'
 import MenuIcon from '@material-ui/icons/Menu';
 import { useState } from "react";
@@ -56,7 +56,7 @@ const MenuList = ({ appInfo }) => {
             <a href={rootLink}>HOME</a>
         </div>
         <div>
-            <Link href={rootLink}><a>LEARN</a></Link>
+            <span className="tag-a" href={rootLink} onClick={() => scrollToTopic()}>LEARN</span>
         </div>
         <div>
             <Link href={rootLink + "test"}><a>TEST</a></Link>
