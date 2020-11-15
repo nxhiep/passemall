@@ -16,6 +16,7 @@ const SEO = ({ url, appInfo, children }) => {
         <link rel="preconnect" href="https://webappapi-dot-micro-enigma-235001.appspot.com"></link>
         <link rel="preconnect" href="https://storage.googleapis.com" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link rel="manifest" href="manifest.json" />
         {url ? <link rel="canonical" href={url}></link> : null}
         <title>{title.toUpperCase()}</title>
         <meta name="title" content={title.toUpperCase()} />
