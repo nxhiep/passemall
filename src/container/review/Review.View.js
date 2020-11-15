@@ -1,4 +1,4 @@
-import { Container, Grid, IconButton } from '@material-ui/core';
+import { Button, Container, Grid, IconButton, Link } from '@material-ui/core';
 import { useTheme } from '@material-ui/core/styles';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import { ArrowBack as ArrowBackIcon } from '@material-ui/icons';
@@ -13,7 +13,7 @@ import Config from '../../config';
 import ReviewProgress from '../../models/ReviewProgress';
 import { scrollToTop } from '../../models/Utils';
 import { getAllCardProgress } from '../../redux/actions/cardProgress';
-import { checkLoadedReceiveProps, isMobileFunctions } from '../../utils';
+import { checkLoadedReceiveProps, isMobileFunctions, isSuperApp, redirectToNewDomain } from '../../utils';
 import { QuestionsPanelTS } from '../game/Game.ViewTS';
 import { useRouter } from 'next/router';
 import ReactGA from 'react-ga'
@@ -90,9 +90,13 @@ class ReviewViewScreenUI extends React.Component {
             levelIdSelected = this.state.levelId;
             questionIds = this.state.questionIds;
         }
+        let linkTest = "/" + this.state.appInfo.appNameId + "/test";
+        if(isSuperApp(this.state.appInfo.id) && redirectToNewDomain){
+            linkTest = "/test";
+        }
         return (
             <div className="body-panel review-page">
-                {this.state.isMobile ? null : <Header isStudy={true} />}
+                {this.state.isMobile ? null : <Header isStudy={true} appInfo={this.state.appInfo} />}
                 <Container className={'review-page-content' + (this.state.isMobile && this.state.showReview ? ' show-review' : '')}>
                     <Grid
                         container
@@ -134,7 +138,9 @@ class ReviewViewScreenUI extends React.Component {
                                     examId={-1}
                                     gameType={Config.REVIEW_GAME}
                                     questionIds={questionIds}
-                                /> : <div className="empty-question-panel">Empty question!</div>
+                                /> : <div className="empty-question-panel">
+                                    <Button href={linkTest} variant="contained" color="primary">START PRACTICE TEST NOW</Button>
+                                </div>
                             }
                         </Grid>
                     </Grid>

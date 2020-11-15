@@ -156,7 +156,7 @@ class StudyViewScreenUI extends Component {
             console.log("PC congratulationTopic", congratulationTopic, 'currentTopic', (currentTopic ? currentTopic.name : ''))
             return (
                 <div className="body-panel">
-                    <Header isStudy={true} />
+                    <Header isStudy={true} appInfo={this.state.appInfo} />
                     <Container className="study-game-panel">
                         {!!this.state.showAlertName ?
                             <CongratulationAlert topicName={this.state.showAlertName} onClose={() => this.setState({ showAlertName: '' })} />

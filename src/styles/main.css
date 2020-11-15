@@ -311,3 +311,47 @@ footer .footer-content .line {
   color: #fff;
   background-color: var(--main-color);
 }
+
+.header-menu {
+  display: flex;
+  align-items: center;
+  margin-left: auto;
+}
+
+.header-menu div {
+  margin-left: 50px;
+}
+
+.header-menu a {
+  text-decoration: none;
+  color: #fff;
+  margin-right: 0;
+  font-size: 16px;
+  font-weight: 600;
+  word-break: keep-all;
+  cursor: pointer;
+}
+.header-menu-swipe .MuiDrawer-paper {
+background-color: #303c88;
+}
+
+.menu-list div {
+  border-bottom: 1px solid #ddd;
+}
+
+.menu-list div a {
+  padding: 15px;
+  color: white;
+  text-decoration: none;
+  display: block;
+  font-weight: 600;
+}
+
+.menu-list .header-mobile-bg {
+  background: url(/images/landing.jpg) 0% 0% / cover no-repeat;
+  height: 50px;
+  display: flex;
+  padding: 10px 0;
+  align-items: center;
+  justify-content: center;
+}

@@ -168,7 +168,7 @@ const TestViewUI = ({ stateInfoState, testInfoState, appInfoState, getTestInfoBy
     }
     return (
         <div className="body-panel test-page">
-            <Header isStudy={true}></Header>
+            <Header isStudy={true} appInfo={appInfoState}></Header>
             <Container className="test-game-panel">
                 {dialogInfo ? <AlertDialogSlide dialogInfo={dialogInfo} /> : ''}
                 {showGame ? (
@@ -185,20 +185,20 @@ const TestViewUI = ({ stateInfoState, testInfoState, appInfoState, getTestInfoBy
                             isFinish={gameState.isFinish}
                             setShowGame={() => setShowGame(false)}>
                         </ButtonLevel>
+                        <div className="spacer-height-test"></div>
                         <Grid
                             container
-                            direction="row"
-                            spacing={isMobile ? 0 : 6}
-                            style={{ display: isHaveRightPanel ? "flex" : "none" }}
+                            alignItems="stretch"
+                            spacing={4}
+                            style={isHaveRightPanel ? {} : { display: "none" }}
+                            className="main-test-game-panel"
                         >
 
-                            <Grid item xs={12} sm={12} md={5} lg={4} className="left-panel">
+                            <Grid item xs={12} sm={12} md={5} lg={4} className="left-panel border-box">
                                 {(gameState.isFinish && gameState.isLoading !== 2) ? (
-                                    <>
-                                        <EndTestView bucket={appInfoState.bucket}></EndTestView>
-                                    </>
+                                    <EndTestView bucket={appInfoState.bucket}></EndTestView>
                                 ) : (
-                                        <>
+                                        <div className="left-panel-box border-box">
                                             <div className="left-panel-content">
                                                 <div className="description">
                                                     You are about to take the
@@ -232,15 +232,14 @@ const TestViewUI = ({ stateInfoState, testInfoState, appInfoState, getTestInfoBy
                                                         marginRight: "auto"
                                                     }
                                                 }>End Test</Button>
-                                        </>)}
-
+                                        </div>
+                                    )}
                             </Grid>
-
-                            <Grid item xs={12} sm={12} md={7} lg={8} className="right-panel">
-                                <div className="box-question-panel">
+                            <Grid item xs={12} sm={12} md={7} lg={8} className="right-panel border-box">
+                                <div className="box-question-panel border-box">
                                     {gameState.isFinish ? null : <TestProgressPanel setShowLeftPanel={() => setShowLeftPanel(true)} appInfo={appInfoState}></TestProgressPanel>}
                                     <TestQuestionPanel
-                                        className="question-view-study-game"
+                                        className="question-view-study-game border-box"
                                         testInfoId={currentTestInfo ? currentTestInfo.id : -1}
                                         appId={appInfoState.id}
                                         timeTest={currentTestInfo.timeTest}

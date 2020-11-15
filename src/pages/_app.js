@@ -2,8 +2,9 @@ import '../styles/index.css'
 import '../styles/main.css'
 import React from 'react';
 import CssBaseline from '@material-ui/core/CssBaseline';
+import { wrapper } from '../redux/store';
 
-export default function MyApp(props) {
+function MyApp(props) {
   const { Component, pageProps } = props;
 
   React.useEffect(() => {
@@ -20,3 +21,5 @@ export default function MyApp(props) {
     </React.Fragment>
   );
 }
+
+export default wrapper.withRedux(MyApp)

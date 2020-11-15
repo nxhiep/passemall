@@ -6,17 +6,19 @@ import Link from 'next/link';
 import { useRouter } from 'next/router';
 import React, { useState } from 'react';
 import { FAQLink } from '../components/Widgets';
-const Header = ({ alt = '', isStudy = false, isBlog = false }) => {
+import HeaderMenu from './HeaderMenu';
+const Header = ({ alt = '', isStudy = false, isBlog = false, appInfo }) => {
+	return <HeaderMenu appInfo={appInfo} />;
 	const theme = useTheme();
 	const isMobile = useMediaQuery(theme.breakpoints.between(0, 780));
 	if (isStudy) {
 		return (
-			<HeaderStudy isMobile={isMobile} ></HeaderStudy>
+			<HeaderStudy isMobile={isMobile} appInfo={appInfo} />
 		)
 	}
-	return <HeaderPC alt={alt} isMobile={isMobile} isBlog={isBlog} />;
+	return <HeaderPC alt={alt} isMobile={isMobile} isBlog={isBlog} appInfo={appInfo} />;
 }
-const HeaderStudy = ({ isMobile }) => {
+const HeaderStudy = ({ isMobile, appInfo }) => {
 	const router = useRouter();
 	const { appNameId, screenChild } = router.query;
 	const getLink = (screen) => {
@@ -36,7 +38,6 @@ const HeaderStudy = ({ isMobile }) => {
 						<FAQLink />
 					</div>
 				)}
-
 			</Container>
 		</header>
 	)
@@ -57,7 +58,9 @@ const HeaderPC = ({ alt, isMobile, isBlog }) => {
 				<a href="/">
 					<img src="/images/logo-landing.png" alt="logo-app" height="80px"></img>
 				</a>
-				{isMobile ? (
+				<HeaderMenu />
+				{
+					{/* isMobile ? (
 					<div style={{ marginLeft: "auto" }}>
 						<IconButton>
 							<MenuIcon onClick={() => handleOpenDrawer(true)} style={{ color: "#fff" }}></MenuIcon>
@@ -95,13 +98,10 @@ const HeaderPC = ({ alt, isMobile, isBlog }) => {
 							<a href={isBlog ? "/" : "/" + appNameId} onClick={() => {
 								isBlog ? router.push("/") : router.push("/" + appNameId)
 							}}>{isBlog ? "About us" : "Home"}</a>
-							{/*<a href={isBlog ? "/blog" : "/"} onClick={() => {
-								isBlog ? router.push("/blog") : router.push("/")
-							}}>{isBlog ? "Blog" : "Study Guide"}</a>*/}
 							<Link href={'/faq?appId=' + appNameId}>FAQ</Link>
 						</div>
-					)}
-
+					) */}
+				}
 			</Container>
 		</header>
 	)

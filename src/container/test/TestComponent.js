@@ -75,48 +75,41 @@ const TestQuestionPanelUI = ({ showLeftPanel, endTest = () => { }, setShowLeftPa
         }
     }
     return (
-        <div
-            className={"questions-panel" + (className ? " " + className : "") + (gameState.isFinish ? " end-game" : "")}
-            style={gameState.isFinish && !isMobile ? { maxHeight: 550 } : {}}
-            id="canvas">
-            {gameState.isFinish && isMobile ? <ArrowBackIcon onClick={() => setShowLeftPanel()} style={{ color: "#4E63BD", marginRight: "16px", marginTop: "20px" }} /> : null}
-            { (gameState.level === Config.EASY_LEVEL || gameState.isFinish === true || showLeftPanel === true) ?
-                null : <CountDown onContinue={onContinue}
-                    endTest={endTest}
-                    level={gameState.level}
-                    id={testInfoId + "-" + gameState.level} >
-                </CountDown>
-            }
-            {
-                questions.map((question) => {
-                    if (questionProgress[question.id]) {
-                        question.progress = questionProgress[question.id];
-                    }
-                    return <QuestionItem
-                        question={question}
-                        key={'question-item-' + question.id}
-                        index={question.index}
-                        onBookmark={onBookmark}
-                        appInfoState={appInfoState}
-                        level={gameState.level} />
-                })
-            }
+        <>
+            <div
+                className={"questions-panel" + (className ? " " + className : "") + (gameState.isFinish ? " end-game" : "")}
+                style={gameState.isFinish && !isMobile ? { maxHeight: 550 } : {}}
+                id="canvas">
+                {gameState.isFinish && isMobile ? <ArrowBackIcon onClick={() => setShowLeftPanel()} style={{ color: "#4E63BD", marginRight: "16px", marginTop: "20px" }} /> : null}
+                { (gameState.level === Config.EASY_LEVEL || gameState.isFinish === true || showLeftPanel === true) ?
+                    null : <CountDown onContinue={onContinue}
+                        endTest={endTest}
+                        level={gameState.level}
+                        id={testInfoId + "-" + gameState.level} >
+                    </CountDown>
+                }
+                {
+                    questions.map((question) => {
+                        if (questionProgress[question.id]) {
+                            question.progress = questionProgress[question.id];
+                        }
+                        return <QuestionItem
+                            question={question}
+                            key={'question-item-' + question.id}
+                            index={question.index}
+                            onBookmark={onBookmark}
+                            appInfoState={appInfoState}
+                            level={gameState.level} />
+                    })
+                }
+            </div>
             {
                 gameState.isFinish ? null : (
+                <div className="parent-button-test">
                     <Button
-                        style={{
-                            color: isSkip ? "#4E63BD" : "#fff",
-                            margin: !isMobile ? "30px auto 65px auto" : "",
-                            display: "block", width: "200px",
-                            backgroundColor: isSkip ? "#F0F0F3" : "#8496EA",
-                            boxShadow: "inset 0px 4px 4px rgba(255, 255, 255, 0.25)",
-                            borderRadius: "20px",
-                            position: isMobile ? "fixed" : "",
-                            bottom: isMobile ? "20px" : "",
-                            left: isMobile ? "calc(50% - 100px)" : "",
-                            border: isSkip ? "2px solid #A7B5EF" : "",
-                            zIndex: 100
-                        }}
+                        variant={isSkip ? "outlined" : "contained"}
+                        color="primary"
+                        className={"button-test " + (isSkip ? "skip" : "continue")}
                         onClick={() => {
                             if (gameState.indexActive === (gameState.questions.length - 1)) {
                                 endTest();
@@ -126,10 +119,11 @@ const TestQuestionPanelUI = ({ showLeftPanel, endTest = () => { }, setShowLeftPa
                         }}
                     >
                         {isSkip ? "Skip" : "Continue"}
-                    </Button>)
+                    </Button>
+                </div>
+                )
             }
-            <div style={{ height: "0px", width: "0px", marginTop: "auto" }}></div>
-        </div >
+        </>
     );
 }
 
@@ -397,9 +391,13 @@ const ButtonLevelUI = ({ showLeftPanel, isHaveRightPanel, setShowLeftPanel, test
         return null
     }
     return (
-        <div style={{ display: "flex", marginBottom: "40px", alignItems: "center", flexDirection: isMobile ? "column" : "row" }}>
-            <div style={{ marginRight: isMobile ? "77%" : "" }}>
-                <div className="button-back" onClick={() => {
+        <Grid container spacing={1} 
+            alignItems="center" 
+            justify="space-between"
+            direction={isMobile ? "column" : "row"} 
+            className="list-level">
+            <div className="button-back" 
+                onClick={() => {
                     if (!isMobile) {
                         if (id === -1 || isFinish) {
                             setShowGame();
@@ -418,36 +416,39 @@ const ButtonLevelUI = ({ showLeftPanel, isHaveRightPanel, setShowLeftPanel, test
                         setShowGame()
                     }
                 }}>
-                    <BackIcon style={{ fontSize: "40px", color: "#818C99" }}></BackIcon>
-                </div>
-
+                <BackIcon style={{ fontSize: "40px", color: "#818C99" }}></BackIcon>
             </div>
-            <Grid container spacing={1} direction={isMobile ? "column" : "row"} className="list-level">
-                <Grid item xs={isMobile ? 12 : 4} onClick={() => handleClickLoadGame(Config.EASY_LEVEL, level)} style={{ display: "flex", background: (level === Config.EASY_LEVEL && id == testInfoId) ? "#fff" : "#F0F0F3" }} className="button-level">
-                    <div style={{ display: "flex", flexDirection: "column", cursor: "pointer" }} >
-                        <div style={{ fontSize: "20px", fontWeight: 600, marginBottom: "8px" }}>Easy Test</div>
-                        <div style={{ fontSize: "15px", color: "" }}>Instant Feedback, Unlimited time</div>
-                    </div>
-                    <NextIcon style={{ marginLeft: "auto", fontSize: "40px" }}></NextIcon>
-                </Grid>
-                <Grid item xs={isMobile ? 12 : 4} onClick={() => handleClickLoadGame(Config.HARD_LEVEL, level)} style={{ display: "flex", background: (level === Config.HARD_LEVEL && id == testInfoId) ? "#fff" : "#F0F0F3" }} className="button-level">
-                    <div style={{ display: "flex", flexDirection: "column" }}>
-                        <div style={{ fontSize: "20px", fontWeight: 600, marginBottom: "8px" }}>Hard Test</div>
-                        <div>40 - minutes test</div>
-                    </div>
-                    <NextIcon style={{ marginLeft: "auto", fontSize: "40px" }}></NextIcon>
-                </Grid>
-                <Grid item xs={isMobile ? 12 : 4} onClick={() => handleClickLoadGame(Config.VERY_HARD_LEVEL, level)} style={{ display: "flex", background: (level === Config.VERY_HARD_LEVEL && id == testInfoId) ? "#fff" : "#F0F0F3" }} className="button-level">
-                    <div style={{ display: "flex", flexDirection: "column" }}>
-                        <div style={{ fontSize: "20px", fontWeight: 600, marginBottom: "8px" }}>Hardest Test</div>
-                        <div>60 seconds / question</div>
-                    </div>
-                    <NextIcon style={{ marginLeft: "auto", fontSize: "40px" }}></NextIcon>
-                </Grid>
-            </Grid >
-        </div >
+            <Grid item 
+                onClick={() => handleClickLoadGame(Config.EASY_LEVEL, level)} 
+                className={"button-level " + (level === Config.EASY_LEVEL && id == testInfoId ? "active" : "")}>
+                <div style={{ display: "flex", flexDirection: "column", cursor: "pointer" }} >
+                    <div className="b-title">Easy Test</div>
+                    <div className="b-des">Instant Feedback, Unlimited time</div>
+                </div>
+                <NextIcon style={{ marginLeft: "auto", fontSize: "40px" }}></NextIcon>
+            </Grid>
+            <Grid item 
+                onClick={() => handleClickLoadGame(Config.HARD_LEVEL, level)} 
+                className={"button-level " + (level === Config.HARD_LEVEL && id == testInfoId ? "active" : "")}>
+                <div style={{ display: "flex", flexDirection: "column" }}>
+                    <div className="b-title">Hard Test</div>
+                    <div className="b-des">40 - minutes test</div>
+                </div>
+                <NextIcon style={{ marginLeft: "auto", fontSize: "40px" }}></NextIcon>
+            </Grid>
+            <Grid item 
+                onClick={() => handleClickLoadGame(Config.VERY_HARD_LEVEL, level)} 
+                className={"button-level " + (level === Config.VERY_HARD_LEVEL && id == testInfoId ? "active" : "")}>
+                <div style={{ display: "flex", flexDirection: "column" }}>
+                    <div className="b-title">Hardest Test</div>
+                    <div className="b-des">60 seconds / question</div>
+                </div>
+                <NextIcon style={{ marginLeft: "auto", fontSize: "40px" }}></NextIcon>
+            </Grid>
+        </Grid>
     )
 }
+
 const mapTestSettingStateToProps = (state) => {
     return {
         gameState: state.gameState,

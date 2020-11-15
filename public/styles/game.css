@@ -6,7 +6,6 @@ body {
     background-color: #f0f0f3;
     padding: 30px 40px;
     overflow-y: auto;
-    height: 550px
 }
 
 .questions-panel .question-item-panel {
@@ -31,7 +30,7 @@ body {
     transition: height .5s;
     display: block;
     background: #fafafa;
-    box-shadow: -5px -5px 30px #ffffff, 5px 5px 30px rgba(174, 174, 192, 0.4);
+    box-shadow: -5px -5px 30px #fff, 5px 5px 30px rgba(174, 174, 192, .4);
     border-radius: 10px
 }
 
@@ -91,7 +90,7 @@ body {
 .questions-panel .question-item-panel .choices-panel .answer-button.correct {
     display: block;
     padding: 0;
-    background: rgba(0, 128, 0, 0.15)
+    background: rgba(0, 128, 0, .15)
 }
 
 .questions-panel .question-item-panel .choices-panel .answer-button.correct .answered-content {
@@ -148,10 +147,11 @@ body {
         background: linear-gradient(108.3deg, #4e63bd 23.49%, #8da3ff 76.7%);
         color: #fff
     }
+
     .questions-panel .question-item-panel .question-content {
         min-height: 100px;
         display: flex;
         flex-direction: column;
-        justify-content: center;
+        justify-content: center
     }
 }

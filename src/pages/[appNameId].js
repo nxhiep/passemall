@@ -10,13 +10,14 @@ import { Provider, useStore } from 'react-redux';
 import Slider from 'react-slick';
 import { PersistGate } from 'redux-persist/integration/react';
 import Footer from '../components/Footer';
+import HeaderMenu from '../components/HeaderMenu';
 import { Clock, FreeCircle, FreeIcon, LoginIcon, PenIcon, TotalQuestions } from '../components/Icons';
 import SEO from '../components/SEO';
 import { FAQLink } from '../components/Widgets';
 import WebAppInfo from '../models/WebAppInfo';
+import { wrapper } from '../redux/store';
 import { callApi } from '../services';
 import { getNewDomain, isSuperApp, oldUser, scrollToTopic, setScrollDownAuto } from '../utils';
-import { wrapper } from '../redux/store';
 const HomeContent = dynamic(() => import("../container/home/HomeContent"), { ssr: false })
 const SelectStatePopup = dynamic(() => import("../components/SelectStatePopup"), { ssr: false })
 initializeReactGA();
@@ -79,17 +80,15 @@ const Home = ({ appInfoState, url }) => {
                 <link rel="stylesheet" type="text/css" href="/styles/home.css" />
             </SEO>
             <div className="body-panel app">
-                <Header
+                <_Header
                     webAppInfo={webAppInfo}
                     appName={webAppInfo.appName}
                     color={myColor.buttonHeader}
-                    bucket={appInfoState.bucket}
                     isMobile={isMobile}
-                    appId={appInfoState.id}
-                    appNameId={appInfoState.appNameId}
                     onStartTest={() => {
-                        window.location.href = window.location.origin + window.location.pathname + '/test';
+                        scrollToTopic()
                     }}
+                    appInfo={appInfoState}
                 />
                 <Features
                     webAppInfo={webAppInfo}
@@ -106,7 +105,7 @@ const Home = ({ appInfoState, url }) => {
                     appInfoState={appInfoState}
                     bucket={appInfoState.bucket}
                     onStartTest={() => {
-                        window.location.href = window.location.origin + window.location.pathname + '/test';
+                        scrollToTopic()
                     }}
                 />
                 <ListTopic />
@@ -143,28 +142,30 @@ const Home = ({ appInfoState, url }) => {
         </>
     )
 }
-const Header = (props) => {
+const _Header = (props) => {
     let webAppInfo = props.webAppInfo ? props.webAppInfo : new WebAppInfo({ appName: props.appName });
     let onStartTest = props.onStartTest ? props.onStartTest : () => { }
-    let appId = props.appId ? props.appId : -1;
+    let { appId, bucket, appNameId } = props.appInfo ? props.appInfo : {};
     const classes = useStyles(props);
-    const [openDrawer, setOpenDrawer] = useState(false);
     const router = useRouter();
-    const appNameId = props.appNameId ? props.appNameId : router.query.appNameId;
-    const bucketUrl = (props.bucket ? props.bucket + "/" : "");
+    appId = appId ? appId : -1;
+    appNameId = appNameId ? appNameId : router.query.appNameId;
+    const bucketUrl = (bucket ? bucket + "/" : "");
     let imgUrl = `/images/apps/${bucketUrl}header-background.png`;
-    if (!isSuperApp(appId) || !props.bucket) {
-        imgUrl = `/images/landing.png`;
+    if (!isSuperApp(appId) || !bucket) {
+        imgUrl = `/images/landing.jpg`;
     }
+    const [openDrawer, setOpenDrawer] = useState(false);
     return (
         <header style={{ position: "relative" }}>
-            <img src={imgUrl} width="100%" style={{ visibility: "hidden", minHeight: "630px", objectFit: "cover" }} allt="image-header" />
+            <img src={imgUrl} width="100%" style={{ visibility: "hidden", minHeight: "530px", objectFit: "cover" }} allt="image-header" />
             <div style={{ position: "absolute", top: "0", left: "0", width: "100%", height: "100%" }} className="header-background color-dark">
-                <img src={imgUrl} width="100%" style={{ minHeight: "630px", objectFit: "cover" }} alt="image-header-2" />
+                <img src={imgUrl} width="100%" style={{ minHeight: "530px", objectFit: "cover" }} alt="image-header-2" />
             </div>
             <div style={{ position: "absolute", top: "0", left: "0", width: "100%", height: "100%" }}>
+                <HeaderMenu appInfo={props.appInfo} />
                 <Container className="container-header">
-                    <Grid container alignItems="center" justify="space-between" className="header-tab-panel">
+                    {/* <Grid container alignItems="center" justify="space-between" className="header-tab-panel">
                         <div className="parent-logo">
                             <a href="/" className="logo">
                                 <img src="/images/logo-landing.png" style={props.isMobile ? { height: "50px", paddingTop: "16px" } : { height: "80px" }} alt="logo-landing"></img>
@@ -213,7 +214,8 @@ const Header = (props) => {
                                 </div>
                             </div>
                         }
-                    </Grid>
+                    </Grid> */}
+                    <div style={{height: "100px"}}></div>
                     <div className="header-title">
                         <h1 style={{ textTransform: "uppercase" }}>{webAppInfo.header.title}</h1>
                         <div style={{ fontWeight: "500", fontSize: '1.1em' }}>{webAppInfo.header.description}</div>
