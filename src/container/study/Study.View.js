@@ -198,7 +198,7 @@ class StudyViewScreenUI extends Component {
             )
         }
         if (this.state.isMobile) {
-            if(this.state.isMobile && this.state.exitCongratulationsScreen){
+            if (this.state.isMobile && this.state.exitCongratulationsScreen) {
                 congratulationTopic = false;
             }
             console.log("Mobile congratulationTopic", congratulationTopic, 'currentTopic', (currentTopic ? currentTopic.name : ''))
@@ -299,7 +299,7 @@ class StudyViewScreenUI extends Component {
                             color="primary"
                             className="next-part-button"
                             onClick={() => {
-                                if(isMobile){
+                                if (isMobile) {
                                     this.setState({
                                         exitCongratulationsScreen: true
                                     })
@@ -337,7 +337,7 @@ const TopicInfoPanelUI = ({ topicState, appInfo }) => {
         return (
             <Grid container alignItems="center" style={{ display: "inline-block", backgroundColor: "var(--main-color)", color: "#fff" }}>
                 <IconButton style={{ color: "#fff" }} onClick={() => {
-                    router.push("/" + (appInfo || '').appNameId);
+                    router.push("/");
                 }}><ArrowBackIcon /></IconButton>
                 <span style={{ textAlign: "left" }}>{name}</span>
             </Grid>
@@ -472,7 +472,7 @@ const TopicTreePanelUI = ({ topicState, parentId, currentQuestionId, onChangeTop
                     <div>{mastered} <DoneAllIcon /></div>
                 </div>
             </Grid>
-            <div style={{height: "100%"}} className="box-topic-tree-panel border-box">
+            <div style={{ height: "100%" }} className="box-topic-tree-panel border-box">
                 <div className="topic-tree-panel">
                     {widgets}
                 </div>

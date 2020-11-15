@@ -20,9 +20,9 @@ const Header = ({ alt = '', isStudy = false, isBlog = false, appInfo }) => {
 }
 const HeaderStudy = ({ isMobile, appInfo }) => {
 	const router = useRouter();
-	const { appNameId, screenChild } = router.query;
+	const { screenChild } = router.query;
 	const getLink = (screen) => {
-		return "/" + appNameId + (screen ? '/' + screen : '');
+		return "/" + (screen ? screen : '');
 	}
 	return (
 		<header>
@@ -45,7 +45,7 @@ const HeaderStudy = ({ isMobile, appInfo }) => {
 
 const HeaderPC = ({ alt, isMobile, isBlog }) => {
 	const router = useRouter();
-	const { practice, appNameId, screenChild } = router.query;
+	const { ScreenChild } = router.query;
 	const [openDrawer, setOpenDrawer] = useState(false);
 	const handleOpenDrawer = (open) => {
 		setOpenDrawer(open)
@@ -59,49 +59,6 @@ const HeaderPC = ({ alt, isMobile, isBlog }) => {
 					<img src="/images/logo-landing.png" alt="logo-app" height="80px"></img>
 				</a>
 				<HeaderMenu />
-				{
-					{/* isMobile ? (
-					<div style={{ marginLeft: "auto" }}>
-						<IconButton>
-							<MenuIcon onClick={() => handleOpenDrawer(true)} style={{ color: "#fff" }}></MenuIcon>
-						</IconButton>
-
-						<SwipeableDrawer
-							anchor="right"
-							open={openDrawer}
-							onClose={() => {
-								handleOpenDrawer(false);
-							}}
-							onOpen={() => handleOpenDrawer(true)}
-						>
-							<div style={{ width: "200px" }}>
-								<List>
-									{isBlog ? b.map((text, index) => {
-										return (
-											<ListItem button key={text}>
-												<ListItemText primary={text} />
-											</ListItem>
-										)
-									}) : a.map((text, index) => (
-										<ListItem button key={text}>
-											<ListItemText primary={text} />
-										</ListItem>
-									))}
-								</List>
-							</div>
-						</SwipeableDrawer>
-					</div>) : (
-						<div style={{ marginLeft: "auto", display: "flex", alignItems: "center" }}>
-							<a href={isBlog ? "/" : "/" + appNameId} onClick={() => {
-								isBlog ? router.push("/") : router.push("/" + appNameId)
-							}}>{isBlog ? "Home" : "Learn"}</a>
-							<a href={isBlog ? "/" : "/" + appNameId} onClick={() => {
-								isBlog ? router.push("/") : router.push("/" + appNameId)
-							}}>{isBlog ? "About us" : "Home"}</a>
-							<Link href={'/faq?appId=' + appNameId}>FAQ</Link>
-						</div>
-					) */}
-				}
 			</Container>
 		</header>
 	)

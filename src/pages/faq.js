@@ -184,34 +184,7 @@ const FAQsWidget = ({ appInfo }) => {
 }
 
 export async function getServerSideProps(context) {
-    let appNameId = context.query ? context.query.appId : null;
-    if(!appNameId){
-        return {};
-    }
-    let appId = -1;
-    if(appNameId.length < 20){
-        try {
-            appId = parseInt(appNameId);
-        } catch(e){}
-    }
-    const appInfo = await callApi({ url: '/data?type=get_app_info&appNameId=' + (appId > -1 ? appId : appNameId), params: null, method: 'post' })
-    // console.log("faq appInfo ", appInfo)
-    // if(typeof appId !== 'number' || appId < 0){
-    //     const directoryAppInfo = path.join(process.cwd(), `src/data/${appNameId}.json`)
-    //     var appInfoFile = fs.readFileSync(directoryAppInfo);
-    //     appInfo = JSON.parse(appInfoFile);
-    //     const appInfoState = await callApi({ url: '/data?type=get_app_info&appNameId=' + appNameId, params: null, method: 'post' })
-    // } else {
-    //     const directoryAppInfo = path.join(process.cwd(), 'src/data/appInfo.json')
-    //     var appInfoFile = fs.readFileSync(directoryAppInfo);
-    //     const appInfos = JSON.parse(appInfoFile);
-    //     for(let i = 0; i < appInfos.length; i++ ){
-    //         if(appInfos[i].id == appId){
-    //             appInfo = appInfos[i];
-    //             break;
-    //         }
-    //     }
-    // }
+    const appInfo = await callApi({ url: '/data?type=get_app_info&appNameId=' + "cdl-practice-test-2020", params: null, method: 'post' })
     return { props: { appInfo: appInfo, url: context.req.url } }
 }
 export default FAQ

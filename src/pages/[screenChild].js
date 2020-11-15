@@ -1,19 +1,19 @@
 import React, { useEffect } from 'react';
 import dynamic from 'next/dynamic';
-const StudyViewScreen = dynamic(() => import('../../container/study/Study.View'), { ssr: false })
-const TestViewScreen = dynamic(() => import('../../container/test/Test.View'), { ssr: false })
-const ReviewViewScreen = dynamic(() => import('../../container/review/Review.View'), { ssr: false })
+const StudyViewScreen = dynamic(() => import('../container/study/Study.View'), { ssr: false })
+const TestViewScreen = dynamic(() => import('../container/test/Test.View'), { ssr: false })
+const ReviewViewScreen = dynamic(() => import('../container/review/Review.View'), { ssr: false })
 import Head from 'next/head';
 import { Provider, useStore } from 'react-redux';
 import { PersistGate } from 'redux-persist/integration/react';
 import { useRouter } from 'next/router';
-import Routes from '../../routes';
+import Routes from '../routes';
 import ReactGA from 'react-ga';
-import { oldUser, setScrollDownAuto } from '../../utils';
+import { oldUser, setScrollDownAuto } from '../utils';
 import path from "path";
 import fs from "fs"
-import { callApi } from '../../services';
-import { wrapper } from '../../redux/store';
+import { callApi } from '../services';
+import { wrapper } from '../redux/store';
 initializeReactGA();
 function initializeReactGA() {
     ReactGA.initialize('UA-167769768-1');
@@ -54,8 +54,7 @@ const Screen = ({ appInfoState }) => {
 }
 
 export async function getStaticProps(context) {
-    const { appNameId } = context.params;
-    const appInfoState = await callApi({ url: '/data?type=get_app_info&appNameId=' + appNameId, params: null, method: 'post' })
+    const appInfoState = await callApi({ url: '/data?type=get_app_info&appNameId=' + "cdl-practice-test-2020", params: null, method: 'post' })
 
     return {
         props: {
@@ -71,11 +70,14 @@ export async function getStaticPaths() {
     let topicNameIdJson = JSON.parse(topicNameIdFile)
     let arrayTopicNameId = [];
     for (let appNameId in topicNameIdJson) {
-        topicNameIdJson[appNameId].forEach(ele => {
-            arrayTopicNameId.push({ params: { appNameId: appNameId, screenChild: ele } });
-        })
-        arrayTopicNameId.push({ params: { appNameId: appNameId, screenChild: "review" } });
-        arrayTopicNameId.push({ params: { appNameId: appNameId, screenChild: "test" } });
+        if (appNameId === "cdl-practice-test-2020") {
+            topicNameIdJson[appNameId].forEach(ele => {
+                arrayTopicNameId.push({ params: { screenChild: ele } });
+            })
+            arrayTopicNameId.push({ params: { screenChild: "review" } });
+            arrayTopicNameId.push({ params: { screenChild: "test" } });
+        }
+
     }
     return {
         paths: arrayTopicNameId,
@@ -84,17 +86,11 @@ export async function getStaticPaths() {
 }
 function ScreenChild({ appInfoState }) {
     const router = useRouter();
-    const { practice, appNameId, screenChild } = router.query
+    const { screenChild } = router.query
     let screen = screenChild
     screen = screen ?? '';
     if (screen.startsWith(Routes.TEST_SCREEN)) {
-        let offset = screen.lastIndexOf('-');
-        let topicId = -1;
-        if (offset > -1) {
-            offset += 1;
-            topicId = offset > -1 ? parseInt(screen.substring(offset, screen.length)) : -1;
-        }
-        return <TestViewScreen topicId={topicId} appInfoState={appInfoState} />
+        return <TestViewScreen appInfoState={appInfoState} />
     }
     if (screen.startsWith(Routes.REVIEW_SCREEN)) {
         return <ReviewViewScreen appInfoState={appInfoState} />

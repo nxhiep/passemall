@@ -19,13 +19,6 @@ import { useRouter } from 'next/router';
 import ReactGA from 'react-ga'
 const ReviewViewScreen = ({ appInfoState }) => {
     const router = useRouter();
-    let { appNameId, screen } = router.query
-    let topicId = -1;
-    if (screen) {
-        let offset = screen.lastIndexOf('-') + 1;
-        topicId = offset > -1 ? parseInt(screen.substring(offset, screen.length)) : -1;
-    }
-    appNameId = appNameId ?? '';
     const theme = useTheme();
     const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
     useEffect(() => {
@@ -41,7 +34,7 @@ const ReviewViewScreen = ({ appInfoState }) => {
         ReactGA.pageview('/reviewpage/' + appInfo.title);
     }, [])
     return (
-        <ReviewView appInfo={appInfo} topicId={topicId} />
+        <ReviewView appInfo={appInfo} />
     );
 }
 
@@ -91,7 +84,7 @@ class ReviewViewScreenUI extends React.Component {
             questionIds = this.state.questionIds;
         }
         let linkTest = "/" + this.state.appInfo.appNameId + "/test";
-        if(isSuperApp(this.state.appInfo.id) && redirectToNewDomain){
+        if (isSuperApp(this.state.appInfo.id)) {
             linkTest = "/test";
         }
         return (
@@ -103,7 +96,7 @@ class ReviewViewScreenUI extends React.Component {
                         direction="row"
                         alignItems="stretch"
                         spacing={this.state.isMobile ? 0 : 3}
-                        style={{height: "100%"}}
+                        style={{ height: "100%" }}
                     >
                         <Grid className="left-panel border-box" item xs={12} sm={12} md={4}
                             style={this.state.isMobile ? { display: this.state.showReview ? 'none' : 'block' } : {}}>
@@ -141,9 +134,9 @@ class ReviewViewScreenUI extends React.Component {
                                     gameType={Config.REVIEW_GAME}
                                     questionIds={questionIds}
                                 /> : <div className="empty-question-panel">
-                                    <div style={{marginBottom: "15px"}}>Start practice now to evaluate your knowledge</div>
-                                    <Button href={linkTest} variant="contained" color="primary">START PRACTICE TEST NOW</Button>
-                                </div>
+                                        <div style={{ marginBottom: "15px" }}>Start practice now to evaluate your knowledge</div>
+                                        <Button href={linkTest} variant="contained" color="primary">START PRACTICE TEST NOW</Button>
+                                    </div>
                             }
                         </Grid>
                     </Grid>

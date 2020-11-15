@@ -15,7 +15,7 @@ const useStyles = makeStyles({
     }
 })
 const Footer = ({ alt = '', isStudy, color, bucket = "" }) => {
-    if(!color){
+    if (!color) {
         color = "#495ebf";
     }
     const theme = useTheme();
@@ -68,9 +68,9 @@ const Footer = ({ alt = '', isStudy, color, bucket = "" }) => {
                                 </Grid>
                                 <Grid item xs={12} sm={12} md={4}>
                                     <div className="company">
-                                            <div><strong>Social</strong></div>
-                                            <SocialWidget color={color} />
-                                        </div>
+                                        <div><strong>Social</strong></div>
+                                        <SocialWidget color={color} />
+                                    </div>
                                 </Grid>
                             </Grid>
                             <Divider className="line"></Divider>
@@ -123,7 +123,7 @@ const SocialWidget = ({ color }) => {
 }
 const FooterStudy = ({ isMobile }) => {
     const router = useRouter();
-    const { practice, appNameId, screenChild } = router.query;
+    const { screenChild } = router.query;
     let index;
     if (screenChild === "test") {
         index = 2;
@@ -140,7 +140,7 @@ const FooterStudy = ({ isMobile }) => {
             <IconButton
                 onClick={() => {
                     if (index !== 1) {
-                        router.push("/" + appNameId)
+                        router.push("/")
                     }
                 }}
                 style={index === 1 ? { position: "relative", bottom: "20px" } : (index === 2 ? { color: "#AEAEC0", marginLeft: "16px", marginRight: "auto" } : { color: "#AEAEC0", marginLeft: "16px" })}
@@ -154,7 +154,7 @@ const FooterStudy = ({ isMobile }) => {
             <IconButton
                 onClick={() => {
                     if (index !== 2) {
-                        router.push("/" + appNameId + "/" + "test")
+                        router.push("/" + "test")
                     }
                 }}
                 style={index === 2 ? { position: "relative", bottom: "20px" } : { color: "#AEAEC0", marginRight: "auto", marginLeft: "auto" }}
@@ -168,7 +168,7 @@ const FooterStudy = ({ isMobile }) => {
             <IconButton
                 onClick={() => {
                     if (index !== 3) {
-                        router.push("/" + appNameId + "/" + "review")
+                        router.push("/" + "review")
                     }
                 }}
                 style={index === 3 ? { position: "relative", bottom: "20px" } : (index === 2 ? { color: "#AEAEC0", marginRight: "16px", marginLeft: "auto" } : { color: "#AEAEC0", marginRight: "16px" })}

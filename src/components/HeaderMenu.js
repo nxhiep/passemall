@@ -13,59 +13,60 @@ const HeaderMenu = ({ appInfo }) => {
     return <header>
         <Container>
             <Grid container alignItems="center" justify="space-between">
-                <a href="/" style={{padding: "10px 0"}}>
+                <a href="/" style={{ padding: "10px 0" }}>
                     <img src="/images/logo-landing.png" alt="logo-app" height={isMobile ? "45px" : "60px"}></img>
                 </a>
                 {!isMobile ? <div className="header-menu">
                     <MenuList appInfo={appInfo} />
                 </div> : <div className="header-menu-mobile">
-                    <IconButton onClick={() => handleOpenDrawer(true)}>
-                        <MenuIcon style={{ color: "#fff" }}></MenuIcon>
-                    </IconButton>
-                    <SwipeableDrawer
-                        className="header-menu-swipe"
-                        anchor="right"
-                        open={openDrawer}
-                        onClose={() => {
-                            handleOpenDrawer(false);
-                        }}
-                        onOpen={() => handleOpenDrawer(true)}
-                    >
-                        <div style={{ width: "200px" }} className="menu-list">
-                            <div className="header-mobile-bg">
-                                <a href="/">
-                                    <img src="/images/logo-landing.png" alt="logo-app" width="100%"></img>
-                                </a>
+                        <IconButton onClick={() => handleOpenDrawer(true)}>
+                            <MenuIcon style={{ color: "#fff" }}></MenuIcon>
+                        </IconButton>
+                        <SwipeableDrawer
+                            className="header-menu-swipe"
+                            anchor="right"
+                            open={openDrawer}
+                            onClose={() => {
+                                handleOpenDrawer(false);
+                            }}
+                            onOpen={() => handleOpenDrawer(true)}
+                        >
+                            <div style={{ width: "200px" }} className="menu-list">
+                                <div className="header-mobile-bg">
+                                    <a href="/">
+                                        <img src="/images/logo-landing.png" alt="logo-app" width="100%"></img>
+                                    </a>
+                                </div>
+                                <MenuList appInfo={appInfo} />
                             </div>
-                            <MenuList appInfo={appInfo} />
-                        </div>
-                    </SwipeableDrawer>
-                </div>}
+                        </SwipeableDrawer>
+                    </div>}
             </Grid>
         </Container>
     </header>
 }
 
 const MenuList = ({ appInfo }) => {
-    let rootLink = '';
-    if(appInfo && (!isSuperApp(appInfo.id) || !redirectToNewDomain)){
-        rootLink = '/'+appInfo.appNameId+'/';
+    let rootLink = '/';
+    if (appInfo && (!isSuperApp(appInfo.id) && !redirectToNewDomain)) {
+        rootLink = '/' + appInfo.appNameId + '/';
     }
+    console.log("xxxx", rootLink, isSuperApp(appInfo.id))
     return <>
         <div>
             <a href={rootLink}>HOME</a>
         </div>
         <div>
-            <Link href={rootLink}><a>LEARN</a></Link>
+            <a href={rootLink}>LEARN</a>
         </div>
         <div>
-            <Link href={rootLink + "test"}><a>TEST</a></Link>
+            <a href={rootLink + "test"}>TEST</a>
         </div>
         <div>
-            <Link href={rootLink + "review"}><a>REVIEW</a></Link>
+            <a href={rootLink + "review"}>REVIEW</a>
         </div>
         <div>
-            <Link href={"/blog" + (appInfo ? "?appId=" + appInfo.id : '')}><a>BLOG</a></Link>
+            <a href={"/blog" + (appInfo ? "?appId=" + appInfo.id : '')}>BLOG</a>
         </div>
     </>
 }

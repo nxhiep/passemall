@@ -2,12 +2,10 @@ import React, { useEffect, useState } from 'react';
 import ReactGA from 'react-ga';
 import Head from 'next/head';
 import NavigateNextIcon from '@material-ui/icons/NavigateNext';
-import Header from '../components/Header';
 import Footer from '../components/Footer';
 import { Container, Divider, Grid, IconButton, Link, useMediaQuery, useTheme } from '@material-ui/core';
 import { useRouter } from 'next/router';
 import { getRecentPosts } from '../utils';
-import { SocialWidget } from '../components/SocialWidget';
 import { HeaderBlog, BannerBlog } from '../components/blog/HeaderBlog';
 import SEOInfo from '../models/SEOInfo';
 function initializeReactGA() {
@@ -15,7 +13,7 @@ function initializeReactGA() {
 }
 
 initializeReactGA();
-    const seoInfo = new SEOInfo();
+const seoInfo = new SEOInfo();
 const ListBlog = ({ data, url }) => {
     const seoInfo = new SEOInfo();
     seoInfo.title = 'ABC Learning - Blog';
@@ -42,7 +40,7 @@ const ListBlog = ({ data, url }) => {
                 <meta name="title" content={seoInfo.title} />
                 <meta name="description" content={seoInfo.description} />
                 <meta name="keywords" content={seoInfo.keyword} />
-                <meta property="og:title" content={seoInfo.title} />	
+                <meta property="og:title" content={seoInfo.title} />
                 <meta property="og:description" content={seoInfo.descriptionSEO} />
                 <meta property="og:image" content={seoInfo.image} />
 
@@ -50,7 +48,7 @@ const ListBlog = ({ data, url }) => {
             <div className='body-panel landing-page list-blog'>
                 <HeaderBlog />
                 <BannerBlog />
-                <Container style={{paddingTop: "40px"}}>
+                <Container style={{ paddingTop: "40px" }}>
                     <Grid container spacing={2}>
                         <Grid container item xs={12} sm={12} md={8}>
                             {data.map(el => {
@@ -97,20 +95,21 @@ const BlogItem = ({ isMobile, data }) => {
                     <Grid container item xs={12} sm={8} alignContent="flex-start" direction="column">
                         <h2 style={{ color: "#4E63BD" }} title={data.title}>{data.title}</h2>
                         <p style={{ fontSize: "18px", marginBottom: "10px" }} className="dot-5" title={data.description}>{data.description}</p>
-                        <div style={{marginTop: "auto",}}>
+                        <div style={{ marginTop: "auto", }}>
                             <IconButton
-                                style={{ 
-                                    borderRadius: "0px", 
-                                    backgroundColor: "#4E63BD", 
-                                    color: "#fff", 
-                                    padding: "8px 16px", 
-                                    fontSize: "18px" }}
+                                style={{
+                                    borderRadius: "0px",
+                                    backgroundColor: "#4E63BD",
+                                    color: "#fff",
+                                    padding: "8px 16px",
+                                    fontSize: "18px"
+                                }}
                                 onClick={() => router.push(getLink(data.title, data.id))}>
                                 Read More<NavigateNextIcon></NavigateNextIcon>
                             </IconButton>
                         </div>
                     </Grid>
-            </Grid>
+                </Grid>
             </Link>
         </div>
     )
@@ -126,13 +125,13 @@ const RecentPosts = ({ data }) => {
     }
     let recentPosts = [];
     data && data.forEach(element => {
-        if(recentPostIds.indexOf(element.id) > -1){
+        if (recentPostIds.indexOf(element.id) > -1) {
             recentPosts.push(element);
-        } 
+        }
     });
     return (<div className="recent-posts">
-        <h2 style={{ 
-            fontSize: "20px", 
+        <h2 style={{
+            fontSize: "20px",
             fontWeight: "600",
             marginTop: "0",
             textDecoration: 'underline',
@@ -150,9 +149,9 @@ const RecentPosts = ({ data }) => {
                                 </Grid>
                                 <Grid container item xs={7} sm={8}>
                                     <div style={{ color: "#4E63BD" }} className="dot-1" title={item.title}><strong>{item.title}</strong></div>
-                                    <div style={{height: "8px", width: "100%"}}></div>
+                                    <div style={{ height: "8px", width: "100%" }}></div>
                                     <div style={{ fontSize: "16px" }} className="dot-1" title={item.description}>{item.description}</div>
-                                    <div style={{height: "8px", width: "100%"}}></div>
+                                    <div style={{ height: "8px", width: "100%" }}></div>
                                     <IconButton
                                         style={{ borderRadius: "0px", backgroundColor: "#4E63BD", color: "#fff", padding: "0px 6px", fontSize: "13px" }}
                                         onClick={() => router.push(getLink(item.title, item.id))}>
@@ -169,8 +168,9 @@ const RecentPosts = ({ data }) => {
 }
 
 export async function getServerSideProps(context) {
+    console.log("xxxx context", context.query)
     let url = 'https://micro-enigma-235001.appspot.com/new/api?type=get-all-new-info';
-    if(context.query.appId){
+    if (context.query.appId) {
         url += '&appId=' + context.query.appId;
     }
     const res = await fetch(url);
