@@ -184,7 +184,7 @@ const FAQsWidget = ({ appInfo }) => {
 }
 
 export async function getServerSideProps(context) {
-    const appInfo = await callApi({ url: '/data?type=get_app_info&appNameId=' + "ati-teas-vi-practice-test", params: null, method: 'post' })
+    const appInfo = await callApi({ url: '/data?type=get_app_info&appNameId=' + "ged-practice-test-free-2020", params: null, method: 'post' })
     return { props: { appInfo: appInfo, url: context.req.url } }
 }
 export default FAQ
