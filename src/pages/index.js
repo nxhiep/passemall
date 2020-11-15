@@ -420,7 +420,7 @@ const FeedbackItem = ({ content, name, index }) => {
 }
 
 export async function getServerSideProps(context) {
-    const appInfoState = await callApi({ url: '/data?type=get_app_info&appNameId=' + "ged-practice-test-free-2020", params: null, method: 'post' })
+    const appInfoState = await callApi({ url: '/data?type=get_app_info&appNameId=' + "asvab-practice-test-2020", params: null, method: 'post' })
     let url = context.req.headers.referer;
     return {
         props: {
