@@ -403,7 +403,10 @@ body {
     }
 
     .test-game-panel .button-back {
-        background: transparent
+        background: transparent;
+        width: 60px;
+        height: 60px;
+        margin-right: auto;
     }
 
     .test-game-panel {
@@ -434,7 +437,8 @@ body {
 
     .test-game-panel .box-question-panel {
         box-shadow: none;
-        background: #e5e5e5
+        background: #e5e5e5;
+        height: 100%;
     }
 
     .test-game-panel .test-progress-panel {
@@ -552,19 +556,58 @@ body {
     border-radius: 50px !important;
     box-shadow: inset 0px 4px 4px rgba(255, 255, 255, 0.25) !important;
     font-weight: bold !important;
+    padding: 8px !important;
 }
 
 .button-test.continue {
     background-color: #516df1 !important;
 }
 
-.questions-panel {
+.questions-panel.questions-panel-2 {
     background-color: transparent !important;
     height: calc(100% - 70px) !important;
+}
+
+.count-down {
+    background: #0008ff91;
+    border-radius: 20px;
+    height: 40px;
+    width: 140px;
+    margin: 0px auto 20px;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.questions-panel {
+    padding: 15px 40px
 }
 
 @media screen and (max-width: 1400px) {
     .main-test-game-panel {
         height: calc(100% - 90px);
+    }
+    .count-down {
+        margin-bottom: 10px;
+    }
+}
+
+@media screen and (max-width: 780px) {
+    .test-game-panel {
+        height: 100%;
+        margin-bottom: 0;
+    }
+
+    .test-game-panel .right-panel {
+        height: 100%;
+    }
+
+    .questions-panel {
+        padding: 15px
+    }
+
+    .button-test {
+        width: 100%;
     }
 }

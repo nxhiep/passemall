@@ -56,7 +56,7 @@ const MenuList = ({ appInfo }) => {
             <a href={rootLink}>HOME</a>
         </div>
         <div>
-            <Link href={rootLink + "study"}><a>LEARN</a></Link>
+            <Link href={rootLink}><a>LEARN</a></Link>
         </div>
         <div>
             <Link href={rootLink + "test"}><a>TEST</a></Link>

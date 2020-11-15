@@ -39,7 +39,7 @@ const CountDownUI = ({ timeLeftReducer, id, setTimeLeftState, onContinue, endTes
         }
     });
     return (
-        <div style={{ background: "#0008ff91", borderRadius: "20px", height: "40px", width: "140px", margin: "0px auto 20px", color: "#fff", display: "flex", alignItems: "center", justifyContent: "center" }}>
+        <div className="count-down">
             <TimerIcon></TimerIcon>
             <div style={{ marginLeft: "8px" }}>
                 {convertTime(timeLeftReducer.data[id] ? timeLeftReducer.data[id].timeLeft : -1)}

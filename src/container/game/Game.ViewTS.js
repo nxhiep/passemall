@@ -54,7 +54,7 @@ const QuestionsPanelx = ({ questionProgress, className, topicId, loadGame = () =
             return <LoadingWidget color={null} />;
         }
         return (
-            <div className={"questions-panel" + (className ? " " + className : "")} style={{ backgroundColor: "#f7f8ff", marginBottom: "100px" }} id="canvas">
+            <div className={"questions-panel" + (className ? " " + className : "") + (" question-panel-" + gameType)} style={{ backgroundColor: "#f7f8ff" }} id="canvas">
                 {
                     questions.map((question, index) => {
                         return <QuestionItemTS

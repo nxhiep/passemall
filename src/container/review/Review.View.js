@@ -101,9 +101,11 @@ class ReviewViewScreenUI extends React.Component {
                     <Grid
                         container
                         direction="row"
+                        alignItems="stretch"
                         spacing={this.state.isMobile ? 0 : 3}
+                        style={{height: "100%"}}
                     >
-                        <Grid className="left-panel" item xs={12} sm={12} md={4}
+                        <Grid className="left-panel border-box" item xs={12} sm={12} md={4}
                             style={this.state.isMobile ? { display: this.state.showReview ? 'none' : 'block' } : {}}>
                             <LevelQuestionPanel
                                 activeId={levelIdSelected}
@@ -116,7 +118,7 @@ class ReviewViewScreenUI extends React.Component {
                                     });
                                 }} />
                         </Grid>
-                        <Grid className="right-panel" item xs={12} sm={12} md={8}
+                        <Grid className="right-panel border-box" item xs={12} sm={12} md={8}
                             style={this.state.isMobile ? { display: !this.state.showReview ? 'none' : 'block' } : {}}>
                             {this.state.isMobile && this.state.showReview ? <Grid container alignItems="center" >
                                 <IconButton onClick={() => {
@@ -134,11 +136,12 @@ class ReviewViewScreenUI extends React.Component {
                             {
                                 questionIds.length > 0 ? <QuestionsPanelTS
                                     appInfo={this.state.appInfo}
-                                    className="question-view-study-game"
+                                    className="question-view-study-game border-box"
                                     examId={-1}
                                     gameType={Config.REVIEW_GAME}
                                     questionIds={questionIds}
                                 /> : <div className="empty-question-panel">
+                                    <div style={{marginBottom: "15px"}}>Start practice now to evaluate your knowledge</div>
                                     <Button href={linkTest} variant="contained" color="primary">START PRACTICE TEST NOW</Button>
                                 </div>
                             }
