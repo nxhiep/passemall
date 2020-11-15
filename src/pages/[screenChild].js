@@ -54,7 +54,7 @@ const Screen = ({ appInfoState }) => {
 }
 
 export async function getStaticProps(context) {
-    const appInfoState = await callApi({ url: '/data?type=get_app_info&appNameId=' + "cdl-practice-test-2020", params: null, method: 'post' })
+    const appInfoState = await callApi({ url: '/data?type=get_app_info&appNameId=' + "ati-teas-vi-practice-test", params: null, method: 'post' })
 
     return {
         props: {
@@ -70,7 +70,7 @@ export async function getStaticPaths() {
     let topicNameIdJson = JSON.parse(topicNameIdFile)
     let arrayTopicNameId = [];
     for (let appNameId in topicNameIdJson) {
-        if (appNameId === "cdl-practice-test-2020") {
+        if (appNameId === "ati-teas-vi-practice-test") {
             topicNameIdJson[appNameId].forEach(ele => {
                 arrayTopicNameId.push({ params: { screenChild: ele } });
             })
