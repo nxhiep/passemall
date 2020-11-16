@@ -1,17 +1,13 @@
-import { Container, Drawer, IconButton, List, ListItem, ListItemText, SwipeableDrawer } from '@material-ui/core';
+import { Container, IconButton, SwipeableDrawer } from '@material-ui/core';
 import { useTheme } from '@material-ui/core/styles';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
-import React, { Fragment, useEffect, useState } from 'react';
-import { useRouter } from 'next/router';
-import Link from 'next/link'
-import MenuIcon from '@material-ui/icons/Menu';
-import { SocialWidget } from '../SocialWidget';
 import MenuIconButton from '@material-ui/icons/Menu';
-import ReactHtmlParser from 'react-html-parser';
+import React, { Fragment, useState } from 'react';
+import { SocialWidget } from '../SocialWidget';
 
 export const HeaderBlog = ({ appId, faq }) => {
     const theme = useTheme();
-	const isMobile = useMediaQuery(theme.breakpoints.between(0, 780));
+    const isMobile = useMediaQuery(theme.breakpoints.between(0, 780));
     return <header className="header-blog">
         <Container style={{ display: "flex", height: '100%', alignItems: 'center', justifyContent: 'space-between' }}>
             <a href='/'>
@@ -33,13 +29,13 @@ const MenuPanel = () => {
     return <MyDrawer />
 }
 
-export const BannerBlog = ({title, bannerImage}) => {
+export const BannerBlog = ({ title, bannerImage }) => {
     const theme = useTheme();
     const isMobile = useMediaQuery(theme.breakpoints.between(0, 780));
     const smallest = useMediaQuery(theme.breakpoints.between(0, 450));
     const styles = { zIndex: "1000", position: "absolute", top: "100px", right: "80px", color: "#fff", display: "flex", flexDirection: "column" };
     const styleImage = {};
-    if(isMobile){
+    if (isMobile) {
         styles.top = '0';
         styles.left = '0';
         styles.right = '0';
@@ -50,48 +46,48 @@ export const BannerBlog = ({title, bannerImage}) => {
         styles.marginTop = '20px';
         styleImage.position = '';
     }
-    if(title){
+    if (title) {
         styles.fontSize = isMobile ? (smallest ? '1.5em' : '2em') : '40px';
         styles.fontWeight = '600';
     }
     let arr = title ? title.split(" ") : [];
-    if(title && arr.length > 7){
+    if (title && arr.length > 7) {
         let temp = [];
-        for(let s of title.split(arr[4])){
+        for (let s of title.split(arr[4])) {
             temp.push(s + (temp.length == 0 ? arr[4] : ''));
         }
         title = temp;
         styles.textAlign = 'center';
     }
-    return <div className="banner-blog" style={bannerImage ? { backgroundImage: 'url('+bannerImage+')' } : {}}>
+    return <div className="banner-blog" style={bannerImage ? { backgroundImage: 'url(' + bannerImage + ')' } : {}}>
         <div className="wrapper-banner-image" style={styleImage}>
         </div>
-        {typeof title === 'string' ? <div style={styles}>{title}</div> : 
-        (typeof title === 'object' ? <div style={styles}>{title.map((e, i) => {
-            return <div key={i}>{e}</div>
-        })}</div> : null)}
+        {typeof title === 'string' ? <div style={styles}>{title}</div> :
+            (typeof title === 'object' ? <div style={styles}>{title.map((e, i) => {
+                return <div key={i}>{e}</div>
+            })}</div> : null)}
         <SocialWidget />
     </div>
 }
 
 const MyDrawer = () => {
-  const [open, setOpen] = useState(false);
+    const [open, setOpen] = useState(false);
 
-  const toggleDrawer = (event, open) => {
-    if (typeof event === 'undefined' || event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
-      return;
-    }
-    setOpen(open);
-  };
+    const toggleDrawer = (event, open) => {
+        if (typeof event === 'undefined' || event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
+            return;
+        }
+        setOpen(open);
+    };
 
-  return <Fragment>
-        <IconButton aria-label="menu" size="small" onClick={ (event) => toggleDrawer(event, true) }>
+    return <Fragment>
+        <IconButton aria-label="menu" size="small" onClick={(event) => toggleDrawer(event, true)}>
             <MenuIconButton htmlColor="white" />
         </IconButton>
-        <SwipeableDrawer anchor="right" open={open} 
-            onOpen={ (event) => toggleDrawer(event, true) }
-            onClose={ (event) => toggleDrawer(event, false) }
-            >
+        <SwipeableDrawer anchor="right" open={open}
+            onOpen={(event) => toggleDrawer(event, true)}
+            onClose={(event) => toggleDrawer(event, false)}
+        >
             <div className="header-menu-mobile">
                 <div><a href='/'>Home</a></div>
                 <div><a href='/blog' className="active">Blog</a></div>

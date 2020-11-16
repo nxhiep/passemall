@@ -94,7 +94,6 @@ footer {
   color: #fff;
   margin-top: auto;
   position: relative;
-  bottom: -20px;
 }
 footer .footer-content {
   margin-top: 60px;
@@ -340,6 +339,7 @@ background-color: #303c88;
   border-bottom: 1px solid #ddd;
 }
 
+.menu-list div span,
 .menu-list div a {
   padding: 15px;
   color: white;

@@ -6,6 +6,7 @@ import { useRouter } from 'next/router';
 import LibraryBooksIcon from '@material-ui/icons/LibraryBooks';
 import HomeIcon from '@material-ui/icons/Home';
 import VisibilityIcon from '@material-ui/icons/Visibility';
+
 import { FacebookFooter, GmailFooter, InstaFooter, TwitterFooter, Youtube, TumblrIcon, LinkedInFooter } from './Icons';
 const useStyles = makeStyles({
     root: {

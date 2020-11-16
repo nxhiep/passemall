@@ -130,7 +130,7 @@
     justify-content: center;
     flex-direction: column;
     text-align: center;
-    margin-bottom: 20px
+    margin-bottom: 50px
 }
 
 .landing-page .title-block .title {
@@ -144,7 +144,8 @@
 .landing-page .title-block .description {
     max-width: 550px;
     color: #979bac;
-    font-weight: 500
+    font-weight: 500;
+    margin-top: 30px;
 }
 
 .landing-page .statictis-apps {

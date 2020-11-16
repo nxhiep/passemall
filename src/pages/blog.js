@@ -136,6 +136,7 @@ const RecentPosts = ({ data }) => {
             fontWeight: "600",
             marginTop: "0",
             textDecoration: 'underline',
+            marginBottom: "35px"
         }}>Recent Posts</h2>
         <div className="list-recent-posts">
             {recentPosts.map((item, index) => {
