@@ -6,6 +6,7 @@ import dynamic from 'next/dynamic';
 import { useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react';
 import ReactGA from 'react-ga';
+import LazyLoad from 'react-lazyload';
 import { Provider, useStore } from 'react-redux';
 import Slider from 'react-slick';
 import { PersistGate } from 'redux-persist/integration/react';
@@ -166,67 +167,16 @@ const _Header = (props) => {
     if (!isSuperApp(appId) || !bucket) {
         imgUrl = `/images/landing.jpg`;
     }
-    const [openDrawer, setOpenDrawer] = useState(false);
     return (
         <header style={{ position: "relative" }}>
             <img src={imgUrl} width="100%" style={{ visibility: "hidden", minHeight: "530px", objectFit: "cover" }} allt="image-header" />
-            <div style={{ position: "absolute", top: "0", left: "0", width: "100%", height: "100%" }} className="header-background color-dark">
+            <div style={{ position: "absolute", top: "0", left: "0", width: "100%", height: "100%", background: '#1f1667' }} className="header-background color-dark">
                 <img src={imgUrl} width="100%" style={{ minHeight: "530px", objectFit: "cover" }} alt="image-header-2" />
             </div>
             <div style={{ position: "absolute", top: "0", left: "0", width: "100%", height: "100%" }}>
                 <HeaderMenu appInfo={props.appInfo} />
                 <Container className="container-header">
-                    {/* <Grid container alignItems="center" justify="space-between" className="header-tab-panel">
-                        <div className="parent-logo">
-                            <a href="/" className="logo">
-                                <img src="/images/logo-landing.png" style={props.isMobile ? { height: "50px", paddingTop: "16px" } : { height: "80px" }} alt="logo-landing"></img>
-                            </a>
-                        </div>
-                        {props.isMobile ?
-                            <div style={{ marginLeft: "auto" }}>
-                                <IconButton onClick={() => setOpenDrawer(true)}>
-                                    <MenuIcon style={{ marginLeft: "auto", color: "#fff" }}></MenuIcon>
-                                </IconButton>
-                                <SwipeableDrawer
-                                    anchor="right"
-                                    open={openDrawer}
-                                    onClose={() => {
-                                        setOpenDrawer(false);
-                                    }}
-                                    onOpen={() => setOpenDrawer(true)}
-                                >
-                                    <div style={{ width: "200px" }}>
-                                        <List>
-                                            <ListItem button>
-                                                <ListItemText primary="Learn" />
-                                            </ListItem>
-                                            <ListItem button>
-                                                <a href="/test" style={{ textDecoration: "none", color: "#4a4a4a", fontWeight: 400 }}>
-                                                    <ListItemText primary="Test" />
-                                                </a>
-                                            </ListItem>
-                                            <ListItem button>
-                                                <BlogWidget appId={appId} />
-                                            </ListItem>
-                                            <ListItem button>
-                                                <FAQLink appId={appId} style={{ textTransform: "uppercase" }} />
-                                            </ListItem>
-                                        </List>
-                                    </div>
-                                </SwipeableDrawer>
-                            </div>
-                            :
-                            <div className="menu-appbar">
-                                <div className="menu-nav">
-                                    <span onClick={() => scrollToTopic()}>LEARN</span>
-                                    <a href={"/" + appNameId + "/test"}>TEST</a>
-                                    <BlogWidget appId={appId} />
-                                    <FAQLink appId={appId} style={{ textTransform: "uppercase" }} />
-                                </div>
-                            </div>
-                        }
-                    </Grid> */}
-                    <div style={{height: "100px"}}></div>
+                    <div style={{height: props.isMobile ? "70px" : "100px"}}></div>
                     <div className="header-title">
                         <h1 style={{ textTransform: "uppercase" }}>{webAppInfo.header.title}</h1>
                         <div style={{ fontWeight: "500", fontSize: '1.1em' }}>{webAppInfo.header.description}</div>
@@ -237,14 +187,8 @@ const _Header = (props) => {
                     </div>
                 </Container>
             </div>
-        </header >
+        </header>
     )
-}
-
-const BlogWidget = ({ appId }) => {
-    return <a href={"/blog?appId=" + appId} style={{ textDecoration: "none", color: "white", textTransform: "uppercase" }}>
-        Blog
-    </a>
 }
 
 const Features = ({ color, webAppInfo, appName }) => {
@@ -318,7 +262,7 @@ const ListInfoGraphic = (props) => {
             <Container>
                 <Grid container alignItems="stretch">
                     <Grid item xs={12} sm={4}>
-                        <img width="100%" src={srcImage1} alt="infographic-1" style={{ display: "block" }}></img>
+                        <LazyLoad><img width="100%" src={srcImage1} alt="infographic-1" style={{ display: "block" }}></img></LazyLoad>
                     </Grid>
                     <Grid item xs={12} sm={1}></Grid>
                     <Grid item xs={12} sm={6}>
@@ -383,7 +327,7 @@ const ListInfoGraphic = (props) => {
                     </Grid>
                     <Grid item xs={12} sm={2}></Grid>
                     <Grid item xs={12} sm={4}>
-                        <img src={srcImage2} alt="infographic-2" style={{ display: "block", width: "100%" }}></img>
+                        <LazyLoad><img src={srcImage2} alt="infographic-2" style={{ display: "block", width: "100%" }}></img></LazyLoad>
                     </Grid>
                     <Grid item xs={12} sm={1}></Grid>
                 </Grid>
@@ -420,11 +364,11 @@ const MobileDescription = ({ appInfoState, color = "#FFA86C", appName }) => {
                         </div>
                         <div className="app-url">
                             <a href={appInfoState.urlAndroid} target="_blank" rel="noopener noreferrer">
-                                <img alt="Link google app" src="/images/googlePlayIcon.png" />
+                                <LazyLoad><img alt="Link google app" src="/images/googlePlayIcon.png" /></LazyLoad>
                             </a>
                             <div style={{ width: '20px' }}></div>
                             <a href={appInfoState.urlIos} target="_blank" rel="noopener noreferrer">
-                                <img src="/images/appStoreIcon.png" alt="Link app store" />
+                                <LazyLoad><img src="/images/appStoreIcon.png" alt="Link app store" /></LazyLoad>
                             </a>
                         </div>
                     </div>
@@ -485,7 +429,7 @@ const FeedbackItem = ({ content, name, createTime, index }) => {
     return <div className="feedback-item">
         <div className="content">{content}</div>
         <div className="infos">
-            <img className="avatar" src={index % 3 === 0 ? "/images/avatar-1.png" : (index % 3 === 1 ? "/images/avatar-2.png" : "/images/avatar-3.png")} alt="avatar"></img>
+            <LazyLoad><img className="avatar" src={index % 3 === 0 ? "/images/avatar-1.png" : (index % 3 === 1 ? "/images/avatar-2.png" : "/images/avatar-3.png")} alt="avatar"></img></LazyLoad>
             <div className="name">{name}</div>
         </div>
     </div>

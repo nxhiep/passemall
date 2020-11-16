@@ -10,6 +10,7 @@ import { getRecentPosts } from '../utils';
 import { SocialWidget } from '../components/SocialWidget';
 import { HeaderBlog, BannerBlog } from '../components/blog/HeaderBlog';
 import SEOInfo from '../models/SEOInfo';
+import LazyLoad from 'react-lazyload';
 function initializeReactGA() {
     ReactGA.initialize('UA-167769768-1');
 }
@@ -91,7 +92,7 @@ const BlogItem = ({ isMobile, data }) => {
                 <Grid container spacing={3}>
                     <Grid container item xs={12} sm={4}>
                         <div className="wrapper-image">
-                            <img src={data.bannerImage} alt={data.title}></img>
+                            <LazyLoad><img src={data.bannerImage} alt={data.title}></img></LazyLoad>
                         </div>
                     </Grid>
                     <Grid container item xs={12} sm={8} alignContent="flex-start" direction="column">
@@ -146,7 +147,7 @@ const RecentPosts = ({ data }) => {
                             <Grid container spacing={1}>
                                 <Grid container item xs={5} sm={4}>
                                     <div className="wrapper-image">
-                                        <img src={item.bannerImage} alt={item.title}></img>
+                                        <LazyLoad><img src={item.bannerImage} alt={item.title}></img></LazyLoad>
                                     </div>
                                 </Grid>
                                 <Grid container item xs={7} sm={8}>

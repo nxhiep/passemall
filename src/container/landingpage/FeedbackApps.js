@@ -2,6 +2,7 @@ import { CircularProgress, Container } from '@material-ui/core';
 import { useTheme } from '@material-ui/core/styles';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import React, { useEffect, useState } from 'react';
+import LazyLoad from 'react-lazyload';
 import Slider from "react-slick";
 import { TitleBlock } from '../../components/Widgets';
 import { callApi } from '../../services';
@@ -77,7 +78,7 @@ const FeedbackItem = ({
     return (
         <div className="feedback-item">
             <div>
-                <img className="avatar" src={index % 3 === 0 ? "/images/avatar-1.png" : (index % 3 === 1 ? "/images/avatar-2.png" : "/images/avatar-3.png")} alt="avatar"></img>
+                <LazyLoad><img className="avatar" src={index % 3 === 0 ? "/images/avatar-1.png" : (index % 3 === 1 ? "/images/avatar-2.png" : "/images/avatar-3.png")} alt="avatar"></img></LazyLoad>
                 <div className="info">
                     <strong>{name}</strong>
                     <div className="overflow">{content}</div>

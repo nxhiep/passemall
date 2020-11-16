@@ -382,13 +382,14 @@ header .container-header .header-title p {
     }
 
     .overview-container .list-overview .overview-item {
-        width: 80%;
-        margin: 20px auto
+        width: inherit;
+        margin: 20px auto;
+        padding: 0 10px;
     }
 
     .overview-container .overview-title {
-        width: 80%;
-        margin: 80px auto 40px
+        margin: 50px auto 30px;
+        padding: 0 10px;
     }
 
     .mobile-description-container .mobile-description-content p {

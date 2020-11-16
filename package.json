@@ -25,6 +25,7 @@
     "react-dom": "16.13.1",
     "react-ga": "^3.1.2",
     "react-html-parser": "^2.0.2",
+    "react-lazyload": "^3.1.0",
     "react-redux": "^7.2.1",
     "react-slick": "^0.27.4",
     "redux-devtools-extension": "^2.13.8",
