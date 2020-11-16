@@ -44,6 +44,17 @@ const useStyles = makeStyles({
         marginTop: "40px",
         padding: "8px 24px",
         fontWeight: "bold"
+    },
+    buttonStartTest: {
+        backgroundColor: props => props.color, 
+        color: "white", 
+        padding: "10px 30px", 
+        borderRadius: "50px", 
+        fontWeight: "600",
+        fontSize: "16px",
+        "&:hover, &:focus": {
+            backgroundColor: "rgb(31 63 197)"
+        }
     }
 })
 const Home = ({ appInfoState, url }) => {
@@ -313,7 +324,7 @@ const ListInfoGraphic = (props) => {
                     <Grid item xs={12} sm={6}>
                         <h2>{webAppInfo.block3.title}</h2>
                         <p>{webAppInfo.block3.description}</p>
-                        <Button className={classes.root} style={{ marginTop: '50px' }} onClick={() => { onStartTest(); }}>START YOUR PRACTICE TEST</Button>
+                        <Button className={classes.buttonStartTest} style={{ marginTop: '50px' }} onClick={() => { onStartTest(); }}>START YOUR PRACTICE TEST</Button>
                     </Grid>
                     <Grid item xs={12} sm={1}></Grid>
                 </Grid>
@@ -352,8 +363,11 @@ const ListInfoGraphic = (props) => {
                     <Grid item xs={12} sm={5}>
                         <h2>{webAppInfo.block5.title}</h2>
                         <p>{webAppInfo.block5.description}</p>
-                        <div style={{ display: "flex", flexDirection: "column", justifyContent: "flex-start", width: "240px" }}>
-                            <Button className={classes.root} style={{ display: props.isMobile ? "none" : "block" }} onClick={() => { onStartTest(); }} fullWidth={false}>START YOUR PRACTICE TEST</Button>
+                        <div style={{ display: "inline-flex", flexDirection: "column", justifyContent: "flex-start", alignItems: "flex-start", marginTop: "20px" }}>
+                            <Button 
+                                className={classes.buttonStartTest}
+                                style={{ display: props.isMobile ? "none" : "block" }} 
+                                onClick={() => { onStartTest(); }} fullWidth={false}>START YOUR PRACTICE TEST</Button>
                             <ArrowDownwardIcon style={
                                 {
                                     marginTop: "20px",
@@ -361,7 +375,8 @@ const ListInfoGraphic = (props) => {
                                     fontSize: "32px",
                                     display: "block",
                                     marginLeft: "auto",
-                                    marginRight: "auto"
+                                    marginRight: "auto",
+                                    cursor: "pointer"
                                 }
                             }></ArrowDownwardIcon>
                         </div>
