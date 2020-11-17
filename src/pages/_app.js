@@ -13,6 +13,10 @@ function MyApp(props) {
     if (jssStyles) {
       jssStyles.parentElement.removeChild(jssStyles);
     }
+    if(typeof window !== 'undefined'){
+      const { register } = require('../services/serviceWorker');
+      register();
+    }
   }, []);
 
   return (
