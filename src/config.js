@@ -51,5 +51,7 @@ class Config {
     static TEST_STATUS_NOTHING = 1;
     static TEST_STATUS_PLAYING = 3;
     static LISTBUCKET = ["ged", "cdl", "hesia2"]
+
+    static APP_NEW_DOMAIN = 5722070642065408;
 }
 export default Config;

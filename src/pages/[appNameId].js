@@ -1,6 +1,5 @@
-import { Button, CircularProgress, Container, Grid, IconButton, List, ListItem, ListItemText, makeStyles, SwipeableDrawer, useMediaQuery, useTheme } from '@material-ui/core';
+import { Button, CircularProgress, Container, Grid, makeStyles, useMediaQuery, useTheme } from '@material-ui/core';
 import ArrowDownwardIcon from '@material-ui/icons/ArrowDownward';
-import MenuIcon from '@material-ui/icons/Menu';
 import { Rating } from '@material-ui/lab';
 import dynamic from 'next/dynamic';
 import { useRouter } from 'next/router';
@@ -14,7 +13,6 @@ import Footer from '../components/Footer';
 import HeaderMenu from '../components/HeaderMenu';
 import { Clock, FreeCircle, FreeIcon, LoginIcon, PenIcon, TotalQuestions } from '../components/Icons';
 import SEO from '../components/SEO';
-import { FAQLink } from '../components/Widgets';
 import WebAppInfo from '../models/WebAppInfo';
 import { wrapper } from '../redux/store';
 import { callApi } from '../services';

@@ -1,9 +1,7 @@
 import { Container, Grid, IconButton, InputAdornment, List, ListItem, ListItemText, makeStyles, SwipeableDrawer, TextField, useMediaQuery, useTheme } from '@material-ui/core';
 import MenuIcon from '@material-ui/icons/Menu';
 import SearchIcon from '@material-ui/icons/Search';
-import fs from 'fs';
 import { useRouter } from 'next/router';
-import path from 'path';
 import React, { useEffect, useState } from 'react';
 import ReactGA from 'react-ga';
 import Footer from '../components/Footer';
@@ -13,7 +11,7 @@ import FeedbackApps from '../container/landingpage/FeedbackApps';
 import ListGreatApps from '../container/landingpage/ListGreatApps';
 import StatictisApps from '../container/landingpage/StatictisApps';
 import { callApi } from '../services';
-import { isLocalhost, oldUser, scrollDown, setScrollDownAuto } from '../utils';
+import { oldUser, scrollDown, setScrollDownAuto } from '../utils';
 function initializeReactGA() {
     ReactGA.initialize('UA-167769768-1');
 }
@@ -249,20 +247,6 @@ const Header = ({ setOpen, showResult, isMobile }) => {
         </header>
     );
 }
-
-// <Grid container alignItems="center" justify="space-between" className="header-media">
-//                 <Grid item xs={12} sm={8} md={7} className="header-content">
-//                     <div className="xxx">
-//                         <h1>Make your study great with our thousands of free practice questions</h1>
-//                         <p>You want to get 100% ready for your important day? You desire to pass your exam at your first try?
-//                         You are wondering if you should pay a charge of money buying some practice materials?
-//                             That’s why we are here to support you achieve the gate of success with our test prep solutions.</p>
-//                     </div>
-//                 </Grid>
-//                 <Grid item xs={12} sm={4} md={5} className="header-image-content">
-//                     <img alt='Make your study great with our thousands of free practice questions' width="100%" height="100%" src="/images/test3.png" />
-//                 </Grid>
-//             </Grid>
 
 export async function getServerSideProps(context) {
     // console.log("context.req.headers", context.req.headers)
