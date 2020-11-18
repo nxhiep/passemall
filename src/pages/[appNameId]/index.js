@@ -13,7 +13,7 @@ import Footer from '../../components/Footer';
 import HeaderMenu from '../../components/HeaderMenu';
 import { Clock, FreeCircle, FreeIcon, LoginIcon, PenIcon, TotalQuestions } from '../../components/Icons';
 import SEO from '../../components/SEO';
-import { APP_NEW_DOMAIN } from '../../config_app';
+import { APP_NEW_DOMAIN, GA_ID } from '../../config_app';
 import WebAppInfo from '../../models/WebAppInfo';
 import { wrapper } from '../../redux/store';
 import { callApi } from '../../services';
@@ -22,10 +22,6 @@ const HomeContent = dynamic(() => import("../../container/home/HomeContent"), { 
 const SelectStatePopup = dynamic(() => import("../../components/SelectStatePopup"), { ssr: false })
 const GameChildScreen = dynamic(() => import("./[screenChild]"), { ssr: false })
 
-initializeReactGA();
-function initializeReactGA() {
-    ReactGA.initialize('UA-167769768-1');
-}
 const useStyles = makeStyles({
     root: {
         marginTop: "40px",
@@ -59,6 +55,9 @@ const useStyles = makeStyles({
         }
     }
 })
+
+ReactGA.initialize(GA_ID);
+
 const AppHome = ({ appInfoState, url, home }) => {
     if (!appInfoState) {
         appInfoState = {};
@@ -71,6 +70,7 @@ const AppHome = ({ appInfoState, url, home }) => {
     const theme = useTheme();
     const isMobile = useMediaQuery(theme.breakpoints.between(0, 780));
     useEffect(() => {
+        ReactGA.pageview('/appInfo');
         setScrollDownAuto("home")
         oldUser()
     }, [])
@@ -103,6 +103,10 @@ const AppHome = ({ appInfoState, url, home }) => {
                     color={myColor.buttonHeader}
                     isMobile={isMobile}
                     onStartTest={() => {
+                        ReactGA.event({
+                            category: 'Click Start Test',
+                            action: 'Click Start Test 1'
+                        })
                         scrollToTopic()
                     }}
                     appInfo={appInfoState}
@@ -121,7 +125,11 @@ const AppHome = ({ appInfoState, url, home }) => {
                     color={myColor.mainColor}
                     appInfoState={appInfoState}
                     bucket={appInfoState.bucket}
-                    onStartTest={() => {
+                    onStartTest={(index) => {
+                        ReactGA.event({
+                            category: 'Click Start Test',
+                            action: 'Click Start Test ' + index
+                        })
                         scrollToTopic()
                     }}
                 />
@@ -188,7 +196,11 @@ const _Header = (props) => {
                         <Button
                             style={{ fontSize: '16px' }}
                             variant="contained"
-                            className={classes.button} onClick={() => { onStartTest() }} style={{ display: props.isMobile ? "flex" : "inline-flex", marginLeft: props.isMobile ? "auto" : "", marginRight: props.isMobile ? "auto" : "" }} >START YOUR PRACTICE TEST</Button>
+                            className={classes.button} 
+                            onClick={() => { onStartTest() }} 
+                            style={{ display: props.isMobile ? "flex" : "inline-flex", 
+                            marginLeft: props.isMobile ? "auto" : "", 
+                            marginRight: props.isMobile ? "auto" : "" }}>START YOUR PRACTICE TEST</Button>
                     </div>
                 </Container>
             </div>
@@ -273,7 +285,7 @@ const ListInfoGraphic = (props) => {
                     <Grid item xs={12} sm={6}>
                         <h2>{webAppInfo.block3.title}</h2>
                         <p>{webAppInfo.block3.description}</p>
-                        <Button className={classes.buttonStartTest} style={{ marginTop: '50px' }} onClick={() => { onStartTest(); }}>START YOUR PRACTICE TEST</Button>
+                        <Button className={classes.buttonStartTest} style={{ marginTop: '50px' }} onClick={() => { onStartTest(2); }}>START YOUR PRACTICE TEST</Button>
                     </Grid>
                     <Grid item xs={12} sm={1}></Grid>
                 </Grid>
@@ -316,7 +328,7 @@ const ListInfoGraphic = (props) => {
                             <Button 
                                 className={classes.buttonStartTest}
                                 style={{ display: props.isMobile ? "none" : "block" }} 
-                                onClick={() => { onStartTest(); }} fullWidth={false}>START YOUR PRACTICE TEST</Button>
+                                onClick={() => { onStartTest(3); }} fullWidth={false}>START YOUR PRACTICE TEST</Button>
                             <ArrowDownwardIcon style={
                                 {
                                     marginTop: "20px",
@@ -368,11 +380,21 @@ const MobileDescription = ({ appInfoState, color = "#FFA86C", appName }) => {
                             </div>
                         </div>
                         <div className="app-url">
-                            <a href={appInfoState.urlAndroid} target="_blank" rel="noopener noreferrer">
+                            <a href={appInfoState.urlAndroid} target="_blank" rel="noopener noreferrer" onClick={() => {
+                                ReactGA.event({
+                                    category: 'Click Google Play',
+                                    action: 'Click Google Play App Home'
+                                })
+                            }}>
                                 <LazyLoad><img alt="Link google app" src="/images/googlePlayIcon.png" /></LazyLoad>
                             </a>
                             <div style={{ width: '20px' }}></div>
-                            <a href={appInfoState.urlIos} target="_blank" rel="noopener noreferrer">
+                            <a href={appInfoState.urlIos} target="_blank" rel="noopener noreferrer" onClick={() => {
+                                ReactGA.event({
+                                    category: 'Click App Store',
+                                    action: 'Click Google Play App Home'
+                                })
+                            }}>
                                 <LazyLoad><img src="/images/appStoreIcon.png" alt="Link app store" /></LazyLoad>
                             </a>
                         </div>

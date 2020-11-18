@@ -4,10 +4,36 @@
 ROOT_PATH="./public/info"
 
 addConfig() {
-    value=$1
+    appId=$1
+    gaId=$2
     file="./src/config_app.js"
     > $file
-    echo "export const APP_NEW_DOMAIN = $value;">>$file
+    echo "export const APP_NEW_DOMAIN = $appId;\nexport const GA_ID = '$gaId';">>$file
+}
+
+getGaId() {
+    app=$1
+    if [ "$app" = "cdl" ]
+    then
+        echo '253313963'
+        return 1
+    fi
+    if [ "$app" = "asvab" ]
+    then
+        echo '253286832'
+        return 1
+    fi
+    if [ "$app" = "ged" ]
+    then
+        echo '253293094'
+        return 1
+    fi
+    if [ "$app" = "teas" ]
+    then
+        echo '253275154'
+        return 1
+    fi
+    echo 'UA-167769768-1'
 }
 
 getAppId() {
@@ -38,6 +64,7 @@ getAppId() {
 deploy() {
     app=$1
     appId=$(getAppId $app)
+    gaId=$(getGaId $app)
     if [ -z "$app" ]
     then
         app=""
@@ -52,9 +79,9 @@ deploy() {
     cp -r "$ROOT_PATH/images/$logoPath/logo60.png" "$ROOT_PATH/images/logo60.png"
     cp -r "$ROOT_PATH/images/$logoPath/logo192.png" "$ROOT_PATH/images/logo192.png"
     cp -r "$ROOT_PATH/images/$logoPath/logo512.png" "$ROOT_PATH/images/logo512.png"
-    addConfig $appId
+    addConfig $appId $gaId
 }
 
 deploy
-yarn
-yarn build
+# yarn
+# yarn build

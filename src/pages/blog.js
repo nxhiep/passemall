@@ -7,13 +7,10 @@ import LazyLoad from 'react-lazyload';
 import { BannerBlog, HeaderBlog } from '../components/blog/HeaderBlog';
 import Footer from '../components/Footer';
 import SEO from '../components/SEO';
+import { GA_ID } from '../config_app';
 import { getRecentPosts } from '../utils';
 
-function initializeReactGA() {
-    ReactGA.initialize('UA-167769768-1');
-}
-
-initializeReactGA();
+ReactGA.initialize(GA_ID);
 const ListBlog = ({ data, url }) => {
     useEffect(() => {
         ReactGA.pageview('/blog');

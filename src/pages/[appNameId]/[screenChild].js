@@ -7,7 +7,7 @@ import ReactGA from 'react-ga';
 import { Provider, useStore } from 'react-redux';
 import { PersistGate } from 'redux-persist/integration/react';
 import SEO from '../../components/SEO';
-import { APP_NEW_DOMAIN } from "../../config_app";
+import { APP_NEW_DOMAIN, GA_ID } from "../../config_app";
 import { wrapper } from '../../redux/store';
 import Routes from '../../routes';
 import { callApi } from '../../services';
@@ -15,12 +15,11 @@ import { oldUser, setScrollDownAuto } from '../../utils';
 const StudyViewScreen = dynamic(() => import('../../container/study/Study.View'), { ssr: false })
 const TestViewScreen = dynamic(() => import('../../container/test/Test.View'), { ssr: false })
 const ReviewViewScreen = dynamic(() => import('../../container/review/Review.View'), { ssr: false })
-initializeReactGA();
-function initializeReactGA() {
-    ReactGA.initialize('UA-167769768-1');
-}
+
+ReactGA.initialize(GA_ID);
 const GameChildScreen = ({ appInfoState, url }) => {
     useEffect(() => {
+        ReactGA.pageview('/appGame');
         setScrollDownAuto()
         oldUser()
     }, [])

@@ -8,18 +8,16 @@ import Slider from "react-slick";
 import { BannerBlog, HeaderBlog } from '../../components/blog/HeaderBlog';
 import Footer from '../../components/Footer';
 import SEO from '../../components/SEO';
+import { GA_ID } from '../../config_app';
 import SEOInfo from '../../models/SEOInfo';
 import { addRecentPost } from '../../utils';
 
-function initializeReactGA() {
-    ReactGA.initialize('UA-167769768-1');
-}
+ReactGA.initialize(GA_ID);
 
-initializeReactGA();
 const Blog = ({ newInfo, relativeds, url }) => {
     const seoInfo = new SEOInfo(newInfo);
     useEffect(() => {
-        ReactGA.pageview('/homepage');
+        ReactGA.pageview('/blog-info', [newInfo.title]);
         addRecentPost(newInfo.id);
     }, [])
     return (

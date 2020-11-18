@@ -7,7 +7,7 @@ import ReactGA from 'react-ga';
 import Footer from '../components/Footer';
 import SEO from '../components/SEO';
 import { Modal } from "../components/Widgets";
-import { APP_NEW_DOMAIN } from '../config_app';
+import { APP_NEW_DOMAIN, GA_ID } from '../config_app';
 import FeedbackApps from '../container/landingpage/FeedbackApps';
 import ListGreatApps from '../container/landingpage/ListGreatApps';
 import StatictisApps from '../container/landingpage/StatictisApps';
@@ -15,9 +15,6 @@ import { callApi } from '../services';
 import { oldUser, scrollDown, setScrollDownAuto } from '../utils';
 import AppHome from './[appNameId]';
 
-function initializeReactGA() {
-    ReactGA.initialize('UA-167769768-1');
-}
 const useStyles = makeStyles({
     notchedOutline: {
         borderWidth: "1px",
@@ -32,16 +29,17 @@ const useStyles = makeStyles({
         flexDirection: "column"
     }
 })
-initializeReactGA();
+
+ReactGA.initialize(GA_ID);
 const LandingPage = ({ appInfoState, url }) => {
     if(APP_NEW_DOMAIN){
         return <AppHome appInfoState={appInfoState} url={url} home={true} />
     }
 
     useEffect(() => {
+        ReactGA.pageview('/homepage');
         setScrollDownAuto()
         oldUser();
-        ReactGA.pageview('/homepage');
     }, [])
     const [open, setOpen] = useState(false);
     const handleClose = () => {
@@ -54,6 +52,10 @@ const LandingPage = ({ appInfoState, url }) => {
     })
     const [listSearch, setListSearch] = useState([]);
     const showResult = (textInput) => {
+        ReactGA.event({
+            category: 'Search',
+            action: 'Search app'
+        })
         let result = []
         list.forEach((el, index) => {
             if (el.toLowerCase().replace(/ /g, "").search(textInput) > -1) {
