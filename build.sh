@@ -7,7 +7,7 @@ addConfig() {
     value=$1
     file="./src/config_app.js"
     > $file
-    echo "export const APP_NEW_DOMAIN = $value">>$file
+    echo "export const APP_NEW_DOMAIN = $value;">>$file
 }
 
 getAppId() {
@@ -56,3 +56,5 @@ deploy() {
 }
 
 deploy
+yarn
+yarn build
