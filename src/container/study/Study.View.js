@@ -114,6 +114,7 @@ class StudyViewScreenUI extends Component {
         this.setState({
             currentIndex: index,
             currentTopic: currentTopic,
+            showGame: true
         });
     }
 
@@ -177,9 +178,6 @@ class StudyViewScreenUI extends Component {
                                     currentQuestionId={currentTopic ? currentTopic.id : null}
                                     onChangeTopic={(topic, index, type) => {
                                         this.activeTopic(topic, index, type);
-                                        this.setState({
-                                            showGame: true
-                                        })
                                     }}
                                     openAlert={(topic) => {
                                         this.setState({
@@ -224,9 +222,6 @@ class StudyViewScreenUI extends Component {
                                         currentQuestionId={currentTopic ? currentTopic.id : null}
                                         onChangeTopic={(topic, index) => {
                                             this.activeTopic(topic, index);
-                                            this.setState({
-                                                showGame: true
-                                            })
                                         }}
                                         openAlert={(topic) => {
                                             this.setState({
@@ -253,8 +248,11 @@ class StudyViewScreenUI extends Component {
         let newIndex = this.state.currentIndex + 1;
         if (newIndex < this.state.topics.length) {
             let currentTopic = this.state.topics[newIndex]
+            if(currentTopic.getPercentComplete() == 100){
+                currentTopic.progress.reset();
+                resetTopicProgress(currentTopic.progress);
+            }
             this.activeTopic(currentTopic, newIndex);
-        } else {
         }
         if (this.state.count !== -1) {
             this.setState((state) => {
@@ -317,7 +315,7 @@ class StudyViewScreenUI extends Component {
                             Try Again
                             </Button>
                     </Grid>
-                </> : null}
+                </> : <div>X</div>}
             </div>
         );
     }

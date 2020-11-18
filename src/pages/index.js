@@ -180,12 +180,12 @@ const Header = ({ setOpen, showResult, isMobile }) => {
                             >
                                 <div style={{ width: "200px" }}>
                                     <List>
-                                        <ListItem button key={text}>
+                                        <ListItem button>
                                             <a href="/" style={{ textDecoration: "none", color: "#4a4a4a", fontWeight: 400 }}>
                                                 <ListItemText primary="HOME" />
                                             </a>
                                         </ListItem>
-                                        <ListItem button key={text}>
+                                        <ListItem button>
                                             <a href="/blog" style={{ textDecoration: "none", color: "#4a4a4a", fontWeight: 400 }}>
                                                 <ListItemText primary="BLOG" />
                                             </a>
