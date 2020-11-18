@@ -30,6 +30,7 @@
     margin-left: auto
 }
 
+.landing-page header .menu-appbar .menu-nav span,
 .landing-page header .menu-appbar .menu-nav a {
     display: flex;
     flex-direction: row;

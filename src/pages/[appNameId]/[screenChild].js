@@ -1,54 +1,49 @@
-import React, { useEffect } from 'react';
+import fs from "fs";
 import dynamic from 'next/dynamic';
+import { useRouter } from 'next/router';
+import path from "path";
+import React, { useEffect } from 'react';
+import ReactGA from 'react-ga';
+import { Provider, useStore } from 'react-redux';
+import { PersistGate } from 'redux-persist/integration/react';
+import SEO from '../../components/SEO';
+import { APP_NEW_DOMAIN } from "../../config_app";
+import { wrapper } from '../../redux/store';
+import Routes from '../../routes';
+import { callApi } from '../../services';
+import { oldUser, setScrollDownAuto } from '../../utils';
 const StudyViewScreen = dynamic(() => import('../../container/study/Study.View'), { ssr: false })
 const TestViewScreen = dynamic(() => import('../../container/test/Test.View'), { ssr: false })
 const ReviewViewScreen = dynamic(() => import('../../container/review/Review.View'), { ssr: false })
-import Head from 'next/head';
-import { Provider, useStore } from 'react-redux';
-import { PersistGate } from 'redux-persist/integration/react';
-import { useRouter } from 'next/router';
-import Routes from '../../routes';
-import ReactGA from 'react-ga';
-import { oldUser, setScrollDownAuto } from '../../utils';
-import path from "path";
-import fs from "fs"
-import { callApi } from '../../services';
-import { wrapper } from '../../redux/store';
 initializeReactGA();
 function initializeReactGA() {
     ReactGA.initialize('UA-167769768-1');
 }
-const Screen = ({ appInfoState }) => {
+const GameChildScreen = ({ appInfoState, url }) => {
     useEffect(() => {
         setScrollDownAuto()
         oldUser()
     }, [])
     const store = useStore((state) => state);
+    // console.log("store", store, appInfoState)
     return (
         <>
-            <Head>
-                <meta charSet="UTF-8" />
-                <title>{appInfoState.title}</title>
-                <link rel="icon" href={appInfoState.avatar} />
-                <link rel="preconnect" href="https://webappapi-dot-micro-enigma-235001.appspot.com"></link>
+            <SEO appInfo={appInfoState} url={url}>
                 <link rel="stylesheet" type="text/css" href="/styles/game.css" />
                 <link rel="stylesheet" type="text/css" href="/styles/review.css" />
                 <link rel="stylesheet" type="text/css" href="/styles/test.css" />
                 <link rel="stylesheet" type="text/css" href="/styles/study.css" />
                 <link rel="stylesheet" type="text/css" href="/styles/header.css" />
-                <meta property="og:type" content="website" />
-                <meta name="title" content={appInfoState.title} />
-                <meta name="description" content={appInfoState.description} />
-                <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-                <meta name="keywords" content={appInfoState.keywords} />
-            </Head>
-            <Provider store={store}>
-                <PersistGate
-                    persistor={store.__persistor}
-                >
-                    <ScreenChild appInfoState={appInfoState} />
-                </PersistGate>
-            </Provider>
+            </SEO>
+            <div style={{width:"100%", height:"100%"}}>
+                <Provider store={store}>
+                    <PersistGate
+                        persistor={store.__persistor}
+                    >
+                        <ScreenChild appInfoState={appInfoState} />
+                    </PersistGate>
+                </Provider>
+            </div>
         </>
     )
 }
@@ -83,24 +78,47 @@ export async function getStaticPaths() {
     };
 }
 function ScreenChild({ appInfoState }) {
-    const router = useRouter();
-    const { practice, appNameId, screenChild } = router.query
-    let screen = screenChild
-    screen = screen ?? '';
-    if (screen.startsWith(Routes.TEST_SCREEN)) {
-        let offset = screen.lastIndexOf('-');
-        let topicId = -1;
-        if (offset > -1) {
-            offset += 1;
-            topicId = offset > -1 ? parseInt(screen.substring(offset, screen.length)) : -1;
+    if(APP_NEW_DOMAIN){
+        const router = useRouter();
+        let screen = router.query.appNameId
+        screen = screen ?? '';
+        // console.log("screen", screen, 'router.query', router.query)
+        if (screen.startsWith(Routes.TEST_SCREEN)) {
+            let offset = screen.lastIndexOf('-');
+            let topicId = -1;
+            if (offset > -1) {
+                offset += 1;
+                topicId = offset > -1 ? parseInt(screen.substring(offset, screen.length)) : -1;
+            }
+            return <TestViewScreen topicId={topicId} appInfoState={appInfoState} />
         }
-        return <TestViewScreen topicId={topicId} appInfoState={appInfoState} />
-    }
-    if (screen.startsWith(Routes.REVIEW_SCREEN)) {
-        return <ReviewViewScreen appInfoState={appInfoState} />
-    }
-    if (screen.length > 0) {
-        return <StudyViewScreen appInfoState={appInfoState} />
+        if (screen.startsWith(Routes.REVIEW_SCREEN)) {
+            return <ReviewViewScreen appInfoState={appInfoState} />
+        }
+        if (screen.length > 0) {
+            return <StudyViewScreen appInfoState={appInfoState} />
+        }
+        return <h1>Not found page!</h1>
+    } else {
+        const router = useRouter();
+        const { practice, appNameId, screenChild } = router.query
+        let screen = screenChild
+        screen = screen ?? '';
+        if (screen.startsWith(Routes.TEST_SCREEN)) {
+            let offset = screen.lastIndexOf('-');
+            let topicId = -1;
+            if (offset > -1) {
+                offset += 1;
+                topicId = offset > -1 ? parseInt(screen.substring(offset, screen.length)) : -1;
+            }
+            return <TestViewScreen topicId={topicId} appInfoState={appInfoState} />
+        }
+        if (screen.startsWith(Routes.REVIEW_SCREEN)) {
+            return <ReviewViewScreen appInfoState={appInfoState} />
+        }
+        if (screen.length > 0) {
+            return <StudyViewScreen appInfoState={appInfoState} />
+        }
     }
 }
-export default wrapper.withRedux(Screen)
+export default wrapper.withRedux(GameChildScreen)

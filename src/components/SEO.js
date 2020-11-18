@@ -1,6 +1,6 @@
 import Head from "next/head";
 
-const SEO = ({ url, appInfo, children }) => {
+const SEO = ({ url, appInfo, children, manifest }) => {
     let title = 'ABC Learning';
     let description = 'With thousands of our FREE practice questions, we are here to help you achieve your gate of success with our test prep solutions.';
     let keywords = 'Abc e-learning, abc elearning, study online,practice test, practice question,exam prepare,asvab,teas exam,cdl test,cdl practice,cissp exam,cissp practice,accuplacer,comptia practice test,comptia A+,compTIA Network,comptia security,dmv,dmv practice test,driving theory,driving theory UK,G1 test,GED,hesi,hesi A2,motorcycle permit,pmp,pmp exam,ptcb,ptce,real estate exam,practice app,practice test onl,free practice test,free practice questions,free practice app';
@@ -8,6 +8,7 @@ const SEO = ({ url, appInfo, children }) => {
     if (appInfo) {
         appInfo.title && (title = appInfo.title);
         appInfo.description && (description = appInfo.description);
+        appInfo.descriptionSEO && (description = appInfo.descriptionSEO);
         appInfo.keywords && (keywords = appInfo.keywords);
         appInfo.avatar && (image = appInfo.avatar);
     }
@@ -17,7 +18,7 @@ const SEO = ({ url, appInfo, children }) => {
         <link rel="preconnect" href="https://storage.googleapis.com" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <meta name="theme-color" content="#000000" />
-        <link rel="manifest" href="manifest.json" />
+        {manifest ? <link rel="manifest" href="manifest.json" /> : null}
         {url ? <link rel="canonical" href={url}></link> : null}
         <title>{title.toUpperCase()}</title>
         <meta name="title" content={title.toUpperCase()} />

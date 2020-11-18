@@ -9,16 +9,19 @@ import LazyLoad from 'react-lazyload';
 import { Provider, useStore } from 'react-redux';
 import Slider from 'react-slick';
 import { PersistGate } from 'redux-persist/integration/react';
-import Footer from '../components/Footer';
-import HeaderMenu from '../components/HeaderMenu';
-import { Clock, FreeCircle, FreeIcon, LoginIcon, PenIcon, TotalQuestions } from '../components/Icons';
-import SEO from '../components/SEO';
-import WebAppInfo from '../models/WebAppInfo';
-import { wrapper } from '../redux/store';
-import { callApi } from '../services';
-import { getNewDomain, isSuperApp, oldUser, scrollToTopic, setScrollDownAuto } from '../utils';
-const HomeContent = dynamic(() => import("../container/home/HomeContent"), { ssr: false })
-const SelectStatePopup = dynamic(() => import("../components/SelectStatePopup"), { ssr: false })
+import Footer from '../../components/Footer';
+import HeaderMenu from '../../components/HeaderMenu';
+import { Clock, FreeCircle, FreeIcon, LoginIcon, PenIcon, TotalQuestions } from '../../components/Icons';
+import SEO from '../../components/SEO';
+import { APP_NEW_DOMAIN } from '../../config_app';
+import WebAppInfo from '../../models/WebAppInfo';
+import { wrapper } from '../../redux/store';
+import { callApi } from '../../services';
+import { getNewDomain, isSuperApp, oldUser, scrollToTopic, setScrollDownAuto } from '../../utils';
+const HomeContent = dynamic(() => import("../../container/home/HomeContent"), { ssr: false })
+const SelectStatePopup = dynamic(() => import("../../components/SelectStatePopup"), { ssr: false })
+const GameChildScreen = dynamic(() => import("./[screenChild]"), { ssr: false })
+
 initializeReactGA();
 function initializeReactGA() {
     ReactGA.initialize('UA-167769768-1');
@@ -56,10 +59,14 @@ const useStyles = makeStyles({
         }
     }
 })
-const Home = ({ appInfoState, url }) => {
+const AppHome = ({ appInfoState, url, home }) => {
     if (!appInfoState) {
         appInfoState = {};
         console.error("xxxxxxxxxxxxxxxxxxxxxxxx appInfo null");
+    }
+    // console.log("xxxxx appInfoState", appInfoState)
+    if(APP_NEW_DOMAIN && home !== true){
+        return <GameChildScreen appInfoState={appInfoState} url={url} />
     }
     const theme = useTheme();
     const isMobile = useMediaQuery(theme.breakpoints.between(0, 780));
@@ -83,7 +90,7 @@ const Home = ({ appInfoState, url }) => {
     const store = useStore((state) => state);
     return (
         <>
-            <SEO appInfo={appInfoState} url={url}>
+            <SEO appInfo={appInfoState} url={url} manifest={true}>
                 <link rel="stylesheet" type="text/css" href="/styles/app.css" />
                 <link rel="stylesheet" type="text/css" href="/styles/slick.css" />
                 <link rel="stylesheet" type="text/css" href="/styles/slick-theme.css" />
@@ -435,7 +442,7 @@ const FeedbackItem = ({ content, name, createTime, index }) => {
 
 // export const getServerSideProps = wrapper.getServerSideProps(async (context) => {
 export async function getServerSideProps(context) {
-    const { appNameId } = context.params;
+    const appNameId = APP_NEW_DOMAIN ? APP_NEW_DOMAIN : context.params.appNameId;
     const appInfoState = await callApi({ url: '/data?type=get_app_info&appNameId=' + appNameId, params: null, method: 'post' })
     let url = context.req.headers.referer;
     return {
@@ -446,4 +453,4 @@ export async function getServerSideProps(context) {
     }
 }
 
-export default wrapper.withRedux(Home);
+export default wrapper.withRedux(AppHome);
