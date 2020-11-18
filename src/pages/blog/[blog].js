@@ -1,17 +1,15 @@
-import React, { useEffect, useState } from 'react';
+import { Container, Grid, IconButton, Link, useMediaQuery, useTheme } from '@material-ui/core';
+import NavigateNextIcon from '@material-ui/icons/NavigateNext';
+import { useRouter } from 'next/router';
+import React, { useEffect } from 'react';
 import ReactGA from 'react-ga';
 import ReactHtmlParser from 'react-html-parser';
-import Head from 'next/head';
-import NavigateNextIcon from '@material-ui/icons/NavigateNext';
-import Header from '../../components/Header';
-import Footer from '../../components/Footer';
-import { Container, Grid, IconButton, Link, useMediaQuery, useTheme } from '@material-ui/core';
-import { useRouter } from 'next/router';
-import { addRecentPost } from '../../utils';
-import { SocialWidget } from '../../components/SocialWidget';
 import Slider from "react-slick";
 import { BannerBlog, HeaderBlog } from '../../components/blog/HeaderBlog';
+import Footer from '../../components/Footer';
+import SEO from '../../components/SEO';
 import SEOInfo from '../../models/SEOInfo';
+import { addRecentPost } from '../../utils';
 
 function initializeReactGA() {
     ReactGA.initialize('UA-167769768-1');
@@ -26,10 +24,9 @@ const Blog = ({ newInfo, relativeds, url }) => {
     }, [])
     return (
         <>
-            <Head>
-                <meta charSet="UTF-8" />
-                <title>{seoInfo.title}</title>
-                <link rel="icon" href="/images/logo.svg" />
+            <SEO url={url}
+                appInfo={seoInfo}
+            >
                 <link href="https://fonts.googleapis.com/css2?family=Russo+One&display=swap" rel="stylesheet"></link>
                 <link rel="stylesheet" type="text/css" href="/styles/index.css" />
                 <link rel="stylesheet" type="text/css" href="/styles/header.css" />
@@ -37,19 +34,7 @@ const Blog = ({ newInfo, relativeds, url }) => {
                 <link rel="stylesheet" type="text/css" href="/styles/listblog.css" />
                 <link rel="stylesheet" type="text/css" href="/styles/slick.css" />
                 <link rel="stylesheet" type="text/css" href="/styles/slick-theme.css" />
-                <link rel="preconnect" href="https://storage.googleapis.com" />
-                <link rel="canonical" href={"https://passemall.com" + url}></link>
-                <meta property="og:type" content="website" />
-                <meta name="theme-color" content="#000000" />
-                <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
-                <meta name="title" content={seoInfo.title} />
-                <meta name="description" content={seoInfo.description} />
-                <meta name="keywords" content={seoInfo.keyword} />
-                <meta property="og:title" content={seoInfo.titleSEO} />	
-                <meta property="og:description" content={seoInfo.descriptionSEO} />
-                <meta property="og:image" content={seoInfo.image} />
-            </Head>
+            </SEO>
 
             <div className='body-panel landing-page'>
                 <HeaderBlog appId={newInfo ? newInfo.appId : -1} />

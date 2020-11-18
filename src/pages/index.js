@@ -1,19 +1,20 @@
 import { Container, Grid, IconButton, InputAdornment, List, ListItem, ListItemText, makeStyles, SwipeableDrawer, TextField, useMediaQuery, useTheme } from '@material-ui/core';
 import MenuIcon from '@material-ui/icons/Menu';
 import SearchIcon from '@material-ui/icons/Search';
-import fs from 'fs';
 import { useRouter } from 'next/router';
-import path from 'path';
 import React, { useEffect, useState } from 'react';
 import ReactGA from 'react-ga';
 import Footer from '../components/Footer';
 import SEO from '../components/SEO';
 import { Modal } from "../components/Widgets";
+import { APP_NEW_DOMAIN } from '../config_app';
 import FeedbackApps from '../container/landingpage/FeedbackApps';
 import ListGreatApps from '../container/landingpage/ListGreatApps';
 import StatictisApps from '../container/landingpage/StatictisApps';
 import { callApi } from '../services';
-import { isLocalhost, oldUser, scrollDown, setScrollDownAuto } from '../utils';
+import { oldUser, scrollDown, setScrollDownAuto } from '../utils';
+import AppHome from './[appNameId]';
+
 function initializeReactGA() {
     ReactGA.initialize('UA-167769768-1');
 }
@@ -33,6 +34,10 @@ const useStyles = makeStyles({
 })
 initializeReactGA();
 const LandingPage = ({ appInfoState, url }) => {
+    if(APP_NEW_DOMAIN){
+        return <AppHome appInfoState={appInfoState} url={url} home={true} />
+    }
+
     useEffect(() => {
         setScrollDownAuto()
         oldUser();
@@ -62,7 +67,7 @@ const LandingPage = ({ appInfoState, url }) => {
     const isMobile = useMediaQuery(theme.breakpoints.between(0, 780));
     return (
         <>
-            <SEO url={url ? url : 'http://passemall.com/'}>
+            <SEO url={url ? url : 'http://passemall.com/'} manifest={true}>
                 <link rel="stylesheet" type="text/css" href="/styles/slick.css" />
                 <link rel="stylesheet" type="text/css" href="/styles/slick-theme.css" />
                 <link rel="stylesheet" type="text/css" href="/styles/landing-page.css" />
@@ -175,13 +180,16 @@ const Header = ({ setOpen, showResult, isMobile }) => {
                             >
                                 <div style={{ width: "200px" }}>
                                     <List>
-                                        {["Home", "Blog", "Support"].map((text, index) => (
-                                            <ListItem button key={text}>
-                                                <a href={index === 0 ? "/" : (index === 1 ? "/blog" : "")} style={{ textDecoration: "none", color: "#4a4a4a", fontWeight: 400 }}>
-                                                    <ListItemText primary={text} />
-                                                </a>
-                                            </ListItem>
-                                        ))}
+                                        <ListItem button key={text}>
+                                            <a href="/" style={{ textDecoration: "none", color: "#4a4a4a", fontWeight: 400 }}>
+                                                <ListItemText primary="HOME" />
+                                            </a>
+                                        </ListItem>
+                                        <ListItem button key={text}>
+                                            <a href="/blog" style={{ textDecoration: "none", color: "#4a4a4a", fontWeight: 400 }}>
+                                                <ListItemText primary="BLOG" />
+                                            </a>
+                                        </ListItem>
                                     </List>
                                 </div>
                             </SwipeableDrawer>
@@ -191,7 +199,7 @@ const Header = ({ setOpen, showResult, isMobile }) => {
                             <div className="menu-nav">
                                 <a href="/" >HOME</a>
                                 <a href="/blog">BLOG</a>
-                                <a href="" onClick={() => scrollDown()}>SUPPORT</a>
+                                <span onClick={() => scrollDown()}>SUPPORT</span>
                             </div>
 
                             <TextField
@@ -250,30 +258,28 @@ const Header = ({ setOpen, showResult, isMobile }) => {
     );
 }
 
-// <Grid container alignItems="center" justify="space-between" className="header-media">
-//                 <Grid item xs={12} sm={8} md={7} className="header-content">
-//                     <div className="xxx">
-//                         <h1>Make your study great with our thousands of free practice questions</h1>
-//                         <p>You want to get 100% ready for your important day? You desire to pass your exam at your first try?
-//                         You are wondering if you should pay a charge of money buying some practice materials?
-//                             That’s why we are here to support you achieve the gate of success with our test prep solutions.</p>
-//                     </div>
-//                 </Grid>
-//                 <Grid item xs={12} sm={4} md={5} className="header-image-content">
-//                     <img alt='Make your study great with our thousands of free practice questions' width="100%" height="100%" src="/images/test3.png" />
-//                 </Grid>
-//             </Grid>
-
 export async function getServerSideProps(context) {
-    // console.log("context.req.headers", context.req.headers)
-    const appInfoState = await callApi({ url: '/data?type=get_all_app_info', params: null, method: 'post' });
-    let url = context.req.headers.referer;
-    return {
-        props: {
-            appInfoState: appInfoState ? appInfoState : [],
-            url: url ? url : ''
+    if(APP_NEW_DOMAIN){
+        const appNameId = APP_NEW_DOMAIN;
+        const appInfoState = await callApi({ url: '/data?type=get_app_info&appNameId=' + appNameId, params: null, method: 'post' })
+        let url = context.req.headers.referer;
+        return {
+            props: {
+                appInfoState: appInfoState ? appInfoState : {},
+                url: url ? url : '',
+            }
         }
+    } else {
+        // console.log("context.req.headers", context.req.headers)
+        const appInfoState = await callApi({ url: '/data?type=get_all_app_info', params: null, method: 'post' });
+        let url = context.req.headers.referer;
+        return {
+            props: {
+                appInfoState: appInfoState ? appInfoState : [],
+                url: url ? url : ''
+            }
 
+        }
     }
 }
 

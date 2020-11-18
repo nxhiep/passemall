@@ -1,9 +1,9 @@
 import { Container, Grid, IconButton, SwipeableDrawer, useMediaQuery, useTheme } from "@material-ui/core";
-import { isSuperApp, scrollToTopic } from "../utils";
-import { redirectToNewDomain } from '../utils'
 import MenuIcon from '@material-ui/icons/Menu';
-import { useState } from "react";
 import Link from "next/link";
+import { useState } from "react";
+import { APP_NEW_DOMAIN } from "../config_app";
+import { isSuperApp, scrollToTopic } from "../utils";
 
 const HeaderMenu = ({ appInfo }) => {
     const theme = useTheme();
@@ -47,20 +47,20 @@ const HeaderMenu = ({ appInfo }) => {
 }
 
 const MenuList = ({ appInfo }) => {
-    let rootLink = '';
-    if(appInfo && (!isSuperApp(appInfo.id) || !redirectToNewDomain)){
-        rootLink = '/'+appInfo.appNameId+'/';
+    let rootLink = '/';
+    if(appInfo && (!isSuperApp(appInfo.id) || !APP_NEW_DOMAIN)){
+        rootLink = appInfo.appNameId+'/';
     }
     return <>
         <div>
             <a href={rootLink}>HOME</a>
         </div>
-        <div>
+        {!APP_NEW_DOMAIN ? <div>
             <span className="tag-a" href={rootLink} onClick={() => scrollToTopic()}>LEARN</span>
-        </div>
-        <div>
+        </div> : null}
+        {/* <div>
             <Link href={rootLink + "test"}><a>TEST</a></Link>
-        </div>
+        </div> */}
         <div>
             <Link href={rootLink + "review"}><a>REVIEW</a></Link>
         </div>

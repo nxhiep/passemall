@@ -1,12 +1,11 @@
 import { Button, Container, Grid } from "@material-ui/core";
 import React, { useEffect } from "react";
 import { connect } from "react-redux";
-import { FixedContainer, LineProgress, LoadingWidget } from '../../components/Widgets';
+import { LineProgress, LoadingWidget } from '../../components/Widgets';
+import { APP_NEW_DOMAIN } from "../../config_app";
 import Topic from "../../models/Topic";
-import { stringToHtml } from "../../models/Utils";
 import { getTopicsByParentId } from "../../redux/actions";
 import { stringReplaceUrl } from "../../utils";
-import { useRouter } from "next/router";
 const HomeContent = ({ appInfo, appNameId, topicState, getTopicsByParentId, hasState, onChangeState, stateInfoState }) => {
     let parentId = appInfo.id;
     let currentState;
@@ -73,7 +72,7 @@ const TopicItem = ({ topic, appNameId }) => {
     if (!progress || isNaN(progress) || progress < 0) {
         progress = 0;
     }
-    let link = ("/" + appNameId + '/' + stringReplaceUrl(topic.name) + '-' + topic.id).replace(/--/g, '-');
+    let link = ((APP_NEW_DOMAIN ? "" : "/" + appNameId) + '/' + stringReplaceUrl(topic.name) + '-' + topic.id).replace(/--/g, '-');
     return (
         <Grid item className="topic-item-panel" >
             <a href={link}>

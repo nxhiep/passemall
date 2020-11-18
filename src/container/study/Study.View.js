@@ -1,27 +1,26 @@
-import { Button, Container, Fab, Grid, IconButton, Tooltip } from '@material-ui/core';
-import { ArrowBack as ArrowBackIcon, Check as CheckIcon, Done as DoneIcon, ArrowRightAlt as ArrowRightAltIcon, Lock as LockIcon, DoneAll as DoneAllIcon } from '@material-ui/icons';
+import { Button, Container, Grid, IconButton, Tooltip } from '@material-ui/core';
+import { ArrowBack as ArrowBackIcon, ArrowRightAlt as ArrowRightAltIcon, Check as CheckIcon, Done as DoneIcon, DoneAll as DoneAllIcon, Lock as LockIcon } from '@material-ui/icons';
+import { useRouter } from 'next/router';
 import React, { Component, useEffect, useState } from 'react';
+import ReactGA from 'react-ga';
 import { connect } from 'react-redux';
-import { AlertDialogSlide, DialogInfo, ShowImage, DialogForMobile } from '../../components/Dialog';
+import { AlertDialogSlide, DialogForMobile, DialogInfo, ShowImage } from '../../components/Dialog';
 import Footer from '../../components/Footer';
 import Header from '../../components/Header';
 import { LoadingWidget } from '../../components/Widgets';
 import Config from '../../config';
+import { APP_NEW_DOMAIN } from '../../config_app';
 import { resetTopicProgress, updateTopicsProgress } from '../../redux/actions';
 import { getCardsByParentId } from '../../redux/actions/card';
 import { onContinue, resetQuestionProgress } from '../../redux/actions/game';
 import { getTopicById, getTopicsByParentId } from '../../redux/actions/topic';
-import { isObjEmpty } from '../../utils';
-import { QuestionsPanelTS } from '../game/Game.ViewTS';
-import ReactGA from 'react-ga';
-import { useRouter } from 'next/router';
-import { CongratulationAlert } from "../game/Game.ViewTS"
+import { isMobileFunctions, isObjEmpty } from '../../utils';
+import { CongratulationAlert, QuestionsPanelTS } from '../game/Game.ViewTS';
 const questionsX = new Map();
-import { isMobileFunctions } from '../../utils'
 const StudyViewScreen = ({ appInfoState }) => {
     const router = useRouter();
     const { appNameId, screenChild } = router.query;
-    const screenStudy = screenChild;
+    const screenStudy = APP_NEW_DOMAIN ? appNameId : screenChild;
     let topicId = -1;
     if (screenStudy) {
         let offset = screenStudy.lastIndexOf('-') + 1;
@@ -167,6 +166,7 @@ class StudyViewScreenUI extends Component {
                             spacing={3}
                             alignItems="stretch"
                             className="border-box"
+                            style={{alignItems: "stretch"}}
                         >
                             <Grid item xs={12} sm={12} md={5} lg={4} className="left-panel border-box" >
                                 <TopicInfoPanel

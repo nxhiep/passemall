@@ -1,53 +1,37 @@
+import { Container, Grid, IconButton, Link, useMediaQuery, useTheme } from '@material-ui/core';
+import NavigateNextIcon from '@material-ui/icons/NavigateNext';
+import { useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react';
 import ReactGA from 'react-ga';
-import Head from 'next/head';
-import NavigateNextIcon from '@material-ui/icons/NavigateNext';
-import Header from '../components/Header';
-import Footer from '../components/Footer';
-import { Container, Divider, Grid, IconButton, Link, useMediaQuery, useTheme } from '@material-ui/core';
-import { useRouter } from 'next/router';
-import { getRecentPosts } from '../utils';
-import { SocialWidget } from '../components/SocialWidget';
-import { HeaderBlog, BannerBlog } from '../components/blog/HeaderBlog';
-import SEOInfo from '../models/SEOInfo';
 import LazyLoad from 'react-lazyload';
+import { BannerBlog, HeaderBlog } from '../components/blog/HeaderBlog';
+import Footer from '../components/Footer';
+import SEO from '../components/SEO';
+import { getRecentPosts } from '../utils';
+
 function initializeReactGA() {
     ReactGA.initialize('UA-167769768-1');
 }
 
 initializeReactGA();
-    const seoInfo = new SEOInfo();
 const ListBlog = ({ data, url }) => {
-    const seoInfo = new SEOInfo();
-    seoInfo.title = 'ABC Learning - Blog';
     useEffect(() => {
-        ReactGA.pageview('/homepage');
+        ReactGA.pageview('/blog');
     }, [])
+    console.log("data", data)
     const theme = useTheme();
     const isMobile = useMediaQuery(theme.breakpoints.between(0, 780));
-    const displayNone = useMediaQuery(theme.breakpoints.down("md"))
     return (
         <>
-            <Head>
-                <title>ABC Learning - Blog</title>
-                <link rel="icon" href="/images/logo.svg" />
-                <link href="https://fonts.googleapis.com/css2?family=Russo+One&display=swap" rel="stylesheet"></link>
+            <SEO url={url}
+                appInfo={{
+                    title: "ABC Elearning - Blog",
+                }}
+            >
+            <link href="https://fonts.googleapis.com/css2?family=Russo+One&display=swap" rel="stylesheet"></link>
                 <link rel="stylesheet" type="text/css" href="/styles/index.css" />
                 <link rel="stylesheet" type="text/css" href="/styles/listblog.css" />
-                <link rel="preconnect" href="https://storage.googleapis.com" />
-                <link rel="canonical" href="https://passemall.com"></link>
-                <meta property="og:type" content="website" />
-                <meta name="theme-color" content="#000000" />
-                <link rel="canonical" href={"https://passemall.com" + url}></link>
-
-                <meta name="title" content={seoInfo.title} />
-                <meta name="description" content={seoInfo.description} />
-                <meta name="keywords" content={seoInfo.keyword} />
-                <meta property="og:title" content={seoInfo.title} />	
-                <meta property="og:description" content={seoInfo.descriptionSEO} />
-                <meta property="og:image" content={seoInfo.image} />
-
-            </Head>
+            </SEO>
             <div className='body-panel landing-page list-blog'>
                 <HeaderBlog />
                 <BannerBlog />
