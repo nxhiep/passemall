@@ -14,7 +14,7 @@ function MyApp(props) {
       jssStyles.parentElement.removeChild(jssStyles);
     }
     if(typeof window !== 'undefined'){
-      const { register } = require('../services/serviceWorker');
+      const { register } = require('../serviceWorker');
       register();
     }
   }, []);
