@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useState } from "react";
 import { APP_NEW_DOMAIN } from "../config_app";
 import { isSuperApp, scrollToTopic } from "../utils";
+import ReactGA from 'react-ga';
 
 const HeaderMenu = ({ appInfo }) => {
     const theme = useTheme();
@@ -56,16 +57,33 @@ const MenuList = ({ appInfo }) => {
             <a href={rootLink}>HOME</a>
         </div>
         {!APP_NEW_DOMAIN ? <div>
-            <span className="tag-a" href={rootLink} onClick={() => scrollToTopic()}>LEARN</span>
+            <span className="tag-a" href={rootLink} onClick={() => {
+                ReactGA.event({
+                    category: 'Click Learn',
+                    action: 'Click Learn Header'
+                })
+                scrollToTopic()
+            }}>LEARN</span>
         </div> : null}
         {/* <div>
             <Link href={rootLink + "test"}><a>TEST</a></Link>
         </div> */}
         <div>
-            <Link href={rootLink + "review"}><a>REVIEW</a></Link>
+            <Link href={rootLink + "review"} onClick={() => {
+                ReactGA.event({
+                    category: 'Click Review',
+                    action: 'Click Review Header'
+                })
+            }}><a>REVIEW</a></Link>
         </div>
         <div>
-            <Link href={"/blog" + (appInfo ? "?appId=" + appInfo.id : '')}><a>BLOG</a></Link>
+            <Link href={"/blog" + (appInfo ? "?appId=" + appInfo.id : '')} onClick={() => {
+                ReactGA.event({
+                    category: 'Click Blog',
+                    action: 'Click Blog Header',
+                    value: appInfo.id
+                })
+            }}><a>BLOG</a></Link>
         </div>
     </>
 }
