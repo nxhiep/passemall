@@ -37,7 +37,7 @@ getAppId() {
 
 deploy() {
     app=$1
-    appId=$(getAppId cdl)
+    appId=$(getAppId $app)
     if [ -z "$app" ]
     then
         app=""
