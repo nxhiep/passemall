@@ -54,7 +54,6 @@ class StudyViewScreenUI extends Component {
             showAlertName: '',
             isMobile: isMobile,
             count: 0,
-            exitCongratulationsScreen: false
         }
         this.props.getTopicsByParentId(this.state.id);
         this.props.getTopicById(this.state.id, this.state.appInfo.id, this.state.appInfo.bucket);
@@ -126,7 +125,7 @@ class StudyViewScreenUI extends Component {
             let i = this.state.currentIndex + 1;
             topics[i].progress.lock = false;
             this.setState({
-                topics: topics
+                topics: topics,
             });
             this.props.updateTopicsProgress([topics[i].progress]);
         }
@@ -153,7 +152,7 @@ class StudyViewScreenUI extends Component {
         }
         let congratulationTopic = (!!gameState.isFinish);
         if (!this.state.isMobile) {
-            console.log("PC congratulationTopic", congratulationTopic, 'currentTopic', (currentTopic ? currentTopic.name : ''))
+            // console.log("PC congratulationTopic", congratulationTopic, 'currentTopic', (currentTopic ? currentTopic.name : ''))
             return (
                 <div className="body-panel">
                     <Header isStudy={true} appInfo={this.state.appInfo} />
@@ -192,14 +191,11 @@ class StudyViewScreenUI extends Component {
                         </Grid>
                     </Container>
                     <ShowImage />
-                </div >
+                </div>
             )
         }
         if (this.state.isMobile) {
-            if(this.state.isMobile && this.state.exitCongratulationsScreen){
-                congratulationTopic = false;
-            }
-            console.log("Mobile congratulationTopic", congratulationTopic, 'currentTopic', (currentTopic ? currentTopic.name : ''))
+            // console.log("Mobile congratulationTopic", congratulationTopic, 'currentTopic', (currentTopic ? currentTopic.name : ''))
             return (
                 <div className="body-panel">
                     <Container className="study-game-panel">
@@ -244,7 +240,8 @@ class StudyViewScreenUI extends Component {
         }
     }
 
-    onNextPart() {
+    onNextPart(zzz) {
+        // console.log("onNextPart", zzz)
         let newIndex = this.state.currentIndex + 1;
         if (newIndex < this.state.topics.length) {
             let currentTopic = this.state.topics[newIndex]
@@ -274,7 +271,9 @@ class StudyViewScreenUI extends Component {
                                 currentIndex={currentQuestionIndex}
                                 congratulationTopic={congratulationTopic}
                                 onContinue={onContinue}
-                                onNextPart={this.onNextPart}
+                                onNextPart={() => {
+                                    this.onNextPart(1)
+                                }}
                                 setShowGame={() => this.setState({ showGame: false })}
                             /> : <LoadingWidget />
                     }
@@ -297,12 +296,7 @@ class StudyViewScreenUI extends Component {
                             color="primary"
                             className="next-part-button"
                             onClick={() => {
-                                if(isMobile){
-                                    this.setState({
-                                        exitCongratulationsScreen: true
-                                    })
-                                }
-                                this.onNextPart()
+                                this.onNextPart(2)
                             }}
                         >
                             Go To Part {this.state.currentTopic.orderIndex + 2} <ArrowRightAltIcon />
@@ -315,7 +309,7 @@ class StudyViewScreenUI extends Component {
                             Try Again
                             </Button>
                     </Grid>
-                </> : <div>X</div>}
+                </> : null}
             </div>
         );
     }

@@ -82,6 +82,6 @@ deploy() {
     addConfig $appId $gaId
 }
 
-deploy
+deploy $1
 # yarn
 # yarn build

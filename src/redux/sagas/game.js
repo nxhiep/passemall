@@ -14,6 +14,7 @@ function* startGameReload() {
 }
 function* startGame() {
     let action = yield take(Types.GAME_LOAD_GAME);
+    // console.log("startGame action", action)
     let gameState = yield select((state) => state.gameState);
     let timeTest = action.timeTest
     let topicReducer = yield select((state) => state.topicReducer);
@@ -50,7 +51,7 @@ function* startGame() {
             }
         });
     }
-
+    // console.log("startGame currentGame", currentGame)
     if (currentGame == null || currentGame == undefined) {
         if (gameType === Config.STUDY_GAME || gameType === Config.REVIEW_GAME) {
             let cards;
@@ -95,7 +96,9 @@ function* startGame() {
     }
     else {
         yield put(resumeGame(currentGame));
+        // console.log("startGame resumeGame", currentGame)
         let gameState = yield select((state) => state.gameState);
+        // console.log("object topic", topic, 'gameState', gameState)
         if (topic) {
             if (topic.getPercentComplete() === 0) {
                 yield put(resetQuestionProgress());

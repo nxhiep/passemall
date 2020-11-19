@@ -15,7 +15,7 @@ const ListBlog = ({ data, url }) => {
     useEffect(() => {
         ReactGA.pageview('/blog');
     }, [])
-    console.log("data", data)
+    // console.log("data", data)
     const theme = useTheme();
     const isMobile = useMediaQuery(theme.breakpoints.between(0, 780));
     return (

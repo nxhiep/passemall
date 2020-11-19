@@ -33,6 +33,7 @@ const mapDispatchChoiceToProps = {
 const QuestionsPanelx = ({ questionProgress, className, topicId, loadGame = () => { }, gameState, gameType, currentIndex, onBookmark, questionIds, appInfo, onContinue, congratulationTopic, onNextPart, setShowGame }) => {
     const [showAlert, setShowAlert] = useState(false);
     useEffect(() => {
+        // console.log("loadGame", { appId: appInfo.id, id: topicId, gameType: gameType, questionIds: questionIds })
         loadGame({ appId: appInfo.id, id: topicId, gameType: gameType, questionIds: questionIds });
     }, [loadGame, appInfo, topicId, gameType, questionIds]);
     const isMobile = isMobileFunctions();

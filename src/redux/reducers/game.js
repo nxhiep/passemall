@@ -168,6 +168,7 @@ const onContinue = (state, firstLoad) => {
         let isFirstLoop = state.arrayIndexWrong.length > 0 ? false : true;
         let newQuestion;
         state.progress = calcProgress(questions);
+        // console.log("state.progress", state.progress.mastered, 'questions.length', questions.length)
         if (state.progress.mastered === questions.length) {
             state.isFinish = true;
         }

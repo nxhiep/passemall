@@ -65,25 +65,30 @@ const MenuList = ({ appInfo }) => {
                 scrollToTopic()
             }}>LEARN</span>
         </div> : null}
-        {/* <div>
+        {/* <div onClick={() => {
+                ReactGA.event({
+                    category: 'Click Test',
+                    action: 'Click Test Header'
+                })
+            }}>
             <Link href={rootLink + "test"}><a>TEST</a></Link>
         </div> */}
-        <div>
-            <Link href={rootLink + "review"} onClick={() => {
+        <div onClick={() => {
                 ReactGA.event({
                     category: 'Click Review',
                     action: 'Click Review Header'
                 })
-            }}><a>REVIEW</a></Link>
+            }}>
+            <Link href={rootLink + "review"}><a>REVIEW</a></Link>
         </div>
-        <div>
-            <Link href={"/blog" + (appInfo ? "?appId=" + appInfo.id : '')} onClick={() => {
+        <div onClick={() => {
                 ReactGA.event({
                     category: 'Click Blog',
                     action: 'Click Blog Header',
                     value: appInfo.id
                 })
-            }}><a>BLOG</a></Link>
+            }}>
+            <Link href={"/blog" + (appInfo ? "?appId=" + appInfo.id : '')}><a>BLOG</a></Link>
         </div>
     </>
 }
