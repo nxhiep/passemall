@@ -1,7 +1,7 @@
-import { Container, Grid, IconButton, Link, useMediaQuery, useTheme } from '@material-ui/core';
+import { CircularProgress, Container, Grid, IconButton, Link, useMediaQuery, useTheme } from '@material-ui/core';
 import NavigateNextIcon from '@material-ui/icons/NavigateNext';
 import { useRouter } from 'next/router';
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import ReactGA from 'react-ga';
 import ReactHtmlParser from 'react-html-parser';
 import Slider from "react-slick";
@@ -14,7 +14,7 @@ import { addRecentPost } from '../../utils';
 
 ReactGA.initialize(GA_ID);
 
-const Blog = ({ newInfo, relativeds, url }) => {
+const Blog = ({ newInfo, url }) => {
     const seoInfo = new SEOInfo(newInfo);
     useEffect(() => {
         ReactGA.pageview('/blog-info', [newInfo.title]);
@@ -38,21 +38,33 @@ const Blog = ({ newInfo, relativeds, url }) => {
                 <HeaderBlog appId={newInfo ? newInfo.appId : -1} />
                 <BannerBlog title={newInfo ? newInfo.title : ''} bannerImage={newInfo.bannerImage} />
                 <PostContent content={newInfo.content} />
-                <RelatedStories relativeds={relativeds} />
+                <RelatedStories topicId={newInfo.topicId} />
                 <Footer color="#4E63BD"></Footer>
             </div>
         </>
     );
 }
 
-const RelatedStories = ({ relativeds }) => {
+const RelatedStories = ({ topicId }) => {
+    const theme = useTheme();
+    const isMobile = useMediaQuery(theme.breakpoints.between(0, 780));
+    const isTablet = useMediaQuery(theme.breakpoints.between(0, 1200));
+    const [relativeds, setRelativeds] = useState(null)
+    useEffect(() => {
+        fetch(`https://micro-enigma-235001.appspot.com/new/api?type=get-new-info-relatived&topicId=${topicId}`)
+            .then((data) => data.json()).then((data) => {
+                setRelativeds(data)
+            }).catch(e => {
+                setRelativeds([])
+            })
+    }, [])
     if(!relativeds){
+        return <CircularProgress />;
+    }
+    if(relativeds.length == 0){
         return null;
     }
     if(relativeds.length >= 4){
-        const theme = useTheme();
-	    const isMobile = useMediaQuery(theme.breakpoints.between(0, 780));
-	    const isTablet = useMediaQuery(theme.breakpoints.between(0, 1200));
         const settings = {
             dots: true,
             infinite: true,
@@ -64,6 +76,7 @@ const RelatedStories = ({ relativeds }) => {
         };
         return (
             <Container style={{ paddingTop: '40px', paddingBottom: '40px' }}>
+                <h2 style={{textAlign: "center"}}>Related Stories</h2>
                 <Slider {...settings}>
                     {
                         relativeds.map(e => {
@@ -177,12 +190,6 @@ export async function getServerSideProps(context) {
     let blogId = context.params.blog.substring(context.params.blog.length - 16)
     const res = await fetch(`https://micro-enigma-235001.appspot.com/new/api?type=get-new-info-by-id&id=${blogId}`);
     const newInfo = await res.json();
-    // console.log("newInfo", newInfo);
-    let relativeds;
-    if(newInfo){
-        const res2 = await fetch(`https://micro-enigma-235001.appspot.com/new/api?type=get-new-info-relatived&topicId=${newInfo.topicId}`);
-        relativeds = await res2.json();
-    }
-    return { props: { newInfo: newInfo, relativeds: relativeds, url: context.req.url } }
+    return { props: { newInfo: newInfo, url: context.req.url } }
 }
 export default Blog;

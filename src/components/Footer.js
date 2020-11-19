@@ -66,13 +66,14 @@ const Footer = ({ alt = '', isStudy, color, bucket = "" }) => {
                                     <div className="resources">
                                         <div><strong>Resources</strong></div>
                                         <div><a href="/blog">Blog</a></div>
+                                        <div><a href="/blog/about-us-5634123102158848">About us</a></div>
                                     </div>
                                 </Grid>
                                 <Grid item xs={12} sm={12} md={4}>
                                     <div className="company">
-                                            <div><strong>Social</strong></div>
-                                            <SocialWidget color={color} />
-                                        </div>
+                                        <div><strong>Social</strong></div>
+                                        <SocialWidget color={color} />
+                                    </div>
                                 </Grid>
                             </Grid>
                             <Divider className="line"></Divider>
