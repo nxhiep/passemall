@@ -12,6 +12,7 @@ import { PersistGate } from 'redux-persist/integration/react';
 import Footer from '../../components/Footer';
 import HeaderMenu from '../../components/HeaderMenu';
 import { Clock, FreeCircle, FreeIcon, LoginIcon, PenIcon, TotalQuestions } from '../../components/Icons';
+import { CreditCard as CreditCardIcon } from '@material-ui/icons'
 import SEO from '../../components/SEO';
 import { APP_NEW_DOMAIN, GA_ID } from '../../config_app';
 import WebAppInfo from '../../models/WebAppInfo';
@@ -292,14 +293,26 @@ const ListInfoGraphic = (props) => {
             </Container>
             <div style={{ height: "80px", width: "100%" }}></div>
             <Container className="infographic-container">
-                <h2>Exam experience, duplicated</h2>
-                <p>Our {appName} Certification Exam Simulator is an effective way to practice for the actual exam.</p>
+                <h2>{webAppInfo.block4[0].title}</h2>
+                <p>{webAppInfo.block4[0].description}</p>
                 <Grid container spacing={3} className="list-infographic-new" alignItems="stretch" justify="space-evenly">
                     <Grid item xs={12} sm={3}>
                         <div style={{ display: "flex", flexDirection: "column" }}>
                             <div style={{ color: props.color }} className="titlex">{webAppInfo.numberInfo.number1}</div>
-                            <p className="dot-2 descriptionx">There is no fee to take the {appName}</p>
-                            <FreeCircle color={props.color} ></FreeCircle>
+                            <p className="dot-2 descriptionx">{webAppInfo.block4[1].title}</p>
+                            {webAppInfo.numberInfo.free ? <FreeCircle color={props.color} ></FreeCircle> 
+                                : <div style={{ 
+                                    backgroundColor: "#5a6695",
+                                    color: "white",
+                                    marginTop: "auto",
+                                    marginBottom: "16px",
+                                    width: "78px",
+                                    height: "78px",
+                                    display: "flex",
+                                    alignItems: "center",
+                                    justifyContent: "center",
+                                    borderRadius: "100%"
+                                }}><CreditCardIcon color="inherit" fontSize="large" /></div>}
                         </div>
                     </Grid>
                     <Grid item xs={12} sm={3}>

@@ -8,10 +8,11 @@ class Info {
 }
 
 class NumberInfo {
-    constructor({ number1, number2, number3 }) {
+    constructor({ number1, number2, number3, free }) {
         this.number1 = number1;
         this.number2 = number2;
         this.number3 = number3;
+        this.free = typeof free === 'undefined' || !!free;
     }
 }
 
@@ -30,6 +31,7 @@ export default class WebAppInfo {
         block1,
         block2,
         block3,
+        block4,
         block5,
         numberInfo,
         appName,
@@ -64,7 +66,7 @@ export default class WebAppInfo {
                     passwords to remember - just frictionless ${appName} training.`
                 }),
                 new Info({
-                    title: "Exam like the real test:",
+                    title: "Exam like the real test",
                     description: `See if you're ready for the real thing with
                     the ${appName} Exam Simulator.`
                 })
@@ -99,6 +101,17 @@ export default class WebAppInfo {
                     We’ve designed our website training course to duplicate the exam experience, so it becomes familiar.`
             })
         }
+        if(!block4){
+            block4 = [
+                new Info({
+                    title: "Exam experience, duplicated",
+                    description: `Our ${appName} Certification Exam Simulator is an effective way to practice for the actual exam.`
+                }),
+                new Info({
+                    title: `There is no fee to take the ${appName}`,
+                })
+            ]
+        }
         if (!block5) {
             block5 = new Info({
                 title: "Total confidence. This is what you get",
@@ -127,6 +140,7 @@ export default class WebAppInfo {
         this.block1 = block1;
         this.block2 = block2;
         this.block3 = block3;
+        this.block4 = block4;
         this.block5 = block5;
         this.numberInfo = numberInfo;
         this.mainColor = mainColor;
@@ -217,7 +231,7 @@ export default class WebAppInfo {
                     passwords to remember - just frictionless TEAS training.`
                 }),
                 new Info({
-                    title: "Exam like the real test:",
+                    title: "Exam like the real test",
                     description: `See if you're ready for the real thing with
                     the TEAS Exam Simulator
                     Same number of questions presented
@@ -241,19 +255,26 @@ export default class WebAppInfo {
                 }),
                 new Info({
                     title: 'Exam like the real test',
-                    description: `Our TEAS practice test has four subjects: Mathematics, Science, 
-                        English and Language Usage, and Read like the real test.`
+                    description: `Our TEAS practice test has four subjects: Mathematics, Science, English and Language Usage, and Reading like the real test.`
                 }),
                 new Info({
-                    title: "Detailed explanation",
+                    title: "Full answers and detailed explanations",
                     description: `Every question has a detailed explanation. It helps you a lot when studying by yourself.`
                 })
             ],
             block3: new Info({
-                title: 'Practice every time',
-                description: `You can practice every time you want with our free ATI TEAS VI practice test. The more you practice, 
-                    the higher score you can get. Practice actual TEAS questions and answers are effective to study.`
+                title: 'Familiar with the test',
+                description: `Most test-takers do not know how to study for these tests for the first time. Others do not know how to remember the amount of information that they think they need to know. Our free TEAS practice test will help you study with very funny and interesting methods.`
             }),
+            block4: [
+                new Info({
+                    title: "Get 100% ready for the real test",
+                    description: "Our TEAS Certification Exam Simulator is an effective way to practice for the actual exam."
+                }),
+                new Info({
+                    title: "The TEAS test fee costs $70 and may be paid in person using cash, check or debit/credit card.",
+                }),
+            ],
             block5: new Info({
                 title: 'Save your time',
                 description: `Our free  ATI TEAS VI practice test will save your time. You can use it whenever you are free. 
@@ -261,9 +282,10 @@ export default class WebAppInfo {
                     your strengths and then concentrate on the areas you need to work hard on.`
             }),
             numberInfo: new NumberInfo({
-                number1: "$100",
+                number1: "$70",
                 number2: "Maximum 170 questions",
-                number3: "209 minutes"
+                number3: "209 minutes",
+                free: false
             }),
             appName: "TEAS"
         });
@@ -273,9 +295,9 @@ export default class WebAppInfo {
         return new WebAppInfo({
             header: new Info({
                 title: "FREE CDL PRACTICE TEST",
-                description: `If you are preparing for the DMV driving permit test and driver's license exam, 
-                    try our free DMV practice test. That's very similar to the real DMV test. 
-                    Practice with these sample tests and know what you need to study for this test.`,
+                description: `If you are preparing for the Commercial driver's license test, 
+                    do not hesitate to try our free CDL practice test. All the questions are based on 
+                    the real test. Practice with these questions to know what you need to improve for your big day`,
             }),
             block1: [
                 new Info({
@@ -295,10 +317,7 @@ export default class WebAppInfo {
                 }),
                 new Info({
                     title: "Exam like the real test",
-                    description: `See if you're ready for the real thing with
-                    the CDL Exam Simulator
-                    Same number of questions presented
-                    the same way as the Nurse Aide exam.`
+                    description: `See if you're ready for the real thing with the CDL Exam Simulator. Same number of questions presented the same way as the real CDL exam.`
                 })
             ],
             block2: [
@@ -317,31 +336,41 @@ export default class WebAppInfo {
                         you are completely prepared, taking you to the right direction to passing your CDL.`,
                 }),
                 new Info({
-                    title: 'Exams like the real test',
+                    title: 'Hundreds of free simulator tests',
                     description: `Our free CDL practice test gives you hundreds of free CDL 
                         practice questions like the real test with three types of CDL classes.`
                 }),
                 new Info({
-                    title: "Detailed explanation",
+                    title: "Full answers and detailed explanations",
                     description: `Every question has a detailed explanation. It helps you a lot when studying by yourself.`
                 })
             ],
             block3: new Info({
                 title: 'Familiar with the test',
                 description: `Most drivers do not know how to study for these tests for the first time. 
-                    Others do not know how to remember the amount of information that they think they need to know. 
-                    Our free CDL practice test will help you study. When using sample questions like the real test 
-                    you will be familiar with the test.`
+                Others do not know how to remember the amount of information that they think they need to know. 
+                Our free CDL practice test will help you study. When using sample questions like the real test 
+                you will be familiar with the test.`
             }),
+            block4: [
+                new Info({
+                    title: "Exam experience, duplicated",
+                    description: "Our CDL Certification Exam Simulator is an effective way to practice for the actual exam."
+                }),
+                new Info({
+                    title: "Standard CDL License - expect to pay a fee  between $75 and $100",
+                }),
+            ],
             block5: new Info({
-                title: 'Know information in your state’s driver manual',
+                title: 'Available Driver Manual Books for all states',
                 description: `Make sure that you know about it. Every state has a drivers manual and makes 
                     sure that you focus only on the areas that you are required to. It will help you a lot.`
             }),
             numberInfo: new NumberInfo({
                 number1: "Varies depending on state",
                 number2: "20-50 varies depending on state",
-                number3: "45-60 minutes"
+                number3: "45-60 minutes",
+                free: false
             }),
             mainColor: new MainColor({
                 colorFooter: "#5B6695",
@@ -386,12 +415,7 @@ export default class WebAppInfo {
             block2: [
                 new Info({
                     title: "ASVAB Exam Overview",
-                    description: `Our thousands of FREE Commercial driver license practice questions and tests will 
-                        ensure that you are completely prepared, taking you to the right direction to beginning an 
-                        exciting career in trucking. From dump truck to passenger bus and even tractor trailer ASVAB 
-                        driver training in all states, we divide each knowledge domain into small parts. 
-                        All you need to do is taking your study round by round like a mini game with fully detailed 
-                        explanations for each question!`,
+                    description: `The Armed Services Vocational Aptitude Battery (ASVAB) is a multiple choice test, administered by the United States Military Entrance Processing Command, used to determine qualification for enlistment in the United States Armed Forces. The ASVAB tests are designed to measure aptitudes in four domains: Verbal, Math, Science and Technical, and Spatial.`,
                 }),
                 new Info({
                     title: "Free ASVAB practice test",
@@ -399,27 +423,34 @@ export default class WebAppInfo {
                 }),
                 new Info({
                     title: 'Exam like the real test',
-                    description: `Our ASVAB practice test must be completed in a specific time limit and has 4 domains like the real test.`
+                    description: `Our ASVAB practice test must be completed in a specific time limit and has 9 domains like the real test.`
                 }),
                 new Info({
-                    title: "Detailed explanation",
+                    title: "Full answers and detailed explanations",
                     description: `Every question has a detailed explanation. It helps you a lot when studying by yourself.`
                 })
             ],
             block3: new Info({
-                title: 'The ASVAB test is not hard',
-                description: `You can find the right preparation, use of a quality study guide, and working hard. 
-                    The more you practice, the higher score you can get. So you pass the test easily.`
+                title: 'Familiar with the test',
+                description: `Most test-takers do not know how to study for these tests for the first time. Others do not know how to remember the amount of information that they think they need to know. Our free ASVAB practice test will help you study with very funny and interesting methods.`
             }),
+            block4: [
+                new Info({
+                    title: 'Get 100% ready for the real test',
+                    description: `Most test-takers do not know how to study for these tests for the first time. Others do not know how to remember the amount of information that they think they need to know. Our free ASVAB practice test will help you study with very funny and interesting methods.`
+                }),
+                new Info({
+                    title: 'There is no fee to take the ASVAB',
+                }),
+            ],
             block5: new Info({
-                title: 'The best way to pass the ASVAB is to study for it',
-                description: `You can read through the book, talk to others who have taken the test 
-                    and practice with our free ASVAB practice test as much as you can.`
+                title: 'Save your time',
+                description: `Our free ASVAB practice test will save your time. All the questions are free and based on real test. It helps you determine your strengths as wel as your weakness. You'll know which areas you need to work hard on.`
             }),
             numberInfo: new NumberInfo({
                 number1: "Free",
                 number2: "154 in computer-based and 225 in paper-based ASVAB",
-                number3: "154 minutes"
+                number3: "154 minutes",
             }),
             mainColor: new MainColor({
                 colorFooter: "#8A8862",
@@ -559,15 +590,23 @@ export default class WebAppInfo {
                     description: `Study the main topics of the test; Math, Science, English… All of them are like the real test.`
                 }),
                 new Info({
-                    title: "Detailed explanation",
+                    title: "Full answers and detailed explanations",
                     description: `Every question has a detailed explanation. It helps you a lot when studying by yourself.`
                 })
             ],
             block3: new Info({
                 title: 'Knowledge gaps by taking free practice tests',
-                description: `Taking multiple free practice tests is helpful to find your
-                     knowledge gaps. Ut doesn’t waste your time and you should try.`
+                description: `Most test-takers do not know how to study for these tests for the first time. Others do not know how to remember the amount of information that they think they need to know. Our free GED practice test will help you study with very funny and interesting methods.`
             }),
+            block4: [
+                new Info({
+                    title: 'Get 100% ready for the real test',
+                    description: `Most test-takers do not know how to study for these tests for the first time. Others do not know how to remember the amount of information that they think they need to know. Our free GED practice test will help you study with very funny and interesting methods.`
+                }),
+                new Info({
+                    title: 'The GED test fee costs $120 and may be paid in person using cash, check or debit/credit card.',
+                })
+            ],
             block5: new Info({
                 title: 'Taking practice tests is a highly useful',
                 description: `Taking practice tests is a highly useful tool for identifying your weaknesses and 
@@ -575,9 +614,10 @@ export default class WebAppInfo {
                     you can much easier create an individual study plan for yourself efficiently.`
             }),
             numberInfo: new NumberInfo({
-                number1: "120 for 4 sections",
+                number1: "$120 for 4 sections",
                 number2: "Maximum 161 questions",
-                number3: "445 minutes"
+                number3: "445 minutes",
+                free: false
             }),
             mainColor: new MainColor({
                 colorFooter: "#E07730",
@@ -867,7 +907,8 @@ export default class WebAppInfo {
             numberInfo: new NumberInfo({
                 number1: "Ranging from about $15 to $50",
                 number2: "Maximum 40 questions",
-                number3: "90 minutes"
+                number3: "90 minutes",
+
             }),
             appName: "COLLEGE BOARD ACCUPLACER STUDY"
         });
