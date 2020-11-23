@@ -15,22 +15,22 @@ getGaId() {
     app=$1
     if [ "$app" = "cdl" ]
     then
-        echo 'G-QRYQT0D4R1'
+        echo 'UA-167769768-3'
         return 1
     fi
     if [ "$app" = "asvab" ]
     then
-        echo 'G-EB0S42LFD5'
+        echo 'UA-167769768-2'
         return 1
     fi
     if [ "$app" = "ged" ]
     then
-        echo 'G-9WSPC14E6M'
+        echo 'UA-167769768-4'
         return 1
     fi
     if [ "$app" = "teas" ]
     then
-        echo 'G-3KWR00VYL0'
+        echo 'UA-167769768-5'
         return 1
     fi
     echo 'UA-167769768-1'
