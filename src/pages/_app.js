@@ -1,8 +1,7 @@
-import '../styles/index.css'
-import '../styles/main.css'
 import React from 'react';
-import CssBaseline from '@material-ui/core/CssBaseline';
 import { wrapper } from '../redux/store';
+import '../styles/index.css';
+import '../styles/main.css';
 
 function MyApp(props) {
   const { Component, pageProps } = props;
@@ -13,9 +12,9 @@ function MyApp(props) {
     if (jssStyles) {
       jssStyles.parentElement.removeChild(jssStyles);
     }
-    if(typeof window !== 'undefined'){
+    if(typeof window !== 'undefined' && 'serviceWorker' in navigator) {
       const { register } = require('../serviceWorker');
-      register();
+      register()
     }
   }, []);
 
