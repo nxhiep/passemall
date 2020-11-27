@@ -94,7 +94,6 @@ const AppHome = ({ appInfoState, url, home }) => {
             <SEO appInfo={appInfoState} url={url} manifest={true}>
                 <link rel="stylesheet" type="text/css" href="/styles/app.css" />
                 <link rel="stylesheet" type="text/css" href="/styles/slick.css" />
-                <link rel="stylesheet" type="text/css" href="/styles/slick-theme.css" />
                 <link rel="stylesheet" type="text/css" href="/styles/home.css" />
             </SEO>
             <div className="body-panel app">

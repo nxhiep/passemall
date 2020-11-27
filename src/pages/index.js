@@ -71,7 +71,6 @@ const LandingPage = ({ appInfoState, url }) => {
         <>
             <SEO url={url ? url : 'http://passemall.com/'} manifest={true}>
                 <link rel="stylesheet" type="text/css" href="/styles/slick.css" />
-                <link rel="stylesheet" type="text/css" href="/styles/slick-theme.css" />
                 <link rel="stylesheet" type="text/css" href="/styles/landing-page.css" />
             </SEO>
             <div className='body-panel landing-page'>

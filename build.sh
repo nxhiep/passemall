@@ -2,13 +2,15 @@
 # git pull --rebase origin cdl
 
 ROOT_PATH="./public/info"
+VERSION="2.0.0"
 
 addConfig() {
     appId=$1
     gaId=$2
+    appName=$3
     file="./src/config_app.js"
     > $file
-    echo "export const APP_NEW_DOMAIN = $appId;\nexport const GA_ID = '$gaId';">>$file
+    echo "export const APP_NEW_DOMAIN = $appId;\nexport const GA_ID = '$gaId';\nexport const APP_SHORT_NAME = '$appName';\nexport const VERSION = '$VERSION';">>$file
 }
 
 getGaId() {
@@ -62,24 +64,24 @@ getAppId() {
 }
 
 deploy() {
-    app=$1
-    appId=$(getAppId $app)
-    gaId=$(getGaId $app)
-    if [ -z "$app" ]
+    appName=$1
+    appId=$(getAppId $appName)
+    gaId=$(getGaId $appName)
+    if [ -z "$appName" ]
     then
-        app=""
+        appPath=""
         logoPath="main"
     else
-        logoPath=$app
-        app="-$app"
+        logoPath=$appName
+        appPath="-$appName"
     fi
-    cp -r "$ROOT_PATH/sitemaps/sitemap$app.xml" ./public/sitemap.xml
-    cp -r "$ROOT_PATH/robots/robots$app.txt" ./public/robots.txt
-    cp -r "$ROOT_PATH/manifests/manifest$app.json" ./public/manifest.json
+    cp -r "$ROOT_PATH/sitemaps/sitemap$appPath.xml" ./public/sitemap.xml
+    cp -r "$ROOT_PATH/robots/robots$appPath.txt" ./public/robots.txt
+    cp -r "$ROOT_PATH/manifests/manifest$appPath.json" ./public/manifest.json
     cp -r "$ROOT_PATH/images/$logoPath/logo60.png" "$ROOT_PATH/images/logo60.png"
     cp -r "$ROOT_PATH/images/$logoPath/logo192.png" "$ROOT_PATH/images/logo192.png"
     cp -r "$ROOT_PATH/images/$logoPath/logo512.png" "$ROOT_PATH/images/logo512.png"
-    addConfig $appId $gaId
+    addConfig $appId $gaId $appName
 }
 
 deploy $1

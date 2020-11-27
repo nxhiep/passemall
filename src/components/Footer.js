@@ -8,6 +8,7 @@ import HomeIcon from '@material-ui/icons/Home';
 import VisibilityIcon from '@material-ui/icons/Visibility';
 
 import { FacebookFooter, GmailFooter, InstaFooter, TwitterFooter, Youtube, TumblrIcon, LinkedInFooter } from './Icons';
+import { VERSION } from '../config_app';
 const useStyles = makeStyles({
     root: {
         "&:hover": {
@@ -80,6 +81,12 @@ const Footer = ({ alt = '', isStudy, color, bucket = "" }) => {
                         </div>
                     </Container>
                 )}
+            <div style={{
+                fontSize: "10px",
+                position: "absolute",
+                bottom: "5px",
+                left: "5px"
+            }}>Version: {VERSION}</div>
         </footer>
     );
 }

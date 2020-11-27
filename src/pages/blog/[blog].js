@@ -31,7 +31,6 @@ const Blog = ({ newInfo, url }) => {
                 <link rel="stylesheet" type="text/css" href="/styles/blog.css" />
                 <link rel="stylesheet" type="text/css" href="/styles/listblog.css" />
                 <link rel="stylesheet" type="text/css" href="/styles/slick.css" />
-                <link rel="stylesheet" type="text/css" href="/styles/slick-theme.css" />
             </SEO>
 
             <div className='body-panel landing-page'>
