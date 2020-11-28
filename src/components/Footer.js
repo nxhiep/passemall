@@ -36,7 +36,7 @@ const Footer = ({ alt = '', isStudy, color, bucket = "" }) => {
                     <Grid container spacing={2}>
                         <Grid item xs={12} sm={6} md={3}>
                             <div className="logo-footer">
-                                <img src={srcImage} alt="logo-footer" style={{ cursor: "pointer" }} height="80px" ></img>
+                                <img src={srcImage} alt="logo-footer" style={{ cursor: "pointer" }} width="280px" height="70px" ></img>
                             </div>
                         </Grid>
                         <Grid item xs={12} sm={6} md={3}>
@@ -60,7 +60,7 @@ const Footer = ({ alt = '', isStudy, color, bucket = "" }) => {
                             <Grid container spacing={2}>
                                 <Grid item xs={12} sm={6} md={4}>
                                     <div className="logo-footer">
-                                        <img src={srcImage} alt="logo-footer" style={{ cursor: "pointer" }} height="80px"></img>
+                                        <img src={srcImage} alt="logo-footer" style={{ cursor: "pointer" }} width="280px" height="70px"></img>
                                     </div>
                                 </Grid>
                                 <Grid item xs={12} sm={6} md={4}>

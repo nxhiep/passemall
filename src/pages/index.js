@@ -21,11 +21,10 @@ const LandingPage = () => {
         setScrollDownAuto()
         oldUser();
     }, [])
-    let url = 'http://localhost:3000/';
     const [searchResults, setSearchResults] = useState(null);
     return (
         <>
-            <SEO url={url ? url : 'http://passemall.com/'} manifest={true}>
+            <SEO url={'http://passemall.com/'} manifest={true}>
                 <link rel="stylesheet" type="text/css" href="/styles/slick.css" />
                 <link rel="stylesheet" type="text/css" href="/styles/landing-page.css" />
             </SEO>
