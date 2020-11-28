@@ -11,6 +11,7 @@ import { Provider, useStore } from 'react-redux';
 import Slider from 'react-slick';
 import { PersistGate } from 'redux-persist/integration/react';
 import Footer from '../../components/Footer';
+import HeaderBanner from '../../components/HeaderBanner';
 import HeaderMenu from '../../components/HeaderMenu';
 import { Clock, FreeCircle, FreeIcon, LoginIcon, PenIcon, TotalQuestions } from '../../components/Icons';
 import SEO from '../../components/SEO';
@@ -168,17 +169,20 @@ const AppHome = ({ appInfoState, url, home }) => {
     )
 }
 const _Header = (props) => {
+    let { appId, appNameId } = props.appInfo ? props.appInfo : {};
+    appNameId = appNameId ? appNameId : router.query.appNameId;
+    appId = appId ? appId : -1;
+    if(!isSuperApp(appId)){
+        return <HeaderBanner />
+    }
     let webAppInfo = props.webAppInfo ? props.webAppInfo : new WebAppInfo({ appName: props.appName });
     let onStartTest = props.onStartTest ? props.onStartTest : () => { }
-    let { appId, appNameId } = props.appInfo ? props.appInfo : {};
     const classes = useStyles(props);
     let color = props.color ? props.color : "#5b6695";
     const router = useRouter();
-    appId = appId ? appId : -1;
-    appNameId = appNameId ? appNameId : router.query.appNameId;
     const banner = getHeaderBanner(appId);
     return (
-        <header style={{ position: "relative" }}>
+        <div style={{ position: "relative" }}>
             <img src={banner} width="100%" style={{ visibility: "hidden", minHeight: "530px", objectFit: "cover" }} allt="image-header" />
             <div style={{ position: "absolute", top: "0", left: "0", width: "100%", height: "100%", background: '#1f1667' }} className="header-background color-dark">
                 <img src={banner} width="100%" style={{ minHeight: "530px", objectFit: "cover" }} alt="image-header-2" />
@@ -201,7 +205,7 @@ const _Header = (props) => {
                     </div>
                 </Container>
             </div>
-        </header>
+        </div>
     )
 }
 
