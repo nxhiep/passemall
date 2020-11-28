@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { Close as CloseIcon } from '@material-ui/icons'
 
 const SearchResultsModal = ({ value, results }) => {
+    console.log("SearchResultsModal", value, results)
     const [open, setOpen] = useState(false)
     const handleClose = () => {
         setOpen(false)

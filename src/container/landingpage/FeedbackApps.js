@@ -19,13 +19,14 @@ const FeedbackAppsUI = () => {
     }, []);
 
     const theme = useTheme();
-    const isMobile = useMediaQuery(theme.breakpoints.between(0, 960));
+    const xs = useMediaQuery(theme.breakpoints.down("xs"));
+    const sm = useMediaQuery(theme.breakpoints.down("md"));
     const settings = {
         dots: true,
         infinite: true,
         speed: 500,
-        slidesToShow: isMobile ? 1 : 3,
-        slidesToScroll: isMobile ? 1 : 3,
+        slidesToShow: xs ? 1 : (sm ? 2 : 3),
+        slidesToScroll: xs ? 1 : (sm ? 2 : 3),
         className: "feedback-slider",
         autoPlay: true,
         autoplaySpeed: 1500,
@@ -40,7 +41,7 @@ const FeedbackAppsUI = () => {
     return (
         <section className="feedback-apps">
             <Container>
-                {isMobile ? null : (
+                {sm ? null : (
                     <>
                         <div className="divider"></div>
                         <div style={{ textAlign: "center", marginTop: "4px" }}>

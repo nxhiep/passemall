@@ -22,7 +22,7 @@ const Content = ({ appInfo, headerMenu }) => {
     return <Container>
         <Grid container alignItems="center" justify="space-between">
             <a href="/" style={{padding: "10px 0"}}>
-                <img src="/images/logo-landing.png" alt="logo-app" width={isMobile ? "180px" : "240px"} height={isMobile ? "45px" : "60px"}></img>
+                <img src="/images/logo-landing-2.png" alt="logo-app" width={isMobile ? "180px" : "240px"} height={isMobile ? "45px" : "60px"}></img>
             </a>
             {!isMobile ? <div className="header-menu">
                 {headerMenu ? headerMenu : <MenuList appInfo={appInfo} />}
@@ -31,7 +31,7 @@ const Content = ({ appInfo, headerMenu }) => {
                     <MenuIcon style={{ color: "#fff" }}></MenuIcon>
                 </IconButton> */}
                 <button style={{backgroundColor: "transparent", outline: "none", border: "none"}} onClick={() => handleOpenDrawer(true)}>
-                    <MenuIcon style={{ color: "#fff" }}></MenuIcon>
+                    <MenuIcon style={{ color: "#1E3094" }}></MenuIcon>
                 </button>
                 <SwipeableDrawer
                     className="header-menu-swipe"

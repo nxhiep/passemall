@@ -19,31 +19,33 @@ const StatictisApps = () => {
                     title="SOME OF THE BEST FEATURES"
                     description="With thousands of exam-simulated questions with detail explanations, lifetime access to the complete Manual, and dozens of test-taking strategies, our Test Prep helps you pass your test with flying colors."
                 />
-                <Grid container alignItems="flex-start">
-                    <Grid item xs={isMobile ? 12 : 6} >
-                        <LazyLoad><img data-src="/images/test5.jpg" alt="static-img" className="image-statictis-apps lazyload" alt='With thousands of exam-simulated questions with detail explanations, lifetime access to the complete Manual, and dozens of test-taking strategies, our Test Prep helps you pass your test with flying colors' /></LazyLoad>
-                    </Grid>
-                    <Grid item xs={isMobile ? 12 : 6} className="statictis-apps-items">
-                        <StatictisAppItem
-                            icon="free"
-                            title="COMPLETELY FREE"
-                            description="Our application is 100% free, so you can practice your test in our web or in any other devices with our available free app on google play or appStore. No internet connection and no registration required."
-                        />
-                        <StatictisAppItem
-                            icon={<img src="/images/border-color.svg" width="22px" height="22px" alt="border-color"></img>}
-                            title="PRACTICE BY TOPICS"
-                            description="Test your knowledge by practicing by topics exactly as in real test. Moreover, topic is also divided into small parts which helps you get your interest in studying, just like playing a game."
-                        />
-                        <StatictisAppItem
-                            icon={<DashboardIcon></DashboardIcon>}
-                            title="CUSTOMIZE YOUR EXAM"
-                            description="You can design your test so that it works best for you. Gradually set the test as close as the real test to ready for it. This is the most effective way that helps many people get over their challenge."
-                        />
-                        <StatictisAppItem
-                            icon={<HowToRegIcon></HowToRegIcon>}
-                            title="SPECICAL REVIEW MODE"
-                            description="With this feature, you can review which questions you are weak, medium or strong. And this will help you find out where you need to work more and make the most of your study time."
-                        />
+                <Grid container alignItems="center">
+                    {isMobile ? null : <Grid item xs={12} sm={6} md={3}>
+                        <LazyLoad><img data-src="/images/test5.png" alt="static-img" className="image-statictis-apps lazyload" alt='With thousands of exam-simulated questions with detail explanations, lifetime access to the complete Manual, and dozens of test-taking strategies, our Test Prep helps you pass your test with flying colors' /></LazyLoad>
+                    </Grid>}
+                    <Grid item xs={12} sm={12} md={9} className="statictis-apps-items">
+                        <Grid container justify="flex-start">
+                            <StatictisAppItem
+                                icon="free"
+                                title="COMPLETELY FREE"
+                                description="Our application is 100% free, so you can practice your test in our web or in any other devices with our available free app on google play or appStore. No internet connection and no registration required."
+                            />
+                            <StatictisAppItem
+                                icon={<img src="/images/border-color.svg" width="22px" height="22px" alt="border-color"></img>}
+                                title="PRACTICE BY TOPICS"
+                                description="Test your knowledge by practicing by topics exactly as in real test. Moreover, topic is also divided into small parts which helps you get your interest in studying, just like playing a game."
+                            />
+                            <StatictisAppItem
+                                icon={<DashboardIcon></DashboardIcon>}
+                                title="CUSTOMIZE YOUR EXAM"
+                                description="You can design your test so that it works best for you. Gradually set the test as close as the real test to ready for it. This is the most effective way that helps many people get over their challenge."
+                            />
+                            <StatictisAppItem
+                                icon={<HowToRegIcon></HowToRegIcon>}
+                                title="SPECICAL REVIEW MODE"
+                                description="With this feature, you can review which questions you are weak, medium or strong. And this will help you find out where you need to work more and make the most of your study time."
+                            />
+                        </Grid>
                     </Grid>
                 </Grid>
                 <Grid container className="list-number">
@@ -75,15 +77,16 @@ const ActiveItem = ({ value = '', title = '' }) => {
 }
 
 const StatictisAppItem = ({ title = '', description = '', icon }) => {
-    return (
-        <div className="statictis-app-item">
+    return <>
+        <Grid item xs={false} sm={1} md={1}></Grid>
+        <Grid item xs={12} sm={5} md={5} className="statictis-app-item">
             <div className="image">{icon}</div>
             <div className="info">
                 <strong style={{ color: "#4E63BD" }}>{title}</strong>
                 <p>{description}</p>
             </div>
-        </div>
-    );
+        </Grid>
+    </>
 }
 
 export default StatictisApps;

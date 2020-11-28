@@ -324,7 +324,7 @@ footer .footer-content .line {
 .header-menu .tag-a,
 .header-menu a {
   text-decoration: none;
-  color: #fff;
+  color: #303c88;
   margin-right: 0;
   font-size: 16px;
   font-weight: 600;
@@ -355,4 +355,116 @@ background-color: #303c88;
   padding: 10px 0;
   align-items: center;
   justify-content: center;
+}
+
+header {
+  background: url(/images/new/banner-left.jpg) no-repeat, url(/images/new/banner-right.jpg) no-repeat;
+  background-position: top left, top right;
+  background-size: auto, auto 100%;
+}
+header.sm {
+  background: url(/images/new/banner-right.jpg) no-repeat;
+  background-size: 150%;
+  background-position: right top;
+}
+
+.search-header-panel {
+  color: #303c88;
+  border: 1px solid;
+  border-radius: 40px;
+  display: flex;
+  align-items: center
+}
+
+.search-header-panel .search-header .MuiInputBase-root::before,
+.search-header-panel .search-header .MuiInputBase-root::after {
+  content: none
+}
+
+.search-header-panel .search-header .MuiInputBase-root {
+  border-bottom: none !important
+}
+
+#search-header {
+  padding: 7px 15px;
+  color: #303c88;
+  font-weight: 500
+}
+
+.search-results-panel {
+  background-color: #fff;
+  max-height: 600px;
+  margin: auto;
+  box-sizing: border-box;
+  border-radius: 10px;
+  outline: none;
+  height: 100%;
+}
+
+.search-results-panel .headerx {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 0 0 20px
+}
+
+.search-results-panel .bodyx {
+  padding: 20px 30px;
+  height: calc(100% - 50px);
+  overflow-y: auto;
+  width: 100%;
+  box-sizing: border-box
+}
+
+.search-results-panel .bodyx .app-item-panel {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+  border-bottom: 1px solid #ddd;
+  padding-bottom: 10px;
+  cursor: pointer
+}
+
+.search-results-panel .bodyx .app-item-panel .stores {
+  display: flex;
+  align-items: center
+}
+
+.search-results-panel .bodyx .app-item-panel .stores img {
+  height: 30px
+}
+
+.search-results-panel .bodyx .app-item-panel .infos {
+  padding-left: 10px
+}
+
+.search-results-panel .bodyx .app-item-panel .infos .name {
+  font-weight: 600;
+  margin-bottom: 8px
+}
+
+.modal-search-results-panel {
+  display: flex;
+  align-items: center;
+  justify-self: center
+}
+.header-menu-swipe #search-header button svg {
+  color: white;
+}
+
+.header-menu-swipe #search-header,
+.header-menu-swipe #search-header button svg,
+.header-menu-swipe .search-header-panel {
+  color: white !important;
+}
+
+@media(max-width: 768px) {
+  .search-header-panel {
+      margin: 5px;
+      margin-top: 10px
+  }
+
+  .menu-list {
+      border-bottom: none !important
+  }
 }
