@@ -41,7 +41,7 @@ const ListGreatApps = () => {
                     {sm ? <ListAppMobile appInfos={appInfos} /> : <ListAppPC appInfos={appInfos} />}
                 </div>
             </Container>
-            <div style={{ width: "100%", height: "100px" }}></div>
+            <div style={{ width: "100%", height: sm ? "50px" : "100px" }}></div>
         </section>
     );
 }

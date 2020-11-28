@@ -83,7 +83,7 @@ const Header = ({ setSearchResults }) => {
                     </Grid>
                     {mdUp ? null : <Grid item xs={1} sm={3} md={false}></Grid>}
                     <Grid item xs={10} sm={6} md={6}>
-                        <img style={smDown ? {} : { position: "relative", bottom: "-120px" }} alt='Make your study great with our thousands of free practice questions' width="100%" height="100%" src="/images/test3.png" />
+                        {!smDown ? <img style={{ position: "relative", bottom: "-120px" }} alt='Make your study great with our thousands of free practice questions' width="100%" height="100%" src="/images/test3.png" /> : null}
                     </Grid>
                     <Grid item xs={1} sm={3} md={false}></Grid>
                 </Grid>

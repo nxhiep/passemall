@@ -1,4 +1,5 @@
 import { Button, CircularProgress, Container, Grid, makeStyles, useMediaQuery, useTheme } from '@material-ui/core';
+import { CreditCard as CreditCardIcon } from '@material-ui/icons';
 import ArrowDownwardIcon from '@material-ui/icons/ArrowDownward';
 import { Rating } from '@material-ui/lab';
 import dynamic from 'next/dynamic';
@@ -12,13 +13,12 @@ import { PersistGate } from 'redux-persist/integration/react';
 import Footer from '../../components/Footer';
 import HeaderMenu from '../../components/HeaderMenu';
 import { Clock, FreeCircle, FreeIcon, LoginIcon, PenIcon, TotalQuestions } from '../../components/Icons';
-import { CreditCard as CreditCardIcon } from '@material-ui/icons'
 import SEO from '../../components/SEO';
 import { APP_NEW_DOMAIN, GA_ID } from '../../config_app';
 import WebAppInfo from '../../models/WebAppInfo';
 import { wrapper } from '../../redux/store';
 import { callApi } from '../../services';
-import { getNewDomain, isSuperApp, oldUser, scrollToTopic, setScrollDownAuto } from '../../utils';
+import { getHeaderBanner, getNewDomain, isSuperApp, oldUser, scrollToTopic, setScrollDownAuto } from '../../utils';
 const HomeContent = dynamic(() => import("../../container/home/HomeContent"), { ssr: false })
 const SelectStatePopup = dynamic(() => import("../../components/SelectStatePopup"), { ssr: false })
 const GameChildScreen = dynamic(() => import("./[screenChild]"), { ssr: false })
@@ -170,21 +170,18 @@ const AppHome = ({ appInfoState, url, home }) => {
 const _Header = (props) => {
     let webAppInfo = props.webAppInfo ? props.webAppInfo : new WebAppInfo({ appName: props.appName });
     let onStartTest = props.onStartTest ? props.onStartTest : () => { }
-    let { appId, bucket, appNameId } = props.appInfo ? props.appInfo : {};
+    let { appId, appNameId } = props.appInfo ? props.appInfo : {};
     const classes = useStyles(props);
+    let color = props.color ? props.color : "#5b6695";
     const router = useRouter();
     appId = appId ? appId : -1;
     appNameId = appNameId ? appNameId : router.query.appNameId;
-    const bucketUrl = (bucket ? bucket + "/" : "");
-    let imgUrl = `/images/apps/${bucketUrl}header-background.png`;
-    if (!isSuperApp(appId) || !bucket) {
-        imgUrl = `/images/landing.jpg`;
-    }
+    const banner = getHeaderBanner(appId);
     return (
         <header style={{ position: "relative" }}>
-            <img src={imgUrl} width="100%" style={{ visibility: "hidden", minHeight: "530px", objectFit: "cover" }} allt="image-header" />
+            <img src={banner} width="100%" style={{ visibility: "hidden", minHeight: "530px", objectFit: "cover" }} allt="image-header" />
             <div style={{ position: "absolute", top: "0", left: "0", width: "100%", height: "100%", background: '#1f1667' }} className="header-background color-dark">
-                <img src={imgUrl} width="100%" style={{ minHeight: "530px", objectFit: "cover" }} alt="image-header-2" />
+                <img src={banner} width="100%" style={{ minHeight: "530px", objectFit: "cover" }} alt="image-header-2" />
             </div>
             <div style={{ position: "absolute", top: "0", left: "0", width: "100%", height: "100%" }}>
                 <HeaderMenu appInfo={props.appInfo} />
@@ -392,13 +389,14 @@ const MobileDescription = ({ appInfoState, color = "#FFA86C", appName }) => {
                             </div>
                         </div>
                         <div className="app-url">
+                            <LazyLoad>
                             <a href={appInfoState.urlAndroid} target="_blank" rel="noopener noreferrer" onClick={() => {
                                 ReactGA.event({
                                     category: 'Click Google Play',
                                     action: 'Click Google Play App Home'
                                 })
                             }}>
-                                <LazyLoad><img alt="Link google app" src="/images/googlePlayIcon.png" /></LazyLoad>
+                                <img alt="Link google app" src="/images/googlePlayIcon.png" />
                             </a>
                             <div style={{ width: '20px' }}></div>
                             <a href={appInfoState.urlIos} target="_blank" rel="noopener noreferrer" onClick={() => {
@@ -407,8 +405,9 @@ const MobileDescription = ({ appInfoState, color = "#FFA86C", appName }) => {
                                     action: 'Click Google Play App Home'
                                 })
                             }}>
-                                <LazyLoad><img src="/images/appStoreIcon.png" alt="Link app store" /></LazyLoad>
+                                <img src="/images/appStoreIcon.png" alt="Link app store" />
                             </a>
+                            </LazyLoad>
                         </div>
                     </div>
                 </Grid>

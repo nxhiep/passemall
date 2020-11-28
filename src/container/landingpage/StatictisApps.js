@@ -21,7 +21,7 @@ const StatictisApps = () => {
                 />
                 <Grid container alignItems="flex-start">
                     <Grid item xs={isMobile ? 12 : 6} >
-                        <LazyLoad><img data-src="/images/test5.png" alt="static-img" className="image-statictis-apps lazyload" alt='With thousands of exam-simulated questions with detail explanations, lifetime access to the complete Manual, and dozens of test-taking strategies, our Test Prep helps you pass your test with flying colors' /></LazyLoad>
+                        <LazyLoad><img data-src="/images/test5.jpg" alt="static-img" className="image-statictis-apps lazyload" alt='With thousands of exam-simulated questions with detail explanations, lifetime access to the complete Manual, and dozens of test-taking strategies, our Test Prep helps you pass your test with flying colors' /></LazyLoad>
                     </Grid>
                     <Grid item xs={isMobile ? 12 : 6} className="statictis-apps-items">
                         <StatictisAppItem

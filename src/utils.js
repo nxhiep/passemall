@@ -1,3 +1,4 @@
+import { useMediaQuery, useTheme } from '@material-ui/core';
 import Config from '../src/config';
 
 export function shuffle(list) {
@@ -270,4 +271,32 @@ export const getNewDomain = (appId) => {
         link = "https://ged-testprep.com";
     }
     return link;
+}
+
+export function getHeaderBanner(appId) {
+    const theme = useTheme()
+    const sm = useMediaQuery(theme.breakpoints.down("sm"));
+    const mobile = sm ? '-mobile' : '';
+    if(isAppASVAB(appId)){
+        return `/images/apps/asvab/header-background${mobile}.png`;
+    }
+    if(isAppCDL(appId)){
+        return `/images/apps/cdl/header-background${mobile}.png`;
+    }
+    if(isAppTEAS(appId)){
+        return `/images/apps/teas/header-background${mobile}.png`;
+    }
+    if(isAppGED(appId)){
+        return `/images/apps/ged/header-background${mobile}.png`;
+    }
+    if(isAppCNA(appId)){
+        return `/images/apps/cna/header-background${mobile}.png`;
+    }
+    if(isAppDMV(appId)){
+        return `/images/apps/dmv/header-background${mobile}.png`;
+    }
+    if(isAppMotorcycle(appId)){
+        return `/images/apps/motorcycle/header-background${mobile}.png`;
+    }
+    return `/images/apps/all/header-background${mobile}.png`;
 }

@@ -27,9 +27,12 @@ const Content = ({ appInfo, headerMenu }) => {
             {!isMobile ? <div className="header-menu">
                 {headerMenu ? headerMenu : <MenuList appInfo={appInfo} />}
             </div> : <div className="header-menu-mobile">
-                <IconButton onClick={() => handleOpenDrawer(true)}>
+                {/* <IconButton onClick={() => handleOpenDrawer(true)}>
                     <MenuIcon style={{ color: "#fff" }}></MenuIcon>
-                </IconButton>
+                </IconButton> */}
+                <button style={{backgroundColor: "transparent", outline: "none", border: "none"}} onClick={() => handleOpenDrawer(true)}>
+                    <MenuIcon style={{ color: "#fff" }}></MenuIcon>
+                </button>
                 <SwipeableDrawer
                     className="header-menu-swipe"
                     anchor="right"
