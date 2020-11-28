@@ -2,23 +2,23 @@ import { Button, Container, Grid } from '@material-ui/core';
 import { useTheme } from '@material-ui/core/styles';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import { Done, Lock as LockIcon, PlayArrow } from '@material-ui/icons';
-import React, { useEffect, useState } from 'react';
-import { getTestInfoByAppId, setTestInfoPlaying, endTest, getTopicsByParentId, getTestInfoByAppIdAndParentId } from "../../redux/actions/index";
-import SelectStatePopup from '../../components/SelectStatePopup';
-import { LoadingWidget } from '../../components/Widgets';
-import Config from '../../config';
+import ArrowRightAltIcon from '@material-ui/icons/ArrowRightAlt';
 import CloseIcon from '@material-ui/icons/Close';
-import { scrollToTop } from '../../models/Utils';
+import React, { useEffect, useState } from 'react';
 import ReactGA from 'react-ga';
 import { connect } from 'react-redux';
-import Header from "../../components/Header"
 import { AlertDialogSlide, DialogInfo, ShowImage } from '../../components/Dialog';
-import { ButtonLevel, TestProgressPanel, TestQuestionPanel } from './TestComponent';
-import EndTestView from "./EndTest";
-import ArrowRightAltIcon from '@material-ui/icons/ArrowRightAlt';
-import SelectTopicPopUp from '../../components/SelectTopicPopUp';
 import Footer from '../../components/Footer';
-import { CongratulationAlert } from "../game/Game.ViewTS"
+import HeaderMenu from '../../components/HeaderMenu';
+import SelectStatePopup from '../../components/SelectStatePopup';
+import SelectTopicPopUp from '../../components/SelectTopicPopUp';
+import { LoadingWidget } from '../../components/Widgets';
+import Config from '../../config';
+import { scrollToTop } from '../../models/Utils';
+import { endTest, getTestInfoByAppId, getTestInfoByAppIdAndParentId, getTopicsByParentId, setTestInfoPlaying } from "../../redux/actions/index";
+import { CongratulationAlert } from "../game/Game.ViewTS";
+import EndTestView from "./EndTest";
+import { ButtonLevel, TestProgressPanel, TestQuestionPanel } from './TestComponent';
 const TestViewScreen = ({ appInfoState, topicId = -1 }) => {
     const theme = useTheme()
     const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
@@ -168,7 +168,7 @@ const TestViewUI = ({ stateInfoState, testInfoState, appInfoState, getTestInfoBy
     }
     return (
         <div className="body-panel test-page">
-            <Header isStudy={true} appInfo={appInfoState}></Header>
+            <HeaderMenu appInfo={appInfoState} />
             <Container className="test-game-panel">
                 {dialogInfo ? <AlertDialogSlide dialogInfo={dialogInfo} /> : ''}
                 {showGame ? (

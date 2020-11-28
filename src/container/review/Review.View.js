@@ -1,12 +1,14 @@
-import { Button, Container, Grid, IconButton, Link } from '@material-ui/core';
+import { Button, Container, Grid, IconButton } from '@material-ui/core';
 import { useTheme } from '@material-ui/core/styles';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import { ArrowBack as ArrowBackIcon } from '@material-ui/icons';
+import { useRouter } from 'next/router';
 import React, { useEffect } from 'react';
+import ReactGA from 'react-ga';
 import { connect } from 'react-redux';
 import { ShowImage } from '../../components/Dialog';
 import Footer from '../../components/Footer';
-import Header from '../../components/Header';
+import HeaderMenu from '../../components/HeaderMenu';
 import Image from '../../components/Image';
 import { LoadingWidget } from '../../components/Widgets';
 import Config from '../../config';
@@ -15,8 +17,6 @@ import { scrollToTop } from '../../models/Utils';
 import { getAllCardProgress } from '../../redux/actions/cardProgress';
 import { checkLoadedReceiveProps, isMobileFunctions, isSuperApp, redirectToNewDomain } from '../../utils';
 import { QuestionsPanelTS } from '../game/Game.ViewTS';
-import { useRouter } from 'next/router';
-import ReactGA from 'react-ga'
 const ReviewViewScreen = ({ appInfoState }) => {
     const router = useRouter();
     let { appNameId, screen } = router.query
@@ -96,7 +96,7 @@ class ReviewViewScreenUI extends React.Component {
         }
         return (
             <div className="body-panel review-page">
-                {this.state.isMobile ? null : <Header isStudy={true} appInfo={this.state.appInfo} />}
+                {this.state.isMobile ? null : <HeaderMenu appInfo={this.state.appInfo} />}
                 <Container className={'review-page-content' + (this.state.isMobile && this.state.showReview ? ' show-review' : '')}>
                     <Grid
                         container

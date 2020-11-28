@@ -6,7 +6,7 @@ import ReactGA from 'react-ga';
 import { connect } from 'react-redux';
 import { AlertDialogSlide, DialogForMobile, DialogInfo, ShowImage } from '../../components/Dialog';
 import Footer from '../../components/Footer';
-import Header from '../../components/Header';
+import HeaderMenu from '../../components/HeaderMenu';
 import { LoadingWidget } from '../../components/Widgets';
 import Config from '../../config';
 import { APP_NEW_DOMAIN } from '../../config_app';
@@ -155,7 +155,7 @@ class StudyViewScreenUI extends Component {
             // console.log("PC congratulationTopic", congratulationTopic, 'currentTopic', (currentTopic ? currentTopic.name : ''))
             return (
                 <div className="body-panel">
-                    <Header isStudy={true} appInfo={this.state.appInfo} />
+                    <HeaderMenu appInfo={this.state.appInfo} />
                     <Container className="study-game-panel">
                         {!!this.state.showAlertName ?
                             <CongratulationAlert topicName={this.state.showAlertName} onClose={() => this.setState({ showAlertName: '' })} />
