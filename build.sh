@@ -2,7 +2,7 @@
 # git pull --rebase origin cdl
 
 ROOT_PATH="./public/info"
-VERSION="2.0.0"
+VERSION="2.0.1"
 
 addConfig() {
     appId=$1
