@@ -317,7 +317,7 @@ footer .footer-content .line {
   margin-left: auto;
 }
 
-.header-menu div {
+.header-menu > div {
   margin-left: 50px;
 }
 
@@ -335,7 +335,7 @@ footer .footer-content .line {
 background-color: #303c88;
 }
 
-.menu-list div {
+.menu-list > div {
   border-bottom: 1px solid #ddd;
 }
 

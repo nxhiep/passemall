@@ -1,16 +1,30 @@
-import { Accordion, AccordionDetails, AccordionSummary, Container, Divider, Grid, useMediaQuery, useTheme } from '@material-ui/core';
+import { Accordion, AccordionDetails, AccordionSummary, CircularProgress, Container, Divider, Grid, useMediaQuery, useTheme } from '@material-ui/core';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import { useRouter } from 'next/router';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { TitleBlock } from '../../components/Widgets';
+import { callApi } from '../../services';
 import { getNewDomain, redirectToNewDomain } from '../../utils';
 
-const ListGreatApps = ({ appInfoState }) => {
-    let appInfos = appInfoState
-
+const ListGreatApps = () => {
+    const [appInfos, setAppInfos] = useState(null)
+    useEffect(() => {
+        callApi({ url: '/data?type=get_all_app_info', params: null, method: 'post' }).then((data) => {
+            setAppInfos(data)
+        })
+    }, [])
     const theme = useTheme();
     const sm = useMediaQuery(theme.breakpoints.down('sm'));
-
+    if(!appInfos){
+        return <div style={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            margin: "50px"
+        }}>
+            <CircularProgress />
+        </div>
+    }
     return (
         <section className="list-great-apps">
             <div className="divider"></div>
@@ -28,7 +42,7 @@ const ListGreatApps = ({ appInfoState }) => {
                 </div>
             </Container>
             <div style={{ width: "100%", height: "100px" }}></div>
-        </section >
+        </section>
     );
 }
 
@@ -80,7 +94,7 @@ const ListAppMobile = ({ appInfos }) => {
     </div>
 }
 
-const AppInfoItem = ({ appInfo, index }) => {
+const AppInfoItem = ({ appInfo, index, className }) => {
     const router = useRouter();
     const theme = useTheme();
     const isMobile = useMediaQuery(theme.breakpoints.between(0, 780));
@@ -93,7 +107,7 @@ const AppInfoItem = ({ appInfo, index }) => {
     }
     return (
         <>
-            <Grid item xs={12} sm={3} md={4} className="app-info-item" >
+            <Grid item xs={12} sm={3} md={4} className={"app-info-item " + (className ? className : "")} >
                 <a href={link} target="_blank">
                     <div>{appName.toUpperCase()}</div>
                 </a>

@@ -72,6 +72,20 @@ export function scrollToTopic() {
 
     }
 }
+
+export function scrollToElement(id, offset) {
+    if (typeof window !== 'undefined') {
+        let childElement = document.querySelector(id);
+        if (childElement) {
+            window.scroll({
+                top: childElement.offsetTop + (offset ? offset : 0),
+                behavior: "smooth"
+            })
+        }
+
+    }
+}
+
 export function checkLoadedReceiveProps(prevProps, nextProps) {
     return (prevProps.loading === true && nextProps.loading === false && nextProps.data);
 }
