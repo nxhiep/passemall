@@ -2,7 +2,12 @@
 # git pull --rebase origin cdl
 
 ROOT_PATH="./public/info"
-VERSION="2.0.1"
+DATA_PATH="./src/data"
+VERSION="2.0.2"
+
+downloadFile() {
+    curl -o "$DATA_PATH/appInfos.json" "https://micro-enigma-235001.appspot.com/new/api?type=get-map-app"
+}
 
 addConfig() {
     appId=$1
@@ -75,6 +80,7 @@ deploy() {
         logoPath=$appName
         appPath="-$appName"
     fi
+    downloadFile
     cp -r "$ROOT_PATH/sitemaps/sitemap$appPath.xml" ./public/sitemap.xml
     cp -r "$ROOT_PATH/robots/robots$appPath.txt" ./public/robots.txt
     cp -r "$ROOT_PATH/manifests/manifest$appPath.json" ./public/manifest.json
@@ -85,5 +91,3 @@ deploy() {
 }
 
 deploy $1
-# yarn
-# yarn build

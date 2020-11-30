@@ -2,8 +2,10 @@ import { Button, CircularProgress, Container, Grid, makeStyles, useMediaQuery, u
 import { CreditCard as CreditCardIcon } from '@material-ui/icons';
 import ArrowDownwardIcon from '@material-ui/icons/ArrowDownward';
 import { Rating } from '@material-ui/lab';
+import fs from "fs";
 import dynamic from 'next/dynamic';
 import { useRouter } from 'next/router';
+import path from "path";
 import React, { useEffect, useState } from 'react';
 import ReactGA from 'react-ga';
 import LazyLoad from 'react-lazyload';
@@ -491,10 +493,16 @@ const FeedbackItem = ({ content, name, createTime, index }) => {
     </div>
 }
 
+
 // export const getServerSideProps = wrapper.getServerSideProps(async (context) => {
 export async function getServerSideProps(context) {
     const appNameId = APP_NEW_DOMAIN ? APP_NEW_DOMAIN : context.params.appNameId;
-    const appInfoState = await callApi({ url: '/data?type=get_app_info&appNameId=' + appNameId, params: null, method: 'post' })
+    const directoryAppInfos = path.join(process.cwd(), 'src/data/appInfos.json')
+    let appInfosData = fs.readFileSync(directoryAppInfos);
+    let mapAppInfos = JSON.parse(appInfosData)
+    // const appInfoState = await callApi({ url: '/data?type=get_app_info&appNameId=' + appNameId, params: null, method: 'post' })
+    const appInfoState = mapAppInfos[appNameId] || {};
+    // console.log("xxxxxx appNameId", appNameId, 'appInfoState', appInfoState)
     return getWebContext(context, {
         appInfoState
     });
