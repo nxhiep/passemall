@@ -8,11 +8,11 @@ import { GA_ID } from '../config_app';
 import FeedbackApps from '../container/landingpage/FeedbackApps';
 import ListGreatApps from '../container/landingpage/ListGreatApps';
 import StatictisApps from '../container/landingpage/StatictisApps';
-import { oldUser, setScrollDownAuto } from '../utils';
-import './home.css'
+import { getWebContext, oldUser, setScrollDownAuto } from '../utils';
+import './home.css';
 
 ReactGA.initialize(GA_ID);
-const LandingPage = () => {
+const LandingPage = ({ isMobile, url }) => {
     useEffect(() => {
         ReactGA.pageview('/homepage');
         setScrollDownAuto()
@@ -20,9 +20,9 @@ const LandingPage = () => {
     }, [])
     return (
         <>
-            <SEO url={'http://passemall.com/'} />
+            <SEO url={url} />
             <div className='body-panel landing-page'>
-                <HeaderBanner />
+                <HeaderBanner isMobile={isMobile} />
                 <LazyLoad>
                     <ListGreatApps />
                 </LazyLoad>
@@ -35,6 +35,10 @@ const LandingPage = () => {
             </div>
         </>
     );
+}
+
+export async function getServerSideProps(context) {
+    return getWebContext(context);
 }
 
 export default LandingPage;

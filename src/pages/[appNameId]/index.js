@@ -18,7 +18,7 @@ import { APP_NEW_DOMAIN, GA_ID } from '../../config_app';
 import WebAppInfo from '../../models/WebAppInfo';
 import { wrapper } from '../../redux/store';
 import { callApi } from '../../services';
-import { getHeaderBanner, getImageBlock3, getNewDomain, isSuperApp, oldUser, scrollToTopic, setScrollDownAuto } from '../../utils';
+import { getHeaderBanner, getImageBlock3, getNewDomain, getWebContext, isSuperApp, oldUser, scrollToTopic, setScrollDownAuto } from '../../utils';
 import './app.css';
 import './home.css';
 const HomeContent = dynamic(() => import("../../container/home/HomeContent"), { ssr: false })
@@ -495,13 +495,9 @@ const FeedbackItem = ({ content, name, createTime, index }) => {
 export async function getServerSideProps(context) {
     const appNameId = APP_NEW_DOMAIN ? APP_NEW_DOMAIN : context.params.appNameId;
     const appInfoState = await callApi({ url: '/data?type=get_app_info&appNameId=' + appNameId, params: null, method: 'post' })
-    let url = context.req.headers.referer;
-    return {
-        props: {
-            appInfoState: appInfoState ? appInfoState : {},
-            url: url ? url : '',
-        }
-    }
+    return getWebContext(context, {
+        appInfoState
+    });
 }
 
 export default wrapper.withRedux(AppHome);

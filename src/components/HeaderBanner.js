@@ -7,11 +7,11 @@ import { callApi } from "../services";
 import { getDarkModeCustom, isAppCDL, scrollDown, scrollToTopic } from "../utils";
 import HeaderMenu from "./HeaderMenu";
 
-const HeaderBanner = ({ title, description, buttonPractice, blogLink, reviewLink, appInfo }) => {
+const HeaderBanner = ({ isMobile, title, description, buttonPractice, blogLink, reviewLink, appInfo }) => {
     const [searchResults, setSearchResults] = useState(null);
     const theme = useTheme();
-    const mdUp = useMediaQuery(theme.breakpoints.up('md'));
-    const smDown = useMediaQuery(theme.breakpoints.down('sm'));
+    const mdUp = isMobile || useMediaQuery(theme.breakpoints.up('md'));
+    const smDown = isMobile || useMediaQuery(theme.breakpoints.down('sm'));
     let darkMode = getDarkModeCustom(appInfo ? appInfo.id : null);
     let isCDL = isAppCDL(appInfo ? appInfo.id : null);
     let textColor = darkMode ? "white" : null;

@@ -19,7 +19,7 @@ const SEO = ({ url, appInfo, children }) => {
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <meta name="theme-color" content="#000000" />
         <link rel="manifest" href="manifest.json" />
-        {url ? <link rel="canonical" href={url}></link> : null}
+        {url ? <link rel="canonical" href={url || 'http://passemall.com/'}></link> : null}
         <title>{title.toUpperCase()}</title>
         <meta name="title" content={title.toUpperCase()} />
         <meta name="description" content={description} />
