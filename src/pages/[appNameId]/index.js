@@ -66,7 +66,7 @@ const useStyles = makeStyles({
 
 ReactGA.initialize(GA_ID);
 
-const AppHome = ({ appInfoState, url, home }) => {
+const AppHome = ({ appInfoState, url, home, isMobile }) => {
     if (!appInfoState) {
         appInfoState = {};
         console.error("xxxxxxxxxxxxxxxxxxxxxxxx appInfo null");
@@ -77,7 +77,7 @@ const AppHome = ({ appInfoState, url, home }) => {
         return <GameChildScreen appInfoState={appInfoState} url={url} />
     }
     const theme = useTheme();
-    const isMobile = useMediaQuery(theme.breakpoints.between(0, 780));
+    isMobile = isMobile || useMediaQuery(theme.breakpoints.between(0, 780));
     useEffect(() => {
         ReactGA.pageview('/appInfo');
         setScrollDownAuto("home")
