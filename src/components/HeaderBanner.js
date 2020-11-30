@@ -64,9 +64,9 @@ const HeaderBanner = ({ title, description, buttonPractice, blogLink, reviewLink
                         </Grid>
                         {!buttonPractice ? <>
                             {mdUp ? null : <Grid item xs={1} sm={3} md={false}></Grid>}
-                            <Grid item xs={10} sm={6} md={5}>
-                                {!smDown ? <img style={{ position: "relative", bottom: "-120px" }} alt='Make your study great with our thousands of free practice questions' width="100%" height="100%" src="/images/test3.png" /> : null}
-                            </Grid>
+                            {smDown ? null : <Grid item xs={10} sm={6} md={5}>
+                                {<img style={{ position: "relative", bottom: "-120px" }} alt='Make your study great with our thousands of free practice questions' width="100%" height="100%" src="/images/test3.png" />}
+                            </Grid>}
                             <Grid item xs={1} sm={3} md={false}></Grid>
                         </> : null}
                     </Grid>

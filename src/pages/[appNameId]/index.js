@@ -99,7 +99,6 @@ const AppHome = ({ appInfoState, url, home }) => {
         <>
             <SEO appInfo={appInfoState} url={url} manifest={true}>
                 <link rel="stylesheet" type="text/css" href="/styles/app.css" />
-                <link rel="stylesheet" type="text/css" href="/styles/slick.css" />
                 <link rel="stylesheet" type="text/css" href="/styles/home.css" />
             </SEO>
             <div className={"body-panel app " + (isSuperApp(appInfoState.id) ? "" : "other")}>
@@ -166,6 +165,9 @@ const AppHome = ({ appInfoState, url, home }) => {
                     color={myColor.screenShotColor}
                     appName={webAppInfo.appName}
                 />
+                <LazyLoad>
+                    <link rel="stylesheet" type="text/css" href="/styles/slick.css" />
+                </LazyLoad>
                 <Feedback isMobile={isMobile} appId={appInfoState.id}></Feedback>
                 <Footer bucket={appInfoState.bucket} color={myColor.colorFooter}></Footer>
             </div>

@@ -470,3 +470,8 @@ background-color: #303c88;
       border-bottom: none !important
   }
 }
+.slick-track {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

@@ -20,7 +20,6 @@ const LandingPage = () => {
     return (
         <>
             <SEO url={'http://passemall.com/'} manifest={true}>
-                <link rel="stylesheet" type="text/css" href="/styles/slick.css" />
                 <link rel="stylesheet" type="text/css" href="/styles/landing-page.css" />
             </SEO>
             <div className='body-panel landing-page'>
@@ -30,6 +29,9 @@ const LandingPage = () => {
                 </LazyLoad>
                 <StatictisApps />
                 <FeedbackApps />
+                <LazyLoad>
+                    <link rel="stylesheet" type="text/css" href="/styles/slick.css" />
+                </LazyLoad>
                 <Footer color="#4E63BD"></Footer>
             </div>
         </>
