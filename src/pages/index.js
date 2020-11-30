@@ -9,7 +9,6 @@ import FeedbackApps from '../container/landingpage/FeedbackApps';
 import ListGreatApps from '../container/landingpage/ListGreatApps';
 import StatictisApps from '../container/landingpage/StatictisApps';
 import { getWebContext, oldUser, setScrollDownAuto } from '../utils';
-import './home.css';
 
 ReactGA.initialize(GA_ID);
 const LandingPage = ({ isMobile, url }) => {
@@ -20,7 +19,9 @@ const LandingPage = ({ isMobile, url }) => {
     }, [])
     return (
         <>
-            <SEO url={url} />
+            <SEO url={url}>
+                <link rel="stylesheet" type="text/css" href="/styles/landing-page.css" />
+            </SEO>
             <div className='body-panel landing-page'>
                 <HeaderBanner isMobile={isMobile} />
                 <LazyLoad>

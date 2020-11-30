@@ -21,8 +21,6 @@ import WebAppInfo from '../../models/WebAppInfo';
 import { wrapper } from '../../redux/store';
 import { callApi } from '../../services';
 import { getHeaderBanner, getImageBlock3, getNewDomain, getWebContext, isSuperApp, oldUser, scrollToTopic, setScrollDownAuto } from '../../utils';
-import './app.css';
-import './home.css';
 const HomeContent = dynamic(() => import("../../container/home/HomeContent"), { ssr: false })
 const SelectStatePopup = dynamic(() => import("../../components/SelectStatePopup"), { ssr: false })
 const GameChildScreen = dynamic(() => import("./[screenChild]"), { ssr: false })
@@ -101,7 +99,10 @@ const AppHome = ({ appInfoState, url, home, isMobile }) => {
     const store = useStore((state) => state);
     return (
         <>
-            <SEO appInfo={appInfoState} url={url} />
+            <SEO appInfo={appInfoState} url={url}>
+                <link rel="stylesheet" type="text/css" href="/styles/app.css" />
+                <link rel="stylesheet" type="text/css" href="/styles/home.css" />
+            </SEO>
             <div className={"body-panel app " + (isSuperApp(appInfoState.id) ? "" : "other")}>
                 <_Header
                     webAppInfo={webAppInfo}
