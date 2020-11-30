@@ -1,55 +1,74 @@
-import { CircularProgress, Container, Grid, Link, TextField, useMediaQuery, useTheme } from "@material-ui/core"
-import HeaderMenu from "./HeaderMenu"
-import { Search as SearchIcon } from '@material-ui/icons'
+import { CircularProgress, Container, Grid, Link, TextField, useMediaQuery, useTheme } from "@material-ui/core";
+import { Search as SearchIcon } from '@material-ui/icons';
 import { useState } from "react";
-import SearchResultsModal from '../container/home/SearchResultsModal'
-import { scrollDown } from "../utils";
+import ReactGA from 'react-ga';
+import SearchResultsModal from '../container/home/SearchResultsModal';
 import { callApi } from "../services";
+import { getDarkModeCustom, isAppCDL, scrollDown, scrollToTopic } from "../utils";
+import HeaderMenu from "./HeaderMenu";
 
-const HeaderBanner = () => {
+const HeaderBanner = ({ title, description, buttonPractice, blogLink, reviewLink, appInfo }) => {
     const [searchResults, setSearchResults] = useState(null);
     const theme = useTheme();
     const mdUp = useMediaQuery(theme.breakpoints.up('md'));
     const smDown = useMediaQuery(theme.breakpoints.down('sm'));
+    let darkMode = getDarkModeCustom(appInfo ? appInfo.id : null);
+    let isCDL = isAppCDL(appInfo ? appInfo.id : null);
+    let textColor = darkMode ? "white" : null;
     return <>
-        <header className={(smDown ? "sm" : "")}>
+        <header className={(smDown ? "sm" : "") + (darkMode && !isCDL ? " darkmode" : "")}>
             <Container className="header">
-                <HeaderMenu noHeader={true} headerMenu={
+                <HeaderMenu darkMode={darkMode} appInfo={appInfo} noHeader={true} headerMenu={
                     <>
-                        <div>
-                            <a href="/">HOME</a>
-                        </div>
+                        {buttonPractice ? 
+                            <div onClick={() => scrollToTopic()}>
+                                <span className="tag-a">LEARN</span>
+                            </div> : 
+                            <div>
+                                <a href="/">HOME</a>
+                            </div>}
+                        {buttonPractice ? <div onClick={() => {
+                            ReactGA.event({
+                                category: 'Click Review',
+                                action: 'Click Review Header',
+                            })
+                        }}>
+                            <Link href={reviewLink ? reviewLink : "/review"}>REVIEW</Link>
+                        </div> : null}
                         <div onClick={() => {
                             ReactGA.event({
                                 category: 'Click Blog',
                                 action: 'Click Blog Header',
                             })
                         }}>
-                            <Link href="/blog">BLOG</Link>
+                            <Link href={blogLink ? blogLink : "/blog"}>BLOG</Link>
                         </div>
                         <div onClick={() => scrollDown()}>
                             <span className="tag-a">SUPPORT</span>
                         </div>
-                        <SearchPanel setSearchResults={(value, results) => {
+                        {buttonPractice ? null : <SearchPanel setSearchResults={(value, results) => {
                             setSearchResults({value, results})
-                        }} smDown={smDown} />
+                        }} smDown={smDown} />}
                     </>
                 } />
             </Container>
             <div className="header-banner">
-                <Container>
+                <Container className="container-x">
                     <Grid container alignItems="center" justify="space-between" className="header-media">
-                        <Grid item sm={12} md={5}>
-                            <h1 style={{ color: "#1E3094" }}>Make your study great with our thousands of free practice questions</h1>
-                            <p style={{ color: "#555555", fontWeight: '500', fontSize: "18px" }}>You want to get 100% ready for your important day? You desire to pass your exam at your first try?
+                        <Grid item sm={12} md={buttonPractice ? 7 : 5}>
+                            <h1 style={{ color: textColor ? textColor : "#1E3094" }}>{title ? title : "Make your study great with our thousands of free practice questions"}</h1>
+                            <p style={{ color: textColor ? textColor : "#555555", fontWeight: '500', fontSize: "18px" }}>{ description ? description : `You want to get 100% ready for your important day? You desire to pass your exam at your first try?
                                 You are wondering if you should pay a charge of money buying some practice materials?
-                                    That’s why we are here to support you achieve the gate of success with our test prep solutions.</p>
+                                That’s why we are here to support you achieve the gate of success with our test prep solutions.`}</p>
+                            {buttonPractice}
                         </Grid>
-                        {mdUp ? null : <Grid item xs={1} sm={3} md={false}></Grid>}
-                        <Grid item xs={10} sm={6} md={5}>
-                            {!smDown ? <img style={{ position: "relative", bottom: "-120px" }} alt='Make your study great with our thousands of free practice questions' width="100%" height="100%" src="/images/test3.png" /> : null}
-                        </Grid>
-                        <Grid item xs={1} sm={3} md={false}></Grid>
+                        {!buttonPractice ? <>
+                            {mdUp ? null : <Grid item xs={1} sm={3} md={false}></Grid>}
+                            <Grid item xs={10} sm={6} md={5}>
+                                {!smDown ? <img style={{ position: "relative", bottom: "-120px" }} alt='Make your study great with our thousands of free practice questions' width="100%" height="100%" src="/images/test3.png" /> : null}
+                            </Grid>
+                            <Grid item xs={1} sm={3} md={false}></Grid>
+                        </> : null}
                     </Grid>
                 </Container>
             </div>

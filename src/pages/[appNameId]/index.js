@@ -12,14 +12,13 @@ import Slider from 'react-slick';
 import { PersistGate } from 'redux-persist/integration/react';
 import Footer from '../../components/Footer';
 import HeaderBanner from '../../components/HeaderBanner';
-import HeaderMenu from '../../components/HeaderMenu';
 import { Clock, FreeCircle, FreeIcon, LoginIcon, PenIcon, TotalQuestions } from '../../components/Icons';
 import SEO from '../../components/SEO';
 import { APP_NEW_DOMAIN, GA_ID } from '../../config_app';
 import WebAppInfo from '../../models/WebAppInfo';
 import { wrapper } from '../../redux/store';
 import { callApi } from '../../services';
-import { getHeaderBanner, getNewDomain, isSuperApp, oldUser, scrollToTopic, setScrollDownAuto } from '../../utils';
+import { getHeaderBanner, getImageBlock3, getNewDomain, isSuperApp, oldUser, scrollToTopic, setScrollDownAuto } from '../../utils';
 const HomeContent = dynamic(() => import("../../container/home/HomeContent"), { ssr: false })
 const SelectStatePopup = dynamic(() => import("../../components/SelectStatePopup"), { ssr: false })
 const GameChildScreen = dynamic(() => import("./[screenChild]"), { ssr: false })
@@ -41,9 +40,14 @@ const useStyles = makeStyles({
     },
     button: {
         borderRadius: "40px",
-        marginTop: "40px",
+        marginTop: "50px",
+        marginBottom: "50px",
         padding: "8px 24px",
-        fontWeight: "bold"
+        fontWeight: "bold",
+        fontSize: "16px",
+        marginLeft: props => props.isMobile ? "auto" : "",
+        marginRight: props => props.isMobile ? "auto" : "",
+        display: props => props.isMobile ? "flex" : "inline-flex",
     },
     buttonStartTest: {
         backgroundColor: props => props.color, 
@@ -64,6 +68,7 @@ const AppHome = ({ appInfoState, url, home }) => {
     if (!appInfoState) {
         appInfoState = {};
         console.error("xxxxxxxxxxxxxxxxxxxxxxxx appInfo null");
+        return <h1>App Not Existed</h1>
     }
     // console.log("xxxxx appInfoState", appInfoState)
     if(APP_NEW_DOMAIN && home !== true){
@@ -78,7 +83,7 @@ const AppHome = ({ appInfoState, url, home }) => {
     }, [])
     const [selectedState, setSelectedState] = useState(true);
     const [openPopupChangeState, setOpenPopupChangeState] = useState(false);
-    let webAppInfo = WebAppInfo.getAppInfo(appInfoState.id, appInfoState.name);
+    let webAppInfo = WebAppInfo.getAppInfo(appInfoState.id, appInfoState.appName);
     let myColor = webAppInfo.mainColor;
     // console.log("appInfoState.bucket", appInfoState.bucket)
     if (!url) {
@@ -97,10 +102,9 @@ const AppHome = ({ appInfoState, url, home }) => {
                 <link rel="stylesheet" type="text/css" href="/styles/slick.css" />
                 <link rel="stylesheet" type="text/css" href="/styles/home.css" />
             </SEO>
-            <div className="body-panel app">
+            <div className={"body-panel app " + (isSuperApp(appInfoState.id) ? "" : "other")}>
                 <_Header
                     webAppInfo={webAppInfo}
-                    appName={webAppInfo.appName}
                     color={myColor.buttonHeader}
                     isMobile={isMobile}
                     onStartTest={() => {
@@ -169,44 +173,55 @@ const AppHome = ({ appInfoState, url, home }) => {
     )
 }
 const _Header = (props) => {
-    let { appId, appNameId } = props.appInfo ? props.appInfo : {};
-    appNameId = appNameId ? appNameId : router.query.appNameId;
-    appId = appId ? appId : -1;
-    if(!isSuperApp(appId)){
-        return <HeaderBanner />
-    }
-    let webAppInfo = props.webAppInfo ? props.webAppInfo : new WebAppInfo({ appName: props.appName });
-    let onStartTest = props.onStartTest ? props.onStartTest : () => { }
-    const classes = useStyles(props);
-    let color = props.color ? props.color : "#5b6695";
+    let { id, appNameId, appName } = props.appInfo ? props.appInfo : {};
     const router = useRouter();
+    appNameId = appNameId ? appNameId : router.query.appNameId;
+    let appId = id ? id : -1;
+    const classes = useStyles(props);
+    let webAppInfo = props.webAppInfo ? props.webAppInfo : new WebAppInfo({ appName: appName });
+    let onStartTest = props.onStartTest ? props.onStartTest : () => { }
+    if(!isSuperApp(appId)){
+        return <HeaderBanner 
+            title={webAppInfo.header.title}
+            description={webAppInfo.header.description}
+            blogLink={"/blog" + (appId ? "?appId=" + appId : '')}
+            reviewLink={"/" + appNameId + "/review"}
+            buttonPractice={
+                <Button
+                    color="primary"
+                    variant="contained"
+                    className={classes.button} 
+                    onClick={() => { onStartTest() }}>START YOUR PRACTICE TEST</Button>
+            }
+        />
+    }
+    const theme = useTheme();
+    const isMobile = useMediaQuery(theme.breakpoints.between(0, 800));
     const banner = getHeaderBanner(appId);
-    return (
-        <div style={{ position: "relative" }}>
-            <img src={banner} width="100%" style={{ visibility: "hidden", minHeight: "530px", objectFit: "cover" }} allt="image-header" />
-            <div style={{ position: "absolute", top: "0", left: "0", width: "100%", height: "100%", background: '#1f1667' }} className="header-background color-dark">
-                <img src={banner} width="100%" style={{ minHeight: "530px", objectFit: "cover" }} alt="image-header-2" />
-            </div>
-            <div style={{ position: "absolute", top: "0", left: "0", width: "100%", height: "100%" }}>
-                <HeaderMenu appInfo={props.appInfo} />
-                <Container className="container-header">
-                    <div style={{height: props.isMobile ? "70px" : "100px"}}></div>
-                    <div className="header-title">
-                        <h1 style={{ textTransform: "uppercase" }}>{webAppInfo.header.title}</h1>
-                        <div style={{ fontWeight: "500", fontSize: '1.1em' }}>{webAppInfo.header.description}</div>
-                        <Button
-                            style={{ fontSize: '16px' }}
-                            variant="contained"
-                            className={classes.button} 
-                            onClick={() => { onStartTest() }} 
-                            style={{ display: props.isMobile ? "flex" : "inline-flex", 
-                            marginLeft: props.isMobile ? "auto" : "", 
-                            marginRight: props.isMobile ? "auto" : "" }}>START YOUR PRACTICE TEST</Button>
-                    </div>
-                </Container>
-            </div>
-        </div>
-    )
+    return <div className="bg-new"
+        style={{
+            backgroundImage: "url("+banner+")",
+            backgroundSize: "cover",
+            minHeight: isMobile ? "" : "500px",
+            height: "100%",
+            backgroundPosition: "top center"
+        }}
+    >
+        <HeaderBanner 
+            appInfo={props.appInfo}
+            title={webAppInfo.header.title}
+            description={webAppInfo.header.description}
+            blogLink={"/blog" + (appId ? "?appId=" + appId : '')}
+            reviewLink={"/" + appNameId + "/review"}
+            buttonPractice={
+                <Button
+                    color="primary"
+                    variant="contained"
+                    className={classes.button} 
+                    onClick={() => { onStartTest() }}>START YOUR PRACTICE TEST</Button>
+            }
+        />
+    </div>
 }
 
 const Features = ({ color, webAppInfo, appName }) => {
@@ -266,13 +281,7 @@ const ExamOverview = ({ webAppInfo, appName, isMobile }) => {
 const ListInfoGraphic = (props) => {
     let onStartTest = props.onStartTest ? props.onStartTest : () => { }
     const classes = useStyles(props);
-    const bucketUrl = (props.bucket ? props.bucket + "/" : "");
-    let srcImage1 = `/images/apps/${bucketUrl}infographic/infographic-1.png`;
-    let srcImage2 = `/images/apps/${bucketUrl}infographic/infographic-2.png `;
-    if (!isSuperApp(props.appId) || !props.bucket) {
-        srcImage1 = '/images/apps/all/scientifically-proven1.jpg';
-        srcImage2 = '/images/apps/all/scientifically-proven2.jpg';
-    }
+    let images = getImageBlock3(props.appId ? props.appId : -1)
     let appName = props.appName ? props.appName : '';
     let webAppInfo = props.webAppInfo ? props.webAppInfo : new WebAppInfo({ appName: props.appName });
     return (
@@ -280,7 +289,7 @@ const ListInfoGraphic = (props) => {
             <Container>
                 <Grid container alignItems="stretch">
                     <Grid item xs={12} sm={4}>
-                        <LazyLoad><img width="100%" src={srcImage1} alt="infographic-1" style={{ display: "block" }}></img></LazyLoad>
+                        <LazyLoad><img width="100%" src={images[0]} alt="infographic-1" style={{ display: "block" }}></img></LazyLoad>
                     </Grid>
                     <Grid item xs={12} sm={1}></Grid>
                     <Grid item xs={12} sm={6}>
@@ -357,7 +366,7 @@ const ListInfoGraphic = (props) => {
                     </Grid>
                     <Grid item xs={12} sm={2}></Grid>
                     <Grid item xs={12} sm={4}>
-                        <LazyLoad><img src={srcImage2} alt="infographic-2" style={{ display: "block", width: "100%" }}></img></LazyLoad>
+                        <LazyLoad><img src={images[1]} alt="infographic-2" style={{ display: "block", width: "100%" }}></img></LazyLoad>
                     </Grid>
                     <Grid item xs={12} sm={1}></Grid>
                 </Grid>
@@ -377,52 +386,56 @@ const MobileDescription = ({ appInfoState, color = "#FFA86C", appName }) => {
         appName = ''
     }
     const theme = useTheme();
-    const isMobile = useMediaQuery(theme.breakpoints.between(0, 780))
-    return (
-        <Container className="mobile-description-container" style={{ backgroundColor: color }}>
-            <Grid container spacing={3}>
-                <Grid item xs={8} sm={6}>
-                    <div className="mobile-description-content">
-                        <h3>Practice offline & on the go with the free {appName} app</h3>
-                        <p>Available for IOS and Android devices.</p>
-                        <div className="app-info">
-                            <img src={appInfoState.avatar} alt="app-image" style={{ borderRadius: "15px", height: "100px" }}></img>
-                            <div className="app-info-right">
-                                <h4>{appInfoState.appName}</h4>
-                                <Rating value={5} style={isMobile ? { color: "#fff", fontSize: "16px" } : { color: "#fff", fontSize: "20px" }} readOnly ></Rating>
-                            </div>
-                        </div>
-                        <div className="app-url">
-                            <LazyLoad>
-                            <a href={appInfoState.urlAndroid} target="_blank" rel="noopener noreferrer" onClick={() => {
-                                ReactGA.event({
-                                    category: 'Click Google Play',
-                                    action: 'Click Google Play App Home'
-                                })
-                            }}>
-                                <img alt="Link google app" src="/images/googlePlayIcon.png" />
-                            </a>
-                            <div style={{ width: '20px' }}></div>
-                            <a href={appInfoState.urlIos} target="_blank" rel="noopener noreferrer" onClick={() => {
-                                ReactGA.event({
-                                    category: 'Click App Store',
-                                    action: 'Click Google Play App Home'
-                                })
-                            }}>
-                                <img src="/images/appStoreIcon.png" alt="Link app store" />
-                            </a>
-                            </LazyLoad>
-                        </div>
+    const isMobile = useMediaQuery(theme.breakpoints.down(800));
+    console.log("isMobile", isMobile)
+    return <Container className="stores-panel">
+        <Grid container style={{ backgroundColor: color, borderRadius: isMobile ? "20px" : "" }} className="x-content">
+            <Grid item xs={12} sm={isMobile ? 12 : 6}>
+            <div className="mobile-description-content" style={isMobile ? {
+                    textAlign: "center",
+                    display: "flex",
+                    flexDirection: "column",
+                    alignItems: "center",
+            } : {}}>
+                <h1>Practice offline & on the go with the free {appName} app</h1>
+                <p style={{fontSize: "18px", opacity: "0.8"}}>Available for IOS and Android devices.</p>
+                <div className="app-info">
+                    <img src={appInfoState.avatar} alt="app-image" style={{ borderRadius: "15px", height: "100px" }}></img>
+                    <div className="app-info-right">
+                        <h2>{appInfoState.appName}</h2>
+                        <Rating value={5} readOnly ></Rating>
                     </div>
-                </Grid>
-                <Grid item xs={4} sm={6}>
-                    <div className="mobile-description-image">
-                    </div>
-                </Grid>
+                </div>
+                <div className="app-url">
+                    <LazyLoad>
+                    <a href={appInfoState.urlAndroid} target="_blank" rel="noopener noreferrer" onClick={() => {
+                        ReactGA.event({
+                            category: 'Click Google Play',
+                            action: 'Click Google Play App Home'
+                        })
+                    }}>
+                        <img alt="Link google app" src="/images/googlePlayIcon.png" />
+                    </a>
+                    <div style={{ width: '20px' }}></div>
+                    <a href={appInfoState.urlIos} target="_blank" rel="noopener noreferrer" onClick={() => {
+                        ReactGA.event({
+                            category: 'Click App Store',
+                            action: 'Click Google Play App Home'
+                        })
+                    }}>
+                        <img src="/images/appStoreIcon.png" alt="Link app store" />
+                    </a>
+                    </LazyLoad>
+                </div>
+            </div>
             </Grid>
-        </Container>
-    )
+            {!isMobile ? <Grid item xs={12} sm={6} className="stores-right-panel">
+                <LazyLoad><img width="100%" src="/images/screenshot.png" /></LazyLoad>
+            </Grid> : null}
+        </Grid>
+    </Container>
 }
+
 const Feedback = ({ isMobile, appId }) => {
     const [loading, setLoading] = useState(true);
     const [feedbacks, setFeedbacks] = useState([]);

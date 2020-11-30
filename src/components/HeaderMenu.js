@@ -5,24 +5,24 @@ import ReactGA from 'react-ga';
 import { APP_NEW_DOMAIN } from "../config_app";
 import { isSuperApp, scrollToTopic } from "../utils";
 
-const HeaderMenu = ({ appInfo, noHeader, headerMenu }) => {
+const HeaderMenu = ({ appInfo, darkMode, noHeader, headerMenu }) => {
     if(noHeader === true){
-        return <Content appInfo={appInfo} headerMenu={headerMenu} />
+        return <Content appInfo={appInfo} darkMode={darkMode} headerMenu={headerMenu} />
     }
     return <header>
-        <Content appInfo={appInfo} headerMenu={headerMenu} />
+        <Content appInfo={appInfo} darkMode={darkMode} headerMenu={headerMenu} />
     </header>
 }
 
-const Content = ({ appInfo, headerMenu }) => {
+const Content = ({ appInfo, headerMenu, darkMode }) => {
     const theme = useTheme();
     const isMobile = useMediaQuery(theme.breakpoints.between(0, 780));
     const [openDrawer, setOpenDrawer] = useState(false);
     const handleOpenDrawer = (open) => setOpenDrawer(open)
-    return <Container>
+    return <Container style={isMobile ? {padding: "0"} : {}}>
         <Grid container alignItems="center" justify="space-between">
             <a href="/" style={{padding: "10px 0"}}>
-                <img src="/images/logo-landing-2.png" alt="logo-app" width={isMobile ? "180px" : "240px"} height={isMobile ? "45px" : "60px"}></img>
+                <img src={darkMode ? "/images/logo-landing.png" : "/images/logo-landing-2.png"} alt="logo-app" width={isMobile ? "185px" : "240px"} height={isMobile ? "45px" : "60px"}></img>
             </a>
             {!isMobile ? <div className="header-menu">
                 {headerMenu ? headerMenu : <MenuList appInfo={appInfo} />}
@@ -31,7 +31,7 @@ const Content = ({ appInfo, headerMenu }) => {
                     <MenuIcon style={{ color: "#fff" }}></MenuIcon>
                 </IconButton> */}
                 <button style={{backgroundColor: "transparent", outline: "none", border: "none"}} onClick={() => handleOpenDrawer(true)}>
-                    <MenuIcon style={{ color: "#1E3094" }}></MenuIcon>
+                    <MenuIcon style={{ color: darkMode ? "white" : "#1E3094" }}></MenuIcon>
                 </button>
                 <SwipeableDrawer
                     className="header-menu-swipe"

@@ -278,25 +278,79 @@ export function getHeaderBanner(appId) {
     const sm = useMediaQuery(theme.breakpoints.down("sm"));
     const mobile = sm ? '-mobile' : '';
     if(isAppASVAB(appId)){
-        return `/images/apps/asvab/header-background${mobile}.png`;
+        return `/images/apps/asvab/header-background${mobile}.jpg`;
     }
     if(isAppCDL(appId)){
-        return `/images/apps/cdl/header-background${mobile}.png`;
+        return `/images/apps/cdl/header-background${mobile}.jpg`;
     }
     if(isAppTEAS(appId)){
-        return `/images/apps/teas/header-background${mobile}.png`;
+        return `/images/apps/teas/header-background${mobile}.jpg`;
     }
     if(isAppGED(appId)){
-        return `/images/apps/ged/header-background${mobile}.png`;
+        return `/images/apps/ged/header-background${mobile}.jpg`;
     }
     if(isAppCNA(appId)){
-        return `/images/apps/cna/header-background${mobile}.png`;
+        return `/images/apps/cna/header-background${mobile}.jpg`;
     }
     if(isAppDMV(appId)){
-        return `/images/apps/dmv/header-background${mobile}.png`;
+        return `/images/apps/dmv/header-background${mobile}.jpg`;
     }
     if(isAppMotorcycle(appId)){
-        return `/images/apps/motorcycle/header-background${mobile}.png`;
+        return `/images/apps/motorcycle/header-background${mobile}.jpg`;
     }
-    return `/images/apps/all/header-background${mobile}.png`;
+    return `/images/apps/all/header-background${mobile}.jpg`;
+}
+
+export function getDarkModeCustom(appId) {
+    return (appId && isSuperApp(appId));
+}
+
+export function getImageBlock3(appId) {
+    const theme = useTheme()
+    if(isAppASVAB(appId)){
+        return [
+            `/images/apps/asvab/infographic/infographic-1.jpg`,
+            '/images/apps/asvab/infographic/infographic-2.jpg'
+        ]
+    }
+    if(isAppCDL(appId)){
+        return [
+            `/images/apps/cdl/infographic/infographic-1.jpg`,
+            '/images/apps/cdl/infographic/infographic-2.jpg'
+        ]
+    }
+    if(isAppTEAS(appId)){
+        return [
+            `/images/apps/teas/infographic/infographic-1.jpg`,
+            '/images/apps/teas/infographic/infographic-2.jpg'
+        ]
+    }
+    if(isAppGED(appId)){
+        return [
+            `/images/apps/ged/infographic/infographic-1.jpg`,
+            '/images/apps/ged/infographic/infographic-2.jpg'
+        ]
+    }
+    if(isAppCNA(appId)){
+        return [
+            `/images/apps/cna/infographic/infographic-1.jpg`,
+            '/images/apps/cna/infographic/infographic-2.jpg'
+        ]
+    }
+    if(isAppDMV(appId)){
+        return [
+            `/images/apps/dmv/infographic/infographic-1.jpg`,
+            '/images/apps/dmv/infographic/infographic-2.jpg'
+        ]
+    }
+    if(isAppMotorcycle(appId)){
+        return [
+            `/images/apps/motorcycle/infographic/infographic-1.jpg`,
+            '/images/apps/motorcycle/infographic/infographic-2.jpg'
+        ]
+    }
+    return [
+        `/images/apps/all/scientifically-proven1.jpg`,
+        '/images/apps/all/scientifically-proven2.jpg'
+    ]
 }

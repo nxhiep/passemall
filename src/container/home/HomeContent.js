@@ -29,15 +29,18 @@ const HomeContent = ({ appInfo, appNameId, topicState, getTopicsByParentId, hasS
     return (
         <div style={{ 'backgroundColor': 'var(--main-background-color)' }} className="content-home-page">
             <Container>
-                <h2 className="main-title">
-                    <span>All categories</span>
-                    {hasState && currentState ? <div style={{ marginLeft: "auto", marginRight: "20px" }}>{currentState.name}</div> : null}
-                    {hasState ? <Button
-                        variant="outlined"
-                        color="primary"
-                        onClick={() => {
-                            onChangeState();
-                        }}>Change State</Button> : ''}
+                <h2 className="main-title" style={{flexWrap:"wrap"}}>
+                    <span style={{marginBottom: "30px"}}>All categories</span>
+                    <div style={{ marginLeft: "auto", marginRight: "20px" }} style={{ display: "flex", alignItems: "center", flexWrap:"wrap" }}>
+                        {hasState && currentState ? <div>{currentState.name}</div> : null}
+                        <div style={{width: "10px"}}></div>
+                        {hasState ? <Button
+                            variant="outlined"
+                            color="primary"
+                            onClick={() => {
+                                onChangeState();
+                            }}>Change State</Button> : ''}
+                    </div>
                 </h2>
                 <hr />
                 <div>

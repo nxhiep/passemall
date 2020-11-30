@@ -357,12 +357,14 @@ background-color: #303c88;
   justify-content: center;
 }
 
-header {
+.app.other > header,
+.landing-page header {
   background: url(/images/new/banner-left.jpg) no-repeat, url(/images/new/banner-right.jpg) no-repeat;
   background-position: top left, top right;
   background-size: auto, auto 100%;
 }
-header.sm {
+.app.other > header.sm,
+.landing-page header.sm {
   background: url(/images/new/banner-right.jpg) no-repeat;
   background-size: 150%;
   background-position: right top;
