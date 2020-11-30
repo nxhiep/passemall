@@ -9,6 +9,7 @@ import FeedbackApps from '../container/landingpage/FeedbackApps';
 import ListGreatApps from '../container/landingpage/ListGreatApps';
 import StatictisApps from '../container/landingpage/StatictisApps';
 import { oldUser, setScrollDownAuto } from '../utils';
+import './home.css'
 
 ReactGA.initialize(GA_ID);
 const LandingPage = () => {
@@ -19,9 +20,7 @@ const LandingPage = () => {
     }, [])
     return (
         <>
-            <SEO url={'http://passemall.com/'} manifest={true}>
-                <link rel="stylesheet" type="text/css" href="/styles/landing-page.css" />
-            </SEO>
+            <SEO url={'http://passemall.com/'} />
             <div className='body-panel landing-page'>
                 <HeaderBanner />
                 <LazyLoad>
