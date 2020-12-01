@@ -4,8 +4,7 @@ import EditIcon from '@material-ui/icons/Edit';
 import HowToRegIcon from '@material-ui/icons/HowToReg';
 import MenuIcon from '@material-ui/icons/Menu';
 import SearchIcon from '@material-ui/icons/Search';
-import fs from "fs";
-import path from "path";
+import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import LazyLoad from "react-lazyload";
 import Slider from "react-slick";
@@ -77,10 +76,14 @@ const useStyles = makeStyles({
         backgroundColor: "transparent",
         border: "none",
         outline: "none"
+    },
+    appItem: {
+        padding: "16px 0",
+        borderBottom: "1px solid rgba(250,142,69,.3)"
     }
 })
 
-const Home = ({ isMobile, url, appInfos }) => {
+const Home = ({ isMobile, url }) => {
     return <>
         <main style={{
             display: "flex",
@@ -90,7 +93,7 @@ const Home = ({ isMobile, url, appInfos }) => {
                 <link rel="preload" href={url+"/styles/slick.css"} />
             </SEO>
             <HeaderBannerPanel isMobile={isMobile} />
-            <BodyPanel isMobile={isMobile} appInfos={appInfos} />
+            <BodyPanel isMobile={isMobile} />
             <LazyLoad><FooterPanel isMobile={isMobile} /></LazyLoad>
         </main>
     </>
@@ -232,11 +235,11 @@ const SearchPanel = ({ isMobile, setSearchResults }) => {
     </div>
 }
 
-const BodyPanel = ({ isMobile, appInfos }) => {
+const BodyPanel = ({ isMobile }) => {
     const height = "50px";
     return <main>
         <div style={{height: height}}></div>
-        <Block1 appInfos={appInfos} />
+        <Block1 isMobile={isMobile} />
         <div style={{height: height}}></div>
         <LazyLoad><Block2 isMobile={isMobile} /></LazyLoad>
         <div style={{height: height}}></div>
@@ -264,16 +267,74 @@ const MyTitle = ({ title, description }) => {
     </div>
 }
 
-const Block1 = ({ appInfos }) => {
-    // useEffect(() => {
-        
-    // }, [])
+const Block1 = ({ isMobile }) => {
+    const [appInfos, setAppInfos] = useState(null)
+    useEffect(() => {
+        callApi({ url: '/data?type=get_all_app_info', params: null, method: 'post' }).then((data) => {
+            setAppInfos(data)
+        })
+    }, [])
     return <section>
         <MyTitle title="GREAT APPS FOR YOU" description="Practice right now with our free apps!" />
-        <div style={{ textAlign: "center" }}>
-            { appInfos.length }
-        </div>
+        <div style={{height: "40px"}}></div>
+        <Container>
+        {
+            !appInfos ? <div style={{
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                margin: "50px"
+            }}>
+                <CircularProgress />
+            </div> : <ListApps appInfos={appInfos} isMobile={isMobile} />
+        }
+        </Container>
     </section>
+}
+
+const ListApps = ({ appInfos, isMobile }) => {
+    const styles = useStyles({ isMobile })
+    const [open, setOpen] = useState(false)
+    const router = useRouter()
+    const openApp = (appNameId) => {
+        router.push("/" + appNameId)
+    }
+    if(isMobile){
+        return <>
+            <Grid container wrap="wrap">
+                { appInfos.slice(0, 5).map(appInfo => {
+                    return <Grid item xs={12} sm={6} md={4} key={"appInfo-" + appInfo.id} className={styles.appItem} onClick={() => {
+                        openApp(appInfo.appNameId)
+                    }}>
+                        <div>{appInfo.appName}</div>
+                    </Grid>
+                }) }
+            </Grid>
+            {!open ? <Grid item xs={12} sm={6} md={4} style={{ color: "#4e63bd", padding: "10px 0", cursor: "pointer" }} onClick={() => {
+                setOpen(true)
+            }}>
+                <div>Show more</div>
+            </Grid> : null}
+            {open ? <Grid container wrap="wrap">
+                { appInfos.slice(6, appInfos.length).map(appInfo => {
+                    return <Grid item xs={12} sm={6} md={4} key={"appInfo-" + appInfo.id} className={styles.appItem} onClick={() => {
+                        openApp(appInfo.appNameId)
+                    }}>
+                        <div>{appInfo.appName}</div>
+                    </Grid>
+                }) }
+            </Grid> : null}
+        </>
+    }
+    return <Grid container wrap="wrap">
+        { appInfos.map(appInfo => {
+            return <Grid item xs={12} sm={6} md={4} key={"appInfo-" + appInfo.id} className={styles.appItem} onClick={() => {
+                    openApp(appInfo.appNameId)
+                }}>
+                <div>{appInfo.appName}</div>
+            </Grid>
+        }) }
+    </Grid>
 }
 
 const Block2 = ({ isMobile }) => {
@@ -507,16 +568,7 @@ const SocialWidget = ({ color }) => {
 }
 
 export async function getServerSideProps(context) {
-    const directoryAppInfos = path.join(process.cwd(), 'src/data/appInfos.json')
-    let appInfosData = fs.readFileSync(directoryAppInfos);
-    let mapAppInfos = JSON.parse(appInfosData)
-    const mapAppInfo = {};
-    Object.values(mapAppInfos).forEach((value) => {
-        if(!mapAppInfo[value.id]){
-            mapAppInfo[value.id] = value;
-        }
-    })
-    return getWebContext(context, { appInfos: Object.values(mapAppInfo) });
+    return getWebContext(context);
 }
 
 export default Home
