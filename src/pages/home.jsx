@@ -1,18 +1,20 @@
 import { CircularProgress, Container, Grid, makeStyles, SwipeableDrawer, TextField, useMediaQuery, useTheme } from "@material-ui/core";
-import LazyLoad from "react-lazyload";
-import SEO from "../components/SEO";
-import { getWebContext } from "../utils";
 import DashboardIcon from '@material-ui/icons/Dashboard';
-import HowToRegIcon from '@material-ui/icons/HowToReg';
 import EditIcon from '@material-ui/icons/Edit';
-import SearchIcon from '@material-ui/icons/Search';
+import HowToRegIcon from '@material-ui/icons/HowToReg';
 import MenuIcon from '@material-ui/icons/Menu';
+import SearchIcon from '@material-ui/icons/Search';
+import fs from "fs";
+import path from "path";
 import { useEffect, useState } from "react";
-import { callApi } from "../services";
+import LazyLoad from "react-lazyload";
 import Slider from "react-slick";
 import { FacebookFooter, GmailFooter, LinkedInFooter, TumblrIcon, TwitterFooter, Youtube } from "../components/Icons";
-import './home.css'
+import SEO from "../components/SEO";
 import SearchResultsModal from "../container/home/SearchResultsModal";
+import { callApi } from "../services";
+import { getWebContext } from "../utils";
+import './home.css';
 
 const useStyles = makeStyles({
     bgheader: props => {
@@ -78,15 +80,17 @@ const useStyles = makeStyles({
     }
 })
 
-const Home = ({ isMobile, url }) => {
+const Home = ({ isMobile, url, appInfos }) => {
     return <>
         <main style={{
             display: "flex",
             flexDirection: "column"
         }}>
-            <SEO url={url} />
+            <SEO url={url}>
+                <link rel="preload" href={url+"/styles/slick.css"} />
+            </SEO>
             <HeaderBannerPanel isMobile={isMobile} />
-            <BodyPanel isMobile={isMobile} />
+            <BodyPanel isMobile={isMobile} appInfos={appInfos} />
             <LazyLoad><FooterPanel isMobile={isMobile} /></LazyLoad>
         </main>
     </>
@@ -228,17 +232,17 @@ const SearchPanel = ({ isMobile, setSearchResults }) => {
     </div>
 }
 
-const BodyPanel = ({ isMobile }) => {
+const BodyPanel = ({ isMobile, appInfos }) => {
     const height = "50px";
     return <main>
         <div style={{height: height}}></div>
-        <LazyLoad><Block1 /></LazyLoad>
+        <Block1 appInfos={appInfos} />
         <div style={{height: height}}></div>
         <LazyLoad><Block2 isMobile={isMobile} /></LazyLoad>
+        <div style={{height: height}}></div>
         <LazyLoad>
             <link rel="stylesheet" type="text/css" href="/styles/slick.css" />
         </LazyLoad>
-        <div style={{height: height}}></div>
         <LazyLoad><Block3 /></LazyLoad>
         <div style={{height: height}}></div>
     </main>
@@ -260,10 +264,15 @@ const MyTitle = ({ title, description }) => {
     </div>
 }
 
-const Block1 = () => {
+const Block1 = ({ appInfos }) => {
+    // useEffect(() => {
+        
+    // }, [])
     return <section>
         <MyTitle title="GREAT APPS FOR YOU" description="Practice right now with our free apps!" />
-
+        <div style={{ textAlign: "center" }}>
+            { appInfos.length }
+        </div>
     </section>
 }
 
@@ -498,7 +507,16 @@ const SocialWidget = ({ color }) => {
 }
 
 export async function getServerSideProps(context) {
-    return getWebContext(context);
+    const directoryAppInfos = path.join(process.cwd(), 'src/data/appInfos.json')
+    let appInfosData = fs.readFileSync(directoryAppInfos);
+    let mapAppInfos = JSON.parse(appInfosData)
+    const mapAppInfo = {};
+    Object.values(mapAppInfos).forEach((value) => {
+        if(!mapAppInfo[value.id]){
+            mapAppInfo[value.id] = value;
+        }
+    })
+    return getWebContext(context, { appInfos: Object.values(mapAppInfo) });
 }
 
 export default Home
