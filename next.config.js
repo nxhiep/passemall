@@ -9,5 +9,10 @@ module.exports = withCSS({
             }
         }
         return config
+    },
+    exportPathMap: function () {
+        return {
+            '/': { page: '/' },
+        }
     }
 })
