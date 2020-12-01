@@ -6,13 +6,15 @@ import MenuIcon from '@material-ui/icons/Menu';
 import SearchIcon from '@material-ui/icons/Search';
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
+import ReactGA from 'react-ga';
 import LazyLoad from "react-lazyload";
 import Slider from "react-slick";
 import { FacebookFooter, GmailFooter, LinkedInFooter, TumblrIcon, TwitterFooter, Youtube } from "../components/Icons";
 import SEO from "../components/SEO";
+import { GA_ID } from "../config_app";
 import SearchResultsModal from "../container/home/SearchResultsModal";
 import { callApi } from "../services";
-import { getWebContext, scrollDown } from "../utils";
+import { getWebContext, oldUser, scrollDown, setScrollDownAuto } from "../utils";
 import './home.css';
 
 const useStyles = makeStyles({
@@ -94,15 +96,20 @@ const useStyles = makeStyles({
     }
 })
 
+ReactGA.initialize(GA_ID);
+
 const Home = ({ isMobile, url }) => {
+    useEffect(() => {
+        ReactGA.pageview('/homepage');
+        setScrollDownAuto()
+        oldUser();
+    }, [])
     return <>
         <main style={{
             display: "flex",
             flexDirection: "column"
         }}>
-            <SEO url={url}>
-                <link rel="preload" href={url+"/styles/slick.css"} />
-            </SEO>
+            <SEO url={url} />
             <HeaderBannerPanel isMobile={isMobile} />
             <BodyPanel isMobile={isMobile} />
             <FooterPanel isMobile={isMobile} />
