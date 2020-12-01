@@ -92,6 +92,7 @@ const HeaderBannerPanel = ({ isMobile, appInfo }) => {
     const bannerUrl = superApp ? getHeaderBanner(appInfo.id) : null
     const [openDownload, setOpenDownload] = useState(false)
     const styles = useStyles({ isMobile, bannerUrl: bannerUrl, openDownload });
+    let appName = (appInfo.appName || '').toLowerCase().replace('practice', '').replace('test', '').toUpperCase();
     return <>
         <div className={styles.bgheader}>
             <div className={styles.headerTemp}>
@@ -133,7 +134,7 @@ const HeaderBannerPanel = ({ isMobile, appInfo }) => {
                                 display: "flex",
                                 alignItems: "center",
                                 color: superApp ? "white" : "#1e3094"
-                            }}>Make your study great with our thousands of free practice questions</h1>
+                            }}>FREE {appName} PRACTICE TEST</h1>
                             <p style={{
                                 minHeight: isMobile ? "180px" : "0",
                                 display: "flex",
@@ -141,7 +142,8 @@ const HeaderBannerPanel = ({ isMobile, appInfo }) => {
                                 color: superApp ? "white" : "#333",
                                 fontSize: "1.1em",
                                 fontWeight: "500"
-                            }}>You want to get 100% ready for your important day? You desire to pass your exam at your first try? You are wondering if you should pay a charge of money buying some practice materials? That’s why we are here to support you achieve the gate of success with our test prep solutions.</p>
+                            }}>If you're nervous about the {appName} test for the first time, try our free {appName} practice test. 
+                                Test your knowledge with +1000 {appName} practice questions!</p>
                             <div style={{height: "32px"}}></div>
                             <div className={styles.flex} style={{flexWrap: "wrap"}}>
                                 <Button variant="contained" color="inherit" style={{
