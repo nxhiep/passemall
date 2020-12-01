@@ -1,0 +1,44 @@
+.dropdown-app-panel {
+    position: relative;
+    min-width: 320px;
+}
+.dropdown-app-panel .content {
+    display: none;
+    position: absolute;
+    top: calc(100% - 2px);
+    right: 2px;
+    width: calc(100% - 4px);
+    background: #616E7D;
+    padding: 10px;
+    box-sizing: border-box;
+    border-radius: 40px;
+}
+.dropdown-app-panel button {
+    width: 100%;
+    background-color: #616E7D;
+    border-radius: 40px;
+    font-weight: bold;
+    color: white;
+    margin-top: 10px;
+    border: 2px solid;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 8px 20px;
+    padding-right: 10px;
+    font-size: 16px;
+    cursor: pointer;
+    outline: none;
+}
+.dropdown-app-panel:hover button {
+    border-radius: 20px;
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+}
+.dropdown-app-panel:hover .content {
+    display: flex;
+    align-items: center;
+    border-radius: 20px;
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+}

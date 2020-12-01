@@ -33,8 +33,8 @@ const useStyles = makeStyles({
         }
     },
     header: {
-        height: "70px",
-        backgroundColor: "trantransparent"
+        height: "100px",
+        backgroundColor: "transparent"
     },
     flex: {
         display: "flex",
