@@ -1,0 +1,22 @@
+.text-bg {
+    font-size: 35px;
+    color: #639;
+    margin-right: 10px;
+    font-weight: 700;
+    background-image: url(/images/background-text.jpg);
+    background-repeat: repeat;
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-align: center;
+    font-weight: bold;
+    text-transform: uppercase;
+    -webkit-font-smoothing: antialiased;
+}
+
+.slick-dots li button {
+    background-color: black;
+}
+.slick-dots li.slick-active button {
+
+}

@@ -1,10 +1,14 @@
-import { Container, Grid, makeStyles } from "@material-ui/core";
+import { CircularProgress, Container, Grid, makeStyles, useMediaQuery, useTheme } from "@material-ui/core";
 import LazyLoad from "react-lazyload";
 import SEO from "../components/SEO";
 import { getWebContext } from "../utils";
 import DashboardIcon from '@material-ui/icons/Dashboard';
 import HowToRegIcon from '@material-ui/icons/HowToReg';
 import EditIcon from '@material-ui/icons/Edit';
+import { useEffect, useState } from "react";
+import { callApi } from "../services";
+import Slider from "react-slick";
+import { FacebookFooter, GmailFooter, LinkedInFooter, TumblrIcon, TwitterFooter, Youtube } from "../components/Icons";
 
 const useStyles = makeStyles({
     bgheader: {
@@ -29,15 +33,31 @@ const useStyles = makeStyles({
         '&:hover': {
             textDecoration: "underline"
         }
+    },
+    tagAFooter: {
+        color: "white",
+        textDecoration: "none",
+        display: "flex",
+        alignItems: "center",
+        '&:hover': {
+            textDecoration: "underline"
+        }
     }
 })
 
 const Home = ({ isMobile, url }) => {
     return <>
-        <SEO url={url} />
-        <HeaderBannerPanel isMobile={isMobile} />
-        <BodyPanel isMobile={isMobile} />
-        <FooterPanel isMobile={isMobile} />
+        <main style={{
+            display: "flex",
+            flexDirection: "column"
+        }}>
+            <SEO url={url}>
+                <link rel="stylesheet" href="/styles/home/index.css" />
+            </SEO>
+            <HeaderBannerPanel isMobile={isMobile} />
+            <BodyPanel isMobile={isMobile} />
+            <FooterPanel isMobile={isMobile} />
+        </main>
     </>
 }
 
@@ -90,7 +110,6 @@ const BodyPanel = ({ isMobile }) => {
         <div style={{height: height}}></div>
         <Block3 />
         <div style={{height: height}}></div>
-        <Block4 />
     </main>
 }
 
@@ -184,44 +203,156 @@ const Block2Item = ({ icon, title, description }) => {
 }
 
 const ActiveItem = ({ value = '', title = '' }) => {
+    const styles = useStyles()
     return (
         <Grid item xs={6} sm={3} style={{textAlign: "center"}}>
-            <strong style={{
-                fontSize: "35px",
-                color: "#639",
-                marginRight: "10px",
-                fontWeight: "700",
-                backgroundImage: "url(/images/background-text.jpg)",
-                backgroundRepeat: "repeat",
-                backgroundClip: "text",
-                webkitBackgroundClip: "text",
-                webkitTextFillColor: "transparent",
-                textAlign: "center",
-                fontWeight: "bold",
-                textTransform: "uppercase",
-                webkitFontSmoothing: "antialiased"
-            }}>{value}</strong>
+            <strong className="text-bg">{value}</strong>
             <span>{title}</span>
         </Grid>
     );
 }
 
 const Block3 = () => {
-    return <section>
-
-    </section>
+    const [userRates, setUserRates] = useState(null);
+    useEffect(() => {
+        callApi({ url: '/data?type=get_user_rates_perfectest', params: null, method: 'post' }).then((data) => {
+            if(data){
+                setUserRates(data.slice(0, 3))
+            } else {
+                setUserRates([])
+            };
+        })
+    }, []);
+    const theme = useTheme();
+    const xs = useMediaQuery(theme.breakpoints.down("xs"));
+    const sm = useMediaQuery(theme.breakpoints.down("md"));
+    const settings = {
+        dots: true,
+        infinite: true,
+        speed: 500,
+        slidesToShow: xs ? 1 : (sm ? 2 : 3),
+        slidesToScroll: xs ? 1 : (sm ? 2 : 3),
+        className: "feedback-slider",
+        autoPlay: true,
+        autoplaySpeed: 1500,
+        arrows: false
+    };
+    if(!userRates){
+        return <CircularProgress />
+    }
+    if(userRates.length == 0){
+        return null
+    }
+    return (
+        <section>
+            <Container>
+                <MyTitle title="FEEDBACKS" />
+                <Slider {...settings}>
+                    {
+                        userRates.map((userRate, index) => {
+                            return <FeedbackItem
+                                key={"FeedbackItem-" + userRate.id}
+                                content={userRate.content}
+                                name={userRate.userName}
+                                createTime={userRate.createDate}
+                                index={index}
+                            />
+                        })
+                    }
+                </Slider>
+            </Container>
+        </section>
+    );
 }
 
-const Block4 = () => {
-    return <section>
-        Block3
-    </section>
+const FeedbackItem = ({ content, name, index }) => {
+    return (
+        <div style={{
+            padding: "20px"
+        }}>
+            <div style={{
+                borderRadius: "20px",
+                padding: "20px",
+                background: "linear-gradient(180deg,#C8ADC2 0%,#A08FBA 100%),linear-gradient(0deg,rgba(255,255,255,0.8),rgba(255,255,255,0.8))"
+            }}>
+                <LazyLoad><img 
+                    style={{ margin: "20px auto", display: "block" }}
+                    src={index % 3 === 0 ? "/images/avatar-1.png" : (index % 3 === 1 ? "/images/avatar-2.png" : "/images/avatar-3.png")} alt="avatar"></img></LazyLoad>
+                <div>
+                    <div style={{ textAlign: "center", margin: "20px auto", fontSize: "1.1em" }}><strong>{name}</strong></div>
+                    <div style={{ minHeight: "140px" }} className="dot-7">{content}</div>
+                </div>
+            </div>
+        </div>
+    );
 }
 
 const FooterPanel = ({ isMobile }) => {
-    return <main>
-        Footer
-    </main>
+    const styles = useStyles()
+    return <footer style={{ backgroundColor: "#4E63BD", padding: "20px 0" }}>
+        <Container>
+            <Grid container>
+                <Grid item xs={12} sm={6} md={4}>
+                    <a href="/">
+                        <img src="/images/logo-landing.png" width="240px" height="60px" />
+                    </a>
+                </Grid>
+                <Grid item xs={12} sm={6} md={3}>
+                    <div style={{fontSize: "20px", marginBottom: "20px"}}><strong>Resources</strong></div>
+                    <div>
+                        <div><a href="/blog" className={styles.tagAFooter}>Blog</a></div>
+                        <div><a href="https://passemall.com/blog/about-us-5634123102158848" className={styles.tagAFooter}>About us</a></div>
+                    </div>
+                </Grid>
+                <Grid item xs={12} sm={6} md={5}>
+                    <div style={{fontSize: "20px", marginBottom: "20px"}}><strong>Social</strong></div>
+                    <SocialWidget />
+                </Grid>
+            </Grid>
+        </Container>
+    </footer>
+}
+
+const SocialWidget = ({ color }) => {
+    const styles = useStyles()
+    return <Grid container spacing={2}>
+        <Grid item xs={12} sm={12} md={6}>
+            <a href="https://twitter.com/abcelearningapp" target="_blank" rel="noopener" className={styles.tagAFooter}>
+                <TwitterFooter color={color}></TwitterFooter>
+                <span style={{ marginLeft: "8px" }}>Twitter</span>
+            </a>
+        </Grid>
+        <Grid item xs={12} sm={12} md={6}>
+            <a href="https://www.facebook.com/ABC-E-learning-110654290809849" target="_blank" rel="noopener" className={styles.tagAFooter}>
+                <FacebookFooter color={color}></FacebookFooter>
+                <span style={{ marginLeft: "8px" }}>Facebook</span>
+            </a>
+        </Grid>
+        <Grid item xs={12} sm={12} md={6}>
+            <a href="https://www.youtube.com/channel/UCkLKqup_8asTJGtQIgXCOZg" target="_blank" rel="noopener" className={styles.tagAFooter}>
+                <Youtube color={color}></Youtube>
+                <span style={{ marginLeft: "8px" }}>Youtube</span>
+            </a>
+        </Grid>
+        <Grid item xs={12} sm={12} md={6}>
+            <a href="https://www.tumblr.com/blog/view/abcelearningapps" target="_blank" rel="noopener" className={styles.tagAFooter}>
+                <TumblrIcon color={color} bgColor="white"></TumblrIcon>
+                <span style={{ marginLeft: "8px" }}>Tumblr</span>
+            </a>
+        </Grid>
+        <Grid item xs={12} sm={12} md={6}>
+            <a href="https://www.linkedin.com/in/abc-elearningapps-ab9a231b8" target="_blank" rel="noopener" className={styles.tagAFooter}>
+                <LinkedInFooter color={color}></LinkedInFooter>
+                <span style={{ marginLeft: "8px" }}>LinkedIn</span>
+            </a>
+        </Grid>
+        <Grid item xs={12} sm={12} md={12}>
+            <a href="mailto:abc.elearningapps@gmail.com" target="_blank" className={styles.tagAFooter}>
+                <GmailFooter color={color}></GmailFooter>
+                <span style={{ marginLeft: "8px" }}>abc.elearningapps@gmail.com</span>
+            </a>
+        </Grid>
+    </Grid>
 }
 
 export async function getServerSideProps(context) {
