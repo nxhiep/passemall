@@ -137,12 +137,12 @@ const HeaderBannerPanel = ({ isMobile }) => {
                 <Grid container justify="space-between" alignItems="center">
                     <Grid item xs={12} sm={5} md={5}>
                         <h1 style={{
-                            minHeight: "400px",
+                            minHeight: "180px",
                             display: "flex",
                             alignItems: "center"
                         }}>Make your study great with our thousands of free practice questions</h1>
                         <p style={{
-                            minHeight: "400px",
+                            minHeight: "180px",
                             display: "flex",
                             alignItems: "center"
                         }}>You want to get 100% ready for your important day? You desire to pass your exam at your first try? You are wondering if you should pay a charge of money buying some practice materials? That’s why we are here to support you achieve the gate of success with our test prep solutions.</p>
