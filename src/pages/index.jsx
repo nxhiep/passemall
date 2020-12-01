@@ -66,7 +66,7 @@ const useStyles = makeStyles({
         }
     },
     tagAFooter: {
-        color: "white",
+        color: "#4e63bd",
         textDecoration: "none",
         display: "flex",
         alignItems: "center",
@@ -368,12 +368,14 @@ const ListApps = ({ appInfos, isMobile }) => {
 }
 
 const Block2 = ({ isMobile }) => {
+    const theme = useTheme();
+    const sm = useMediaQuery(theme.breakpoints.down(960));
     return <section>
         <MyTitle isMobile={isMobile} title="SOME OF THE BEST FEATURES" description="With thousands of exam-simulated questions with detail explanations, lifetime access to the complete Manual, and dozens of test-taking strategies, our Test Prep helps you pass your test with flying colors." />
         <Container>
             <Grid container spacing={3} alignItems="center">
-                {isMobile ? null : <Grid item xs={12} sm={6} md={3}>
-                    <LazyLoad><img src="/images/test5.png" alt="static-img" alt='With thousands of exam-simulated questions with detail explanations, lifetime access to the complete Manual, and dozens of test-taking strategies, our Test Prep helps you pass your test with flying colors' /></LazyLoad>
+                {isMobile || sm ? null : <Grid item xs={12} sm={6} md={3}>
+                    <LazyLoad><img width="100%" src="/images/test5.jpg" alt="static-img" alt='With thousands of exam-simulated questions with detail explanations, lifetime access to the complete Manual, and dozens of test-taking strategies, our Test Prep helps you pass your test with flying colors' /></LazyLoad>
                 </Grid>}
                 <Grid item xs={12} sm={12} md={9}>
                     <Grid container>
@@ -514,6 +516,8 @@ const FeedbackItem = ({ content, name, index }) => {
             padding: "20px"
         }}>
             <div style={{
+                backdropFilter: "blur(10px)",
+                filter: "drop-shadow(5px 5px 10px rgba(38, 38, 38, 0.35))",
                 textAlign: "center", 
                 color: "white",
                 borderRadius: "20px",
@@ -534,12 +538,12 @@ const FeedbackItem = ({ content, name, index }) => {
 
 const FooterPanel = ({ isMobile }) => {
     const styles = useStyles()
-    return <footer style={{ backgroundColor: "#4E63BD", padding: "50px 0" }}>
+    return <footer style={{ backgroundColor: "#DAD3F1", padding: "50px 0", color: "#4e63bd" }}>
         <Container>
             <Grid container>
                 <Grid item xs={12} sm={6} md={4}>
                     <a href="/">
-                        <img src="/images/logo-landing.png" width="240px" height="60px" />
+                        <img src="/images/logo-landing-2.png" width="240px" height="60px" />
                     </a>
                 </Grid>
                 <Grid item xs={12} sm={6} md={3} style={{paddingTop: "20px"}}>
