@@ -57,7 +57,7 @@ export function isMobileFunctions() {
 }
 export function scrollDown() {
     window.scroll({
-        top: document.body.scrollHeight,
+        top: 100000000,
         behavior: 'smooth'
     });
 }

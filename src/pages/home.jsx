@@ -12,7 +12,7 @@ import { FacebookFooter, GmailFooter, LinkedInFooter, TumblrIcon, TwitterFooter,
 import SEO from "../components/SEO";
 import SearchResultsModal from "../container/home/SearchResultsModal";
 import { callApi } from "../services";
-import { getWebContext } from "../utils";
+import { getWebContext, scrollDown } from "../utils";
 import './home.css';
 
 const useStyles = makeStyles({
@@ -53,7 +53,7 @@ const useStyles = makeStyles({
             }
         }
         return {
-            padding: "10px",
+            padding: "10px 20px",
             textDecoration: "none",
             color: "#4e63bd",
             fontWeight: "600",
@@ -80,6 +80,17 @@ const useStyles = makeStyles({
     appItem: {
         padding: "16px 0",
         borderBottom: "1px solid rgba(250,142,69,.3)"
+    },
+    appItemText: {
+        textTransform: "uppercase",
+        fontSize: "1.2em",
+        fontWeight: "500",
+        cursor: "pointer",
+        color: "#656566",
+        '&:hover': {
+            color: "#1e3094",
+            textDecoration: "underline",
+        }
     }
 })
 
@@ -94,7 +105,7 @@ const Home = ({ isMobile, url }) => {
             </SEO>
             <HeaderBannerPanel isMobile={isMobile} />
             <BodyPanel isMobile={isMobile} />
-            <LazyLoad><FooterPanel isMobile={isMobile} /></LazyLoad>
+            <FooterPanel isMobile={isMobile} />
         </main>
     </>
 }
@@ -144,18 +155,25 @@ const HeaderBannerPanel = ({ isMobile }) => {
                 <Grid container justify="space-between" alignItems="center">
                     <Grid item xs={12} sm={5} md={5}>
                         <h1 style={{
-                            minHeight: "180px",
+                            minHeight: isMobile ? "180px" : "0",
                             display: "flex",
-                            alignItems: "center"
+                            alignItems: "center",
+                            color: "#1e3094"
                         }}>Make your study great with our thousands of free practice questions</h1>
                         <p style={{
-                            minHeight: "180px",
+                            minHeight: isMobile ? "180px" : "0",
                             display: "flex",
-                            alignItems: "center"
+                            alignItems: "center",
+                            color: "#333",
+                            fontSize: "1.1em",
+                            fontWeight: "500"
                         }}>You want to get 100% ready for your important day? You desire to pass your exam at your first try? You are wondering if you should pay a charge of money buying some practice materials? That’s why we are here to support you achieve the gate of success with our test prep solutions.</p>
                     </Grid>
                     {isMobile ? null : <Grid item xs={12} sm={5} md={5}>
-                        <img width="100%" src="/images/test3.png" />
+                        <img width="100%" src="/images/test3.png" style={{
+                            position: "relative",
+                            bottom: "-60px"
+                        }} />
                     </Grid>}
                 </Grid>
             </Container>
@@ -170,7 +188,9 @@ const HeaderMenu = ({ isMobile, setSearchResults }) => {
         <div className={isMobile ? "" : styles.flex}>
             <a href="/" className={styles.headerMenu}>HOME</a>
             <a href="/blog" className={styles.headerMenu}>BLOG</a>
-            <span className={styles.headerMenu}>SUPPORT</span>
+            <span className={styles.headerMenu} onClick={() => {
+                scrollDown()
+            }}>SUPPORT</span>
         </div>
         <div style={{width: "50px"}}></div>
         <SearchPanel isMobile={isMobile} setSearchResults={setSearchResults} />
@@ -251,18 +271,21 @@ const BodyPanel = ({ isMobile }) => {
     </main>
 }
 
-const MyTitle = ({ title, description }) => {
-    return <div style={{textAlign: "center", marginTop: "20px", padding: "0 20px"}}>
+const MyTitle = ({ title, description, isMobile }) => {
+    return <div style={{textAlign: "center", marginTop: "40px", marginBottom: "40px", padding: "0 20px"}}>
         <span style={{ fontSize: "24px", fontWeight: "bold", borderTop: "3px solid #fa8e45", padding: "8px 0px" }}>
             <span style={{color: "#4e63bd"}}>ABC</span>
             <span> </span>
             <span style={{color: "#fa8e45"}}>E-learning</span>
         </span>
-        <h1>{title}</h1>
+        <h1 style={{ fontSize: isMobile ? "" : "1.8em", color: "#1e3094" }}>{title}</h1>
         <p style={{
             maxWidth: "500px",
             textAlign: "center",
-            margin: "0 auto"
+            margin: "0 auto",
+            color: "#333",
+            fontSize: "1.1em",
+            fontWeight: "500"
         }}>{description}</p>
     </div>
 }
@@ -275,8 +298,7 @@ const Block1 = ({ isMobile }) => {
         })
     }, [])
     return <section>
-        <MyTitle title="GREAT APPS FOR YOU" description="Practice right now with our free apps!" />
-        <div style={{height: "40px"}}></div>
+        <MyTitle isMobile={isMobile} title="GREAT APPS FOR YOU" description="Practice right now with our free apps!" />
         <Container>
         {
             !appInfos ? <div style={{
@@ -293,6 +315,7 @@ const Block1 = ({ isMobile }) => {
 }
 
 const ListApps = ({ appInfos, isMobile }) => {
+    appInfos = appInfos.sort((a, b) => a.appName.localeCompare(b.appName))
     const styles = useStyles({ isMobile })
     const [open, setOpen] = useState(false)
     const router = useRouter()
@@ -306,7 +329,7 @@ const ListApps = ({ appInfos, isMobile }) => {
                     return <Grid item xs={12} sm={6} md={4} key={"appInfo-" + appInfo.id} className={styles.appItem} onClick={() => {
                         openApp(appInfo.appNameId)
                     }}>
-                        <div>{appInfo.appName}</div>
+                        <div className={styles.appItemText}>{appInfo.appName}</div>
                     </Grid>
                 }) }
             </Grid>
@@ -320,7 +343,7 @@ const ListApps = ({ appInfos, isMobile }) => {
                     return <Grid item xs={12} sm={6} md={4} key={"appInfo-" + appInfo.id} className={styles.appItem} onClick={() => {
                         openApp(appInfo.appNameId)
                     }}>
-                        <div>{appInfo.appName}</div>
+                        <div className={styles.appItemText}>{appInfo.appName}</div>
                     </Grid>
                 }) }
             </Grid> : null}
@@ -331,7 +354,7 @@ const ListApps = ({ appInfos, isMobile }) => {
             return <Grid item xs={12} sm={6} md={4} key={"appInfo-" + appInfo.id} className={styles.appItem} onClick={() => {
                     openApp(appInfo.appNameId)
                 }}>
-                <div>{appInfo.appName}</div>
+                <div className={styles.appItemText}>{appInfo.appName}</div>
             </Grid>
         }) }
     </Grid>
@@ -339,7 +362,7 @@ const ListApps = ({ appInfos, isMobile }) => {
 
 const Block2 = ({ isMobile }) => {
     return <section>
-        <MyTitle title="SOME OF THE BEST FEATURES" description="With thousands of exam-simulated questions with detail explanations, lifetime access to the complete Manual, and dozens of test-taking strategies, our Test Prep helps you pass your test with flying colors." />
+        <MyTitle isMobile={isMobile} title="SOME OF THE BEST FEATURES" description="With thousands of exam-simulated questions with detail explanations, lifetime access to the complete Manual, and dozens of test-taking strategies, our Test Prep helps you pass your test with flying colors." />
         <Container>
             <Grid container spacing={3} alignItems="center">
                 {isMobile ? null : <Grid item xs={12} sm={6} md={3}>
@@ -404,8 +427,10 @@ const Block2Item = ({ isMobile, icon, title, description }) => {
                 borderRadius: "100%"
             }}>{icon}</div>
             <div style={{ marginTop: "20px", marginBottom: "20px", width: isMobile ? "calc(100% - 60px)" : "100%", marginLeft: isMobile ? "10px" : "" }}>
-                <strong>{title}</strong>
-                <p>{description}</p>
+                <strong style={{ color: "rgb(78, 99, 189)" }}>{title}</strong>
+                <p style={{
+                    color: "#333"
+                }}>{description}</p>
             </div>
         </Grid>
     </>
@@ -421,7 +446,7 @@ const ActiveItem = ({ isMobile, value = '', title = '' }) => {
     );
 }
 
-const Block3 = () => {
+const Block3 = ({ isMobile }) => {
     const [userRates, setUserRates] = useState(null);
     useEffect(() => {
         callApi({ url: '/data?type=get_user_rates_perfectest', params: null, method: 'post' }).then((data) => {
@@ -457,7 +482,7 @@ const Block3 = () => {
     return (
         <section>
             <Container>
-                <MyTitle title="FEEDBACKS" />
+                <MyTitle isMobile={isMobile} title="FEEDBACKS" />
                 <Slider {...settings}>
                     {
                         userRates.map((userRate, index) => {
@@ -482,15 +507,17 @@ const FeedbackItem = ({ content, name, index }) => {
             padding: "20px"
         }}>
             <div style={{
+                textAlign: "center", 
+                color: "white",
                 borderRadius: "20px",
-                padding: "20px",
+                padding: "30px",
                 background: "linear-gradient(180deg,#C8ADC2 0%,#A08FBA 100%),linear-gradient(0deg,rgba(255,255,255,0.8),rgba(255,255,255,0.8))"
             }}>
                 <LazyLoad><img 
                     style={{ margin: "20px auto", display: "block" }}
                     src={index % 3 === 0 ? "/images/avatar-1.png" : (index % 3 === 1 ? "/images/avatar-2.png" : "/images/avatar-3.png")} alt="avatar"></img></LazyLoad>
                 <div>
-                    <div style={{ textAlign: "center", margin: "20px auto", fontSize: "1.1em" }}><strong>{name}</strong></div>
+                    <div style={{ margin: "20px auto", fontSize: "1.1em" }}><strong>{name}</strong></div>
                     <div style={{ minHeight: "140px" }} className="dot-7">{content}</div>
                 </div>
             </div>
@@ -500,7 +527,7 @@ const FeedbackItem = ({ content, name, index }) => {
 
 const FooterPanel = ({ isMobile }) => {
     const styles = useStyles()
-    return <footer style={{ backgroundColor: "#4E63BD", padding: "20px 0" }}>
+    return <footer style={{ backgroundColor: "#4E63BD", padding: "50px 0" }}>
         <Container>
             <Grid container>
                 <Grid item xs={12} sm={6} md={4}>
