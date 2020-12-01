@@ -27,11 +27,11 @@ const LandingPage = ({ isMobile, url }) => {
                 <LazyLoad>
                     <ListGreatApps />
                 </LazyLoad>
-                <StatictisApps />
-                <FeedbackApps />
+                <LazyLoad><StatictisApps /></LazyLoad>
                 <LazyLoad>
                     <link rel="stylesheet" type="text/css" href="/styles/slick.css" />
                 </LazyLoad>
+                <LazyLoad><FeedbackApps /></LazyLoad>
                 <Footer color="#4E63BD"></Footer>
             </div>
         </>
