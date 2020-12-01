@@ -4,8 +4,10 @@ import fs from "fs";
 import path from "path";
 import { useState } from "react";
 import LazyLoad from "react-lazyload";
+import FooterPanel from "../../components/new/FooterPanel";
 import SEO from "../../components/SEO";
 import { APP_NEW_DOMAIN } from "../../config_app";
+import ErrorPage from "../../container/error";
 import { getHeaderBanner, getWebContext, isSuperApp, scrollDown, scrollToTopic } from "../../utils";
 import './app.css';
 
@@ -74,13 +76,16 @@ const useStyles = makeStyles({
 });
 
 const App = ({ appInfo, url, isMobile }) => {
+    if(!appInfo || Object.keys(appInfo).length === 0 && appInfo.constructor === Object){
+        return <ErrorPage title="Not found app" />
+    }
     return <main style={{
         display: "flex",
         flexDirection: "column"
     }}>
         <SEO url={url} appInfo={appInfo} />
         <HeaderBannerPanel isMobile={isMobile} appInfo={appInfo} />
-        <BodyPanel isMobile={isMobile} />
+        <BodyPanel appInfo={appInfo} isMobile={isMobile} />
         <FooterPanel isMobile={isMobile} />
     </main>
 }
@@ -149,7 +154,9 @@ const HeaderBannerPanel = ({ isMobile, appInfo }) => {
                                 <Button variant="contained" color="inherit" style={{
                                     borderRadius: "40px",
                                     fontWeight: "bold",
-                                    marginTop: "10px"
+                                    marginTop: "10px",
+                                    backgroundColor: "#616E7D",
+                                    color: "white"
                                 }} >
                                     <ComputerIcon />
                                     <span style={{width: "10px"}}></span>
@@ -212,16 +219,102 @@ const HeaderMenu = ({ styles, isMobile, appInfo }) => {
     </>
 }
 
-const BodyPanel = ({ isMobile }) => {
+const BodyPanel = ({ isMobile, appInfo }) => {
     return <div>
-        BodyPanel {isMobile}
+        <div style={{height: "100px"}}></div>
+        <Block1 isMobile={isMobile} appInfo={appInfo} />
+        <div style={{height: "50px"}}></div>
+        <Block2 isMobile={isMobile} appInfo={appInfo} />
+        <div style={{height: "50px"}}></div>
+        <Block3 isMobile={isMobile} appInfo={appInfo} />
+        <div style={{height: "50px"}}></div>
+        <Block4 isMobile={isMobile} appInfo={appInfo} />
+        <div style={{height: "50px"}}></div>
+        <Block5 isMobile={isMobile} appInfo={appInfo} />
+        <div style={{height: "50px"}}></div>
+        <Block6 isMobile={isMobile} appInfo={appInfo} />
+        <div style={{height: "50px"}}></div>
     </div>
 }
 
-const FooterPanel = ({ isMobile }) => {
-    return <div>
-        FooterPanel {isMobile}
-    </div>
+const Block1 = ({ isMobile, appInfo }) => {
+    let appName = (appInfo.appName || '').toLowerCase().replace('practice', '').replace('test', '').toUpperCase();
+    return <section>
+        <Container>
+            <Grid container spacing={3}>
+                <Block1Item 
+                    icon="icon-block1-1"
+                    title={"All " + appName + " practice test free"}
+                    desciption="1000+ FREE practice questions and various simulator tests to explore. All you need to get your certificate is available here."
+                />
+                <Block1Item 
+                    icon="icon-block1-2"
+                    title={"No Sign up or Login Required"}
+                    desciption="All your progress is saved without an account even if you close your browser. No usernames, no passwords - just merely ASVAB training."
+                />
+                <Block1Item 
+                    icon="icon-block1-3"
+                    title={"Exam simulator All based on real tests"}
+                    desciption="Same number of questions, same time limits, same structure. The exam simulators let you familiarize with test format and get 100% ready for your big day!"
+                />
+                <Block1Item 
+                    icon="icon-block1-4"
+                    title={"Detailed explanations"}
+                    desciption="Let you know why an option was correct and the others were not. Well understand always helps you remember better!!!"
+                />
+                <Block1Item 
+                    icon="icon-block1-5"
+                    title={"Gamization"}
+                    desciption="The learning process was divided into small milestones. Let's make your studying interesting like playing games."
+                />
+                <Block1Item 
+                    icon="icon-block1-6 "
+                    title={"Study on any device"}
+                    desciption="You can browser to study on any device from your phone to tablet and PC. Keep stay any time to get more knowledge!"
+                />
+            </Grid>
+        </Container>
+    </section>
+}
+
+const Block1Item = ({ icon, title, desciption }) => {
+    return <Grid item xs={12} sm={6} md={4}>
+        <div style={{ padding: "20px", textAlign:"center" }}>
+            <div className={icon}></div>
+            <p><strong>{title}</strong></p>
+            <p>{desciption}</p>
+        </div>
+    </Grid>
+}
+
+const Block2 = () => {
+    return <section>
+        Block2
+    </section>
+}
+
+const Block3 = () => {
+    return <section>
+        Block3
+    </section>
+}
+
+const Block4 = () => {
+    return <section>
+        Block4
+    </section>
+}
+
+const Block5 = () => {
+    return <section>
+        Block5
+    </section>
+}
+
+const Block6 = () => {
+    return <section>
+        Block6
+    </section>
 }
 
 export async function getServerSideProps(context) {

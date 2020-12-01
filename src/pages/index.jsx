@@ -1,83 +1,24 @@
-import { CircularProgress, Container, Grid, makeStyles, SwipeableDrawer, TextField, useMediaQuery, useTheme } from "@material-ui/core";
+import { CircularProgress, Container, Grid, makeStyles, useMediaQuery, useTheme } from "@material-ui/core";
 import DashboardIcon from '@material-ui/icons/Dashboard';
 import EditIcon from '@material-ui/icons/Edit';
 import HowToRegIcon from '@material-ui/icons/HowToReg';
-import MenuIcon from '@material-ui/icons/Menu';
-import SearchIcon from '@material-ui/icons/Search';
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import ReactGA from 'react-ga';
 import LazyLoad from "react-lazyload";
 import Slider from "react-slick";
-import { FacebookFooter, GmailFooter, LinkedInFooter, TumblrIcon, TwitterFooter, Youtube } from "../components/Icons";
+import FooterPanel from "../components/new/FooterPanel";
+import HeaderBannerPanel from "../components/new/HeaderBannerPanel";
 import SEO from "../components/SEO";
 import { GA_ID } from "../config_app";
-import SearchResultsModal from "../container/home/SearchResultsModal";
 import { callApi } from "../services";
-import { getWebContext, oldUser, scrollDown, setScrollDownAuto } from "../utils";
+import { getWebContext, oldUser, setScrollDownAuto } from "../utils";
 import './home.css';
 
 const useStyles = makeStyles({
-    bgheader: props => {
-        if(props.isMobile){
-            return {
-                background: "url(/images/new/banner-right.jpg) no-repeat",
-                backgroundPosition: "top",
-                backgroundSize: "1000px"
-            }
-        }
-        return {
-            background: "url(/images/new/banner-left.jpg) no-repeat, url(/images/new/banner-right.jpg) no-repeat",
-            backgroundPosition: "top left, top right",
-            backgroundSize: "auto, auto 100%"
-        }
-    },
-    header: {
-        height: "100px",
-        backgroundColor: "transparent"
-    },
     flex: {
         display: "flex",
         alignItems: "center"
-    },
-    headerMenu: props => {
-        if(props.isMobile) {
-            return {
-                display: "block",
-                padding: "10px",
-                textDecoration: "none",
-                color: "white",
-                fontWeight: "600",
-                cursor: "pointer",
-                '&:hover': {
-                    textDecoration: "underline"
-                }
-            }
-        }
-        return {
-            padding: "10px 20px",
-            textDecoration: "none",
-            color: "#4e63bd",
-            fontWeight: "600",
-            cursor: "pointer",
-            '&:hover': {
-                textDecoration: "underline"
-            }
-        }
-    },
-    tagAFooter: {
-        color: "#4e63bd",
-        textDecoration: "none",
-        display: "flex",
-        alignItems: "center",
-        '&:hover': {
-            textDecoration: "underline"
-        }
-    },
-    menuButton: {
-        backgroundColor: "transparent",
-        border: "none",
-        outline: "none"
     },
     appItem: {
         padding: "16px 0",
@@ -115,151 +56,6 @@ const Home = ({ isMobile, url }) => {
             <FooterPanel isMobile={isMobile} />
         </main>
     </>
-}
-
-const HeaderBannerPanel = ({ isMobile }) => {
-    const [openDrawer, setOpenDrawer] = useState(false);
-    const handleOpenDrawer = (open) => setOpenDrawer(open)
-    const [searchResults, setSearchResults] = useState(null);
-    const styles = useStyles({ isMobile });
-    return <>
-        <div className={styles.bgheader}>
-            <header className={styles.header}>
-                <Container style={{height: "100%"}}>
-                    <Grid container justify="space-between" alignItems="center" style={{height: "100%"}}>
-                        <a href="/"><img src="/images/logo-landing-2.png" width="240px" height="60px" /></a>
-                        {isMobile ? <button className={styles.menuButton}
-                        onClick={() => {
-                            setOpenDrawer(true)
-                        }}
-                        >
-                            <MenuIcon />
-                        </button> : <div className={styles.flex}>
-                            <HeaderMenu isMobile={isMobile} setSearchResults={(value, results) => {
-                                setSearchResults({ value, results })
-                            }} />
-                        </div>}
-                        { isMobile ? <SwipeableDrawer
-                            className="header-menu-swipe"
-                            anchor="right"
-                            open={openDrawer}
-                            onClose={() => {
-                                handleOpenDrawer(false);
-                            }}
-                            onOpen={() => handleOpenDrawer(true)}
-                        >
-                            <div style={{padding: "10px"}}>
-                                <a href="/"><img width="200px" height="48px" src="/images/logo-landing.png" /></a>
-                            </div>
-                            <HeaderMenu isMobile={isMobile} setSearchResults={(value, results) => {
-                                setSearchResults({ value, results })
-                            }} />
-                        </SwipeableDrawer> : null }
-                    </Grid>
-                </Container>
-            </header>
-            <Container>
-                <Grid container justify="space-between" alignItems="center">
-                    <Grid item xs={12} sm={5} md={5}>
-                        <h1 style={{
-                            minHeight: isMobile ? "180px" : "0",
-                            display: "flex",
-                            alignItems: "center",
-                            color: "#1e3094"
-                        }}>Make your study great with our thousands of free practice questions</h1>
-                        <p style={{
-                            minHeight: isMobile ? "180px" : "0",
-                            display: "flex",
-                            alignItems: "center",
-                            color: "#333",
-                            fontSize: "1.1em",
-                            fontWeight: "500"
-                        }}>You want to get 100% ready for your important day? You desire to pass your exam at your first try? You are wondering if you should pay a charge of money buying some practice materials? That’s why we are here to support you achieve the gate of success with our test prep solutions.</p>
-                    </Grid>
-                    {isMobile ? null : <Grid item xs={12} sm={5} md={5}>
-                        <img width="100%" src="/images/test3.png" style={{
-                            position: "relative",
-                            bottom: "-60px"
-                        }} />
-                    </Grid>}
-                </Grid>
-            </Container>
-        </div>
-        <SearchResultsModal results={searchResults ? searchResults.results : null} value={searchResults ? searchResults.value : null} />
-    </>
-}
-
-const HeaderMenu = ({ isMobile, setSearchResults }) => {
-    const styles = useStyles({ isMobile });
-    return <>
-        <div className={isMobile ? "" : styles.flex}>
-            <a href="/" className={styles.headerMenu}>HOME</a>
-            <a href="/blog" className={styles.headerMenu}>BLOG</a>
-            <span className={styles.headerMenu} onClick={() => {
-                scrollDown()
-            }}>SUPPORT</span>
-        </div>
-        <div style={{width: "50px"}}></div>
-        <SearchPanel isMobile={isMobile} setSearchResults={setSearchResults} />
-    </>
-}
-
-const SearchPanel = ({ isMobile, setSearchResults }) => {
-    const [appInfos, setAppInfos] = useState(null)
-    const [loading, setLoading] = useState(false)
-    const onSearch1 = (value) => {
-        setLoading(true)
-        if (appInfos) {
-            onSearch(appInfos, value)
-        } else {
-            callApi({ url: '/data?type=get_all_app_info', params: null, method: 'post' }).then((data) => {
-                setAppInfos(data)
-                onSearch(data, value)
-            })
-        }
-    }
-    const onSearch = (appInfos, value) => {
-        if (appInfos && value) {
-            let results = [];
-            appInfos.forEach(element => {
-                let data = (element.description + element.appName).toLowerCase().replace(/ /g, "");
-                if (data.search(value.toLowerCase()) > -1) {
-                    results.push(element);
-                }
-            });
-            console.log("data", results)
-            setSearchResults(value, results)
-        } else {
-            setSearchResults(value, null)
-        }
-        setLoading(false)
-    }
-
-    const [value, setValue] = useState("");
-    const color = isMobile ? "white" : "#1E3094";
-    return <div className="search-header-panel">
-        <TextField value={value}
-            placeholder="Search..." id="search-header"
-            color="secondary" className="search-header"
-            onKeyDown={(e) => {
-                if (e.keyCode == 13) {
-                    onSearch1(value)
-                }
-            }}
-            onChange={(e) => setValue(e.target.value)}
-        />
-        <button
-            style={{ padding: "0", background: 'none', border: 'none' }}
-            onClick={() => {
-                if (loading) {
-                    return;
-                }
-                onSearch1(value)
-            }}
-        >
-            {loading ? <CircularProgress style={{ width: "30px", height: "30px", color: color }} /> : <SearchIcon style={{ fontSize: "25px", width: "35px", color: color }} color="inherit"></SearchIcon>}
-        </button>
-    </div>
 }
 
 const BodyPanel = ({ isMobile }) => {
@@ -534,75 +330,6 @@ const FeedbackItem = ({ content, name, index }) => {
             </div>
         </div>
     );
-}
-
-const FooterPanel = ({ isMobile }) => {
-    const styles = useStyles()
-    return <footer style={{ backgroundColor: "#DAD3F1", padding: "50px 0", color: "#4e63bd" }}>
-        <Container>
-            <Grid container>
-                <Grid item xs={12} sm={6} md={4}>
-                    <a href="/">
-                        <img src="/images/logo-landing-2.png" width="240px" height="60px" />
-                    </a>
-                </Grid>
-                <Grid item xs={12} sm={6} md={3} style={{paddingTop: "20px"}}>
-                    <div style={{fontSize: "20px", marginBottom: "20px"}}><strong>Resources</strong></div>
-                    <div>
-                        <div><a href="/blog" className={styles.tagAFooter}>Blog</a></div>
-                        <div style={{height:"10px"}}></div>
-                        <div><a href="https://passemall.com/blog/about-us-5634123102158848" className={styles.tagAFooter}>About us</a></div>
-                    </div>
-                </Grid>
-                <Grid item xs={12} sm={6} md={5} style={{paddingTop: "20px"}}>
-                    <div style={{fontSize: "20px", marginBottom: "20px"}}><strong>Social</strong></div>
-                    <SocialWidget />
-                </Grid>
-            </Grid>
-        </Container>
-    </footer>
-}
-
-const SocialWidget = ({ color }) => {
-    const styles = useStyles()
-    return <Grid container spacing={2}>
-        <Grid item xs={12} sm={12} md={6}>
-            <a href="https://twitter.com/abcelearningapp" target="_blank" rel="noopener" className={styles.tagAFooter}>
-                <TwitterFooter color={color}></TwitterFooter>
-                <span style={{ marginLeft: "8px" }}>Twitter</span>
-            </a>
-        </Grid>
-        <Grid item xs={12} sm={12} md={6}>
-            <a href="https://www.facebook.com/ABC-E-learning-110654290809849" target="_blank" rel="noopener" className={styles.tagAFooter}>
-                <FacebookFooter color={color}></FacebookFooter>
-                <span style={{ marginLeft: "8px" }}>Facebook</span>
-            </a>
-        </Grid>
-        <Grid item xs={12} sm={12} md={6}>
-            <a href="https://www.youtube.com/channel/UCkLKqup_8asTJGtQIgXCOZg" target="_blank" rel="noopener" className={styles.tagAFooter}>
-                <Youtube color={color}></Youtube>
-                <span style={{ marginLeft: "8px" }}>Youtube</span>
-            </a>
-        </Grid>
-        <Grid item xs={12} sm={12} md={6}>
-            <a href="https://www.tumblr.com/blog/view/abcelearningapps" target="_blank" rel="noopener" className={styles.tagAFooter}>
-                <TumblrIcon color={color} bgColor="white"></TumblrIcon>
-                <span style={{ marginLeft: "8px" }}>Tumblr</span>
-            </a>
-        </Grid>
-        <Grid item xs={12} sm={12} md={6}>
-            <a href="https://www.linkedin.com/in/abc-elearningapps-ab9a231b8" target="_blank" rel="noopener" className={styles.tagAFooter}>
-                <LinkedInFooter color={color}></LinkedInFooter>
-                <span style={{ marginLeft: "8px" }}>LinkedIn</span>
-            </a>
-        </Grid>
-        <Grid item xs={12} sm={12} md={12}>
-            <a href="mailto:abc.elearningapps@gmail.com" target="_blank" className={styles.tagAFooter}>
-                <GmailFooter color={color}></GmailFooter>
-                <span style={{ marginLeft: "8px" }}>abc.elearningapps@gmail.com</span>
-            </a>
-        </Grid>
-    </Grid>
 }
 
 export async function getServerSideProps(context) {

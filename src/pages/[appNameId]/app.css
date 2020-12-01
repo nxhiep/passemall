@@ -15,10 +15,11 @@
 }
 .dropdown-app-panel button {
     width: 100%;
-    background-color: #616E7D;
+    background-color: white;
     border-radius: 40px;
     font-weight: bold;
-    color: white;
+    color: #616E7D;
+    border: 2px solid;
     margin-top: 10px;
     border: 2px solid;
     display: flex;
@@ -34,6 +35,8 @@
     border-radius: 20px;
     border-bottom-left-radius: 0;
     border-bottom-right-radius: 0;
+    color: white;
+    background-color: #616E7D;
 }
 .dropdown-app-panel:hover .content {
     display: flex;
@@ -41,4 +44,32 @@
     border-radius: 20px;
     border-top-left-radius: 0;
     border-top-right-radius: 0;
+}
+.icon-block1-1,
+.icon-block1-2,
+.icon-block1-3,
+.icon-block1-4,
+.icon-block1-5,
+.icon-block1-6 {
+    background: url(/images/new/icon-block1.png) no-repeat;
+    background-size: 488px 98px;
+    background-position: 0 center;
+    width: 80px;
+    height: 80px;
+    margin: 0 auto;
+}
+.icon-block1-2 {
+    background-position: -80px center;
+}
+.icon-block1-3 {
+    background-position: -160px center;
+}
+.icon-block1-4 {
+    background-position: -240px center;
+}
+.icon-block1-5 {
+    background-position: -330px center;
+}
+.icon-block1-6 {
+    background-position: -414px center;
 }
