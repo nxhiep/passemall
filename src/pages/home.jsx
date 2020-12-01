@@ -9,6 +9,7 @@ import { useEffect, useState } from "react";
 import { callApi } from "../services";
 import Slider from "react-slick";
 import { FacebookFooter, GmailFooter, LinkedInFooter, TumblrIcon, TwitterFooter, Youtube } from "../components/Icons";
+import './home.css'
 
 const useStyles = makeStyles({
     bgheader: {
@@ -107,6 +108,9 @@ const BodyPanel = ({ isMobile }) => {
         <Block1 />
         <div style={{height: height}}></div>
         <Block2 isMobile={isMobile} />
+        <LazyLoad>
+            <link rel="stylesheet" type="text/css" href="/styles/slick.css" />
+        </LazyLoad>
         <div style={{height: height}}></div>
         <Block3 />
         <div style={{height: height}}></div>
@@ -238,7 +242,9 @@ const Block3 = () => {
         arrows: false
     };
     if(!userRates){
-        return <CircularProgress />
+        return <div style={{ display: "flex", alignItems: "center", justifyContent: "center" }}>
+            <CircularProgress />
+        </div>
     }
     if(userRates.length == 0){
         return null
@@ -301,6 +307,7 @@ const FooterPanel = ({ isMobile }) => {
                     <div style={{fontSize: "20px", marginBottom: "20px"}}><strong>Resources</strong></div>
                     <div>
                         <div><a href="/blog" className={styles.tagAFooter}>Blog</a></div>
+                        <div style={{height:"10px"}}></div>
                         <div><a href="https://passemall.com/blog/about-us-5634123102158848" className={styles.tagAFooter}>About us</a></div>
                     </div>
                 </Grid>

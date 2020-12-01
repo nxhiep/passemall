@@ -14,9 +14,16 @@
     -webkit-font-smoothing: antialiased;
 }
 
-.slick-dots li button {
-    background-color: black;
+.slick-dots li button::before {
+    font-size: 30px !important;
 }
-.slick-dots li.slick-active button {
+.slick-dots li.slick-active button::before {
+    color: blue !important;
+    font-size: 40px !important;
+}
 
+@media(max-width: 768px) {
+    .text-bg {
+        font-size: 30px;
+    }
 }
