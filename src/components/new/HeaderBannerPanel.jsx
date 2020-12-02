@@ -107,7 +107,7 @@ const HeaderBannerPanel = ({ isMobile }) => {
                             display: "flex",
                             alignItems: "center",
                             color: "#1e3094"
-                        }}>Make your study great with our thousands of free practice questions</h1>
+                        }}>Happier study, easier pass with our free practice tests</h1>
                         <p style={{
                             minHeight: isMobile ? "180px" : "0",
                             display: "flex",
@@ -115,7 +115,7 @@ const HeaderBannerPanel = ({ isMobile }) => {
                             color: "#333",
                             fontSize: "1.1em",
                             fontWeight: "500"
-                        }}>You want to get 100% ready for your important day? You desire to pass your exam at your first try? You are wondering if you should pay a charge of money buying some practice materials? That’s why we are here to support you achieve the gate of success with our test prep solutions.</p>
+                        }}>We are here for your success because your success is our last goal! That's why we have tried our best to bring you all free, friendly, and funny test prep solutions.</p>
                     </Grid>
                     {isMobile ? null : <Grid item xs={12} sm={5} md={5}>
                         <img width="100%" src="/images/test3.png" style={{

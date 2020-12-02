@@ -168,8 +168,7 @@ const HeaderBannerPanel = ({ isMobile, appInfo }) => {
                                 color: superApp ? "white" : "#333",
                                 fontSize: "1.1em",
                                 fontWeight: "500"
-                            }}>If you're nervous about the {appName} test for the first time, try our free {appName} practice test. 
-                                Test your knowledge with +1000 {appName} practice questions!</p>
+                            }}>If you're nervous about the {appName} test for the first time, try our free {appName} practice test. Test your knowledge with +1000 {appName} practice questions!</p>
                             <div style={{height: "32px"}}></div>
                             <DownloadAppWidget appInfo={appInfo} />
                         </Grid>
@@ -194,7 +193,9 @@ const DownloadAppWidget = ({ appInfo, center, darkMode }) => {
             marginTop: "10px",
             backgroundColor: darkMode ? "white" : "#616E7D",
             color: darkMode ? "#616E7D" : "white",
-        }} >
+        }} onClick={() => {
+                scrollToTopic()
+            }}>
             <ComputerIcon />
             <span style={{width: "10px"}}></span>
             <span>Start your test</span>
@@ -246,7 +247,7 @@ const HeaderMenu = ({ styles, isMobile, appInfo }) => {
 
 const BodyPanel = ({ isMobile, appInfo }) => {
     return <div>
-        <div style={{height: "100px"}}></div>
+        <div style={{height: isMobile ? "50px" : "100px"}}></div>
         <Block1 isMobile={isMobile} appInfo={appInfo} />
         <div style={{height: "50px"}}></div>
         <Block2 isMobile={isMobile} appInfo={appInfo} />
@@ -281,7 +282,7 @@ const Block1 = ({ isMobile, appInfo }) => {
     let appName = (appInfo.appName || '').toLowerCase().replace('practice', '').replace('test', '').toUpperCase();
     return <section>
         <Container>
-            <Grid container spacing={3}>
+            <Grid container spacing={isMobile ? 2 : 3}>
                 <Block1Item 
                     icon="icon-block1-1"
                     title={"All " + appName + " practice test free"}
@@ -362,6 +363,7 @@ const Block2 = ({appInfo}) => {
 
 const Block3 = ({ isMobile, appInfo }) => {
     let images = getImageBlock3(appInfo.id ? appInfo.id : -1)
+    console.log("appInfo", appInfo)
     return <section>
         <Container>
             <Grid container spacing={4} alignItems="center">
@@ -369,15 +371,17 @@ const Block3 = ({ isMobile, appInfo }) => {
                     <img width="90%" src={images[0]} style={isMobile ? {margin: "0 auto", display: "block"} : {}} />
                 </Grid>
                 <Grid item xs={12} sm={5}>
-                    <MyTitle isMobile={isMobile} title="Scientifically proven" center={false} />
-                    <p>{ReactHtmlParser(appInfo.description)}</p>
+                    {/* <MyTitle isMobile={isMobile} title="Scientifically proven" center={false} /> */}
+                    <div className="contentxxx">{ReactHtmlParser(appInfo.description)}</div>
                     <Button variant="contained" color="inherit" style={{
                         borderRadius: "40px",
                         fontWeight: "bold",
                         marginTop: "10px",
                         backgroundColor: "#616E7D",
                         color: "white",
-                    }} >
+                    }} onClick={() => {
+                        scrollToTopic()
+                    }}>
                         <ComputerIcon />
                         <span style={{width: "10px"}}></span>
                         <span>Start your test</span>
@@ -391,17 +395,20 @@ const Block3 = ({ isMobile, appInfo }) => {
 const Block4 = ({ isMobile, appInfo }) => {
     return <section style={{
         background: "url(/images/new/bg-block4.jpg) no-repeat",
+        backgroundSize: "cover"
     }}>
         <Container style={{
-            minHeight: "300px", 
+            minHeight: "350px", 
             color: "white", 
             display: "flex", 
             alignItems: "center", 
             justifyContent: "center", 
-            flexDirection: "column"
+            flexDirection: "column",
+            alignContent: "center"
         }}>
             <h1>Download the app and start studying for free today</h1>
             <DownloadAppWidget appInfo={appInfo} center={true} darkMode={true} />
+            <div style={{height: "10px"}}></div>
         </Container>
     </section>
 }

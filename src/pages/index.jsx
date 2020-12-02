@@ -101,7 +101,7 @@ const Block1 = ({ isMobile }) => {
         })
     }, [])
     return <section>
-        <MyTitle isMobile={isMobile} title="GREAT APPS FOR YOU" description="Practice right now with our free apps!" />
+        <MyTitle isMobile={isMobile} title="PRACTICE RIGHT NOW WITH OUR FREE TESTS!" description="Let's select your exam first" />
         <Container>
         {
             !appInfos ? <div style={{
@@ -191,8 +191,8 @@ const Block2 = ({ isMobile }) => {
                         <Block2Item
                             isMobile={isMobile}
                             icon={<DashboardIcon />}
-                            title="CUSTOMIZE YOUR EXAM"
-                            description="You can design your test so that it works best for you. Gradually set the test as close as the real test to ready for it. This is the most effective way that helps many people get over their challenge."
+                            title="3 INTERESTING TEST MODES"
+                            description="3 different test modes with increases in difficult level let you experience the test in a very exciting way. Let's get accustomed to the format of the real test."
                         />
                         <Block2Item
                             isMobile={isMobile}
@@ -288,7 +288,7 @@ const Block3 = ({ isMobile }) => {
     return (
         <section>
             <Container>
-                <MyTitle isMobile={isMobile} title="FEEDBACKS" />
+                <MyTitle isMobile={isMobile} title="LET'S TAKE A LOOK AT OUR USER FEEDBACKS" />
                 <Slider {...settings}>
                     {
                         userRates.map((userRate, index) => {
