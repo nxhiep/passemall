@@ -4,6 +4,7 @@ body {
 .dropdown-app-panel {
     position: relative;
     min-width: 320px;
+    z-index: 3;
 }
 .dropdown-app-panel .content {
     display: none;

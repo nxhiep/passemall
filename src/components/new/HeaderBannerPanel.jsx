@@ -103,13 +103,13 @@ const HeaderBannerPanel = ({ isMobile }) => {
                 <Grid container justify="space-between" alignItems="center">
                     <Grid item xs={12} sm={5} md={5}>
                         <h1 style={{
-                            minHeight: isMobile ? "180px" : "0",
+                            // minHeight: isMobile ? "180px" : "0",
                             display: "flex",
                             alignItems: "center",
                             color: "#1e3094"
                         }}>Happier study, easier pass with our free practice tests</h1>
                         <p style={{
-                            minHeight: isMobile ? "180px" : "0",
+                            // minHeight: isMobile ? "180px" : "0",
                             display: "flex",
                             alignItems: "center",
                             color: "#333",
@@ -117,12 +117,18 @@ const HeaderBannerPanel = ({ isMobile }) => {
                             fontWeight: "500"
                         }}>We are here for your success because your success is our last goal! That's why we have tried our best to bring you all free, friendly, and funny test prep solutions.</p>
                     </Grid>
-                    {isMobile ? null : <Grid item xs={12} sm={5} md={5}>
+                    {/* {isMobile ? null : <Grid item xs={12} sm={5} md={5}>
                         <img width="100%" src="/images/test3.png" style={{
                             position: "relative",
                             bottom: "-60px"
                         }} />
-                    </Grid>}
+                    </Grid>} */}
+                    <Grid item xs={12} sm={5} md={5} style={{textAlign: isMobile ? "center" : ""}}>
+                        <img width="100%" src="/images/test3.png" style={{
+                            position: "relative",
+                            bottom: isMobile ? "0" : "-60px",
+                        }} />
+                    </Grid>
                 </Grid>
             </Container>
         </div>

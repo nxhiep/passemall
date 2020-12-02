@@ -1,5 +1,6 @@
 html, body {
   font-family: MyFont,-apple-system,BlinkMacSystemFont, "Roboto", sans-serif;
+  box-sizing: border-box;
 }
 
 .body-panel {

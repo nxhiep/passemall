@@ -105,8 +105,12 @@ const AppPage = ({ appInfo, url, isMobile }) => {
             flexDirection: "column"
         }}>
             <SEO url={url} appInfo={appInfo} />
-            <HeaderBannerPanel isMobile={isMobile} appInfo={appInfo} />
-            <BodyPanel appInfo={appInfo} isMobile={isMobile} />
+            <LazyLoad height={1000}>
+                <HeaderBannerPanel isMobile={isMobile} appInfo={appInfo} />
+            </LazyLoad>
+            <LazyLoad height={2000}>
+                <BodyPanel appInfo={appInfo} isMobile={isMobile} />
+            </LazyLoad>
             <FooterPanel isMobile={isMobile} />
         </main>
     </>
@@ -171,12 +175,18 @@ const HeaderBannerPanel = ({ isMobile, appInfo }) => {
                             <div style={{height: "32px"}}></div>
                             <DownloadAppWidget appInfo={appInfo} />
                         </Grid>
-                        {isMobile ? null : <Grid item xs={12} sm={5} md={5}>
+                        {/* {isMobile ? null : <Grid item xs={12} sm={5} md={5}>
                             <img width="100%" src="/images/test3.png" style={superApp ? {} : {
                                 position: "relative",
                                 bottom: "-60px"
                             }} />
-                        </Grid>}
+                        </Grid>} */}
+                        <Grid item xs={12} sm={5} md={5} style={{textAlign: isMobile ? "center" : ""}}>
+                            <img width="100%" src="/images/test3.png" style={{
+                                position: "relative",
+                                bottom: isMobile ? "0" : "-60px",
+                            }} />
+                        </Grid>
                     </Grid>
                 </Container>
             </div>
@@ -247,32 +257,18 @@ const HeaderMenu = ({ styles, isMobile, appInfo }) => {
 const BodyPanel = ({ isMobile, appInfo }) => {
     return <div>
         <div style={{height: isMobile ? "50px" : "100px"}}></div>
-        <LazyLoad>
-            <Block1 isMobile={isMobile} appInfo={appInfo} />
-        </LazyLoad>
+        <Block1 isMobile={isMobile} appInfo={appInfo} />
         <div style={{height: "50px"}}></div>
-        <LazyLoad scroll={true}>
-            <Block2 isMobile={isMobile} appInfo={appInfo} />
-        </LazyLoad>
+        <Block2 isMobile={isMobile} appInfo={appInfo} />
         <div style={{height: "50px"}}></div>
-        <LazyLoad>
-            <Block3 isMobile={isMobile} appInfo={appInfo} />
-        </LazyLoad>
+        <Block3 isMobile={isMobile} appInfo={appInfo} />
         <div style={{height: "50px"}}></div>
-        <LazyLoad>
-            <Block4 isMobile={isMobile} appInfo={appInfo} />
-        </LazyLoad>
+        <Block4 isMobile={isMobile} appInfo={appInfo} />
         <div style={{height: "50px"}}></div>
-        <LazyLoad>
-            <Block5 isMobile={isMobile} appInfo={appInfo} />
-        </LazyLoad>
+        <Block5 isMobile={isMobile} appInfo={appInfo} />
         <div style={{height: "50px"}}></div>
-        <LazyLoad>
-            <link rel="stylesheet" type="text/css" href="/styles/slick.css" />
-        </LazyLoad>
-        <LazyLoad>
-            <Block6 isMobile={isMobile} appInfo={appInfo} />
-        </LazyLoad>
+        <link rel="stylesheet" type="text/css" href="/styles/slick.css" />
+        <Block6 isMobile={isMobile} appInfo={appInfo} />
         <div style={{height: "50px"}}></div>
     </div>
 }
