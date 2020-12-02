@@ -79,7 +79,7 @@ const MyTitle = ({ title, description, isMobile }) => {
         <span style={{ fontSize: "24px", fontWeight: "bold", borderTop: "3px solid #fa8e45", padding: "8px 0px" }}>
             <span style={{color: "#4e63bd"}}>ABC</span>
             <span> </span>
-            <span style={{color: "#fa8e45"}}>E-learning</span>
+            <span style={{color: "#ff6b00"}}>E-learning</span>
         </span>
         <h1 style={{ fontSize: isMobile ? "" : "1.8em", color: "#1e3094" }}>{title}</h1>
         <p style={{

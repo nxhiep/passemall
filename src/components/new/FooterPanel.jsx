@@ -1,8 +1,9 @@
 import { Container, Grid, makeStyles } from "@material-ui/core"
+import { VERSION } from "../../config_app";
 import { FacebookFooter, GmailFooter, LinkedInFooter, TumblrIcon, TwitterFooter, Youtube } from "../Icons";
 const useStyles = makeStyles({
     tagAFooter: {
-        color: "#4e63bd",
+        color: "#1239e1",
         textDecoration: "none",
         display: "flex",
         alignItems: "center",
@@ -19,7 +20,7 @@ const FooterPanel = ({ isMobile }) => {
             <Grid container>
                 <Grid item xs={12} sm={6} md={4}>
                     <a href="/">
-                        <img src="/images/logo-landing-2.png" width="240px" height="60px" />
+                        <img alt="ABC Elearning Logo" src="/images/logo-landing-2.png" width="240px" height="60px" />
                     </a>
                 </Grid>
                 <Grid item xs={12} sm={6} md={3} style={{paddingTop: "20px"}}>
@@ -36,6 +37,12 @@ const FooterPanel = ({ isMobile }) => {
                 </Grid>
             </Grid>
         </Container>
+        <div style={{
+            fontSize: "10px",
+            position: "absolute",
+            bottom: "5px",
+            left: "5px"
+        }}>Version: {VERSION}</div>
     </footer>
 }
 

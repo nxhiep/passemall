@@ -14,6 +14,7 @@ const SEO = ({ url, appInfo, children }) => {
     }
     return <Head>
         <link rel="icon" href={image} />
+        <link rel="apple-touch-icon" href={image}></link>
         <link rel="preload" href="/fonts/Poppins-Bold.ttf" as="font" crossorigin="anonymous" />
         <link rel="preload" href="/fonts/Poppins-Italic.ttf" as="font" crossorigin="anonymous" />
         <link rel="preload" href="/fonts/Poppins-Regular.ttf" as="font" crossorigin="anonymous" />
@@ -22,7 +23,7 @@ const SEO = ({ url, appInfo, children }) => {
         <link rel="stylesheet" href="index.css"></link>
         <link rel="preconnect" href="https://webappapi-dot-micro-enigma-235001.appspot.com"></link>
         <link rel="preconnect" href="https://storage.googleapis.com" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
         <meta name="theme-color" content="#000000" />
         <link rel="manifest" href="manifest.json" />
         {url ? <link rel="canonical" href={url || 'http://passemall.com/'}></link> : null}

@@ -12,7 +12,7 @@ export const HeaderBlog = ({ appId, faq }) => {
         <Container style={{ display: "flex", height: '100%', alignItems: 'center', justifyContent: 'space-between' }}>
             <a href='/'>
                 <div className="header-app">
-                    <img src="/images/logo-landing.png" alt="logo-app" width="240px" height="60px"></img>
+                    <img src="/images/logo-landing.png" alt="ABC Elearning Logo" width="240px" height="60px"></img>
                 </div>
             </a>
             {isMobile ? <MenuPanel /> : <div className="header-menu-pc">
