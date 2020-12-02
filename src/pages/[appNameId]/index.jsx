@@ -110,8 +110,8 @@ const AppPage = ({ appInfo, url, isMobile }) => {
             </LazyLoad>
             <LazyLoad height={2000}>
                 <BodyPanel appInfo={appInfo} isMobile={isMobile} />
+                <FooterPanel isMobile={isMobile} />
             </LazyLoad>
-            <FooterPanel isMobile={isMobile} />
         </main>
     </>
 }
@@ -175,12 +175,18 @@ const HeaderBannerPanel = ({ isMobile, appInfo }) => {
                             <div style={{height: "32px"}}></div>
                             <DownloadAppWidget appInfo={appInfo} />
                         </Grid>
-                        {isMobile ? null : <Grid item xs={12} sm={5} md={5}>
+                        {/* {isMobile ? null : <Grid item xs={12} sm={5} md={5}>
                             <img width="100%" src="/images/test3.png" style={superApp ? {} : {
                                 position: "relative",
                                 bottom: "-60px"
                             }} />
-                        </Grid>}
+                        </Grid>} */}
+                        <Grid item xs={12} sm={5} md={5} style={{textAlign: isMobile ? "center" : ""}}>
+                            <img width="100%" src="/images/test3.png" style={{
+                                position: "relative",
+                                bottom: isMobile ? "0" : "-60px",
+                            }} />
+                        </Grid>
                     </Grid>
                 </Container>
             </div>
