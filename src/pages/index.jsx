@@ -121,9 +121,10 @@ const ListApps = ({ appInfos, isMobile }) => {
     appInfos = appInfos.sort((a, b) => a.appName.localeCompare(b.appName))
     const styles = useStyles({ isMobile })
     const [open, setOpen] = useState(false)
-    const router = useRouter()
+    // const router = useRouter()
     const openApp = (appNameId) => {
-        router.push("/" + appNameId)
+        // router.push("/" + appNameId)
+        window.open("/" + appNameId, '_blank')
     }
     if(isMobile){
         return <>

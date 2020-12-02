@@ -139,7 +139,9 @@ const AppHome = ({ appInfoState, url, home, isMobile }) => {
                         scrollToTopic()
                     }}
                 />
-                <ListTopic />
+                <LazyLoad>
+                    <ListTopic />
+                </LazyLoad>
                 <Provider store={store}>
                     <PersistGate persistor={store.__persistor}>
                         <HomeContent
@@ -162,15 +164,17 @@ const AppHome = ({ appInfoState, url, home, isMobile }) => {
                                 }} /> : ''}
                     </PersistGate>
                 </Provider>
+                <LazyLoad>
                 <MobileDescription
                     appInfoState={appInfoState}
                     color={myColor.screenShotColor}
                     appName={webAppInfo.appName}
                 />
+                </LazyLoad>
                 <LazyLoad>
                     <link rel="stylesheet" type="text/css" href="/styles/slick.css" />
+                    <Feedback isMobile={isMobile} appId={appInfoState.id}></Feedback>
                 </LazyLoad>
-                <Feedback isMobile={isMobile} appId={appInfoState.id}></Feedback>
                 <Footer bucket={appInfoState.bucket} color={myColor.colorFooter}></Footer>
             </div>
         </>
