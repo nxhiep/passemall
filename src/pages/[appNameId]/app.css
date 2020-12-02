@@ -45,6 +45,21 @@
     border-top-left-radius: 0;
     border-top-right-radius: 0;
 }
+.dropdown-app-panel.darkmode button {
+    color: white;
+    background-color: transparent;
+}
+.dropdown-app-panel.darkmode:hover button {
+    border-bottom: 0;
+}
+.dropdown-app-panel.darkmode:hover .content {
+    background-color: transparent;
+    color: white;
+    border: 2px solid;
+    width: 100%;
+    left: 0;
+    border-top: 0;
+}
 .icon-block1-1,
 .icon-block1-2,
 .icon-block1-3,
@@ -72,4 +87,94 @@
 }
 .icon-block1-6 {
     background-position: -414px center;
+}
+.content-home-page .content-panel {
+    align-items: stretch;
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
+.content-home-page .content-panel .topic-item-panel {
+    box-shadow: 0 0 6px 4px rgba(185,185,185,.5);
+    border-radius: 5px;
+    padding: 20px;
+    width: calc(50% - 10px);
+    box-sizing: border-box;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+.content-home-page .content-panel .topic-item-panel>a {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    align-items: flex-start;
+    text-decoration: none;
+    color: inherit;
+}
+.icon-block5-1,
+.icon-block5-2,
+.icon-block5-3,
+.icon-block5-4,
+.icon-block5-5,
+.icon-block5-6 {
+    background: url(/images/new/icon-block5.png) no-repeat;
+    background-size: 500px 88.18px;
+    background-position: 0 center;
+    width: 80px;
+    height: 80px;
+    margin: 0 auto;
+}
+.icon-block5-2 {
+    background-position: -87px center;
+}
+.icon-block5-3 {
+    background-position: -165px center;
+}
+.icon-block5-4 {
+    background-position: -244px center;
+}
+.icon-block5-5 {
+    background-position: -326px center;
+}
+.icon-block5-6 {
+    background-position: -417px center;
+}
+.feedback-container > div {
+    background-color: #f1f1f1;
+    border-bottom-right-radius: 60%;
+    border-bottom-left-radius: 60%;
+}
+.feedback-container .feedbacks-slider {
+    display: flex;
+    align-items: center;
+}
+.feedback-container .slick-list {
+    width: 100%;
+}
+.feedback-container .feedback-item {
+    padding: 30px 20px;
+    text-align: center;
+}
+.feedback-container .feedback-item .content {
+    font-weight: 500;
+    font-size: 1.2em;
+    margin: 10px auto;
+}
+.feedback-container .feedback-item .name {
+    margin: 10px auto;
+    font-weight: 600;
+}
+.feedback-container .feedback-item .avatar {
+    margin: 30px auto;
+}
+.main-title {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+@media(max-width: 768px) {
+    .content-home-page .content-panel .topic-item-panel {
+        width: 100%;
+    }
 }

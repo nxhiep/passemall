@@ -8,9 +8,7 @@ import { Provider, useStore } from 'react-redux';
 import { PersistGate } from 'redux-persist/integration/react';
 import SEO from '../../components/SEO';
 import { APP_NEW_DOMAIN, GA_ID } from "../../config_app";
-import { wrapper } from '../../redux/store';
 import Routes from '../../routes';
-import { callApi } from '../../services';
 import { oldUser, setScrollDownAuto } from '../../utils';
 const StudyViewScreen = dynamic(() => import('../../container/study/Study.View'), { ssr: false })
 const TestViewScreen = dynamic(() => import('../../container/test/Test.View'), { ssr: false })
@@ -24,7 +22,6 @@ const GameChildScreen = ({ appInfoState, url }) => {
         oldUser()
     }, [])
     const store = useStore((state) => state);
-    // console.log("store", store, appInfoState)
     return (
         <>
             <SEO appInfo={appInfoState} url={url}>
@@ -46,36 +43,19 @@ const GameChildScreen = ({ appInfoState, url }) => {
         </>
     )
 }
-
-export async function getStaticProps(context) {
-    const { appNameId } = context.params;
-    const appInfoState = await callApi({ url: '/data?type=get_app_info&appNameId=' + appNameId, params: null, method: 'post' })
-
+export async function getServerSideProps(context) {
+    const appNameId = APP_NEW_DOMAIN ? APP_NEW_DOMAIN : context.params.appNameId;
+    const directoryAppInfos = path.join(process.cwd(), 'src/data/appInfos.json')
+    let appInfosData = fs.readFileSync(directoryAppInfos);
+    let mapAppInfos = JSON.parse(appInfosData)
+    const appInfo = mapAppInfos[appNameId] || {};
     return {
         props: {
-            appInfoState: appInfoState
+            appInfoState: appInfo
         }
     }
-
 }
 
-export async function getStaticPaths() {
-    const directorytopicNameId = path.join(process.cwd(), 'src/data/topicNameId.json')
-    let topicNameIdFile = fs.readFileSync(directorytopicNameId);
-    let topicNameIdJson = JSON.parse(topicNameIdFile)
-    let arrayTopicNameId = [];
-    for (let appNameId in topicNameIdJson) {
-        topicNameIdJson[appNameId].forEach(ele => {
-            arrayTopicNameId.push({ params: { appNameId: appNameId, screenChild: ele } });
-        })
-        arrayTopicNameId.push({ params: { appNameId: appNameId, screenChild: "review" } });
-        arrayTopicNameId.push({ params: { appNameId: appNameId, screenChild: "test" } });
-    }
-    return {
-        paths: arrayTopicNameId,
-        fallback: false
-    };
-}
 function ScreenChild({ appInfoState }) {
     if(APP_NEW_DOMAIN){
         const router = useRouter();
@@ -120,4 +100,4 @@ function ScreenChild({ appInfoState }) {
         }
     }
 }
-export default wrapper.withRedux(GameChildScreen)
+export default GameChildScreen
