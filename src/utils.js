@@ -273,10 +273,10 @@ export const getNewDomain = (appId) => {
     return link;
 }
 
-export function getHeaderBanner(appId) {
+export function getHeaderBanner(appId, isMobile) {
     const theme = useTheme()
     const sm = useMediaQuery(theme.breakpoints.down("sm"));
-    const mobile = sm ? '-mobile' : '';
+    const mobile = !!isMobile || sm ? '-mobile' : '';
     if(isAppASVAB(appId)){
         return `/images/apps/asvab/header-background${mobile}.jpg`;
     }

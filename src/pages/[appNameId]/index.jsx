@@ -116,7 +116,7 @@ const HeaderBannerPanel = ({ isMobile, appInfo }) => {
     const [openDrawer, setOpenDrawer] = useState(false);
     const handleOpenDrawer = (open) => setOpenDrawer(open)
     const superApp = isSuperApp(appInfo.id)
-    const bannerUrl = superApp ? getHeaderBanner(appInfo.id) : null
+    const bannerUrl = superApp ? getHeaderBanner(appInfo.id, isMobile) : null
     const styles = useStyles({ isMobile, bannerUrl: bannerUrl });
     let appName = (appInfo.appName || '').toLowerCase().replace('practice', '').replace('test', '').toUpperCase();
     return <>
