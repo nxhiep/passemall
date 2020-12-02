@@ -9,7 +9,7 @@ const useStyles = makeStyles({
             return {
                 background: "url(/images/new/banner-right.jpg) no-repeat",
                 backgroundPosition: "top",
-                backgroundSize: "1000px"
+                backgroundSize: "cover",
             }
         }
         return {
@@ -33,7 +33,7 @@ const useStyles = makeStyles({
                 padding: "10px",
                 textDecoration: "none",
                 color: "white",
-                fontWeight: "600",
+                fontWeight: "500",
                 cursor: "pointer",
                 '&:hover': {
                     textDecoration: "underline"
@@ -44,7 +44,7 @@ const useStyles = makeStyles({
             padding: "10px 20px",
             textDecoration: "none",
             color: "#4e63bd",
-            fontWeight: "600",
+            fontWeight: "500",
             cursor: "pointer",
             '&:hover': {
                 textDecoration: "underline"

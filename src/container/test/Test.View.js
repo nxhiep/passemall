@@ -168,7 +168,7 @@ const TestViewUI = ({ stateInfoState, testInfoState, appInfoState, getTestInfoBy
     }
     return (
         <div className="body-panel test-page">
-            <HeaderMenu appInfo={appInfoState} />
+            <HeaderMenu appInfo={appInfoState} darkMode={true} />
             <Container className="test-game-panel">
                 {dialogInfo ? <AlertDialogSlide dialogInfo={dialogInfo} /> : ''}
                 {showGame ? (

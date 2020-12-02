@@ -33,7 +33,7 @@ const Blog = ({ newInfo, url }) => {
                 <link rel="stylesheet" type="text/css" href="/styles/slick.css" />
             </SEO>
 
-            <div className='body-panel landing-page'>
+            <div className='body-panel'>
                 <HeaderBlog appId={newInfo ? newInfo.appId : -1} />
                 <BannerBlog title={newInfo ? newInfo.title : ''} bannerImage={newInfo.bannerImage} />
                 <PostContent content={newInfo.content} />

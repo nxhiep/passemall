@@ -1,5 +1,5 @@
 import { Button, CircularProgress, Container, Grid, makeStyles, SwipeableDrawer } from "@material-ui/core";
-import { Computer as ComputerIcon, ExpandLess as ExpandLessIcon, ExpandMore as ExpandMoreIcon, Menu as MenuIcon } from '@material-ui/icons';
+import { Computer as ComputerIcon, ExpandLess as ExpandLessIcon, Menu as MenuIcon } from '@material-ui/icons';
 import fs from "fs";
 import dynamic from "next/dynamic";
 import path from "path";
@@ -32,7 +32,7 @@ const useStyles = makeStyles({
             return {
                 background: "url(/images/new/banner-right.jpg) no-repeat",
                 backgroundPosition: "top",
-                backgroundSize: "1000px"
+                backgroundSize: "cover",
             }
         }
         return {
@@ -64,7 +64,7 @@ const useStyles = makeStyles({
                 padding: "10px",
                 textDecoration: "none",
                 color: "white",
-                fontWeight: "600",
+                fontWeight: "500",
                 cursor: "pointer",
                 '&:hover': {
                     textDecoration: "underline"
@@ -75,7 +75,7 @@ const useStyles = makeStyles({
             padding: "10px 20px",
             textDecoration: "none",
             color: props.bannerUrl ? "white" : "#4e63bd",
-            fontWeight: "600",
+            fontWeight: "500",
             cursor: "pointer",
             '&:hover': {
                 textDecoration: "underline"
@@ -167,7 +167,6 @@ const HeaderBannerPanel = ({ isMobile, appInfo }) => {
                                 alignItems: "center",
                                 color: superApp ? "white" : "#333",
                                 fontSize: "1.1em",
-                                fontWeight: "500"
                             }}>If you're nervous about the {appName} test for the first time, try our free {appName} practice test. Test your knowledge with +1000 {appName} practice questions!</p>
                             <div style={{height: "32px"}}></div>
                             <DownloadAppWidget appInfo={appInfo} />
@@ -246,13 +245,13 @@ const HeaderMenu = ({ styles, isMobile, appInfo }) => {
 }
 
 const BodyPanel = ({ isMobile, appInfo }) => {
-    return <>
+    return <div>
         <div style={{height: isMobile ? "50px" : "100px"}}></div>
         <LazyLoad>
             <Block1 isMobile={isMobile} appInfo={appInfo} />
         </LazyLoad>
         <div style={{height: "50px"}}></div>
-        <LazyLoad>
+        <LazyLoad scroll={true}>
             <Block2 isMobile={isMobile} appInfo={appInfo} />
         </LazyLoad>
         <div style={{height: "50px"}}></div>
@@ -275,7 +274,7 @@ const BodyPanel = ({ isMobile, appInfo }) => {
             <Block6 isMobile={isMobile} appInfo={appInfo} />
         </LazyLoad>
         <div style={{height: "50px"}}></div>
-    </>
+    </div>
 }
 
 const MyTitle = ({ title, isMobile, center }) => {

@@ -326,7 +326,7 @@ const FeedbackItem = ({ content, name, index }) => {
                     src={index % 3 === 0 ? "/images/avatar-1.png" : (index % 3 === 1 ? "/images/avatar-2.png" : "/images/avatar-3.png")} alt="avatar"></img></LazyLoad>
                 <div>
                     <div style={{ margin: "20px auto", fontSize: "1.1em" }}><strong>{name}</strong></div>
-                    <div style={{ minHeight: "140px" }} className="dot-7">{content}</div>
+                    <div title={content} style={{ minHeight: "180px" }} className="dot-7">{content}</div>
                 </div>
             </div>
         </div>

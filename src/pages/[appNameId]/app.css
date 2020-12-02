@@ -40,7 +40,7 @@ body {
     border-bottom-right-radius: 0;
     color: white;
     background-color: #616E7D;
-    border: none;
+    border-color: #616E7D;
 }
 .dropdown-app-panel:hover svg {
     transform: rotate(180deg);
@@ -58,7 +58,7 @@ body {
 }
 .dropdown-app-panel.darkmode:hover button {
     border: 2px solid white;
-    border-bottom: 0;
+    border-bottom-color: transparent;
 }
 .dropdown-app-panel.darkmode:hover .content {
     background-color: transparent;
@@ -66,7 +66,8 @@ body {
     border: 2px solid;
     width: 100%;
     left: 0;
-    border-top: 0;
+    border-top-color: transparent;
+    top: calc(100% - 4px);
 }
 .icon-block1-1,
 .icon-block1-2,
@@ -120,6 +121,9 @@ body {
     text-decoration: none;
     color: inherit;
 }
+.content-home-page .content-panel .topic-item-panel>a>label {
+    font-weight: 500;
+}
 .icon-block5-1,
 .icon-block5-2,
 .icon-block5-3,
@@ -165,7 +169,6 @@ body {
     text-align: center;
 }
 .feedback-container .feedback-item .content {
-    font-weight: 500;
     font-size: 1.2em;
     margin: 10px auto;
 }
@@ -186,17 +189,19 @@ body {
         width: 100%;
     }
 }
-
-.contentxxx > * {
+.contentxxx {
+    font-family: MyFont !important;
+}
+.contentxxx * {
     font-size: 16px !important;
-    font-family: "Roboto", sans-serif !important;
-    font-weight: 500;
-    color: #333;
+    font-family: MyFont !important;
+    font-weight: normal !important;
+    color: #333 !important;
 }
 
 .contentxxx h1 span,
 .contentxxx h1 {
-    color: black;
-    font-weight: bold;
+    color: black !important;
+    font-weight: bold !important;
     font-size: 36px !important;
 }

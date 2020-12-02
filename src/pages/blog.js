@@ -29,7 +29,7 @@ const ListBlog = ({ data, url }) => {
                 <link rel="stylesheet" type="text/css" href="/styles/index.css" />
                 <link rel="stylesheet" type="text/css" href="/styles/listblog.css" />
             </SEO>
-            <div className='body-panel landing-page list-blog'>
+            <div className='body-panel list-blog'>
                 <HeaderBlog />
                 <BannerBlog />
                 <Container style={{paddingTop: "40px"}}>
