@@ -1,516 +1,334 @@
-import { Button, CircularProgress, Container, Grid, makeStyles, useMediaQuery, useTheme } from '@material-ui/core';
-import { CreditCard as CreditCardIcon } from '@material-ui/icons';
-import ArrowDownwardIcon from '@material-ui/icons/ArrowDownward';
-import { Rating } from '@material-ui/lab';
+import { Button, Container, Grid, makeStyles } from "@material-ui/core";
+import { Computer as ComputerIcon, ExpandLess as ExpandLessIcon, ExpandMore as ExpandMoreIcon } from '@material-ui/icons';
 import fs from "fs";
-import dynamic from 'next/dynamic';
-import { useRouter } from 'next/router';
 import path from "path";
-import React, { useEffect, useState } from 'react';
-import ReactGA from 'react-ga';
-import LazyLoad from 'react-lazyload';
-import { Provider, useStore } from 'react-redux';
-import Slider from 'react-slick';
-import { PersistGate } from 'redux-persist/integration/react';
-import Footer from '../../components/Footer';
-import HeaderBanner from '../../components/HeaderBanner';
-import { Clock, FreeCircle, FreeIcon, LoginIcon, PenIcon, TotalQuestions } from '../../components/Icons';
-import SEO from '../../components/SEO';
-import { APP_NEW_DOMAIN, GA_ID } from '../../config_app';
-import WebAppInfo from '../../models/WebAppInfo';
-import { wrapper } from '../../redux/store';
-import { callApi } from '../../services';
-import { getHeaderBanner, getImageBlock3, getNewDomain, getWebContext, isSuperApp, oldUser, scrollToTopic, setScrollDownAuto } from '../../utils';
-const HomeContent = dynamic(() => import("../../container/home/HomeContent"), { ssr: false })
-const SelectStatePopup = dynamic(() => import("../../components/SelectStatePopup"), { ssr: false })
-const GameChildScreen = dynamic(() => import("./[screenChild]"), { ssr: false })
+import { useState } from "react";
+import LazyLoad from "react-lazyload";
+import FooterPanel from "../../components/new/FooterPanel";
+import SEO from "../../components/SEO";
+import { APP_NEW_DOMAIN } from "../../config_app";
+import ErrorPage from "../../container/error";
+import { getHeaderBanner, getWebContext, isSuperApp, scrollDown, scrollToTopic } from "../../utils";
+import './app.css';
 
 const useStyles = makeStyles({
-    root: {
-        marginTop: "40px",
-        backgroundColor: props => props.color,
-        borderRadius: "50px",
-        textTransform: "none",
-        padding: "12px 32px",
-        fontSize: "18px",
-        fontWeight: 600,
-        margin: "0 auto",
-        color: props => props.color === "#FAFAFA" ? "#383838" : "#fff",
-        "&:hover": {
-            backgroundColor: props => props.color,
+    bgheader: props => {
+        if(props.bannerUrl){
+            return {
+                background: "url("+props.bannerUrl+") no-repeat",
+                backgroundSize: "cover"
+            }
+        }
+        if(props.isMobile){
+            return {
+                background: "url(/images/new/banner-right.jpg) no-repeat",
+                backgroundPosition: "top",
+                backgroundSize: "1000px"
+            }
+        }
+        return {
+            background: "url(/images/new/banner-left.jpg) no-repeat, url(/images/new/banner-right.jpg) no-repeat",
+            backgroundPosition: "top left, top right",
+            backgroundSize: "auto, auto 100%"
         }
     },
-    button: {
-        borderRadius: "40px",
-        marginTop: "50px",
-        marginBottom: "50px",
-        padding: "8px 24px",
-        fontWeight: "bold",
-        fontSize: "16px",
-        marginLeft: props => props.isMobile ? "auto" : "",
-        marginRight: props => props.isMobile ? "auto" : "",
-        display: props => props.isMobile ? "flex" : "inline-flex",
+    headerTemp: props => {
+        if(props.bannerUrl){
+            return {
+                backgroundColor: "rgb(0 0 0 / 0.6)"
+            }
+        }
+        return {}
     },
-    buttonStartTest: {
-        backgroundColor: props => props.color, 
-        color: "white", 
-        padding: "10px 30px", 
-        borderRadius: "50px", 
-        fontWeight: "600",
-        fontSize: "16px",
-        "&:hover, &:focus": {
-            backgroundColor: "rgb(31 63 197)"
-        }
-    }
-})
-
-ReactGA.initialize(GA_ID);
-
-const AppHome = ({ appInfoState, url, home, isMobile }) => {
-    if (!appInfoState) {
-        appInfoState = {};
-        console.error("xxxxxxxxxxxxxxxxxxxxxxxx appInfo null");
-        return <h1>App Not Existed</h1>
-    }
-    // console.log("xxxxx appInfoState", appInfoState)
-    if(APP_NEW_DOMAIN && home !== true){
-        return <GameChildScreen appInfoState={appInfoState} url={url} />
-    }
-    const theme = useTheme();
-    isMobile = isMobile || useMediaQuery(theme.breakpoints.between(0, 780));
-    useEffect(() => {
-        ReactGA.pageview('/appInfo');
-        setScrollDownAuto("home")
-        oldUser()
-    }, [])
-    const [selectedState, setSelectedState] = useState(true);
-    const [openPopupChangeState, setOpenPopupChangeState] = useState(false);
-    let webAppInfo = WebAppInfo.getAppInfo(appInfoState.id, appInfoState.appName);
-    let myColor = webAppInfo.mainColor;
-    // console.log("appInfoState.bucket", appInfoState.bucket)
-    if (!url) {
-        let domain = getNewDomain(appInfoState.id);
-        if (domain) {
-            url = domain;
-        } else {
-            url = 'http://passemall.com/' + appInfoState.appNameId;
-        }
-    }
-    const store = useStore((state) => state);
-    return (
-        <>
-            <SEO appInfo={appInfoState} url={url}>
-                <link rel="stylesheet" type="text/css" href="/styles/app.css" />
-                <link rel="stylesheet" type="text/css" href="/styles/home.css" />
-            </SEO>
-            <div className={"body-panel app " + (isSuperApp(appInfoState.id) ? "" : "other")}>
-                <_Header
-                    webAppInfo={webAppInfo}
-                    color={myColor.buttonHeader}
-                    isMobile={isMobile}
-                    onStartTest={() => {
-                        ReactGA.event({
-                            category: 'Click Start Test',
-                            action: 'Click Start Test 1'
-                        })
-                        scrollToTopic()
-                    }}
-                    appInfo={appInfoState}
-                />
-                <Features
-                    webAppInfo={webAppInfo}
-                    appName={webAppInfo.appName}
-                    color={myColor.mainColor}
-                />
-                <ExamOverview webAppInfo={webAppInfo} isMobile={isMobile} />
-                <ListInfoGraphic
-                    isMobile={isMobile}
-                    webAppInfo={webAppInfo}
-                    appName={webAppInfo.appName}
-                    appId={appInfoState.id}
-                    color={myColor.mainColor}
-                    appInfoState={appInfoState}
-                    bucket={appInfoState.bucket}
-                    onStartTest={(index) => {
-                        ReactGA.event({
-                            category: 'Click Start Test',
-                            action: 'Click Start Test ' + index
-                        })
-                        scrollToTopic()
-                    }}
-                />
-                <LazyLoad>
-                    <ListTopic />
-                </LazyLoad>
-                <Provider store={store}>
-                    <PersistGate persistor={store.__persistor}>
-                        <HomeContent
-                            appInfo={appInfoState} appNameId={appInfoState.appNameId}
-                            hasState={appInfoState && appInfoState.hasState}
-                            onChangeState={() => {
-                                setOpenPopupChangeState(true);
-                            }}
-                        />
-                        {appInfoState && appInfoState.hasState ?
-                            <SelectStatePopup
-                                onLoaded={(selectedState) => {
-                                    setSelectedState(selectedState)
-                                }}
-                                openDefault={false}
-                                appInfo={appInfoState}
-                                openPopupChangeState={openPopupChangeState}
-                                onHidden={() => {
-                                    setOpenPopupChangeState(false);
-                                }} /> : ''}
-                    </PersistGate>
-                </Provider>
-                <LazyLoad>
-                <MobileDescription
-                    appInfoState={appInfoState}
-                    color={myColor.screenShotColor}
-                    appName={webAppInfo.appName}
-                />
-                </LazyLoad>
-                <LazyLoad>
-                    <link rel="stylesheet" type="text/css" href="/styles/slick.css" />
-                    <Feedback isMobile={isMobile} appId={appInfoState.id}></Feedback>
-                </LazyLoad>
-                <Footer bucket={appInfoState.bucket} color={myColor.colorFooter}></Footer>
-            </div>
-        </>
-    )
-}
-const _Header = (props) => {
-    let { id, appNameId, appName } = props.appInfo ? props.appInfo : {};
-    const router = useRouter();
-    appNameId = appNameId ? appNameId : router.query.appNameId;
-    let appId = id ? id : -1;
-    const classes = useStyles(props);
-    let webAppInfo = props.webAppInfo ? props.webAppInfo : new WebAppInfo({ appName: appName });
-    let onStartTest = props.onStartTest ? props.onStartTest : () => { }
-    if(!isSuperApp(appId)){
-        return <HeaderBanner 
-            title={webAppInfo.header.title}
-            description={webAppInfo.header.description}
-            blogLink={"/blog" + (appId ? "?appId=" + appId : '')}
-            reviewLink={"/" + appNameId + "/review"}
-            buttonPractice={
-                <Button
-                    color="primary"
-                    variant="contained"
-                    className={classes.button} 
-                    onClick={() => { onStartTest() }}>START YOUR PRACTICE TEST</Button>
-            }
-        />
-    }
-    const theme = useTheme();
-    const isMobile = useMediaQuery(theme.breakpoints.between(0, 800));
-    const banner = getHeaderBanner(appId);
-    return <div className="bg-new"
-        style={{
-            backgroundImage: "url("+banner+")",
-            backgroundSize: "cover",
-            minHeight: isMobile ? "" : "500px",
-            height: "100%",
-            backgroundPosition: "top center"
-        }}
-    >
-        <HeaderBanner 
-            appInfo={props.appInfo}
-            title={webAppInfo.header.title}
-            description={webAppInfo.header.description}
-            blogLink={"/blog" + (appId ? "?appId=" + appId : '')}
-            reviewLink={"/" + appNameId + "/review"}
-            buttonPractice={
-                <Button
-                    color="primary"
-                    variant="contained"
-                    className={classes.button} 
-                    onClick={() => { onStartTest() }}>START YOUR PRACTICE TEST</Button>
-            }
-        />
-    </div>
-}
-
-const Features = ({ color, webAppInfo, appName }) => {
-    if (!webAppInfo) {
-        webAppInfo = new WebAppInfo({ appName: appName });
-    }
-    return (
-        <Container className="features-container">
-            <div className="list-features">
-                <div >
-                    <FreeIcon width="80px" height="80px" color={color}></FreeIcon>
-                    <h2 className="dot-2">{webAppInfo.block1[0].title}</h2>
-                    <p>{webAppInfo.block1[0].description}</p>
-                </div>
-                <div >
-                    <LoginIcon width="80px" height="80px" color={color}></LoginIcon>
-                    <h2 className="dot-2">{webAppInfo.block1[1].title}</h2>
-                    <p>{webAppInfo.block1[1].description}</p>
-                </div>
-                <div>
-                    <PenIcon width="80px" height="80px" color={color}></PenIcon>
-                    <h2 className="dot-2">{webAppInfo.block1[2].title}</h2>
-                    <p>{webAppInfo.block1[2].description}</p>
-                </div>
-            </div>
-        </Container>
-    )
-}
-const ExamOverview = ({ webAppInfo, appName, isMobile }) => {
-    if (!webAppInfo) {
-        webAppInfo = new WebAppInfo({ appName: appName });
-    }
-    return (
-        <Container className="overview-container">
-            <div className="overview-title">
-                <h2 style={{ textAlign: "center" }}>{webAppInfo.block2[0].title}</h2>
-                <p style={{ textAlign: isMobile ? "left" : "center" }}>{webAppInfo.block2[0].description}</p>
-            </div>
-            <div className="list-overview">
-                <div className="overview-item">
-                    <h2>{webAppInfo.block2[1].title}</h2>
-                    <p>{webAppInfo.block2[1].description}</p>
-                </div>
-                <div className="overview-item">
-                    <h2>{webAppInfo.block2[2].title}</h2>
-                    <p>{webAppInfo.block2[2].description}</p>
-                </div>
-                <div className="overview-item">
-                    <h2>{webAppInfo.block2[3].title}</h2>
-                    <p>{webAppInfo.block2[3].description}</p>
-                </div>
-            </div>
-
-        </Container>
-    )
-}
-const ListInfoGraphic = (props) => {
-    let onStartTest = props.onStartTest ? props.onStartTest : () => { }
-    const classes = useStyles(props);
-    let images = getImageBlock3(props.appId ? props.appId : -1)
-    let appName = props.appName ? props.appName : '';
-    let webAppInfo = props.webAppInfo ? props.webAppInfo : new WebAppInfo({ appName: props.appName });
-    return (
-        <>
-            <Container>
-                <Grid container alignItems="stretch">
-                    <Grid item xs={12} sm={4}>
-                        <LazyLoad><img width="100%" src={images[0]} alt="infographic-1" style={{ display: "block" }}></img></LazyLoad>
-                    </Grid>
-                    <Grid item xs={12} sm={1}></Grid>
-                    <Grid item xs={12} sm={6}>
-                        <h2>{webAppInfo.block3.title}</h2>
-                        <p>{webAppInfo.block3.description}</p>
-                        <Button className={classes.buttonStartTest} style={{ marginTop: '50px' }} onClick={() => { onStartTest(2); }}>START YOUR PRACTICE TEST</Button>
-                    </Grid>
-                    <Grid item xs={12} sm={1}></Grid>
-                </Grid>
-            </Container>
-            <div style={{ height: "80px", width: "100%" }}></div>
-            <Container className="infographic-container">
-                <h2>{webAppInfo.block4[0].title}</h2>
-                <p>{webAppInfo.block4[0].description}</p>
-                <Grid container spacing={3} className="list-infographic-new" alignItems="stretch" justify="space-evenly">
-                    <Grid item xs={12} sm={3}>
-                        <div style={{ display: "flex", flexDirection: "column" }}>
-                            <div style={{ color: props.color }} className="titlex">{webAppInfo.numberInfo.number1}</div>
-                            <p className="dot-2 descriptionx">{webAppInfo.block4[1].title}</p>
-                            {webAppInfo.numberInfo.free ? <FreeCircle color={props.color} ></FreeCircle> 
-                                : <div style={{ 
-                                    backgroundColor: "#5a6695",
-                                    color: "white",
-                                    marginTop: "auto",
-                                    marginBottom: "16px",
-                                    width: "78px",
-                                    height: "78px",
-                                    display: "flex",
-                                    alignItems: "center",
-                                    justifyContent: "center",
-                                    borderRadius: "100%"
-                                }}><CreditCardIcon color="inherit" fontSize="large" /></div>}
-                        </div>
-                    </Grid>
-                    <Grid item xs={12} sm={3}>
-                        <div style={{ display: "flex", flexDirection: "column" }}>
-                            <div style={{ color: props.color }} className="titlex">{webAppInfo.numberInfo.number2}</div>
-                            <p className="dot-2 descriptionx">Total questions</p>
-                            <TotalQuestions color={props.color}></TotalQuestions>
-                        </div>
-                    </Grid>
-                    <Grid item xs={12} sm={3}>
-                        <div style={{ display: "flex", flexDirection: "column" }}>
-                            <div style={{ color: props.color }} className="titlex">{webAppInfo.numberInfo.number3}</div>
-                            <p className="dot-2 descriptionx">Total time (minutes) to take the {appName}</p>
-                            <Clock color={props.color}></Clock>
-                        </div>
-                    </Grid>
-
-                </Grid>
-            </Container>
-            <Container>
-                <Grid container alignItems="stretch">
-                    <Grid item xs={12} sm={5}>
-                        <h2>{webAppInfo.block5.title}</h2>
-                        <p>{webAppInfo.block5.description}</p>
-                        <div style={{ display: "inline-flex", flexDirection: "column", justifyContent: "flex-start", alignItems: "flex-start", marginTop: "20px" }}>
-                            <Button 
-                                className={classes.buttonStartTest}
-                                style={{ display: props.isMobile ? "none" : "block" }} 
-                                onClick={() => { onStartTest(3); }} fullWidth={false}>START YOUR PRACTICE TEST</Button>
-                            <ArrowDownwardIcon style={
-                                {
-                                    marginTop: "20px",
-                                    color: props.color ? props.color : "",
-                                    fontSize: "32px",
-                                    display: "block",
-                                    marginLeft: "auto",
-                                    marginRight: "auto",
-                                    cursor: "pointer"
-                                }
-                            }></ArrowDownwardIcon>
-                        </div>
-                    </Grid>
-                    <Grid item xs={12} sm={2}></Grid>
-                    <Grid item xs={12} sm={4}>
-                        <LazyLoad><img src={images[1]} alt="infographic-2" style={{ display: "block", width: "100%" }}></img></LazyLoad>
-                    </Grid>
-                    <Grid item xs={12} sm={1}></Grid>
-                </Grid>
-            </Container>
-        </>
-    )
-}
-const ListTopic = () => {
-    return (
-        <Container style={{ textAlign: "center", marginTop: "40px" }}>
-            <h2 style={{ fontSize: "36px" }}>Start your Practice Test</h2>
-        </Container>
-    )
-}
-const MobileDescription = ({ appInfoState, color = "#FFA86C", appName }) => {
-    if (!appName) {
-        appName = ''
-    }
-    const theme = useTheme();
-    const isMobile = useMediaQuery(theme.breakpoints.down(800));
-    console.log("isMobile", isMobile)
-    return <Container className="stores-panel">
-        <Grid container style={{ backgroundColor: color, borderRadius: isMobile ? "20px" : "" }} className="x-content">
-            <Grid item xs={12} sm={isMobile ? 12 : 6}>
-            <div className="mobile-description-content" style={isMobile ? {
-                    textAlign: "center",
-                    display: "flex",
-                    flexDirection: "column",
-                    alignItems: "center",
-            } : {}}>
-                <h1>Practice offline & on the go with the free {appName} app</h1>
-                <p style={{fontSize: "18px", opacity: "0.8"}}>Available for IOS and Android devices.</p>
-                <div className="app-info">
-                    <img src={appInfoState.avatar} alt="app-image" style={{ borderRadius: "15px", height: "100px" }}></img>
-                    <div className="app-info-right">
-                        <h2>{appInfoState.appName}</h2>
-                        <Rating value={5} readOnly ></Rating>
-                    </div>
-                </div>
-                <div className="app-url">
-                    <LazyLoad>
-                    <a href={appInfoState.urlAndroid} target="_blank" rel="noopener noreferrer" onClick={() => {
-                        ReactGA.event({
-                            category: 'Click Google Play',
-                            action: 'Click Google Play App Home'
-                        })
-                    }}>
-                        <img alt="Link google app" src="/images/googlePlayIcon.png" />
-                    </a>
-                    <div style={{ width: '20px' }}></div>
-                    <a href={appInfoState.urlIos} target="_blank" rel="noopener noreferrer" onClick={() => {
-                        ReactGA.event({
-                            category: 'Click App Store',
-                            action: 'Click Google Play App Home'
-                        })
-                    }}>
-                        <img src="/images/appStoreIcon.png" alt="Link app store" />
-                    </a>
-                    </LazyLoad>
-                </div>
-            </div>
-            </Grid>
-            {!isMobile ? <Grid item xs={12} sm={6} className="stores-right-panel">
-                <LazyLoad><img width="100%" src="/images/screenshot.png" /></LazyLoad>
-            </Grid> : null}
-        </Grid>
-    </Container>
-}
-
-const Feedback = ({ isMobile, appId }) => {
-    const [loading, setLoading] = useState(true);
-    const [feedbacks, setFeedbacks] = useState([]);
-    useEffect(() => {
-        callApi({ url: '/data?type=get_user_rates&appId=' + appId, params: null, method: 'post' }).then((data) => {
-            setLoading(false);
-            setFeedbacks(data);
-        });
-    }, [appId])
-    if (loading) {
-        return <CircularProgress />
-    }
-    if (feedbacks.length == 0) {
-        return null;
-    }
-    const settings = {
-        infinite: true,
-        speed: 500,
-        slidesToShow: 1,
-        slidesToScroll: 1,
-        className: "feedbacks-slider",
-        autoPlay: true,
-        autoplaySpeed: 1500,
-        arrows: true
-    };
-    return <Container className="feedback-container">
-        <div style={{ position: 'relative' }}>
-            <Slider {...settings}>
-                {
-                    feedbacks.map((feedback, index) => {
-                        return <FeedbackItem
-                            key={"XX-FeedbackItem-" + feedback.id + "-" + index}
-                            content={feedback.content}
-                            name={feedback.userName}
-                            createTime={feedback.createDate}
-                            index={index}
-                        />
-                    })
+    header: {
+        height: "100px",
+        backgroundColor: "transparent"
+    },
+    flex: {
+        display: "flex",
+        alignItems: "center"
+    },
+    headerMenu: props => {
+        if(props.isMobile) {
+            return {
+                display: "block",
+                padding: "10px",
+                textDecoration: "none",
+                color: "white",
+                fontWeight: "600",
+                cursor: "pointer",
+                '&:hover': {
+                    textDecoration: "underline"
                 }
-            </Slider>
-        </div>
-    </Container>
+            }
+        }
+        return {
+            padding: "10px 20px",
+            textDecoration: "none",
+            color: props.bannerUrl ? "white" : "#4e63bd",
+            fontWeight: "600",
+            cursor: "pointer",
+            '&:hover': {
+                textDecoration: "underline"
+            }
+        }
+    },
+});
+
+const AppPage = ({ appInfo, url, isMobile }) => {
+    console.log("AppPage", appInfo, url, isMobile);
+    if(!appInfo || Object.keys(appInfo).length === 0 && appInfo.constructor === Object){
+        return <ErrorPage title="Not found app" />
+    }
+    return <>
+        <main style={{
+            display: "flex",
+            flexDirection: "column"
+        }}>
+            <SEO url={url} appInfo={appInfo} />
+            <HeaderBannerPanel isMobile={isMobile} appInfo={appInfo} />
+            <BodyPanel appInfo={appInfo} isMobile={isMobile} />
+            <FooterPanel isMobile={isMobile} />
+        </main>
+    </>
 }
 
-const FeedbackItem = ({ content, name, createTime, index }) => {
-    return <div className="feedback-item">
-        <div className="content">{content}</div>
-        <div className="infos">
-            <LazyLoad><img className="avatar" src={index % 3 === 0 ? "/images/avatar-1.png" : (index % 3 === 1 ? "/images/avatar-2.png" : "/images/avatar-3.png")} alt="avatar"></img></LazyLoad>
-            <div className="name">{name}</div>
+const HeaderBannerPanel = ({ isMobile, appInfo }) => {
+    const [openDrawer, setOpenDrawer] = useState(false);
+    const handleOpenDrawer = (open) => setOpenDrawer(open)
+    const superApp = isSuperApp(appInfo.id)
+    const bannerUrl = superApp ? getHeaderBanner(appInfo.id) : null
+    const [openDownload, setOpenDownload] = useState(false)
+    const styles = useStyles({ isMobile, bannerUrl: bannerUrl, openDownload });
+    let appName = (appInfo.appName || '').toLowerCase().replace('practice', '').replace('test', '').toUpperCase();
+    return <>
+        <div className={styles.bgheader}>
+            <div className={styles.headerTemp}>
+                <header className={styles.header}>
+                    <Container style={{height: "100%"}}>
+                        <Grid container justify="space-between" alignItems="center" style={{height: "100%"}}>
+                            <a href="/"><img src={superApp ? "/images/logo-landing.png" : "/images/logo-landing-2.png"} width="240px" height="60px" /></a>
+                            {isMobile ? <button className={styles.menuButton}
+                            onClick={() => {
+                                setOpenDrawer(true)
+                            }}
+                            >
+                                <MenuIcon />
+                            </button> : <div className={styles.flex}>
+                                <HeaderMenu styles={styles} isMobile={isMobile} appInfo={appInfo} />
+                            </div>}
+                            { isMobile ? <SwipeableDrawer
+                                className="header-menu-swipe"
+                                anchor="right"
+                                open={openDrawer}
+                                onClose={() => {
+                                    handleOpenDrawer(false);
+                                }}
+                                onOpen={() => handleOpenDrawer(true)}
+                            >
+                                <div style={{padding: "10px"}}>
+                                    <a href="/"><img width="200px" height="48px" src="/images/logo-landing.png" /></a>
+                                </div>
+                                <HeaderMenu styles={styles} isMobile={isMobile} appInfo={appInfo} />
+                            </SwipeableDrawer> : null }
+                        </Grid>
+                    </Container>
+                </header>
+                <Container>
+                    <Grid container justify="space-between" alignItems="center">
+                        <Grid item xs={12} sm={6} md={6}>
+                            <h1 style={{
+                                minHeight: isMobile ? "180px" : "0",
+                                display: "flex",
+                                alignItems: "center",
+                                color: superApp ? "white" : "#1e3094"
+                            }}>FREE {appName} PRACTICE TEST</h1>
+                            <p style={{
+                                minHeight: isMobile ? "180px" : "0",
+                                display: "flex",
+                                alignItems: "center",
+                                color: superApp ? "white" : "#333",
+                                fontSize: "1.1em",
+                                fontWeight: "500"
+                            }}>If you're nervous about the {appName} test for the first time, try our free {appName} practice test. 
+                                Test your knowledge with +1000 {appName} practice questions!</p>
+                            <div style={{height: "32px"}}></div>
+                            <div className={styles.flex} style={{flexWrap: "wrap"}}>
+                                <Button variant="contained" color="inherit" style={{
+                                    borderRadius: "40px",
+                                    fontWeight: "bold",
+                                    marginTop: "10px",
+                                    backgroundColor: "#616E7D",
+                                    color: "white"
+                                }} >
+                                    <ComputerIcon />
+                                    <span style={{width: "10px"}}></span>
+                                    <span>Start your test</span>
+                                </Button>
+                                <div style={{width: "32px"}}></div>
+                                <div className="dropdown-app-panel">
+                                    <button variant="outlined" color="inherit">
+                                        <span>Download on your mobile device</span>
+                                        <span style={{width: "10px"}}></span>
+                                        {openDownload ? <ExpandLessIcon /> : <ExpandMoreIcon />}
+                                    </button>
+                                    <div className="content">
+                                        <a href={appInfo.urlAndroid} target="_blank" rel="noopener noreferrer" onClick={() => {
+                                            ReactGA.event({
+                                                category: 'Click Google Play',
+                                                action: 'Click Google Play App Home'
+                                            })
+                                        }}>
+                                            <img alt="Link google app" src="/images/googlePlayIcon.png" />
+                                        </a>
+                                        <div style={{ width: '10px' }}></div>
+                                        <a href={appInfo.urlIos} target="_blank" rel="noopener noreferrer" onClick={() => {
+                                            ReactGA.event({
+                                                category: 'Click App Store',
+                                                action: 'Click Google Play App Home'
+                                            })
+                                        }}>
+                                            <img src="/images/appStoreIcon.png" alt="Link app store" />
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </Grid>
+                        {isMobile ? null : <Grid item xs={12} sm={5} md={5}>
+                            <img width="100%" src="/images/test3.png" style={superApp ? {} : {
+                                position: "relative",
+                                bottom: "-60px"
+                            }} />
+                        </Grid>}
+                    </Grid>
+                </Container>
+            </div>
         </div>
+    </>
+}
+
+const HeaderMenu = ({ styles, isMobile, appInfo }) => {
+    return <>
+        <div className={isMobile ? "" : styles.flex}>
+            <span onClick={() => {
+                scrollToTopic()
+            }} className={styles.headerMenu}>LEARN</span>
+            <a href={"/" + appInfo.appNameId + "/review"} className={styles.headerMenu}>REVIEW</a>
+            <a href={"/blog?appId=" + appInfo.appNameId} className={styles.headerMenu}>BLOG</a>
+            <span className={styles.headerMenu} onClick={() => {
+                scrollDown()
+            }}>SUPPORT</span>
+        </div>
+    </>
+}
+
+const BodyPanel = ({ isMobile, appInfo }) => {
+    return <div>
+        <div style={{height: "100px"}}></div>
+        <Block1 isMobile={isMobile} appInfo={appInfo} />
+        <div style={{height: "50px"}}></div>
+        {/* <Block2 isMobile={isMobile} appInfo={appInfo} />
+        <div style={{height: "50px"}}></div>
+        <Block3 isMobile={isMobile} appInfo={appInfo} />
+        <div style={{height: "50px"}}></div>
+        <Block4 isMobile={isMobile} appInfo={appInfo} />
+        <div style={{height: "50px"}}></div>
+        <Block5 isMobile={isMobile} appInfo={appInfo} />
+        <div style={{height: "50px"}}></div>
+        <Block6 isMobile={isMobile} appInfo={appInfo} />
+        <div style={{height: "50px"}}></div> */}
     </div>
 }
 
+const Block1 = ({ isMobile, appInfo }) => {
+    let appName = (appInfo.appName || '').toLowerCase().replace('practice', '').replace('test', '').toUpperCase();
+    return <section>
+        <Container>
+            <Grid container spacing={3}>
+                <Block1Item 
+                    icon="icon-block1-1"
+                    title={"All " + appName + " practice test free"}
+                    desciption="1000+ FREE practice questions and various simulator tests to explore. All you need to get your certificate is available here."
+                />
+                <Block1Item 
+                    icon="icon-block1-2"
+                    title={"No Sign up or Login Required"}
+                    desciption="All your progress is saved without an account even if you close your browser. No usernames, no passwords - just merely ASVAB training."
+                />
+                <Block1Item 
+                    icon="icon-block1-3"
+                    title={"Exam simulator All based on real tests"}
+                    desciption="Same number of questions, same time limits, same structure. The exam simulators let you familiarize with test format and get 100% ready for your big day!"
+                />
+                <Block1Item 
+                    icon="icon-block1-4"
+                    title={"Detailed explanations"}
+                    desciption="Let you know why an option was correct and the others were not. Well understand always helps you remember better!!!"
+                />
+                <Block1Item 
+                    icon="icon-block1-5"
+                    title={"Gamization"}
+                    desciption="The learning process was divided into small milestones. Let's make your studying interesting like playing games."
+                />
+                <Block1Item 
+                    icon="icon-block1-6 "
+                    title={"Study on any device"}
+                    desciption="You can browser to study on any device from your phone to tablet and PC. Keep stay any time to get more knowledge!"
+                />
+            </Grid>
+        </Container>
+    </section>
+}
 
-// export const getServerSideProps = wrapper.getServerSideProps(async (context) => {
+const Block1Item = ({ icon, title, desciption }) => {
+    return <Grid item xs={12} sm={6} md={4}>
+        <div style={{ padding: "20px", textAlign:"center" }}>
+            <div className={icon}></div>
+            <p><strong>{title}</strong></p>
+            <p>{desciption}</p>
+        </div>
+    </Grid>
+}
+
+const Block2 = () => {
+    return <section>
+        Block2
+    </section>
+}
+
+const Block3 = () => {
+    return <section>
+        Block3
+    </section>
+}
+
+const Block4 = () => {
+    return <section>
+        Block4
+    </section>
+}
+
+const Block5 = () => {
+    return <section>
+        Block5
+    </section>
+}
+
+const Block6 = () => {
+    return <section>
+        Block6
+    </section>
+}
+
 export async function getServerSideProps(context) {
     const appNameId = APP_NEW_DOMAIN ? APP_NEW_DOMAIN : context.params.appNameId;
     const directoryAppInfos = path.join(process.cwd(), 'src/data/appInfos.json')
     let appInfosData = fs.readFileSync(directoryAppInfos);
     let mapAppInfos = JSON.parse(appInfosData)
-    // const appInfoState = await callApi({ url: '/data?type=get_app_info&appNameId=' + appNameId, params: null, method: 'post' })
-    const appInfoState = mapAppInfos[appNameId] || {};
-    // console.log("xxxxxx appNameId", appNameId, 'appInfoState', appInfoState)
+    const appInfo = mapAppInfos[appNameId] || {};
     return getWebContext(context, {
-        appInfoState
+        appInfo
     });
 }
 
-export default wrapper.withRedux(AppHome);
+export default AppPage;
