@@ -1,59 +1,80 @@
-import { Button, Container, Grid, makeStyles } from '@material-ui/core';
+import { Button, Container, Grid, makeStyles } from "@material-ui/core";
+import { Computer as ComputerIcon, ExpandLess as ExpandLessIcon, ExpandMore as ExpandMoreIcon } from '@material-ui/icons';
 import fs from "fs";
-import dynamic from 'next/dynamic';
 import path from "path";
-import React, { useEffect, useState } from 'react';
-import ReactGA from 'react-ga';
-import SEO from '../../components/SEO';
-import { APP_NEW_DOMAIN, GA_ID } from '../../config_app';
-import { wrapper } from '../../redux/store';
-import { getHeaderBanner, getWebContext, isSuperApp, oldUser, scrollToTopic, setScrollDownAuto } from '../../utils';
-const HomeContent = dynamic(() => import("../../container/home/HomeContent"), { ssr: false })
-const SelectStatePopup = dynamic(() => import("../../components/SelectStatePopup"), { ssr: false })
-const GameChildScreen = dynamic(() => import("./[screenChild]"), { ssr: false })
+import { useEffect, useState } from "react";
+import FooterPanel from "../../components/new/FooterPanel";
+import SEO from "../../components/SEO";
+import { APP_NEW_DOMAIN } from "../../config_app";
+import ErrorPage from "../../container/error";
+import { getHeaderBanner, getWebContext, isSuperApp, oldUser, scrollDown, scrollToTopic, setScrollDownAuto } from "../../utils";
+import './app.css';
 
 const useStyles = makeStyles({
-    root: {
-        marginTop: "40px",
-        backgroundColor: props => props.color,
-        borderRadius: "50px",
-        textTransform: "none",
-        padding: "12px 32px",
-        fontSize: "18px",
-        fontWeight: 600,
-        margin: "0 auto",
-        color: props => props.color === "#FAFAFA" ? "#383838" : "#fff",
-        "&:hover": {
-            backgroundColor: props => props.color,
+    bgheader: props => {
+        if(props.bannerUrl){
+            return {
+                background: "url("+props.bannerUrl+") no-repeat",
+                backgroundSize: "cover"
+            }
+        }
+        if(props.isMobile){
+            return {
+                background: "url(/images/new/banner-right.jpg) no-repeat",
+                backgroundPosition: "top",
+                backgroundSize: "1000px"
+            }
+        }
+        return {
+            background: "url(/images/new/banner-left.jpg) no-repeat, url(/images/new/banner-right.jpg) no-repeat",
+            backgroundPosition: "top left, top right",
+            backgroundSize: "auto, auto 100%"
         }
     },
-    button: {
-        borderRadius: "40px",
-        marginTop: "50px",
-        marginBottom: "50px",
-        padding: "8px 24px",
-        fontWeight: "bold",
-        fontSize: "16px",
-        marginLeft: props => props.isMobile ? "auto" : "",
-        marginRight: props => props.isMobile ? "auto" : "",
-        display: props => props.isMobile ? "flex" : "inline-flex",
-    },
-    buttonStartTest: {
-        backgroundColor: props => props.color, 
-        color: "white", 
-        padding: "10px 30px", 
-        borderRadius: "50px", 
-        fontWeight: "600",
-        fontSize: "16px",
-        "&:hover, &:focus": {
-            backgroundColor: "rgb(31 63 197)"
+    headerTemp: props => {
+        if(props.bannerUrl){
+            return {
+                backgroundColor: "rgb(0 0 0 / 0.6)"
+            }
         }
-    }
-})
+        return {}
+    },
+    header: {
+        height: "100px",
+        backgroundColor: "transparent"
+    },
+    flex: {
+        display: "flex",
+        alignItems: "center"
+    },
+    headerMenu: props => {
+        if(props.isMobile) {
+            return {
+                display: "block",
+                padding: "10px",
+                textDecoration: "none",
+                color: "white",
+                fontWeight: "600",
+                cursor: "pointer",
+                '&:hover': {
+                    textDecoration: "underline"
+                }
+            }
+        }
+        return {
+            padding: "10px 20px",
+            textDecoration: "none",
+            color: props.bannerUrl ? "white" : "#4e63bd",
+            fontWeight: "600",
+            cursor: "pointer",
+            '&:hover': {
+                textDecoration: "underline"
+            }
+        }
+    },
+});
 
-ReactGA.initialize(GA_ID);
-
-const AppHome = ({ appInfoState, url, home, isMobile }) => {
+const AppPage = ({ appInfo, url, isMobile }) => {
     console.log("AppPage", appInfo, url, isMobile);
     if(!appInfo || Object.keys(appInfo).length === 0 && appInfo.constructor === Object){
         return <ErrorPage title="Not found app" />
@@ -273,6 +294,36 @@ const Block1Item = ({ icon, title, desciption }) => {
     </Grid>
 }
 
+const Block2 = () => {
+    return <section>
+        Block2
+    </section>
+}
+
+const Block3 = () => {
+    return <section>
+        Block3
+    </section>
+}
+
+const Block4 = () => {
+    return <section>
+        Block4
+    </section>
+}
+
+const Block5 = () => {
+    return <section>
+        Block5
+    </section>
+}
+
+const Block6 = () => {
+    return <section>
+        Block6
+    </section>
+}
+
 export async function getServerSideProps(context) {
     const appNameId = APP_NEW_DOMAIN ? APP_NEW_DOMAIN : context.params.appNameId;
     const directoryAppInfos = path.join(process.cwd(), 'src/data/appInfos.json')
@@ -284,4 +335,4 @@ export async function getServerSideProps(context) {
     });
 }
 
-export default wrapper.withRedux(AppHome);
+export default AppPage;
