@@ -50,10 +50,10 @@ const Home = ({ isMobile, url }) => {
             display: "flex",
             flexDirection: "column"
         }}>
-            <LazyLoad height={1000}>
                 <SEO url={url} />
+            <LazyLoad height={1000}>
+                <HeaderBannerPanel isMobile={isMobile} />
             </LazyLoad>
-            <HeaderBannerPanel isMobile={isMobile} />
             <LazyLoad height={2000}>
                 <BodyPanel isMobile={isMobile} />
             </LazyLoad>
