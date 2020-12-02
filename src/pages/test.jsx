@@ -1,13 +1,33 @@
 import { Container, Grid } from "@material-ui/core";
+import Head from "next/head";
 import SEO from "../components/SEO";
+import { VERSION } from "../config_app";
 import { getWebContext } from "../utils";
 
 const TestPage = ({ url, isMobile }) => {
     const headerMenu = { padding: "20px", color: "blue", textDecoration: "none", fontWeight: "500" };
     return <>
-        <SEO url={url} appInfo={{
-            title: "Test Page"
-        }} />
+        <Head>
+            <meta charset="UTF-8" />
+            <meta name="google-site-verification" content="X91De9MR3B7BNl2-ciF8EUnT2A2oybgrzwbNla4YdIA" />
+            <meta charset="utf-8" />
+            <link rel="icon" href="/info/images/logo60.png" />
+            <link rel="apple-touch-icon" href="/info/images/logo60.png" />
+            <link rel="preconnect" href="https://webappapi-dot-micro-enigma-235001.appspot.com" />
+            <link rel="preconnect" href="https://storage.googleapis.com" />
+            <meta name="viewport" content="width=device-width, initial-scale=1" />
+            <meta name="theme-color" content="#000000" />
+            <link rel="manifest" href="manifest.json" />
+            <title>TEST PAGE ${VERSION}</title>
+            <meta name="title" content={"TEST PAGE " + VERSION} />
+            <meta name="description" content="With thousands of our FREE practice questions, we are here to help you achieve your gate of success with our test prep solutions." />
+            <meta name="keywords" content="Abc e-learning, abc elearning, study online,practice test, practice question,exam prepare,asvab,teas exam,cdl test,cdl practice,cissp exam,cissp practice,accuplacer,comptia practice test,comptia A+,compTIA Network,comptia security,dmv,dmv practice test,driving theory,driving theory UK,G1 test,GED,hesi,hesi A2,motorcycle permit,pmp,pmp exam,ptcb,ptce,real estate exam,practice app,practice test onl,free practice test,free practice questions,free practice app" />
+            <meta property="og:title" content={"Test Page " + VERSION} />
+            <meta property="og:description" content="With thousands of our FREE practice questions, we are here to help you achieve your gate of success with our test prep solutions." />
+            <meta property="og:image" content="/info/images/logo60.png" />
+            <meta property="og:type" content="website" />
+            <meta name="next-head-count" content="22" />
+        </Head>
         <main style={{
             background: "url(/images/new/banner-left.jpg) no-repeat, url(/images/new/banner-right.jpg) no-repeat",
             backgroundPosition: "top left, top right",
