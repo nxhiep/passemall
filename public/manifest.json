@@ -5,20 +5,17 @@
 		{
 			"src": "./info/images/logo60.png",
 			"type": "image/png",
-			"sizes": "55x55",
-			"purpose": "any maskable"
+			"sizes": "55x55"
 		},
 		{
 			"src": "./info/images/logo192.png",
 			"type": "image/png",
-			"sizes": "192x192",
-			"purpose": "any maskable"
+			"sizes": "192x192"
 		},
 		{
 			"src": "./info/images/logo512.png",
 			"type": "image/png",
-			"sizes": "512x512",
-			"purpose": "any maskable"
+			"sizes": "512x512"
 		}
 	],
 	"start_url": "/?source=pwa",
