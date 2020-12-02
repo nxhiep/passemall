@@ -248,9 +248,13 @@ const HeaderMenu = ({ styles, isMobile, appInfo }) => {
 const BodyPanel = ({ isMobile, appInfo }) => {
     return <div>
         <div style={{height: isMobile ? "50px" : "100px"}}></div>
-        <Block1 isMobile={isMobile} appInfo={appInfo} />
+        <LazyLoad>
+            <Block1 isMobile={isMobile} appInfo={appInfo} />
+        </LazyLoad>
         <div style={{height: "50px"}}></div>
-        <Block2 isMobile={isMobile} appInfo={appInfo} />
+        <LazyLoad>
+            <Block2 isMobile={isMobile} appInfo={appInfo} />
+        </LazyLoad>
         <div style={{height: "50px"}}></div>
         <LazyLoad>
             <Block3 isMobile={isMobile} appInfo={appInfo} />
