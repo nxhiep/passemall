@@ -37,10 +37,9 @@ const useStyles = makeStyles({
     }
 });
 
-// ReactGA.initialize(GA_ID);
-
 const TestPage = ({ url, isMobile }) => {
     // useEffect(() => {
+    //     ReactGA.initialize(GA_ID);
     //     ReactGA.pageview('/homepage');
     //     setScrollDownAuto()
     //     oldUser();
