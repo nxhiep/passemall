@@ -17,16 +17,16 @@ import { isMobileFunctions, isObjEmpty } from '../../utils';
 import { CongratulationAlert, QuestionsPanelTS } from '../game/Game.ViewTS';
 
 const questionsX = new Map();
-const StudyViewScreen = ({ appInfoState, topicId }) => {
+const StudyViewScreen = ({ appInfo, topicId }) => {
     const router = useRouter();
     useEffect(() => {
-        ReactGA.pageview('/studypage/' + appInfoState.title);
+        ReactGA.pageview('/studypage/' + appInfo.title);
     }, []);
-    if (!appInfoState) {
+    if (!appInfo) {
         return <LoadingWidget />
     }
     return (
-        <StudyView appInfo={appInfoState} topicId={topicId} />
+        <StudyView appInfo={appInfo} topicId={topicId} />
     );
 }
 

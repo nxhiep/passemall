@@ -23,11 +23,11 @@ const SEO = ({ url, appInfo, children }) => {
         <link rel="preload" href="index.css" as="style"></link>
         <link rel="stylesheet" href="index.css"></link> */}
 
-        <link rel="preconnect" href="https://webappapi-dot-micro-enigma-235001.appspot.com"></link>
+        <link rel="preconnect" href="https://micro-enigma-235001.appspot.com"></link>
         <link rel="preconnect" href="https://storage.googleapis.com" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <meta name="theme-color" content="#000000" />
-        <link rel="manifest" href="manifest.json" />
+        <link rel="manifest" href="/manifest.json" />
         {url ? <link rel="canonical" href={url || 'http://passemall.com/'}></link> : null}
         <title>{title.toUpperCase()}</title>
         <meta name="title" content={title.toUpperCase()} />

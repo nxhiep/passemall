@@ -17,7 +17,7 @@ import { scrollToTop } from '../../models/Utils';
 import { getAllCardProgress } from '../../redux/actions/cardProgress';
 import { checkLoadedReceiveProps, isMobileFunctions, isSuperApp, redirectToNewDomain } from '../../utils';
 import { QuestionsPanelTS } from '../game/Game.ViewTS';
-const ReviewViewScreen = ({ appInfoState }) => {
+const ReviewViewScreen = ({ appInfo }) => {
     const router = useRouter();
     let { appNameId, screen } = router.query
     let topicId = -1;
@@ -33,7 +33,6 @@ const ReviewViewScreen = ({ appInfoState }) => {
             scrollToTop();
         }
     }, [isMobile]);
-    let appInfo = appInfoState;
     if (!appInfo) {
         return <LoadingWidget />
     }

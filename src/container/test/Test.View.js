@@ -19,7 +19,7 @@ import { endTest, getTestInfoByAppId, getTestInfoByAppIdAndParentId, getTopicsBy
 import { CongratulationAlert } from "../game/Game.ViewTS";
 import EndTestView from "./EndTest";
 import { ButtonLevel, TestProgressPanel, TestQuestionPanel } from './TestComponent';
-const TestViewScreen = ({ appInfoState, topicId = -1 }) => {
+const TestViewScreen = ({ appInfo, topicId = -1 }) => {
     const theme = useTheme()
     const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
     useEffect(() => {
@@ -27,7 +27,6 @@ const TestViewScreen = ({ appInfoState, topicId = -1 }) => {
             scrollToTop();
         }
     }, [isMobile]);
-    let appInfo = appInfoState;
     useEffect(() => {
         ReactGA.pageview('/testpage/' + appInfo.title);
     }, []);
@@ -35,7 +34,7 @@ const TestViewScreen = ({ appInfoState, topicId = -1 }) => {
         return React.createElement(LoadingWidget, null);
     }
     return (
-        <TestView appInfoState={appInfoState} topicId={topicId}></TestView>
+        <TestView appInfoState={appInfo} topicId={topicId}></TestView>
     )
 };
 const TestViewUI = ({ stateInfoState, testInfoState, appInfoState, getTestInfoByAppId = () => { }, gameState, getTestInfoByAppIdAndParentId = () => { }, setTestInfoPlaying = () => { }, endTest, getTopicsByParentId }) => {

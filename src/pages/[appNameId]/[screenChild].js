@@ -16,7 +16,7 @@ const TestViewScreen = dynamic(() => import('../../container/test/Test.View'), {
 const ReviewViewScreen = dynamic(() => import('../../container/review/Review.View'), { ssr: false })
 
 ReactGA.initialize(GA_ID);
-const GameChildScreen = ({ appInfoState, url }) => {
+const GameChildScreen = ({ appInfo, url, topicId }) => {
     useEffect(() => {
         ReactGA.pageview('/appGame');
         setScrollDownAuto()
@@ -25,7 +25,7 @@ const GameChildScreen = ({ appInfoState, url }) => {
     const store = useStore((state) => state);
     return (
         <>
-            <SEO appInfo={appInfoState} url={url}>
+            <SEO appInfo={appInfo} url={url}>
                 <link rel="stylesheet" type="text/css" href="/styles/game.css" />
                 <link rel="stylesheet" type="text/css" href="/styles/review.css" />
                 <link rel="stylesheet" type="text/css" href="/styles/test.css" />
@@ -37,7 +37,7 @@ const GameChildScreen = ({ appInfoState, url }) => {
                     <PersistGate
                         persistor={store.__persistor}
                     >
-                        <ScreenChild appInfoState={appInfoState} />
+                        <ScreenChild appInfo={appInfo} topicId={topicId} />
                     </PersistGate>
                 </Provider>
             </div>
@@ -46,30 +46,19 @@ const GameChildScreen = ({ appInfoState, url }) => {
 }
 
 
-function ScreenChild({ appInfoState }) {
+function ScreenChild({ appInfo, topicId }) {
     const router = useRouter();
-    let screen = APP_NEW_DOMAIN ? router.query.screenChild : router.query.appNameId
+    let screen = router.query.screenChild
     screen = screen ?? '';
-    if (screen.startsWith(Routes.TEST_SCREEN)) {
-        let offset = screen.lastIndexOf('-');
-        let topicId = -1;
-        if (offset > -1) {
-            offset += 1;
-            topicId = offset > -1 ? parseInt(screen.substring(offset, screen.length)) : -1;
-        }
-        return <TestViewScreen topicId={topicId} appInfoState={appInfoState} />
+    console.log("ScreenChild", screen)
+    if (screen.startsWith(Routes.TEST_SCREEN)&& topicId > -1) {
+        return <TestViewScreen topicId={topicId} appInfo={appInfo} />
     }
     if (screen.startsWith(Routes.REVIEW_SCREEN)) {
-        return <ReviewViewScreen appInfoState={appInfoState} />
+        return <ReviewViewScreen appInfo={appInfo} />
     }
-    if (screen.length > 0) {
-        let offset = screen.lastIndexOf('-');
-        let topicId = -1;
-        if (offset > -1) {
-            offset += 1;
-            topicId = offset > -1 ? parseInt(screen.substring(offset, screen.length)) : -1;
-        }
-        return <StudyViewScreen appInfoState={appInfoState} topicId={topicId} />
+    if (screen.length > 0 && topicId > -1) {
+        return <StudyViewScreen appInfo={appInfo} topicId={topicId} />
     }
     return <ErrorPage />
 }
@@ -80,9 +69,20 @@ export async function getServerSideProps(context) {
     let appInfosData = fs.readFileSync(directoryAppInfos);
     let mapAppInfos = JSON.parse(appInfosData)
     const appInfo = mapAppInfos[appNameId] || {};
+    let topicId = -1;
+    let screen = context.params && context.params.screenChild;
+    if(screen){
+        let offset = screen.lastIndexOf('-');
+        if (offset > -1) {
+            offset += 1;
+            topicId = offset > -1 ? parseInt(screen.substring(offset, screen.length)) : -1;
+        }
+    }
+    console.log("topicId", topicId)
     return {
         props: {
-            appInfoState: appInfo
+            appInfo,
+            topicId
         }
     }
 }

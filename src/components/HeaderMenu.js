@@ -1,9 +1,9 @@
-import { Container, Grid, IconButton, Link, SwipeableDrawer, useMediaQuery, useTheme } from "@material-ui/core";
+import { Container, Grid, Link, SwipeableDrawer, useMediaQuery, useTheme } from "@material-ui/core";
 import MenuIcon from '@material-ui/icons/Menu';
 import { useState } from "react";
 import ReactGA from 'react-ga';
 import { APP_NEW_DOMAIN } from "../config_app";
-import { isSuperApp, scrollToTopic } from "../utils";
+import { isSuperApp } from "../utils";
 
 const HeaderMenu = ({ appInfo, darkMode, noHeader, headerMenu }) => {
     if(noHeader === true){
@@ -59,28 +59,27 @@ const Content = ({ appInfo, headerMenu, darkMode }) => {
 const MenuList = ({ appInfo }) => {
     let rootLink = '/';
     if(appInfo && (!isSuperApp(appInfo.id) || !APP_NEW_DOMAIN)){
-        rootLink = appInfo.appNameId+'/';
+        rootLink = '/' + appInfo.appNameId;
     }
     return <>
         <div>
             <a href={rootLink}>HOME</a>
         </div>
-        {!APP_NEW_DOMAIN ? <div>
-            <span className="tag-a" href={rootLink} onClick={() => {
+        <div onClick={() => {
                 ReactGA.event({
-                    category: 'Click Learn',
-                    action: 'Click Learn Header'
+                    category: 'Click Test',
+                    action: 'Click Test Header'
                 })
-                scrollToTopic()
-            }}>LEARN</span>
-        </div> : null}
+            }}>
+            <Link href={rootLink}>LEARN</Link>
+        </div>
         {/* <div onClick={() => {
                 ReactGA.event({
                     category: 'Click Test',
                     action: 'Click Test Header'
                 })
             }}>
-            <Link href={rootLink + "test"}>TEST</Link>
+            <Link href={rootLink + "/test"}>TEST</Link>
         </div> */}
         <div onClick={() => {
                 ReactGA.event({
@@ -88,7 +87,7 @@ const MenuList = ({ appInfo }) => {
                     action: 'Click Review Header'
                 })
             }}>
-            <Link href={rootLink + "review"}>REVIEW</Link>
+            <Link href={rootLink + "/review"}>REVIEW</Link>
         </div>
         <div onClick={() => {
                 ReactGA.event({
