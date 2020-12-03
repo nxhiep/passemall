@@ -63,14 +63,19 @@ export function scrollDown() {
 }
 export function scrollToTopic() {
     if (typeof window !== 'undefined') {
-        let childElement = document.querySelector(".content-home-page");
-        if (childElement) {
-            window.scroll({
-                top: childElement.offsetTop,
-                behavior: "smooth"
-            })
-        }
-
+        window.scroll({
+            top: 300,
+            behavior: "smooth"
+        })
+        setTimeout(() => {
+            let childElement = document.querySelector(".content-home-page");
+            if (childElement) {
+                window.scroll({
+                    top: childElement.offsetTop,
+                    behavior: "smooth"
+                })
+            }
+        }, 301)
     }
 }
 

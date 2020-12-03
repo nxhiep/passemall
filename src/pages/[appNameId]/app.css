@@ -49,6 +49,7 @@ body {
 .dropdown-app-panel:hover .content {
     display: flex;
     align-items: center;
+    justify-content: space-between;
     border-radius: 20px;
     border-top-left-radius: 0;
     border-top-right-radius: 0;
