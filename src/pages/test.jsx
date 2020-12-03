@@ -3,12 +3,31 @@ import Head from "next/head";
 import { useEffect, useState } from "react";
 import LazyLoad from "react-lazyload";
 import Slider from "react-slick";
+import HeaderBannerPanel from "../components/new/HeaderBannerPanel";
 import { VERSION } from "../config_app";
 import { callApi } from "../services";
 import { getWebContext } from "../utils";
 
 const useStyles = makeStyles({
-
+    flex: {
+        display: "flex",
+        alignItems: "center"
+    },
+    appItem: {
+        padding: "16px 0",
+        borderBottom: "1px solid rgba(250,142,69,.3)"
+    },
+    appItemText: {
+        textTransform: "uppercase",
+        fontSize: "1.2em",
+        fontWeight: "500",
+        cursor: "pointer",
+        color: "#656566",
+        '&:hover': {
+            color: "#1e3094",
+            textDecoration: "underline",
+        }
+    }
 });
 
 const TestPage = ({ url, isMobile }) => {
@@ -35,54 +54,34 @@ const TestPage = ({ url, isMobile }) => {
         </Head>
         <main>
             <LazyLoad height={1000}>
-                <section  style={{
-                    background: "url(/images/new/banner-left.jpg) no-repeat, url(/images/new/banner-right.jpg) no-repeat",
-                    backgroundPosition: "top left, top right",
-                }}>
-                    <header>
-                        <Container>
-                            <Grid container justify="space-between" alignItems="center" style={{height: "100%"}}>
-                                <a href="/"><img alt="ABC Elearning Logo" src="/images/logo-landing-2.png" width="240px" height="60px" /></a>
-
-                                <div>
-                                    <a href="/" style={headerMenu}>HOME</a>
-                                    <a href="/blog" style={headerMenu}>BLOG</a>
-                                    <a href="/test" style={headerMenu}>TEST</a>
-                                    <a href="/support" style={headerMenu}>SUPPORT</a>
-                                </div>
-                            </Grid>
-                        </Container>
-                    </header>
-                    <Container>
-                        <h1>Happier study, easier pass with our free practice tests</h1>
-                        <p>We are here for your success because your success is our last goal! That's why we have tried our best to bring you all free, friendly, and funny test prep solutions.</p>
-                        <h1>SOME OF THE BEST FEATURES</h1>
-                        <p>With thousands of exam-simulated questions with detail explanations, lifetime access to the complete Manual, and dozens of test-taking strategies, our Test Prep helps you pass your test with flying colors.</p>
-                        <hr />
-                        <h2>COMPLETELY FREE</h2>
-                        <p>Our application is 100% free, so you can practice your test in our web or in any other devices with our available free app on google play or appStore. No internet connection and no registration required.</p>
-                        <h2>PRACTICE BY TOPICS</h2>
-                        <p>Test your knowledge by practicing by topics exactly as in real test. Moreover, topic is also divided into small parts which helps you get your interest in studying, just like playing a game.</p>
-                        <h2>3 INTERESTING TEST MODES</h2>
-                        <p>3 different test modes with increases in difficult level let you experience the test in a very exciting way. Let's get accustomed to the format of the real test.</p>
-                        <h2>SPECICAL REVIEW MODE</h2>
-                        <p>With this feature, you can review which questions you are weak, medium or strong. And this will help you find out where you need to work more and make the most of your study time.</p>
-                    </Container>
-                </section>
+                <HeaderBannerPanel isMobile={isMobile} />
             </LazyLoad>
             <LazyLoad height={2000}>
                 <Block1 />
                 <Block2 />
+                <link rel="stylesheet" type="text/css" href="/styles/slick.css" />
                 <Block3 />
             </LazyLoad>
         </main>
     </>
 }
 
-const MyTitle = ({title, description}) => {
-    return <div>
-        <h1>{title}</h1>
-        <p>{description}</p>
+const MyTitle = ({ title, description, isMobile }) => {
+    return <div style={{textAlign: "center", marginTop: "40px", marginBottom: "40px", padding: "0 20px"}}>
+        <span style={{ fontSize: "24px", fontWeight: "bold", borderTop: "3px solid #fa8e45", padding: "8px 0px" }}>
+            <span style={{color: "#4e63bd"}}>ABC</span>
+            <span> </span>
+            <span style={{color: "#ff6b00"}}>E-learning</span>
+        </span>
+        <h1 style={{ fontSize: isMobile ? "" : "1.8em", color: "#1e3094" }}>{title}</h1>
+        <p style={{
+            maxWidth: "500px",
+            textAlign: "center",
+            margin: "0 auto",
+            color: "#333",
+            fontSize: "1.1em",
+            fontWeight: "500"
+        }}>{description}</p>
     </div>
 }
 
