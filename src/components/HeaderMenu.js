@@ -79,7 +79,7 @@ const MenuList = ({ appInfo }) => {
                     action: 'Click Test Header'
                 })
             }}>
-            <Link href={rootLink + "/test"}>TEST</Link>
+            <Link href={rootLink + (rootLink == '/' ? "" : "/") + "test"}>TEST</Link>
         </div> */}
         <div onClick={() => {
                 ReactGA.event({
@@ -87,7 +87,7 @@ const MenuList = ({ appInfo }) => {
                     action: 'Click Review Header'
                 })
             }}>
-            <Link href={rootLink + "/review"}>REVIEW</Link>
+            <Link href={rootLink + (rootLink == '/' ? "" : "/") + "review"}>REVIEW</Link>
         </div>
         <div onClick={() => {
                 ReactGA.event({
