@@ -15,12 +15,14 @@ const SEO = ({ url, appInfo, children }) => {
     return <Head>
         <link rel="icon" href={image} />
         <link rel="apple-touch-icon" href={image}></link>
-        <link rel="preload" href="/fonts/Poppins-Bold.ttf" as="font" crossOrigin="anonymous" />
+
+        {/* <link rel="preload" href="/fonts/Poppins-Bold.ttf" as="font" crossOrigin="anonymous" />
         <link rel="preload" href="/fonts/Poppins-Italic.ttf" as="font" crossOrigin="anonymous" />
         <link rel="preload" href="/fonts/Poppins-Regular.ttf" as="font" crossOrigin="anonymous" />
         <link rel="preload" href="/fonts/Poppins-SemiBold.ttf" as="font" crossOrigin="anonymous" />
         <link rel="preload" href="index.css" as="style"></link>
-        <link rel="stylesheet" href="index.css"></link>
+        <link rel="stylesheet" href="index.css"></link> */}
+        
         <link rel="preconnect" href="https://webappapi-dot-micro-enigma-235001.appspot.com"></link>
         <link rel="preconnect" href="https://storage.googleapis.com" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
