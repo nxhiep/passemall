@@ -100,11 +100,11 @@ const AppPage = ({ appInfo, url, isMobile }) => {
         oldUser()
     }, [])
     return <>
+        <SEO url={url} appInfo={appInfo} />
         <main style={{
             display: "flex",
             flexDirection: "column"
         }}>
-            <SEO url={url} appInfo={appInfo} />
             <LazyLoad height={1000}>
                 <HeaderBannerPanel isMobile={isMobile} appInfo={appInfo} />
             </LazyLoad>

@@ -46,11 +46,11 @@ const Home = ({ isMobile, url }) => {
         oldUser();
     }, [])
     return <>
+        <SEO url={url} />
         <main style={{
             display: "flex",
             flexDirection: "column"
         }}>
-            <SEO url={url} />
             <LazyLoad height={1000}>
                 <HeaderBannerPanel isMobile={isMobile} />
             </LazyLoad>
