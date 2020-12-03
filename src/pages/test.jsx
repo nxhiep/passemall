@@ -3,6 +3,7 @@ import Head from "next/head";
 import { useEffect, useState } from "react";
 import LazyLoad from "react-lazyload";
 import Slider from "react-slick";
+import FooterPanel from "../components/new/FooterPanel";
 import HeaderBannerPanel from "../components/new/HeaderBannerPanel";
 import { VERSION } from "../config_app";
 import { callApi } from "../services";
@@ -61,6 +62,7 @@ const TestPage = ({ url, isMobile }) => {
                 <Block2 />
                 <link rel="stylesheet" type="text/css" href="/styles/slick.css" />
                 <Block3 />
+                <FooterPanel isMobile={isMobile} />
             </LazyLoad>
         </main>
     </>
