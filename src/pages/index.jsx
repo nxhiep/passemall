@@ -2,7 +2,6 @@ import { CircularProgress, Container, Grid, makeStyles, useMediaQuery, useTheme 
 import DashboardIcon from '@material-ui/icons/Dashboard';
 import EditIcon from '@material-ui/icons/Edit';
 import HowToRegIcon from '@material-ui/icons/HowToReg';
-import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import ReactGA from 'react-ga';
 import LazyLoad from "react-lazyload";

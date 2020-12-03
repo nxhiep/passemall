@@ -9,32 +9,24 @@ import Footer from '../../components/Footer';
 import HeaderMenu from '../../components/HeaderMenu';
 import { LoadingWidget } from '../../components/Widgets';
 import Config from '../../config';
-import { APP_NEW_DOMAIN } from '../../config_app';
 import { resetTopicProgress, updateTopicsProgress } from '../../redux/actions';
 import { getCardsByParentId } from '../../redux/actions/card';
 import { onContinue, resetQuestionProgress } from '../../redux/actions/game';
 import { getTopicById, getTopicsByParentId } from '../../redux/actions/topic';
 import { isMobileFunctions, isObjEmpty } from '../../utils';
 import { CongratulationAlert, QuestionsPanelTS } from '../game/Game.ViewTS';
+
 const questionsX = new Map();
-const StudyViewScreen = ({ appInfoState }) => {
+const StudyViewScreen = ({ appInfoState, topicId }) => {
     const router = useRouter();
-    const { appNameId, screenChild } = router.query;
-    const screenStudy = APP_NEW_DOMAIN ? appNameId : screenChild;
-    let topicId = -1;
-    if (screenStudy) {
-        let offset = screenStudy.lastIndexOf('-') + 1;
-        topicId = offset > -1 ? parseInt(screenStudy.substring(offset, screenStudy.length)) : -1;
-    }
-    let appInfo = appInfoState;
     useEffect(() => {
-        ReactGA.pageview('/studypage/' + appInfo.title);
+        ReactGA.pageview('/studypage/' + appInfoState.title);
     }, []);
-    if (!appInfo) {
+    if (!appInfoState) {
         return <LoadingWidget />
     }
     return (
-        <StudyView appInfo={appInfo} topicId={topicId} />
+        <StudyView appInfo={appInfoState} topicId={topicId} />
     );
 }
 
