@@ -34,69 +34,43 @@ const TestPage = ({ url, isMobile }) => {
             <meta property="og:type" content="website" />
         </Head>
         <main>
-            <section>
-                <header style={{
+            <LazyLoad height={1000}>
+                <section  style={{
                     background: "url(/images/new/banner-left.jpg) no-repeat, url(/images/new/banner-right.jpg) no-repeat",
                     backgroundPosition: "top left, top right",
-                    backgroundSize: "auto, auto 100%"
                 }}>
-                    <Container>
-                        <Grid container justify="space-between" alignItems="center" style={{height: "100%"}}>
-                            <a href="/"><img alt="ABC Elearning Logo" src="/images/logo-landing-2.png" width="240px" height="60px" /></a>
+                    <header>
+                        <Container>
+                            <Grid container justify="space-between" alignItems="center" style={{height: "100%"}}>
+                                <a href="/"><img alt="ABC Elearning Logo" src="/images/logo-landing-2.png" width="240px" height="60px" /></a>
 
-                            <div>
-                                <a href="/" style={headerMenu}>HOME</a>
-                                <a href="/blog" style={headerMenu}>BLOG</a>
-                                <a href="/test" style={headerMenu}>TEST</a>
-                                <a href="/support" style={headerMenu}>SUPPORT</a>
-                            </div>
-                        </Grid>
+                                <div>
+                                    <a href="/" style={headerMenu}>HOME</a>
+                                    <a href="/blog" style={headerMenu}>BLOG</a>
+                                    <a href="/test" style={headerMenu}>TEST</a>
+                                    <a href="/support" style={headerMenu}>SUPPORT</a>
+                                </div>
+                            </Grid>
+                        </Container>
+                    </header>
+                    <Container>
+                        <h1>Happier study, easier pass with our free practice tests</h1>
+                        <p>We are here for your success because your success is our last goal! That's why we have tried our best to bring you all free, friendly, and funny test prep solutions.</p>
+                        <h1>SOME OF THE BEST FEATURES</h1>
+                        <p>With thousands of exam-simulated questions with detail explanations, lifetime access to the complete Manual, and dozens of test-taking strategies, our Test Prep helps you pass your test with flying colors.</p>
+                        <hr />
+                        <h2>COMPLETELY FREE</h2>
+                        <p>Our application is 100% free, so you can practice your test in our web or in any other devices with our available free app on google play or appStore. No internet connection and no registration required.</p>
+                        <h2>PRACTICE BY TOPICS</h2>
+                        <p>Test your knowledge by practicing by topics exactly as in real test. Moreover, topic is also divided into small parts which helps you get your interest in studying, just like playing a game.</p>
+                        <h2>3 INTERESTING TEST MODES</h2>
+                        <p>3 different test modes with increases in difficult level let you experience the test in a very exciting way. Let's get accustomed to the format of the real test.</p>
+                        <h2>SPECICAL REVIEW MODE</h2>
+                        <p>With this feature, you can review which questions you are weak, medium or strong. And this will help you find out where you need to work more and make the most of your study time.</p>
                     </Container>
-                </header>
-                <Container>
-                    <h1>Happier study, easier pass with our free practice tests</h1>
-                    <p>We are here for your success because your success is our last goal! That's why we have tried our best to bring you all free, friendly, and funny test prep solutions.</p>
-                    <h1>SOME OF THE BEST FEATURES</h1>
-                    <p>With thousands of exam-simulated questions with detail explanations, lifetime access to the complete Manual, and dozens of test-taking strategies, our Test Prep helps you pass your test with flying colors.</p>
-                    <hr />
-                    <h2>COMPLETELY FREE</h2>
-                    <p>Our application is 100% free, so you can practice your test in our web or in any other devices with our available free app on google play or appStore. No internet connection and no registration required.</p>
-                    <h2>PRACTICE BY TOPICS</h2>
-                    <p>Test your knowledge by practicing by topics exactly as in real test. Moreover, topic is also divided into small parts which helps you get your interest in studying, just like playing a game.</p>
-                    <h2>3 INTERESTING TEST MODES</h2>
-                    <p>3 different test modes with increases in difficult level let you experience the test in a very exciting way. Let's get accustomed to the format of the real test.</p>
-                    <h2>SPECICAL REVIEW MODE</h2>
-                    <p>With this feature, you can review which questions you are weak, medium or strong. And this will help you find out where you need to work more and make the most of your study time.</p>
-                    <Block2Item
-                        isMobile={isMobile}
-                        icon={<span>free</span>}
-                        title="COMPLETELY FREE"
-                        description="Our application is 100% free, so you can practice your test in our web or in any other devices with our available free app on google play or appStore. No internet connection and no registration required."
-                    />
-                    <Block2Item
-                        isMobile={isMobile}
-                        title="PRACTICE BY TOPICS"
-                        description="Test your knowledge by practicing by topics exactly as in real test. Moreover, topic is also divided into small parts which helps you get your interest in studying, just like playing a game."
-                    />
-                    <Block2Item
-                        isMobile={isMobile}
-                        title="3 INTERESTING TEST MODES"
-                        description="3 different test modes with increases in difficult level let you experience the test in a very exciting way. Let's get accustomed to the format of the real test."
-                    />
-                    <Block2Item
-                        isMobile={isMobile}
-                        title="SPECICAL REVIEW MODE"
-                        description="With this feature, you can review which questions you are weak, medium or strong. And this will help you find out where you need to work more and make the most of your study time."
-                    />
-                    <Block2Item
-                        isMobile={isMobile}
-                        icon={<span>free</span>}
-                        title="COMPLETELY FREE"
-                        description="Our application is 100% free, so you can practice your test in our web or in any other devices with our available free app on google play or appStore. No internet connection and no registration required."
-                    />
-                </Container>
-            </section>
-            <LazyLoad>
+                </section>
+            </LazyLoad>
+            <LazyLoad height={2000}>
                 <Block1 />
                 <Block2 />
                 <Block3 />
