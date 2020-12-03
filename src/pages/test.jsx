@@ -3,7 +3,7 @@ import DashboardIcon from '@material-ui/icons/Dashboard';
 import EditIcon from '@material-ui/icons/Edit';
 import HowToRegIcon from '@material-ui/icons/HowToReg';
 import { useEffect, useState } from "react";
-// import ReactGA from 'react-ga';
+import ReactGA from 'react-ga';
 import LazyLoad from "react-lazyload";
 import Slider from "react-slick";
 import FooterPanel from "../components/new/FooterPanel";
@@ -11,8 +11,7 @@ import HeaderBannerPanel from "../components/new/HeaderBannerPanel";
 import SEO from "../components/SEO";
 import { GA_ID } from "../config_app";
 import { callApi } from "../services";
-// import { getWebContext, oldUser, setScrollDownAuto } from "../utils";
-import { getWebContext } from "../utils";
+import { getWebContext, oldUser, setScrollDownAuto } from "../utils";
 import './home.css';
 
 const useStyles = makeStyles({
@@ -38,12 +37,12 @@ const useStyles = makeStyles({
 });
 
 const TestPage = ({ url, isMobile }) => {
-    // useEffect(() => {
-    //     ReactGA.initialize(GA_ID);
-    //     ReactGA.pageview('/homepage');
-    //     setScrollDownAuto()
-    //     oldUser();
-    // }, [])
+    useEffect(() => {
+        ReactGA.initialize(GA_ID);
+        ReactGA.pageview('/homepage');
+        setScrollDownAuto()
+        oldUser();
+    }, [])
     return <>
         <SEO url={url} />
         <main>
