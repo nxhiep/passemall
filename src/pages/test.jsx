@@ -1,11 +1,13 @@
 import { CircularProgress, Container, Grid, makeStyles, useMediaQuery, useTheme } from "@material-ui/core";
-import Head from "next/head";
+import DashboardIcon from '@material-ui/icons/Dashboard';
+import EditIcon from '@material-ui/icons/Edit';
+import HowToRegIcon from '@material-ui/icons/HowToReg';
 import { useEffect, useState } from "react";
 import LazyLoad from "react-lazyload";
 import Slider from "react-slick";
 import FooterPanel from "../components/new/FooterPanel";
 import HeaderBannerPanel from "../components/new/HeaderBannerPanel";
-import { VERSION } from "../config_app";
+import SEO from "../components/SEO";
 import { callApi } from "../services";
 import { getWebContext } from "../utils";
 
@@ -32,27 +34,8 @@ const useStyles = makeStyles({
 });
 
 const TestPage = ({ url, isMobile }) => {
-    const headerMenu = { padding: "20px", color: "blue", textDecoration: "none", fontWeight: "500" };
     return <>
-        <Head>
-            <meta charSet="UTF-8" />
-            <meta name="google-site-verification" content="X91De9MR3B7BNl2-ciF8EUnT2A2oybgrzwbNla4YdIA" />
-            <link rel="icon" href="/info/images/logo60.png"></link>
-            <link rel="apple-touch-icon" href="/info/images/logo60.png"></link>
-            <link rel="preconnect" href="https://webappapi-dot-micro-enigma-235001.appspot.com"></link>
-            <link rel="preconnect" href="https://storage.googleapis.com"></link>
-            <meta name="viewport" content="width=device-width, initial-scale=1" />
-            <meta name="theme-color" content="#000000" />
-            <link rel="manifest" href="manifest.json"></link>
-            <title>TEST PAGE {VERSION}</title>
-            <meta name="title" content={"TEST PAGE " + VERSION} />
-            <meta name="description" content="With thousands of our FREE practice questions, we are here to help you achieve your gate of success with our test prep solutions." />
-            <meta name="keywords" content="Abc e-learning, abc elearning, study online,practice test, practice question,exam prepare,asvab,teas exam,cdl test,cdl practice,cissp exam,cissp practice,accuplacer,comptia practice test,comptia A+,compTIA Network,comptia security,dmv,dmv practice test,driving theory,driving theory UK,G1 test,GED,hesi,hesi A2,motorcycle permit,pmp,pmp exam,ptcb,ptce,real estate exam,practice app,practice test onl,free practice test,free practice questions,free practice app" />
-            <meta property="og:title" content={"Test Page " + VERSION} />
-            <meta property="og:description" content="With thousands of our FREE practice questions, we are here to help you achieve your gate of success with our test prep solutions." />
-            <meta property="og:image" content="/info/images/logo60.png" />
-            <meta property="og:type" content="website" />
-        </Head>
+        <SEO url={url} />
         <main>
             <LazyLoad height={1000}>
                 <HeaderBannerPanel isMobile={isMobile} />
@@ -178,16 +161,19 @@ const Block2 = ({ isMobile }) => {
                         />
                         <Block2Item
                             isMobile={isMobile}
+                            icon={<EditIcon />}
                             title="PRACTICE BY TOPICS"
                             description="Test your knowledge by practicing by topics exactly as in real test. Moreover, topic is also divided into small parts which helps you get your interest in studying, just like playing a game."
                         />
                         <Block2Item
                             isMobile={isMobile}
+                            icon={<DashboardIcon />}
                             title="3 INTERESTING TEST MODES"
                             description="3 different test modes with increases in difficult level let you experience the test in a very exciting way. Let's get accustomed to the format of the real test."
                         />
                         <Block2Item
                             isMobile={isMobile}
+                            icon={<HowToRegIcon />}
                             title="SPECICAL REVIEW MODE"
                             description="With this feature, you can review which questions you are weak, medium or strong. And this will help you find out where you need to work more and make the most of your study time."
                         />
