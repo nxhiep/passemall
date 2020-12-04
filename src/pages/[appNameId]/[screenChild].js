@@ -51,7 +51,7 @@ function ScreenChild({ appInfo, topicId }) {
     let screen = router.query.screenChild
     screen = screen ?? '';
     console.log("ScreenChild", screen)
-    if (screen.startsWith(Routes.TEST_SCREEN)&& topicId > -1) {
+    if (screen.startsWith(Routes.TEST_SCREEN)) {
         return <TestViewScreen topicId={topicId} appInfo={appInfo} />
     }
     if (screen.startsWith(Routes.REVIEW_SCREEN)) {
