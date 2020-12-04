@@ -1,19 +1,19 @@
 {
-	"name": "ABC Learning",
-	"short_name": "ABC Learning",
+	"name": "CDL PRACTICE TEST",
+	"short_name": "CDL PRACTICE TEST",
 	"icons": [
 		{
-			"src": "./info/images/logo60.png",
+			"src": "./info/images/cdl/logo60.png",
 			"type": "image/png",
 			"sizes": "55x55"
 		},
 		{
-			"src": "./info/images/logo192.png",
+			"src": "./info/images/cdl/logo192.png",
 			"type": "image/png",
 			"sizes": "192x192"
 		},
 		{
-			"src": "./info/images/logo512.png",
+			"src": "./info/images/cdl/logo512.png",
 			"type": "image/png",
 			"sizes": "512x512"
 		}
