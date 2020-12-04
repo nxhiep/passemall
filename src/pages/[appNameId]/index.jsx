@@ -363,7 +363,7 @@ const Block2 = ({appInfo}) => {
 
 const Block3 = ({ isMobile, appInfo }) => {
     let images = getImageBlock3(appInfo.id ? appInfo.id : -1)
-    console.log("appInfo", appInfo)
+    // console.log("appInfo", appInfo)
     return <section>
         <Container>
             <Grid container spacing={4} alignItems="center">
