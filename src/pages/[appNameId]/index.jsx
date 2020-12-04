@@ -107,6 +107,8 @@ const AppPage = ({ appInfo, url, isMobile }) => {
         }}>
             <LazyLoad height={1000}>
                 <HeaderBannerPanel isMobile={isMobile} appInfo={appInfo} />
+                <div style={{height: isMobile ? "50px" : "100px"}}></div>
+                <Block1 isMobile={isMobile} appInfo={appInfo} />
             </LazyLoad>
             <BodyPanel appInfo={appInfo} isMobile={isMobile} />
         </main>
@@ -256,8 +258,6 @@ const HeaderMenu = ({ styles, isMobile, appInfo }) => {
 
 const BodyPanel = ({ isMobile, appInfo }) => {
     return <>
-        <div style={{height: isMobile ? "50px" : "100px"}}></div>
-        <Block1 isMobile={isMobile} appInfo={appInfo} />
         <div className="content-home-page-1">
         <LazyLoad height={2000}>
             <div style={{height: "70px"}}></div>

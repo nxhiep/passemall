@@ -53,6 +53,8 @@ const Home = ({ isMobile, url }) => {
         }}>
             <LazyLoad height={1000}>
                 <HeaderBannerPanel isMobile={isMobile} />
+                <div style={{height: height}}></div>
+                <MyTitle isMobile={isMobile} title="PRACTICE RIGHT NOW WITH OUR FREE TESTS!" description="Let's select your exam first" />
             </LazyLoad>
             <BodyPanel isMobile={isMobile} />
         </main>
@@ -62,8 +64,6 @@ const Home = ({ isMobile, url }) => {
 const BodyPanel = ({ isMobile }) => {
     const height = "50px";
     return <>
-        <div style={{height: height}}></div>
-        <MyTitle isMobile={isMobile} title="PRACTICE RIGHT NOW WITH OUR FREE TESTS!" description="Let's select your exam first" />
         <LazyLoad height={2000}>
             <Block1 isMobile={isMobile} />
             <div style={{height: height}}></div>
