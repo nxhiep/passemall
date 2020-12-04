@@ -168,7 +168,7 @@ const FooterStudy = ({ isMobile }) => {
             <IconButton
                 onClick={() => {
                     if (index !== 2) {
-                        router.push(rootPath + "/test")
+                        router.push(rootPath + (rootPath == '/' ? '' : '/') + 'test')
                     }
                 }}
                 style={index === 2 ? { position: "relative", bottom: "20px" } : { color: "#AEAEC0", marginRight: "auto", marginLeft: "auto" }}
@@ -182,7 +182,7 @@ const FooterStudy = ({ isMobile }) => {
             <IconButton
                 onClick={() => {
                     if (index !== 3) {
-                        router.push(rootPath + "/review")
+                        router.push(rootPath + (rootPath == '/' ? '' : '/') + 'review')
                     }
                 }}
                 style={index === 3 ? { position: "relative", bottom: "20px" } : (index === 2 ? { color: "#AEAEC0", marginRight: "16px", marginLeft: "auto" } : { color: "#AEAEC0", marginRight: "16px" })}
