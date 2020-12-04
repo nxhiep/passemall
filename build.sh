@@ -107,7 +107,7 @@ deploy() {
         logoPath=$appName
         appPath="-$appName"
     fi
-    # downloadFile
+    downloadFile
     cp -r "$ROOT_PATH/sitemaps/sitemap$appPath.xml" ./public/sitemap.xml
     cp -r "$ROOT_PATH/robots/robots$appPath.txt" ./public/robots.txt
     cp -r "$ROOT_PATH/manifests/manifest$appPath.json" ./public/manifest.json
