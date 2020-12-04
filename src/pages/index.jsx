@@ -171,6 +171,7 @@ const Block2 = ({ isMobile }) => {
     const sm = useMediaQuery(theme.breakpoints.down(960));
     return <section>
         <MyTitle isMobile={isMobile} title="SOME OF THE BEST FEATURES" description="With thousands of exam-simulated questions with detail explanations, lifetime access to the complete Manual, and dozens of test-taking strategies, our Test Prep helps you pass your test with flying colors." />
+        <div style={{height: "30px"}}></div>
         <Container>
             <Grid container spacing={3} alignItems="center">
                 {isMobile || sm ? null : <Grid item xs={12} sm={6} md={3}>
@@ -205,13 +206,14 @@ const Block2 = ({ isMobile }) => {
                     </Grid>
                 </Grid>
             </Grid>
-            <div style={{height: "50px"}}></div>
+            <div style={{height: "70px"}}></div>
             <Grid container>
                 <ActiveItem isMobile={isMobile} value="10,123" title="Users" />
                 <ActiveItem isMobile={isMobile} value="20,432" title="Download" />
                 <ActiveItem isMobile={isMobile} value="7871" title="Likes" />
                 <ActiveItem isMobile={isMobile} value="945" title="5 star rating" />
             </Grid>
+            <div style={{height: "50px"}}></div>
         </Container>
     </section>
 }

@@ -8,7 +8,7 @@ import HomeIcon from '@material-ui/icons/Home';
 import VisibilityIcon from '@material-ui/icons/Visibility';
 
 import { FacebookFooter, GmailFooter, InstaFooter, TwitterFooter, Youtube, TumblrIcon, LinkedInFooter } from './Icons';
-import { VERSION } from '../config_app';
+import { APP_NEW_DOMAIN, VERSION } from '../config_app';
 const useStyles = makeStyles({
     root: {
         "&:hover": {
@@ -145,12 +145,16 @@ const FooterStudy = ({ isMobile }) => {
         }
     }
     const classes = useStyles();
+    let rootPath = "/" + appNameId;
+    if(APP_NEW_DOMAIN){
+        rootPath = "/";
+    }
     return (
         <div className="footer-mobile">
             <IconButton
                 onClick={() => {
                     if (index !== 1) {
-                        router.push("/" + appNameId)
+                        router.push(rootPath)
                     }
                 }}
                 style={index === 1 ? { position: "relative", bottom: "20px" } : (index === 2 ? { color: "#AEAEC0", marginLeft: "16px", marginRight: "auto" } : { color: "#AEAEC0", marginLeft: "16px" })}
@@ -164,7 +168,7 @@ const FooterStudy = ({ isMobile }) => {
             <IconButton
                 onClick={() => {
                     if (index !== 2) {
-                        router.push("/" + appNameId + "/" + "test")
+                        router.push(rootPath + "/test")
                     }
                 }}
                 style={index === 2 ? { position: "relative", bottom: "20px" } : { color: "#AEAEC0", marginRight: "auto", marginLeft: "auto" }}
@@ -178,7 +182,7 @@ const FooterStudy = ({ isMobile }) => {
             <IconButton
                 onClick={() => {
                     if (index !== 3) {
-                        router.push("/" + appNameId + "/" + "review")
+                        router.push(rootPath + "/review")
                     }
                 }}
                 style={index === 3 ? { position: "relative", bottom: "20px" } : (index === 2 ? { color: "#AEAEC0", marginRight: "16px", marginLeft: "auto" } : { color: "#AEAEC0", marginRight: "16px" })}
@@ -189,7 +193,7 @@ const FooterStudy = ({ isMobile }) => {
                     {index === 3 ? null : <span style={{ fontSize: "14px" }}>Reivew</span>}
                 </span>
             </IconButton>
-        </div >
+        </div>
     )
 
 }

@@ -199,6 +199,9 @@ const DownloadAppWidget = ({ appInfo, center, darkMode }) => {
             marginTop: "10px",
             backgroundColor: darkMode ? "white" : "#616E7D",
             color: darkMode ? "#616E7D" : "white",
+            border: darkMode ? "2px solid white" : "2px solid #616E7D",
+            paddingTop: "7px",
+            paddingBottom: "7px"
         }} onClick={() => {
                 scrollToTopic()
             }}>
@@ -257,7 +260,7 @@ const BodyPanel = ({ isMobile, appInfo }) => {
         <Block1 isMobile={isMobile} appInfo={appInfo} />
         <div className="content-home-page-1">
         <LazyLoad height={2000}>
-            <div style={{height: "50px"}}></div>
+            <div style={{height: "70px"}}></div>
             <Block2 isMobile={isMobile} appInfo={appInfo} />
             <div style={{height: "50px"}}></div>
             <Block3 isMobile={isMobile} appInfo={appInfo} />
@@ -336,6 +339,7 @@ const Block2 = ({appInfo}) => {
     const [selectedState, setSelectedState] = useState(true);
     return <section className="content-home-page">
         <MyTitle title={"Start your "+ appName +" Practice Test"} />
+        <div style={{height: "40px"}}></div>
         <Provider store={store}>
             <PersistGate persistor={store.__persistor}>
                 <HomeContent
@@ -365,6 +369,7 @@ const Block3 = ({ isMobile, appInfo }) => {
     let images = getImageBlock3(appInfo.id ? appInfo.id : -1)
     // console.log("appInfo", appInfo)
     return <section>
+        <div style={{height: "50px"}}></div>
         <Container>
             <Grid container spacing={4} alignItems="center">
                 <Grid item xs={12} sm={6}>
@@ -373,12 +378,13 @@ const Block3 = ({ isMobile, appInfo }) => {
                 <Grid item xs={12} sm={5}>
                     {/* <MyTitle isMobile={isMobile} title="Scientifically proven" center={false} /> */}
                     <div className="contentxxx">{ReactHtmlParser(appInfo.description)}</div>
+                    <div style={{height: "50px"}}></div>
                     <Button variant="contained" color="inherit" style={{
                         borderRadius: "40px",
                         fontWeight: "bold",
-                        marginTop: "10px",
                         backgroundColor: "#616E7D",
                         color: "white",
+                        padding: "10px 20px",
                     }} onClick={() => {
                         scrollToTopic()
                     }}>
@@ -389,6 +395,7 @@ const Block3 = ({ isMobile, appInfo }) => {
                 </Grid>
             </Grid>
         </Container>
+        <div style={{height: "50px"}}></div>
     </section>
 }
 
