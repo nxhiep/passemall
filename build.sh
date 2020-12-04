@@ -84,6 +84,7 @@ deploy() {
     cp -r "$ROOT_PATH/sitemaps/sitemap$appPath.xml" ./public/sitemap.xml
     cp -r "$ROOT_PATH/robots/robots$appPath.txt" ./public/robots.txt
     cp -r "$ROOT_PATH/manifests/manifest$appPath.json" ./public/manifest.json
+    cp -r "$ROOT_PATH/google/google6a7147cc4f9810e2$appPath.html" ./public/google6a7147cc4f9810e2.html
     cp -r "$ROOT_PATH/images/$logoPath/logo60.png" "$ROOT_PATH/images/logo60.png"
     cp -r "$ROOT_PATH/images/$logoPath/logo192.png" "$ROOT_PATH/images/logo192.png"
     cp -r "$ROOT_PATH/images/$logoPath/logo512.png" "$ROOT_PATH/images/logo512.png"
