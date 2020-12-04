@@ -354,10 +354,11 @@ const ListTestInfoUI = ({ testInfoState, appId, onChangeTestInfo, level, bucket 
             childs = []
         }
     })
-    console.log("xxx widget", widget)
+    // console.log("xxx widget", widget)
     return (
         <>
             { widget}
+            {isIPad ? <div style={{height: "70px"}}></div> : null}
         </>
     )
 }
