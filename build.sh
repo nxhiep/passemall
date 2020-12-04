@@ -88,16 +88,27 @@ deploy() {
     cp -r "$ROOT_PATH/images/$logoPath/logo60.png" "$ROOT_PATH/images/logo60.png"
     cp -r "$ROOT_PATH/images/$logoPath/logo192.png" "$ROOT_PATH/images/logo192.png"
     cp -r "$ROOT_PATH/images/$logoPath/logo512.png" "$ROOT_PATH/images/logo512.png"
-    if [ ! -z "$appName" ]
+    if [ -z "$appName" ]
+        if [[ ! -f "$PATH_CODE/[appNameId]" ]]; then
+            mkdir "$PATH_CODE/[appNameId]"
+            cp -r "$PATH_CODE/index.jsx" "$PATH_CODE/[appNameId]/index.jsx"
+            cp -r "$PATH_CODE/[screenChild].js" "$PATH_CODE/[appNameId]/[screenChild].js"
+            cp -r "$PATH_CODE/app.css" "$PATH_CODE/[appNameId]/app.css"
+
+            rm -rf "$PATH_CODE/app.css"
+            rm -rf "$PATH_CODE/[screenChild].js"
+            cp -r "$PATH_CODE/index-old.jsx" "$PATH_CODE/index.jsx"
+        fi
     then
-        c1="\"..\/"
-        c2="\""
+        # c1="\"..\/"
+        # c2="\""
+        cp -r "$PATH_CODE/index.jsx" "$PATH_CODE/index-old.jsx"
         cp -r "$PATH_CODE/[appNameId]/index.jsx" "$PATH_CODE/index.jsx"
-        sed "s/$c1/$c2/g" "$PATH_CODE/index.jsx"
-        cat "$PATH_CODE/index.jsx"
+        # sed "s/$c1/$c2/g" "$PATH_CODE/index.jsx"
+        # cat "$PATH_CODE/index.jsx"
         cp -r "$PATH_CODE/[appNameId]/[screenChild].js" "$PATH_CODE/[screenChild].js"
-        sed "s/$c1/$c2/g" "$PATH_CODE/[screenChild].js"
-        cat "$PATH_CODE/[screenChild].js"
+        # sed "s/$c1/$c2/g" "$PATH_CODE/[screenChild].js"
+        # cat "$PATH_CODE/[screenChild].js"
         cp -r "$PATH_CODE/[appNameId]/app.css" "$PATH_CODE/app.css"
         rm -rf "$PATH_CODE/[appNameId]"
     fi
