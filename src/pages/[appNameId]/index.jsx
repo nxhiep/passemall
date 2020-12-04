@@ -255,6 +255,7 @@ const BodyPanel = ({ isMobile, appInfo }) => {
     return <>
         <div style={{height: isMobile ? "50px" : "100px"}}></div>
         <Block1 isMobile={isMobile} appInfo={appInfo} />
+        <div className="content-home-page-1">
         <LazyLoad height={2000}>
             <div style={{height: "50px"}}></div>
             <Block2 isMobile={isMobile} appInfo={appInfo} />
@@ -270,6 +271,7 @@ const BodyPanel = ({ isMobile, appInfo }) => {
             <div style={{height: "50px"}}></div>
             <FooterPanel isMobile={isMobile} />
         </LazyLoad>
+        </div>
     </>
 }
 
@@ -332,9 +334,8 @@ const Block2 = ({appInfo}) => {
     const store = useStore((state) => state);
     const [openPopupChangeState, setOpenPopupChangeState] = useState(false);
     const [selectedState, setSelectedState] = useState(true);
-    return <section>
+    return <section className="content-home-page">
         <MyTitle title={"Start your "+ appName +" Practice Test"} />
-
         <Provider store={store}>
             <PersistGate persistor={store.__persistor}>
                 <HomeContent
