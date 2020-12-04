@@ -4,7 +4,6 @@ import { useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react';
 import { TitleBlock } from '../../components/Widgets';
 import { callApi } from '../../services';
-import { getNewDomain, redirectToNewDomain } from '../../utils';
 
 const ListGreatApps = () => {
     const [appInfos, setAppInfos] = useState(null)
@@ -101,10 +100,10 @@ const AppInfoItem = ({ appInfo, index, className }) => {
     let appNameId = appInfo.appNameId;
     let appName = appInfo.appName ? appInfo.appName : appInfo.title;
     let link = "/" + appNameId;
-    let domain = getNewDomain(appInfo.id);
-    if(redirectToNewDomain && domain){
-        link = domain;
-    }
+    // let domain = getNewDomain(appInfo.id);
+    // if(domain){
+    //     link = domain;
+    // }
     return (
         <>
             <Grid item xs={12} sm={3} md={4} className={"app-info-item " + (className ? className : "")} >

@@ -245,8 +245,6 @@ export const isLocalhost = () => {
     return process.env.NODE_ENV == 'development';
 }
 
-export const redirectToNewDomain = false;
-
 export const isAppASVAB = (appId) => appId == 5734055144325120;
 export const isAppCDL = (appId) => appId == 5722070642065408;
 export const isAppTEAS = (appId) => appId == 5186025303310336;

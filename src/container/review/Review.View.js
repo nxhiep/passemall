@@ -15,7 +15,7 @@ import Config from '../../config';
 import ReviewProgress from '../../models/ReviewProgress';
 import { scrollToTop } from '../../models/Utils';
 import { getAllCardProgress } from '../../redux/actions/cardProgress';
-import { checkLoadedReceiveProps, isMobileFunctions, isSuperApp, redirectToNewDomain } from '../../utils';
+import { checkLoadedReceiveProps, isMobileFunctions, isSuperApp } from '../../utils';
 import { QuestionsPanelTS } from '../game/Game.ViewTS';
 const ReviewViewScreen = ({ appInfo }) => {
     const router = useRouter();
@@ -90,7 +90,7 @@ class ReviewViewScreenUI extends React.Component {
             questionIds = this.state.questionIds;
         }
         let linkTest = "/" + this.state.appInfo.appNameId + "/test";
-        if(isSuperApp(this.state.appInfo.id) && redirectToNewDomain){
+        if(isSuperApp(this.state.appInfo.id)){
             linkTest = "/test";
         }
         return (
