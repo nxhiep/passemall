@@ -9,6 +9,7 @@ import Footer from '../../components/Footer';
 import HeaderMenu from '../../components/HeaderMenu';
 import { LoadingWidget } from '../../components/Widgets';
 import Config from '../../config';
+import { APP_NEW_DOMAIN } from '../../config_app';
 import { resetTopicProgress, updateTopicsProgress } from '../../redux/actions';
 import { getCardsByParentId } from '../../redux/actions/card';
 import { onContinue, resetQuestionProgress } from '../../redux/actions/game';
@@ -321,7 +322,7 @@ const TopicInfoPanelUI = ({ topicState, appInfo }) => {
         return (
             <Grid container alignItems="center" style={{ display: "inline-block", backgroundColor: "var(--main-color)", color: "#fff" }}>
                 <IconButton style={{ color: "#fff" }} onClick={() => {
-                    router.push("/" + (appInfo || '').appNameId);
+                    router.push("/" + (APP_NEW_DOMAIN ? "" : (appInfo || '').appNameId));
                 }}><ArrowBackIcon /></IconButton>
                 <span style={{ textAlign: "left" }}>{name}</span>
             </Grid>

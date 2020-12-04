@@ -12,10 +12,11 @@ downloadFile() {
 addConfig() {
     appId=$1
     gaId=$2
-    appName=$3
+    googleVerifyId=$3
+    appName=$4
     file="./src/config_app.js"
     > $file
-    echo "export const APP_NEW_DOMAIN = $appId;\nexport const GA_ID = '$gaId';\nexport const APP_SHORT_NAME = '$appName';\nexport const VERSION = '$VERSION';">>$file
+    echo "export const APP_NEW_DOMAIN = $appId;\nexport const GA_ID = '$gaId';\nexport const APP_SHORT_NAME = '$appName';\nexport const VERSION = '$VERSION';\nexport const GOOGLE_SITE_VERIFICATION = '$googleVerifyId';">>$file
 }
 
 getGaId() {
@@ -68,10 +69,36 @@ getAppId() {
     echo false
 }
 
+getGoogleVerifyId() {
+    app=$1
+    if [ "$app" = "cdl" ]
+    then
+        echo 'alG3R0D0dTXZb4Nn8ZSB8FYspMh_HAlziNimiRYMO24'
+        return 1
+    fi
+    if [ "$app" = "asvab" ]
+    then
+        echo 'kS0dwjBOA9pZaStotM-lbFAW2fP7vk6-usRhQcPogw0'
+        return 1
+    fi
+    if [ "$app" = "ged" ]
+    then
+        echo 'kb-TFW_3mkPFfxmjCo79K89fbhM9jEz6Og6k2RZ1P8Y'
+        return 1
+    fi
+    if [ "$app" = "teas" ]
+    then
+        echo 'eEkgzIeAy7B-WsySPbD7FAtOnBl7nOqfaDopBHYGkgc'
+        return 1
+    fi
+    echo 'J65PLlMKrhHcS6Ql3keUP-l6_tzEDu_5RgZxybRrhDE'
+}
+
 deploy() {
     appName=$1
     appId=$(getAppId $appName)
     gaId=$(getGaId $appName)
+    googleVerifyId=$(getGoogleVerifyId $appName)
     if [ -z "$appName" ]
     then
         appPath=""
@@ -80,15 +107,14 @@ deploy() {
         logoPath=$appName
         appPath="-$appName"
     fi
-    downloadFile
+    # downloadFile
     cp -r "$ROOT_PATH/sitemaps/sitemap$appPath.xml" ./public/sitemap.xml
     cp -r "$ROOT_PATH/robots/robots$appPath.txt" ./public/robots.txt
     cp -r "$ROOT_PATH/manifests/manifest$appPath.json" ./public/manifest.json
-    cp -r "$ROOT_PATH/google/google6a7147cc4f9810e2$appPath.html" ./public/google6a7147cc4f9810e2.html
     cp -r "$ROOT_PATH/images/$logoPath/logo60.png" "$ROOT_PATH/images/logo60.png"
     cp -r "$ROOT_PATH/images/$logoPath/logo192.png" "$ROOT_PATH/images/logo192.png"
     cp -r "$ROOT_PATH/images/$logoPath/logo512.png" "$ROOT_PATH/images/logo512.png"
-    addConfig $appId $gaId $appName
+    addConfig $appId $gaId $googleVerifyId $appName
 }
 
 deploy $1

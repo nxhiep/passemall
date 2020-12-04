@@ -1,4 +1,5 @@
 import Head from "next/head";
+import { GOOGLE_SITE_VERIFICATION } from '../config_app'
 
 const SEO = ({ url, appInfo, children }) => {
     let title = 'ABC Learning';
@@ -15,6 +16,8 @@ const SEO = ({ url, appInfo, children }) => {
     return <Head>
         <link rel="icon" href={image} />
         <link rel="apple-touch-icon" href={image}></link>
+
+        <meta name="google-site-verification" content={GOOGLE_SITE_VERIFICATION} />
 
         {/* <link rel="preload" href="/fonts/Poppins-Bold.ttf" as="font" crossOrigin="anonymous" />
         <link rel="preload" href="/fonts/Poppins-Italic.ttf" as="font" crossOrigin="anonymous" />
