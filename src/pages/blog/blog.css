@@ -1,5 +1,7 @@
 main > .lazyload-wrapper {
     height: 100%;
+    display: flex;
+    flex-direction: column;
 }
 @media(min-width: 768px) {
     main > .lazyload-wrapper {
@@ -15,7 +17,6 @@ h1, h2, h3, h4, p {
     width: 100%;
     padding-bottom: 62.25%
 }
-
 .wrapper-image img {
     position: absolute;
     width: 100%;
@@ -31,4 +32,26 @@ h1, h2, h3, h4, p {
     background: #ff9800;
     bottom: -8px;
     right: -8px
+}
+.list-social {
+    right: 20px;
+}
+.button-expaned-x,
+.list-social a {
+    box-shadow: 0 0 6px 2px #838383;
+    border-radius: 100%;
+    width: 50px;
+    height: 50px;
+    text-align: center;
+    padding: 0;
+    background: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 10px
+}
+.button-expaned-x {
+    border: none;
+    margin-right: 10px;
+    outline: none
 }

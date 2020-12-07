@@ -9,6 +9,7 @@ import ReactGA from 'react-ga';
 import LazyLoad from "react-lazyload";
 import FooterPanel from "../../components/new/FooterPanel";
 import SEO from '../../components/SEO';
+import { SocialWidget } from "../../components/SocialWidget";
 import { APP_NEW_DOMAIN, GA_ID } from '../../config_app';
 import { callApi } from "../../services";
 import { getRecentPosts, getWebContext, scrollDown } from '../../utils';
@@ -89,6 +90,7 @@ const ListBlog = ({ appInfo, url, isMobile }) => {
                 <LazyLoad height={1000}>
                     <HeaderBannerPanel appInfo={appInfo} isMobile={isMobile} />
                 </LazyLoad>
+                <SocialWidget bottom={100} />
                 <div style={{ height: "50px" }}></div>
                 <LazyLoad height={2000}>
                     <BodyPanel appInfo={appInfo} isMobile={isMobile} />
