@@ -16,18 +16,10 @@ import './blog.css';
 
 const useStyles = makeStyles({
     bgheader: props => {
-        if(props.isMobile){
-            return {
-                background: "url(/images/new/banner-right.jpg) no-repeat",
-                backgroundPosition: "top",
-                backgroundSize: "cover",
-            }
-        }
         return {
-            background: "url(/images/new/banner-left.jpg) no-repeat, url(/images/new/banner-right.jpg) no-repeat",
-            backgroundPosition: "top left, top right",
-            backgroundSize: "auto, auto 100%",
-            height: "100%",
+            background: props.isMobile ? "url(/images/new/banner-right.jpg) no-repeat" : "url(/images/new/banner-left.jpg) no-repeat, url(/images/new/banner-right.jpg) no-repeat",
+            backgroundPosition: props.isMobile ? "top" : "top left, top right",
+            backgroundSize: props.isMobile ? "cover" : "auto, auto 100%",
             height: "100%",
             display: "flex",
             flexDirection: "column",
@@ -121,7 +113,7 @@ const HeaderBannerPanel = ({ isMobile, appInfo }) => {
                         setOpenDrawer(true)
                     }}
                     >
-                        <MenuIcon style={{ color: isMobile ? "white" : "#3f51b5" }} />
+                        <MenuIcon style={{ color: "#3f51b5" }} />
                     </button> : <div className={styles.flex}>
                         <HeaderMenu styles={styles} isMobile={isMobile} appInfo={appInfo} />
                     </div>}
@@ -149,13 +141,13 @@ const HeaderBannerPanel = ({ isMobile, appInfo }) => {
                         minHeight: isMobile ? "120px" : "0",
                         display: "flex",
                         alignItems: "center",
-                        color: isMobile ? "white" : "#3f51b5",
+                        color: "#3f51b5",
                     }}>Happier study, easier pass with our free practice tests</h1>
                     <p style={{
                         minHeight: isMobile ? "120px" : "0",
                         display: "flex",
                         alignItems: "center",
-                        color: isMobile ? "white" : "#3f51b5",
+                        color: "#3f51b5",
                         fontSize: "1.1em",
                     }}>We are here for your success because your success is our last goal! That's why we have tried our best to bring you all free, friendly, and funny test prep solutions.</p>
                     <div style={{height: "32px"}}></div>
