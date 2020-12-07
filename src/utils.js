@@ -184,7 +184,7 @@ export function stringReplaceUrl(str, regexReplace) {
         }
         result += c;
     }
-    return result.replace(/[^a-zA-Z0-9_-]/g, regexReplace ? regexReplace : '-').replace(/-{2,}/g, '-').replaceAll(/--/g, '-').toLowerCase();
+    return result.replace(/[^a-zA-Z0-9_-]/g, regexReplace ? regexReplace : '-').replace(/-{2,}/g, '-').replace(/--/g, '-').toLowerCase();
 }
 
 export function getCookie(key) {

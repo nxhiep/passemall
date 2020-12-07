@@ -70,10 +70,7 @@ const TopicItem = ({ topic, appNameId }) => {
     
     let description = topic.description;
     if(typeof description === 'string'){
-        description = description.replace(/(<([^>]+)>)/gi, '')
-    }
-    if(typeof description === 'string'){
-        description = description.replaceAll("&nbsp;", "");
+        description = description.replace(/(<([^>]+)>)/gi, '').replace(/&nbsp;/g, '');
     }
     if (typeof description === 'string' && description.charCodeAt(0) === 183) {
         description = description.substring(1, description.length)
