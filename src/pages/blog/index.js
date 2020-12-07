@@ -104,7 +104,7 @@ const ListBlog = ({ appInfo, url, isMobile }) => {
 const HeaderBannerPanel = ({ isMobile, appInfo }) => {
     const [openDrawer, setOpenDrawer] = useState(false);
     const handleOpenDrawer = (open) => setOpenDrawer(open)
-    const bannerUrl = "/images/blog-background.png"
+    const bannerUrl = "/images/blog-background"+(isMobile ? "-mobile" : "")+".jpg";
     const styles = useStyles({ isMobile, bannerUrl });
     return <div className={styles.bgheader}>
         <div className={styles.headerTemp}>
