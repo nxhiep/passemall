@@ -95,7 +95,7 @@ const useStyles = makeStyles({
 ReactGA.initialize(GA_ID);
 
 const Blog = ({ newInfo, appInfo, isMobile, url }) => {
-    console.log("newInfo", newInfo, 'appInfo', appInfo)
+    // console.log("newInfo", newInfo, 'appInfo', appInfo)
     const seoInfo = new SEOInfo(newInfo);
     useEffect(() => {
         ReactGA.pageview('/blog-info', [newInfo.title]);
