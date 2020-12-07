@@ -144,14 +144,14 @@ const HeaderBannerPanel = ({ isMobile, appInfo }) => {
                         display: "flex",
                         alignItems: "center",
                         color: "#3f51b5",
-                    }}>Happier study, easier pass with our free practice tests</h1>
+                    }}>Passemall Blog</h1>
                     <p style={{
                         minHeight: isMobile ? "120px" : "0",
                         display: "flex",
                         alignItems: "center",
                         color: "#3f51b5",
                         fontSize: "1.1em",
-                    }}>We are here for your success because your success is our last goal! That's why we have tried our best to bring you all free, friendly, and funny test prep solutions.</p>
+                    }}>We're to make all your problems clearly!</p>
                     <div style={{height: "32px"}}></div>
                 </Grid>
             </Grid>

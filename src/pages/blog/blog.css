@@ -35,6 +35,7 @@ h1, h2, h3, h4, p {
 }
 .list-social {
     right: 20px;
+    z-index: 1;
 }
 .button-expaned-x,
 .list-social a {
