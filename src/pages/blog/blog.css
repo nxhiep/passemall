@@ -1,5 +1,10 @@
 main > .lazyload-wrapper {
-    height: 80%;
+    height: 100%;
+}
+@media(min-width: 768px) {
+    main > .lazyload-wrapper {
+        height: 80%;
+    }
 }
 h1, h2, h3, h4, p {
     margin-top: 0;

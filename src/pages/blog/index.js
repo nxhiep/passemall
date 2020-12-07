@@ -93,6 +93,7 @@ const ListBlog = ({ appInfo, url, isMobile }) => {
                 <LazyLoad height={1000}>
                     <HeaderBannerPanel appInfo={appInfo} isMobile={isMobile} />
                 </LazyLoad>
+                <div style={{ height: "50px" }}></div>
                 <LazyLoad height={2000}>
                     <BodyPanel appInfo={appInfo} isMobile={isMobile} />
                 </LazyLoad>
@@ -179,6 +180,7 @@ const HeaderMenu = ({ styles, isMobile, appInfo }) => {
 }
 
 const BodyPanel = ({ appInfo, isMobile }) => {
+    console.log("xxxxxxxxx")
     const [postInfos, setPostInfos] = useState(null)
     useEffect(() => {
         callApi({ url: '/new/api?type=get-all-new-info' + (appInfo.id ? '&appId=' + appInfo.id : ''), params: null, method: 'post' }).then((data) => {
@@ -244,7 +246,7 @@ const RecentPosts = ({ data, isMobile }) => {
         }}>Recent Posts</h2>
         <div className="list-recent-posts">
             {recentPosts.map((item, index) => {
-                return <BlogItem data={item} isMobile={isMobile} small={!isMobile && true} />;
+                return <BlogItem key={"xxas" + index} data={item} isMobile={isMobile} small={!isMobile && true} />;
             })}
         </div>
     </div>);
