@@ -1,9 +1,9 @@
-msg="commit at $now"
-if [[ ! -z "$1" ]]
-then 
-    msg="$1"
+msg=$1
+if [[ -z "$msg" ]] 
+then
+    now=$(date +"%T")
+    msg="commit at $now"
 fi
-now=$(date +"%T")
 git status
 git add .
 git commit -m "$msg"
