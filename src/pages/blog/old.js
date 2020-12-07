@@ -4,11 +4,11 @@ import { useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react';
 import ReactGA from 'react-ga';
 import LazyLoad from 'react-lazyload';
-import { BannerBlog, HeaderBlog } from '../components/blog/HeaderBlog';
-import Footer from '../components/Footer';
-import SEO from '../components/SEO';
-import { GA_ID } from '../config_app';
-import { getRecentPosts } from '../utils';
+import { BannerBlog, HeaderBlog } from '../../components/blog/HeaderBlog';
+import Footer from '../../components/Footer';
+import SEO from '../../components/SEO';
+import { APP_NEW_DOMAIN, GA_ID } from '../../config_app';
+import { getRecentPosts } from '../../utils';
 
 ReactGA.initialize(GA_ID);
 const ListBlog = ({ data, url }) => {
@@ -153,7 +153,8 @@ const RecentPosts = ({ data }) => {
 
 export async function getServerSideProps(context) {
     let url = 'https://micro-enigma-235001.appspot.com/new/api?type=get-all-new-info';
-    if(context.query.appId){
+    let appId = APP_NEW_DOMAIN ? APP_NEW_DOMAIN : context.query.appId;
+    if(appId){
         url += '&appId=' + context.query.appId;
     }
     const res = await fetch(url);
