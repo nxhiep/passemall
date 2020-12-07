@@ -42,7 +42,7 @@ const useStyles = makeStyles({
                 padding: "10px",
                 textDecoration: "none",
                 color: "white",
-                fontWeight: "500",
+                fontWeight: "600",
                 cursor: "pointer",
             }
         }
@@ -155,10 +155,7 @@ const HeaderBannerPanel = ({ isMobile, appInfo }) => {
                     <div style={{height: "32px"}}></div>
                 </Grid>
                 <Grid item xs={12} sm={6} md={5}>
-                    {isMobile ? null : <img width="100%" src="/images/test3.png" style={{
-                        position: "relative",
-                        bottom: isMobile ? "0" : "-60px",
-                    }} />}
+                    {isMobile ? null : <img width="100%" src="/images/test3.png" />}
                 </Grid>
             </Grid>
         </Container>
