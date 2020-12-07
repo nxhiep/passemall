@@ -1,4 +1,4 @@
-import { CircularProgress, Container, Grid, IconButton, Link, makeStyles, SwipeableDrawer, useMediaQuery, useTheme } from '@material-ui/core';
+import { Button, CircularProgress, Container, Grid, IconButton, Link, makeStyles, SwipeableDrawer, useMediaQuery, useTheme } from '@material-ui/core';
 import { ExpandLess as ExpandLessIcon, Menu as MenuIcon } from '@material-ui/icons';
 import NavigateNextIcon from '@material-ui/icons/NavigateNext';
 import fs from "fs";
@@ -12,7 +12,7 @@ import Slider from 'react-slick';
 import FooterPanel from '../../components/new/FooterPanel';
 import SEO from '../../components/SEO';
 import { SocialWidget } from '../../components/SocialWidget';
-import { GA_ID } from '../../config_app';
+import { APP_NEW_DOMAIN, GA_ID } from '../../config_app';
 import SEOInfo from '../../models/SEOInfo';
 import { callApi } from '../../services';
 import { addRecentPost, getWebContext, isAppDMV, scrollDown } from '../../utils';
@@ -20,14 +20,27 @@ import './blog-info.css';
 
 const useStyles = makeStyles({
     bgheader: props => {
+        if(props.bannerUrl){
+            return {
+                background: "url("+props.bannerUrl+") no-repeat",
+                backgroundSize: "cover",
+                height: "100%",
+            }
+        }
         return {
             background: props.isMobile ? "url(/images/new/banner-right.jpg) no-repeat" : "url(/images/new/banner-left.jpg) no-repeat, url(/images/new/banner-right.jpg) no-repeat",
             backgroundPosition: props.isMobile ? "top" : "top left, top right",
             backgroundSize: props.isMobile ? "cover" : "auto, auto 100%",
             height: "100%",
+        }
+    },
+    headerTemp: props => {
+        return {
             display: "flex",
             flexDirection: "column",
             justifyContent: "space-between",
+            height: "100%",
+            backgroundColor: props.bannerUrl ? "rgb(0 0 0 / 0.7)" : ""
         }
     },
     header: {
@@ -52,7 +65,7 @@ const useStyles = makeStyles({
         return {
             padding: "10px 20px",
             textDecoration: "none",
-            color: "#3f51b5",
+            color: props.bannerUrl ? "white" : "#3f51b5",
             fontWeight: "600",
             cursor: "pointer",
             position: "relative",
@@ -106,95 +119,113 @@ const Blog = ({ newInfo, appInfo, isMobile, url }) => {
 const HeaderBannerPanel = ({ isMobile, appInfo, newInfo }) => {
     const [openDrawer, setOpenDrawer] = useState(false);
     const handleOpenDrawer = (open) => setOpenDrawer(open)
-    const bannerUrl = "/images/blog-background"+(isMobile ? "-mobile" : "")+".jpg";
-    const styles = useStyles({ isMobile, bannerUrl });
+    const darkMode = !!newInfo.shareImage;
+    const styles = useStyles({ isMobile, bannerUrl: newInfo.shareImage });
     return <div className={styles.bgheader}>
-        <header className={styles.header}>
-            <Container style={{height: "100%"}}>
-                <Grid container justify="space-between" alignItems="center" style={{height: "100%"}}>
-                    <a href="/" style={{outline:'none'}}><img alt="ABC Elearning Logo" src="/images/logo/logo-dark.svg" width="240px" height="60px" /></a>
-                    {isMobile ? <button className={styles.menuButton}
-                    onClick={() => {
-                        setOpenDrawer(true)
-                    }}
-                    >
-                        <MenuIcon style={{ color: "#3f51b5" }} />
-                    </button> : <div className={styles.flex}>
-                        <HeaderMenu styles={styles} isMobile={isMobile} appInfo={appInfo} />
-                    </div>}
-                    { isMobile ? <SwipeableDrawer
-                        className="header-menu-swipe"
-                        anchor="right"
-                        open={openDrawer}
-                        onClose={() => {
-                            handleOpenDrawer(false);
+        <div className={styles.headerTemp}>
+            <header className={styles.header}>
+                <Container style={{height: "100%"}}>
+                    <Grid container justify="space-between" alignItems="center" style={{height: "100%"}}>
+                        <a href="/" style={{outline:'none'}}><img alt="ABC Elearning Logo" src={darkMode ? "/images/logo/logo-light.svg" : "/images/logo/logo-dark.svg"} width="240px" height="60px" /></a>
+                        {isMobile ? <button className={styles.menuButton}
+                        onClick={() => {
+                            setOpenDrawer(true)
                         }}
-                        onOpen={() => handleOpenDrawer(true)}
-                    >
-                        <div style={{padding: "10px"}}>
-                            <a href="/"><img alt="ABC Elearning Logo" width="200px" height="48px" src="/images/logo-landing.png" /></a>
-                        </div>
-                        <HeaderMenu styles={styles} isMobile={isMobile} appInfo={appInfo} />
-                    </SwipeableDrawer> : null }
+                        >
+                            <MenuIcon style={{ color: darkMode ? "white" : "#3f51b5" }} />
+                        </button> : <div className={styles.flex}>
+                            <HeaderMenu styles={styles} isMobile={isMobile} appInfo={appInfo} />
+                        </div>}
+                        { isMobile ? <SwipeableDrawer
+                            className="header-menu-swipe"
+                            anchor="right"
+                            open={openDrawer}
+                            onClose={() => {
+                                handleOpenDrawer(false);
+                            }}
+                            onOpen={() => handleOpenDrawer(true)}
+                        >
+                            <div style={{padding: "10px"}}>
+                                <a href="/"><img alt="ABC Elearning Logo" width="200px" height="48px" src="/images/logo/logo-light.svg" /></a>
+                            </div>
+                            <HeaderMenu styles={styles} isMobile={isMobile} appInfo={appInfo} />
+                        </SwipeableDrawer> : null }
+                    </Grid>
+                </Container>
+            </header>
+            <Container>
+                <Grid container justify="space-between" alignItems="center">
+                    <Grid item xs={12} sm={6} md={6}>
+                        <h1 style={{
+                            minHeight: isMobile ? "120px" : "0",
+                            display: "flex",
+                            alignItems: "center",
+                            color: darkMode ? "white" : "#3f51b5",
+                        }}>{newInfo.title}</h1>
+                        <p style={{
+                            minHeight: isMobile ? "120px" : "0",
+                            display: "flex",
+                            alignItems: "center",
+                            color: darkMode ? "white" : "#3f51b5",
+                            fontSize: "1.1em",
+                        }}>{newInfo.description}</p>
+                        <div style={{height: "32px"}}></div>
+
+                        <DownloadWidget appInfo={appInfo} darkMode={darkMode} />
+                    </Grid>
                 </Grid>
             </Container>
-        </header>
-        <Container>
-            <Grid container justify="space-between" alignItems="center">
-                <Grid item xs={12} sm={6} md={6}>
-                    <h1 style={{
-                        minHeight: isMobile ? "120px" : "0",
-                        display: "flex",
-                        alignItems: "center",
-                        color: "#3f51b5",
-                    }}>{newInfo.title}</h1>
-                    <p style={{
-                        minHeight: isMobile ? "120px" : "0",
-                        display: "flex",
-                        alignItems: "center",
-                        color: "#3f51b5",
-                        fontSize: "1.1em",
-                    }}>{newInfo.description}</p>
-                    <div style={{height: "32px"}}></div>
-
-                    <DownloadWidget appInfo={appInfo} />
-                </Grid>
-            </Grid>
-        </Container>
-        <div></div>
+            <div></div>
+        </div>
     </div>
 }
 
-const DownloadWidget = ({ appInfo }) => {
+const DownloadWidget = ({ appInfo, center, darkMode }) => {
     if(!appInfo || !appInfo.id){
         return null;
     }
-    return <div className={"dropdown-app-panel"} style={{width: "320px"}}>
-        <button variant="outlined" color="inherit">
-            <span>Download on your mobile device</span>
-            <span style={{width: "10px"}}></span>
-            <ExpandLessIcon />
-        </button>
-        <div className="content">
-            <a href={appInfo.urlAndroid} target="_blank" rel="noopener noreferrer" onClick={() => {
-                ReactGA.event({
-                    category: 'Click Google Play',
-                    action: 'Click Google Play App Home'
-                })
-            }}>
-                <img alt="Link google app" src="/images/googlePlayIcon.png" />
-            </a>
-            <div style={{ width: '10px' }}></div>
-            <a href={appInfo.urlIos} target="_blank" rel="noopener noreferrer" onClick={() => {
-                ReactGA.event({
-                    category: 'Click App Store',
-                    action: 'Click Google Play App Home'
-                })
-            }}>
-                <img src="/images/appStoreIcon.png" alt="Link app store" />
-            </a>
+    return <div style={{display: "flex", alignItems:"center", flexWrap: "wrap", justifyContent: center === true ? "center" : ""}}>
+        <Button 
+            variant="contained" 
+            color="primary" 
+            href={"/" + (APP_NEW_DOMAIN ? "" : appInfo.appNameId)} 
+            style={{
+                borderRadius: "40px",
+                padding: "10px 30px",
+                fontWeight: "600",
+                marginTop: "10px"
+            }}
+            >
+            Start Practice
+        </Button>
+        <div style={{width: "20px"}}></div>
+        <div className={"dropdown-app-panel" + (darkMode === true ? " darkmode" : "")} style={{width: "320px"}}>
+            <button variant="outlined" color="inherit">
+                <span>Download on your mobile device</span>
+                <span style={{width: "10px"}}></span>
+                <ExpandLessIcon />
+            </button>
+            <div className="content">
+                <a href={appInfo.urlAndroid} target="_blank" rel="noopener noreferrer" onClick={() => {
+                    ReactGA.event({
+                        category: 'Click Google Play',
+                        action: 'Click Google Play App Home'
+                    })
+                }}>
+                    <img alt="Link google app" src="/images/googlePlayIcon.png" />
+                </a>
+                <div style={{ width: '10px' }}></div>
+                <a href={appInfo.urlIos} target="_blank" rel="noopener noreferrer" onClick={() => {
+                    ReactGA.event({
+                        category: 'Click App Store',
+                        action: 'Click Google Play App Home'
+                    })
+                }}>
+                    <img src="/images/appStoreIcon.png" alt="Link app store" />
+                </a>
+            </div>
         </div>
-    </div>;
+    </div>
 }
 
 const HeaderMenu = ({ styles, isMobile, appInfo }) => {
@@ -213,7 +244,7 @@ const HeaderMenu = ({ styles, isMobile, appInfo }) => {
 const BodyPanel = ({ newInfo, appInfo, isMobile }) => {
     return <>
         <section>
-            <PostContent content={newInfo.content} />
+            <PostContent content={newInfo.content} appInfo={appInfo} />
             <LazyLoad>
                 <link rel="stylesheet" type="text/css" href="/styles/slick.css" />
                 <RelatedStories topicId={newInfo.topicId} isMb={isMobile} />
@@ -223,7 +254,7 @@ const BodyPanel = ({ newInfo, appInfo, isMobile }) => {
     </>
 }
 
-const PostContent = ({content}) => {
+const PostContent = ({ content, appInfo }) => {
     let hasMenu = content.includes('h1') || content.includes('h2') || content.includes('h3');
     let elementId = 'ssadasdasdszcx';
     useEffect(() => {
@@ -249,6 +280,9 @@ const PostContent = ({content}) => {
                 {ReactHtmlParser(content)}
             </Grid>
         </Grid>
+        <div style={{ padding: "20px 0" }}>
+            <DownloadWidget appInfo={appInfo} center={true} />
+        </div>
     </Container>
 }
 
