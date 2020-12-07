@@ -22,7 +22,7 @@ const Content = ({ appInfo, headerMenu, darkMode }) => {
     return <Container style={isMobile ? {padding: "0"} : {}}>
         <Grid container alignItems="center" justify="space-between">
             <a href="/" style={{padding: "10px 0"}}>
-                <img src={darkMode ? "/images/logo-landing.png" : "/images/logo-landing-2.png"} alt="ABC Elearning Logo" width={isMobile ? "185px" : "240px"} height={isMobile ? "45px" : "60px"}></img>
+                <img src={darkMode ? "/images/logo/logo-light.svg" : "/images/logo/logo-dark.svg"} alt="ABC Elearning Logo" width={isMobile ? "185px" : "240px"} height={isMobile ? "45px" : "60px"}></img>
             </a>
             {!isMobile ? <div className="header-menu">
                 {headerMenu ? headerMenu : <MenuList appInfo={appInfo} />}

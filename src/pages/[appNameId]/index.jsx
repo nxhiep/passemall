@@ -128,7 +128,7 @@ const HeaderBannerPanel = ({ isMobile, appInfo }) => {
                 <header className={styles.header}>
                     <Container style={{height: "100%"}}>
                         <Grid container justify="space-between" alignItems="center" style={{height: "100%"}}>
-                            <a href="/" style={{outline:'none'}}><img alt="ABC Elearning Logo" src={superApp ? "/images/logo-landing.png" : "/images/logo-landing-2.png"} width="240px" height="60px" /></a>
+                            <a href="/" style={{outline:'none'}}><img alt="ABC Elearning Logo" src={superApp ? "/images/logo/logo-light.svg" : "/images/logo/logo-dark.svg"} width="240px" height="60px" /></a>
                             {isMobile ? <button className={styles.menuButton}
                             onClick={() => {
                                 setOpenDrawer(true)

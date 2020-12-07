@@ -20,7 +20,7 @@ const FooterPanel = ({ isMobile }) => {
             <Grid container>
                 <Grid item xs={12} sm={6} md={4}>
                     <a href="/">
-                        <img alt="ABC Elearning Logo" src="/images/logo-landing-2.png" width="240px" height="60px" />
+                        <img alt="ABC Elearning Logo" src="/images/logo/logo-dark.svg" width="240px" height="60px" />
                     </a>
                 </Grid>
                 <Grid item xs={12} sm={6} md={3} style={{paddingTop: "20px"}}>

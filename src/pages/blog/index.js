@@ -154,9 +154,12 @@ const HeaderBannerPanel = ({ isMobile, appInfo }) => {
                     }}>We're to make all your problems clearly!</p>
                     <div style={{height: "32px"}}></div>
                 </Grid>
-            </Grid>
-            <Grid item xs={12} sm={6} md={6}>
-                
+                <Grid item xs={12} sm={6} md={5}>
+                    {isMobile ? null : <img width="100%" src="/images/test3.png" style={{
+                        position: "relative",
+                        bottom: isMobile ? "0" : "-60px",
+                    }} />}
+                </Grid>
             </Grid>
         </Container>
         <div></div>
@@ -176,7 +179,6 @@ const HeaderMenu = ({ styles, isMobile, appInfo }) => {
 }
 
 const BodyPanel = ({ appInfo, isMobile }) => {
-    console.log("xxxxxxxxx")
     const [postInfos, setPostInfos] = useState(null)
     useEffect(() => {
         callApi({ url: '/new/api?type=get-all-new-info' + (appInfo.id ? '&appId=' + appInfo.id : ''), params: null, method: 'post' }).then((data) => {
