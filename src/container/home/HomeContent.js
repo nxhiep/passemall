@@ -67,8 +67,15 @@ const TopicItem = ({ topic, appNameId }) => {
     if (!topic) {
         return null;
     }
-    let description = topic.description.replace(/(<([^>]+)>)/gi, '').replaceAll("&nbsp;", "");
-    if (description.charCodeAt(0) === 183) {
+    
+    let description = topic.description;
+    if(typeof description === 'string'){
+        description = description.replace(/(<([^>]+)>)/gi, '')
+    }
+    if(typeof description === 'string'){
+        description = description.replaceAll("&nbsp;", "");
+    }
+    if (typeof description === 'string' && description.charCodeAt(0) === 183) {
         description = description.substring(1, description.length)
     }
     let progress = topic?.progress?.progress;
