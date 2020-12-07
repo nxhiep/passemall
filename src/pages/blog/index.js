@@ -16,19 +16,23 @@ import './blog.css';
 
 const useStyles = makeStyles({
     bgheader: props => {
-        return {
-            background: "url("+props.bannerUrl+") no-repeat",
-            backgroundSize: "cover",
-            backgroundPosition: "top",
-            height: "100%",
+        if(props.isMobile){
+            return {
+                background: "url(/images/new/banner-right.jpg) no-repeat",
+                backgroundPosition: "top",
+                backgroundSize: "cover",
+            }
         }
-    },
-    headerTemp: {
-        height: "100%",
-        display: "flex",
-        flexDirection: "column",
-        justifyContent: "space-between",
-        backgroundColor: "rgb(0 0 0 / 0.5)"
+        return {
+            background: "url(/images/new/banner-left.jpg) no-repeat, url(/images/new/banner-right.jpg) no-repeat",
+            backgroundPosition: "top left, top right",
+            backgroundSize: "auto, auto 100%",
+            height: "100%",
+            height: "100%",
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "space-between",
+        }
     },
     header: {
         height: "100px",
@@ -52,7 +56,7 @@ const useStyles = makeStyles({
         return {
             padding: "10px 20px",
             textDecoration: "none",
-            color: props.bannerUrl ? "white" : "#4e63bd",
+            color: "#3f51b5",
             fontWeight: "600",
             cursor: "pointer",
             position: "relative",
@@ -108,62 +112,60 @@ const HeaderBannerPanel = ({ isMobile, appInfo }) => {
     const bannerUrl = "/images/blog-background"+(isMobile ? "-mobile" : "")+".jpg";
     const styles = useStyles({ isMobile, bannerUrl });
     return <div className={styles.bgheader}>
-        <div className={styles.headerTemp}>
-            <header className={styles.header}>
-                <Container style={{height: "100%"}}>
-                    <Grid container justify="space-between" alignItems="center" style={{height: "100%"}}>
-                        <a href="/" style={{outline:'none'}}><img alt="ABC Elearning Logo" src={"/images/logo-landing.png"} width="240px" height="60px" /></a>
-                        {isMobile ? <button className={styles.menuButton}
-                        onClick={() => {
-                            setOpenDrawer(true)
+        <header className={styles.header}>
+            <Container style={{height: "100%"}}>
+                <Grid container justify="space-between" alignItems="center" style={{height: "100%"}}>
+                    <a href="/" style={{outline:'none'}}><img alt="ABC Elearning Logo" src="/images/logo/logo-dark.svg" width="240px" height="60px" /></a>
+                    {isMobile ? <button className={styles.menuButton}
+                    onClick={() => {
+                        setOpenDrawer(true)
+                    }}
+                    >
+                        <MenuIcon style={{ color: isMobile ? "white" : "#3f51b5" }} />
+                    </button> : <div className={styles.flex}>
+                        <HeaderMenu styles={styles} isMobile={isMobile} appInfo={appInfo} />
+                    </div>}
+                    { isMobile ? <SwipeableDrawer
+                        className="header-menu-swipe"
+                        anchor="right"
+                        open={openDrawer}
+                        onClose={() => {
+                            handleOpenDrawer(false);
                         }}
-                        >
-                            <MenuIcon style={{ color: isMobile ? "white" : "#3f51b5" }} />
-                        </button> : <div className={styles.flex}>
-                            <HeaderMenu styles={styles} isMobile={isMobile} appInfo={appInfo} />
-                        </div>}
-                        { isMobile ? <SwipeableDrawer
-                            className="header-menu-swipe"
-                            anchor="right"
-                            open={openDrawer}
-                            onClose={() => {
-                                handleOpenDrawer(false);
-                            }}
-                            onOpen={() => handleOpenDrawer(true)}
-                        >
-                            <div style={{padding: "10px"}}>
-                                <a href="/"><img alt="ABC Elearning Logo" width="200px" height="48px" src="/images/logo-landing.png" /></a>
-                            </div>
-                            <HeaderMenu styles={styles} isMobile={isMobile} appInfo={appInfo} />
-                        </SwipeableDrawer> : null }
-                    </Grid>
-                </Container>
-            </header>
-            <Container>
-                <Grid container justify="space-between" alignItems="center">
-                    <Grid item xs={12} sm={6} md={6}>
-                        <h1 style={{
-                            minHeight: isMobile ? "120px" : "0",
-                            display: "flex",
-                            alignItems: "center",
-                            color: "white",
-                        }}>Happier study, easier pass with our free practice tests</h1>
-                        <p style={{
-                            minHeight: isMobile ? "120px" : "0",
-                            display: "flex",
-                            alignItems: "center",
-                            color: "white",
-                            fontSize: "1.1em",
-                        }}>We are here for your success because your success is our last goal! That's why we have tried our best to bring you all free, friendly, and funny test prep solutions.</p>
-                        <div style={{height: "32px"}}></div>
-                    </Grid>
-                </Grid>
-                <Grid item xs={12} sm={6} md={6}>
-                    
+                        onOpen={() => handleOpenDrawer(true)}
+                    >
+                        <div style={{padding: "10px"}}>
+                            <a href="/"><img alt="ABC Elearning Logo" width="200px" height="48px" src="/images/logo-landing.png" /></a>
+                        </div>
+                        <HeaderMenu styles={styles} isMobile={isMobile} appInfo={appInfo} />
+                    </SwipeableDrawer> : null }
                 </Grid>
             </Container>
-            <div></div>
-        </div>
+        </header>
+        <Container>
+            <Grid container justify="space-between" alignItems="center">
+                <Grid item xs={12} sm={6} md={6}>
+                    <h1 style={{
+                        minHeight: isMobile ? "120px" : "0",
+                        display: "flex",
+                        alignItems: "center",
+                        color: isMobile ? "white" : "#3f51b5",
+                    }}>Happier study, easier pass with our free practice tests</h1>
+                    <p style={{
+                        minHeight: isMobile ? "120px" : "0",
+                        display: "flex",
+                        alignItems: "center",
+                        color: isMobile ? "white" : "#3f51b5",
+                        fontSize: "1.1em",
+                    }}>We are here for your success because your success is our last goal! That's why we have tried our best to bring you all free, friendly, and funny test prep solutions.</p>
+                    <div style={{height: "32px"}}></div>
+                </Grid>
+            </Grid>
+            <Grid item xs={12} sm={6} md={6}>
+                
+            </Grid>
+        </Container>
+        <div></div>
     </div>
 }
 
