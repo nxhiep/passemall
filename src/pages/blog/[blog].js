@@ -3,12 +3,14 @@ import { ExpandLess as ExpandLessIcon, Menu as MenuIcon } from '@material-ui/ico
 import NavigateNextIcon from '@material-ui/icons/NavigateNext';
 import fs from "fs";
 import { useRouter } from 'next/router';
+import { parse } from 'node-html-parser';
 import path from "path";
 import React, { useEffect, useState } from 'react';
 import ReactGA from 'react-ga';
 import ReactHtmlParser from 'react-html-parser';
 import LazyLoad from 'react-lazyload';
 import Slider from 'react-slick';
+import JsonLD from '../../components/JsonLD';
 import FooterPanel from '../../components/new/FooterPanel';
 import SEO from '../../components/SEO';
 import { SocialWidget } from '../../components/SocialWidget';
@@ -94,7 +96,7 @@ const useStyles = makeStyles({
 
 ReactGA.initialize(GA_ID);
 
-const Blog = ({ newInfo, appInfo, isMobile, url }) => {
+const Blog = ({ newInfo, appInfo, isMobile, url, mapFAQ }) => {
     // console.log("newInfo", newInfo, 'appInfo', appInfo)
     const seoInfo = new SEOInfo(newInfo);
     useEffect(() => {
@@ -103,7 +105,7 @@ const Blog = ({ newInfo, appInfo, isMobile, url }) => {
     }, [])
     return (
         <>
-            <SEO url={url} appInfo={seoInfo} />
+            <SEO url={url} appInfo={seoInfo} mapFAQ={mapFAQ} />
             <main style={{height:"100%"}}>
                 <LazyLoad height={1000}>
                     <HeaderBannerPanel newInfo={newInfo} appInfo={appInfo} isMobile={isMobile} />
@@ -352,7 +354,11 @@ const RelatedStories = ({ topicId, isMb }) => {
                     {
                         relativeds.concat(relativeds).map(e => {
                             return <div key={e.id} className="padding-10">
-                                <BlogItem item={e} />
+                                <BlogItem item={e} style={{
+                                    padding: "10px",
+                                    display: "block",
+                                    boxSizing: "border-box",
+                                }} />
                             </div>
                         })
                     }
@@ -376,13 +382,13 @@ const getLink = (name, id) => {
     return ("/blog/" + name.toLowerCase().replace("?", "").replace(/ /g, "-") + "-").replace("--", "-") + id
 }
 
-const BlogItem = ({ item }) => {
+const BlogItem = ({ item, style }) => {
     const router = useRouter();
     if (!item.bannerImage) {
         item.bannerImage = 'https://storage.googleapis.com/micro-enigma-235001.appspot.com/resources/images/how-to-pass-the-ged-math-test.jpg';
     }
     return (
-            <Link href={getLink(item.title, item.id)} style={{width: "100%", textDecoration: "none"}}>
+            <Link href={getLink(item.title, item.id)} style={{width: "100%", textDecoration: "none", ...style}}>
                 <Grid container spacing={1}>
                     <Grid container item xs={12}>
                         <div className="wrapper-image">
@@ -411,15 +417,40 @@ export async function getServerSideProps(context) {
     let blogId = context.params.blog.substring(context.params.blog.length - 16)
     const newInfo = await callApi({ url: `/new/api?type=get-new-info-by-id&id=${blogId}`, params: null, method: 'post' })
     let appInfo = {};
+    const mapFAQ = {};
     if(newInfo && newInfo.appId){
         const directoryAppInfos = path.join(process.cwd(), 'src/data/appInfos.json')
         let appInfosData = fs.readFileSync(directoryAppInfos);
         let mapAppInfos = JSON.parse(appInfosData)
         appInfo = mapAppInfos[newInfo.appId] || {};
+        const element = newInfo.content ? parse(newInfo.content) : null
+        if(element) {
+            let h1s = element.querySelectorAll("h1,h2,h3");
+            h1s && h1s.forEach((e) => {
+                let text = e.text;
+                let nextText = '';
+                let childNodes = e.parentNode.childNodes;
+                let nextIndex = childNodes.indexOf(e) + 1;
+                while(nextIndex < childNodes.length){
+                    let t = childNodes[nextIndex].text;
+                    if(t){
+                        if(childNodes[nextIndex].tagName == 'h1' || childNodes[nextIndex].tagName == 'h2' || childNodes[nextIndex].tagName == 'h3'){
+                            break;
+                        }
+                        nextText += ' ' + t;
+                    }
+                    nextIndex++;
+                }
+                if(text && nextText){
+                    mapFAQ[text] = nextText.trim()
+                }
+            });
+        }
     }
     return getWebContext(context, {
         appInfo,
-        newInfo
+        newInfo,
+        mapFAQ
     });
 }
 export default Blog;

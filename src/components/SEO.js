@@ -1,7 +1,7 @@
 import Head from "next/head";
 import { GOOGLE_SITE_VERIFICATION } from '../config_app'
 
-const SEO = ({ url, appInfo, children }) => {
+const SEO = ({ url, appInfo, children, mapFAQ }) => {
     let title = 'ABC ELearning';
     let description = 'With thousands of our FREE practice questions, we are here to help you achieve your gate of success with our test prep solutions.';
     let keywords = 'Abc e-learning, abc elearning, study online,practice test, practice question,exam prepare,asvab,teas exam,cdl test,cdl practice,cissp exam,cissp practice,accuplacer,comptia practice test,comptia A+,compTIA Network,comptia security,dmv,dmv practice test,driving theory,driving theory UK,G1 test,GED,hesi,hesi A2,motorcycle permit,pmp,pmp exam,ptcb,ptce,real estate exam,practice app,practice test onl,free practice test,free practice questions,free practice app';
@@ -15,6 +15,17 @@ const SEO = ({ url, appInfo, children }) => {
         appInfo.imageShare && (imageShare = appInfo.imageShare);
         appInfo.avatar && (image = appInfo.avatar);
     }
+    let array = [];
+    mapFAQ && Object.keys(mapFAQ).forEach((key) => {
+        array.push({
+            "@type": "Question",
+            "name": key,
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": mapFAQ[key]
+            }
+        });
+    })
     return <Head>
         <link rel="icon" href={image} />
         <link rel="apple-touch-icon" href={image}></link>
@@ -43,6 +54,14 @@ const SEO = ({ url, appInfo, children }) => {
         <meta property="og:image" content={image} />
         <meta property="og:type" content="website" />
         {children}
+        {mapFAQ && array.length > 0 ? <script
+            type="application/ld+json"
+            dangerouslySetInnerHTML={{ __html: JSON.stringify({
+                "@context": "https://schema.org",
+                "@type": "FAQPage",
+                "mainEntity": array
+            }) }}
+        ></script> : null}
     </Head>
 }
 
