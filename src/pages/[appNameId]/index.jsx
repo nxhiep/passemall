@@ -163,7 +163,7 @@ const HeaderBannerPanel = ({ isMobile, appInfo }) => {
                                 display: "flex",
                                 alignItems: "center",
                                 color: superApp ? "white" : "#1e3094"
-                            }}>FREE {appName} PRACTICE TEST</h1>
+                            }}>FREE {appName} PRACTICE TESTS</h1>
                             <p style={{
                                 minHeight: isMobile ? "120px" : "0",
                                 display: "flex",
