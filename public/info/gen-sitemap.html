@@ -76,6 +76,7 @@
             }
 
             function renderItem(loc, changefreq, priority) {
+                loc = loc.replace(/--/g, '-')
                 return $(`
                     <url>
                         <loc>`+loc+`</loc>
