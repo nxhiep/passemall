@@ -13,7 +13,7 @@ import { getNewDomain, setScrollDownAuto } from '../utils';
 
 const FAQ = ({ appInfo, url }) => {
     let seoInfo = new SEOInfo();
-    seoInfo.title = 'ABC Learning - FAQ';
+    seoInfo.title = 'ABC ELearning - FAQ';
     useEffect(() => {
         setScrollDownAuto()
         ReactGA.pageview(Routes.FAQ_SCREEN);
@@ -22,7 +22,7 @@ const FAQ = ({ appInfo, url }) => {
         <>
             <Head>
                 <meta charSet="UTF-8" />
-                <title>ABC Learning - FAQ</title>
+                <title>ABC ELearning - FAQ</title>
                 <link rel="icon" href="/images/logo.svg" />
                 <link href="https://fonts.googleapis.com/css2?family=Russo+One&display=swap" rel="stylesheet"></link>
                 <link rel="stylesheet" type="text/css" href="/styles/index.css" />
