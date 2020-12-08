@@ -3,7 +3,7 @@
 
 ROOT_PATH="./public/info"
 DATA_PATH="./src/data"
-VERSION="2.0.9"
+VERSION="2.0.10"
 
 downloadFile() {
     curl -o "$DATA_PATH/appInfos.json" "https://micro-enigma-235001.appspot.com/new/api?type=get-map-app"
