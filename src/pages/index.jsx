@@ -187,7 +187,7 @@ const Block2 = ({ isMobile }) => {
                             isMobile={isMobile}
                             icon={<EditIcon />}
                             title="PRACTICE QUESTIONS BY TOPICS"
-                            description="Test your knowledge by practicing by topics exactly as in real test. Moreover, topic is also divided into small parts which helps you get your interest in studying, just like playing a game."
+                            description="Test your knowledge by practicing by topics exactly as in real test. Moreover, topic is also divided into small parts which helps you get your interest in studying, just happier study, easier pass."
                         />
                         <Block2Item
                             isMobile={isMobile}
