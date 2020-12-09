@@ -214,7 +214,7 @@ const DownloadWidget = ({ appInfo, center, darkMode }) => {
                         action: 'Click Google Play App Home'
                     })
                 }}>
-                    <img alt="Link google app" src="/images/googlePlayIcon.png" />
+                    <img width="137px" height="45px" alt="Link google app" src="/images/googlePlayIcon.png" />
                 </a>
                 <div style={{ width: '10px' }}></div>
                 <a href={appInfo.urlIos} target="_blank" rel="noopener noreferrer" onClick={() => {
@@ -223,7 +223,7 @@ const DownloadWidget = ({ appInfo, center, darkMode }) => {
                         action: 'Click Google Play App Home'
                     })
                 }}>
-                    <img src="/images/appStoreIcon.png" alt="Link app store" />
+                    <img width="137px" height="45px" src="/images/appStoreIcon.png" alt="Link app store" />
                 </a>
             </div>
         </div>
