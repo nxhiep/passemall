@@ -14,23 +14,42 @@
         priority {
             display: block;
         }
+        .controls-panel {
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            margin: 10px 0;
+        }
+        .controls-panel ul {
+            list-style-type: none;
+            padding: 0;
+        }
     </style>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script>
+        const DOMAIN = "https://hiep-dot-micro-enigma-235001.appspot.com";
         function run() {
-            const DOMAIN = "https://hiep-dot-micro-enigma-235001.appspot.com";
             $(document).ready(function(){
-                loadData();
-                // loadDataApp(5734055144325120); // ASVAB
-                // loadDataApp(5722070642065408); // CDL
-                // loadDataApp(5296397775536128); // GED
-                // loadDataApp(5186025303310336); // TEAS
+                let radios = document.getElementsByName('domain');
+                let appId;
+                for (let i = 0, length = radios.length; i < length; i++) {
+                    if (radios[i].checked) {
+                        appId = radios[i].value
+                        break;
+                    }
+                }
+                if(appId){
+                    loadDataApp(appId)
+                } else {
+                    loadData();
+                }
             });
 
             function loadDataApp(appId) {
                 var mainPanel = $('urlset');
                 var currentTime = 'monthly';
                 var domain = getNewDomain(appId) + "/";
+                mainPanel.empty();
                 mainPanel.append(renderItem(domain, currentTime, "1.00"));
                 $.post(DOMAIN + '/data?type=get_app_info&appNameId=' + appId, {}, async function(appInfo) {
                     // mainPanel.append(renderItem(domain+'/test', currentTime, "0.80"));
@@ -137,12 +156,37 @@
     </script>
     </head>
     <body>
+        <div class="controls-panel">
+            <ul>    
+                Select App
+                <li>
+                    <input type="radio" id="passemall" name="domain">
+                    <label for="passemall">Passemall</label><br>
+                </li>
+                <li>
+                    <input type="radio" id="cdl" name="domain" value="5722070642065408">
+                    <label for="cdl">CDL</label><br>
+                </li>
+                <li>
+                    <input type="radio" id="asvab" name="domain" value="5734055144325120">
+                    <label for="asvab">ASVAB</label><br>
+                </li>
+                <li>
+                    <input type="radio" id="teas" name="domain" value="5186025303310336">
+                    <label for="teas">TEAS</label><br>
+                </li>
+                <li>
+                    <input type="radio" id="ged" name="domain" value="5296397775536128">
+                    <label for="ged">GED</label><br>
+                </li>
+            </ul>
+            <button onclick="run()">Genarate</button>
+        </div>
         <urlset
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
             xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" 
             xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd"
         >
         </urlset>
-        <button onclick="run()">Genarate</button>
     </body>
 </html>
