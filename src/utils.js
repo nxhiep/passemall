@@ -384,7 +384,7 @@ function getUrl(request) {
     let host = request.headers['x-forwarded-host'] || request.headers['host'];
     let page = request.headers['x-nextjs-page'];
     if(proto && host){
-        return proto + "://" + host + page;
+        return proto + "://" + host + (page == '/index' ? "" : page);
     }
     let url = request.headers.referer;
     if(url){
