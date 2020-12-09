@@ -45,8 +45,8 @@ const SEO = ({ url, appInfo, children, mapFAQ }) => {
         <meta name="theme-color" content="#000000" />
         <link rel="manifest" href="/manifest.json" />
         <link rel="canonical" href={url || 'https://passemall.com/'}></link>
-        <title>{title.toUpperCase()}</title>
-        <meta name="title" content={title.toUpperCase()} />
+        <title>{title}</title>
+        <meta name="title" content={title} />
         <meta name="description" content={description} />
         <meta name="keywords" content={keywords} />
         <meta property="og:title" content={title} />

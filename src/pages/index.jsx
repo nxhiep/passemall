@@ -57,20 +57,14 @@ const Home = ({ isMobile, url }) => {
             <MyTitle isMobile={isMobile} title="PRACTICE RIGHT NOW WITH OUR FREE PRACTICE TESTS!" description="Let's select your exam first" />
             <Block1 isMobile={isMobile} />
             <div style={{height: "80px"}}></div>
-            <LazyLoad height={2000}>
-                <BodyPanel isMobile={isMobile} />
+            <Block2 isMobile={isMobile} />
+            <LazyLoad>
+                <link rel="stylesheet" type="text/css" href="/styles/slick.css" />
+                <Block3 />
             </LazyLoad>
+            <div style={{height: "50px"}}></div>
+            <FooterPanel isMobile={isMobile} />
         </main>
-    </>
-}
-
-const BodyPanel = ({ isMobile }) => {
-    return <>
-        <Block2 isMobile={isMobile} />
-        <link rel="stylesheet" type="text/css" href="/styles/slick.css" />
-        <Block3 />
-        <div style={{height: "50px"}}></div>
-        <FooterPanel isMobile={isMobile} />
     </>
 }
 
