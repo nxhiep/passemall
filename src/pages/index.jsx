@@ -52,29 +52,28 @@ const Home = ({ isMobile, url }) => {
             display: "flex",
             flexDirection: "column"
         }}>
-            <LazyLoad height={1000}>
+            <LazyLoad height={1200}>
                 <HeaderBannerPanel isMobile={isMobile} />
                 <div style={{height: "50px"}}></div>
                 <MyTitle isMobile={isMobile} title="PRACTICE RIGHT NOW WITH OUR FREE TESTS!" description="Let's select your exam first" />
+                <Block1 isMobile={isMobile} />
+                <div style={{height: "50px"}}></div>
             </LazyLoad>
-            <BodyPanel isMobile={isMobile} />
+            <LazyLoad height={2000}>
+                <BodyPanel isMobile={isMobile} />
+            </LazyLoad>
         </main>
     </>
 }
 
 const BodyPanel = ({ isMobile }) => {
-    const height = "50px";
     return <>
-        <LazyLoad height={2000}>
-            <Block1 isMobile={isMobile} />
-            <div style={{height: height}}></div>
-            <Block2 isMobile={isMobile} />
-            <div style={{height: height}}></div>
-            <link rel="stylesheet" type="text/css" href="/styles/slick.css" />
-            <Block3 />
-            <div style={{height: height}}></div>
-            <FooterPanel isMobile={isMobile} />
-        </LazyLoad>
+        <Block2 isMobile={isMobile} />
+        <div style={{height: "50px"}}></div>
+        <link rel="stylesheet" type="text/css" href="/styles/slick.css" />
+        <Block3 />
+        <div style={{height: "50px"}}></div>
+        <FooterPanel isMobile={isMobile} />
     </>
 }
 

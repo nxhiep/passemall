@@ -81,10 +81,10 @@ const ListBlog = ({ appInfo, url, isMobile }) => {
     useEffect(() => {
         ReactGA.pageview('/blog');
     }, [])
-    // console.log("appInfo", appInfo)
+    console.log("appInfo", appInfo)
     return (
         <>
-            <SEO url={url} appInfo={appInfo ? appInfo : { title: "ABC Elearning - Free Practice Questions and Exam Prep - Blog" }} />
+            <SEO url={url} appInfo={appInfo && appInfo.id ? appInfo : { title: "ABC Elearning - Free Practice Questions and Exam Prep - Blog" }} />
             <main style={{height:"100%"}}>
                 <LazyLoad height={1000}>
                     <HeaderBannerPanel appInfo={appInfo} isMobile={isMobile} />
