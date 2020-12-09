@@ -54,7 +54,7 @@ const Home = ({ isMobile, url }) => {
         }}>
             <HeaderBannerPanel isMobile={isMobile} />
             <div style={{height: "50px"}}></div>
-            <MyTitle isMobile={isMobile} title="PRACTICE RIGHT NOW WITH OUR FREE PRACTICE TESTS!" description="Let's select your exam first" />
+            <MyTitle isMobile={isMobile} title="PRACTICE RIGHT NOW WITH OUR FREE QUESTIONS!" description="Let's select your exam first" />
             <Block1 isMobile={isMobile} />
             <div style={{height: "80px"}}></div>
             <Block2 isMobile={isMobile} />
@@ -168,12 +168,12 @@ const Block2 = ({ isMobile }) => {
     const theme = useTheme();
     const sm = useMediaQuery(theme.breakpoints.down(960));
     return <section>
-        <MyTitle isMobile={isMobile} title="SOME OF THE BEST FEATURES" description="With thousands of exam-simulated questions with detail explanations, lifetime access to the complete Manual, and dozens of test-taking strategies, our FREE Pratice Test helps you pass your test with flying colors." />
+        <MyTitle isMobile={isMobile} title="SOME OF THE BEST FEATURES" description="With thousands of exam-simulated questions with detail explanations, lifetime access to the complete Manual, and dozens of test-taking strategies, our FREE Practice Test helps you pass your test with flying colors." />
         <div style={{height: "30px"}}></div>
         <Container>
             <Grid container spacing={3} alignItems="center">
                 {isMobile || sm ? null : <Grid item xs={12} sm={6} md={3}>
-                    <LazyLoad><img width="100%" src="/images/test5.jpg" alt="static-img" alt='With thousands of exam-simulated questions with detail explanations, lifetime access to the complete Manual, and dozens of test-taking strategies, our FREE Pratice Test helps you pass your test with flying colors' /></LazyLoad>
+                    <LazyLoad><img width="100%" src="/images/test5.jpg" alt="static-img" alt='With thousands of exam-simulated questions with detail explanations, lifetime access to the complete Manual, and dozens of test-taking strategies, our FREE Practice questions helps you pass your test with flying colors' /></LazyLoad>
                 </Grid>}
                 <Grid item xs={12} sm={12} md={9}>
                     <Grid container>
@@ -186,7 +186,7 @@ const Block2 = ({ isMobile }) => {
                         <Block2Item
                             isMobile={isMobile}
                             icon={<EditIcon />}
-                            title="PRACTICE BY TOPICS"
+                            title="PRACTICE QUESTIONS BY TOPICS"
                             description="Test your knowledge by practicing by topics exactly as in real test. Moreover, topic is also divided into small parts which helps you get your interest in studying, just like playing a game."
                         />
                         <Block2Item
@@ -235,7 +235,7 @@ const Block2Item = ({ isMobile, icon, title, description }) => {
                 borderRadius: "100%"
             }}>{icon}</div>
             <div style={{ marginTop: "20px", marginBottom: "20px", width: isMobile ? "calc(100% - 60px)" : "100%", marginLeft: isMobile ? "10px" : "" }}>
-                <strong style={{ color: "rgb(78, 99, 189)" }}>{title}</strong>
+                <p style={{marginBottom: "8px"}}><strong style={{ color: "rgb(78, 99, 189)" }}>{title}</strong></p>
                 <p style={{
                     color: "#333"
                 }}>{description}</p>
