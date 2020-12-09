@@ -248,7 +248,7 @@ const ActiveItem = ({ isMobile, value = '', title = '' }) => {
     const styles = useStyles()
     return (
         <Grid item xs={6} sm={3} style={{textAlign: isMobile ? "left" : "center", marginBottom: isMobile ? "10px" : ""}}>
-            <strong className="text-bg">{value}</strong>
+            <div className="text-bg">{value}</div>
             <span>{title}</span>
         </Grid>
     );
