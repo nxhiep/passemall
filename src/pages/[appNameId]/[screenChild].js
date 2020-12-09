@@ -17,6 +17,9 @@ const ReviewViewScreen = dynamic(() => import('../../container/review/Review.Vie
 
 ReactGA.initialize(GA_ID);
 const GameChildScreen = ({ appInfo, url, topicId }) => {
+    if(!appInfo || Object.keys(appInfo).length === 0 && appInfo.constructor === Object){
+        return <ErrorPage title="Not found app" />
+    }
     useEffect(() => {
         ReactGA.pageview('/appGame');
         setScrollDownAuto()

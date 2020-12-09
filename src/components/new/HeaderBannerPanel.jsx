@@ -102,12 +102,7 @@ const HeaderBannerPanel = ({ isMobile }) => {
             <Container>
                 <Grid container justify="space-between" alignItems="center">
                     <Grid item xs={12} sm={5} md={5}>
-                        <h1 style={{
-                            // minHeight: isMobile ? "180px" : "0",
-                            display: "flex",
-                            alignItems: "center",
-                            color: "#1e3094"
-                        }}>Happier study, easier pass with our free practice tests</h1>
+                        <h1 style={{ color: "#1e3094" }}>Happier study, easier pass with our free practice tests</h1>
                         <p style={{
                             // minHeight: isMobile ? "180px" : "0",
                             display: "flex",

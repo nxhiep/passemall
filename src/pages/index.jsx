@@ -12,7 +12,7 @@ import HeaderBannerPanel from "../components/new/HeaderBannerPanel";
 import SEO from "../components/SEO";
 import { GA_ID } from "../config_app";
 import { callApi } from "../services";
-import { getNewDomain, getWebContext, oldUser, setScrollDownAuto } from "../utils";
+import { getNewDomain, getWebContext, isLocalhost, oldUser, setScrollDownAuto } from "../utils";
 import './home.css';
 
 const useStyles = makeStyles({
@@ -85,7 +85,7 @@ const MyTitle = ({ title, description, isMobile }) => {
             <span> </span>
             <span style={{color: "#ff6b00"}}>E-learning</span>
         </span>
-        <h1 style={{ fontSize: isMobile ? "" : "1.8em", color: "#1e3094" }}>{title}</h1>
+        <h2 style={{ fontSize: isMobile ? "" : "1.8em", color: "#1e3094" }}>{title}</h2>
         <p style={{
             maxWidth: "500px",
             textAlign: "center",
@@ -131,7 +131,7 @@ const ListApps = ({ appInfos, isMobile }) => {
     // }
     const getLink = (appInfo) => {
         let newDomain = getNewDomain(appInfo.id)
-        if(newDomain){
+        if(newDomain && !isLocalhost){
             return newDomain;
         }
         return '/' + appInfo.appNameId

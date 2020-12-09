@@ -1,5 +1,5 @@
 import { Button, CircularProgress, Container, Grid, makeStyles, SwipeableDrawer } from "@material-ui/core";
-import { Computer as ComputerIcon, ExpandLess as ExpandLessIcon, Menu as MenuIcon } from '@material-ui/icons';
+import { Computer as ComputerIcon, KeyboardArrowDown as CaretIcon, Menu as MenuIcon } from '@material-ui/icons';
 import fs from "fs";
 import dynamic from "next/dynamic";
 import path from "path";
@@ -121,7 +121,16 @@ const HeaderBannerPanel = ({ isMobile, appInfo }) => {
     const superApp = isSuperApp(appInfo.id)
     const bannerUrl = superApp ? getHeaderBanner(appInfo.id, isMobile) : null
     const styles = useStyles({ isMobile, bannerUrl: bannerUrl });
+    let appTitle = (appInfo.title || '').toLowerCase().replace('|', '')
+        .replace('-', '').replace('abc', '').replace('elearning', '').toUpperCase();
     let appName = (appInfo.appName || '').toLowerCase().replace('practice', '').replace('test', '').toUpperCase();
+    if(!appTitle && appName){
+        appTitle = 'FREE '+appName+' PRACTICE TESTS';
+    }
+    let descriptionAfterH1 = `If you're nervous about the ${appName} test for the first time, try our free ${appName} practice test. Test your knowledge with +1000 ${appName} practice questions!`
+    if(appInfo.descriptionAfterH1){
+        descriptionAfterH1 = appInfo.descriptionAfterH1
+    }
     return <>
         <div className={styles.bgheader}>
             <div className={styles.headerTemp}>
@@ -163,14 +172,14 @@ const HeaderBannerPanel = ({ isMobile, appInfo }) => {
                                 display: "flex",
                                 alignItems: "center",
                                 color: superApp ? "white" : "#1e3094"
-                            }}>FREE {appName} PRACTICE TESTS</h1>
+                            }}>{appTitle}</h1>
                             <p style={{
                                 minHeight: isMobile ? "120px" : "0",
                                 display: "flex",
                                 alignItems: "center",
                                 color: superApp ? "white" : "#333",
                                 fontSize: "1.1em",
-                            }}>If you're nervous about the {appName} test for the first time, try our free {appName} practice test. Test your knowledge with +1000 {appName} practice questions!</p>
+                            }}>{descriptionAfterH1}</p>
                             <div style={{height: "32px"}}></div>
                             <DownloadAppWidget appInfo={appInfo} />
                         </Grid>
@@ -199,9 +208,9 @@ const DownloadAppWidget = ({ appInfo, center, darkMode }) => {
             borderRadius: "40px",
             fontWeight: "bold",
             marginTop: "10px",
-            backgroundColor: darkMode ? "white" : "#616E7D",
+            backgroundColor: darkMode ? "white" : "#4e63bd",
             color: darkMode ? "#616E7D" : "white",
-            border: darkMode ? "2px solid white" : "2px solid #616E7D",
+            border: darkMode ? "2px solid white" : "2px solid #4e63bd",
             paddingTop: "7px",
             paddingBottom: "7px"
         }} onClick={() => {
@@ -216,7 +225,7 @@ const DownloadAppWidget = ({ appInfo, center, darkMode }) => {
             <button variant="outlined" color="inherit">
                 <span>Download on your mobile device</span>
                 <span style={{width: "10px"}}></span>
-                <ExpandLessIcon />
+                <CaretIcon />
             </button>
             <div className="content">
                 <a href={appInfo.urlAndroid} target="_blank" rel="noopener noreferrer" onClick={() => {
@@ -382,7 +391,7 @@ const Block3 = ({ isMobile, appInfo }) => {
                     <Button variant="contained" color="inherit" style={{
                         borderRadius: "40px",
                         fontWeight: "bold",
-                        backgroundColor: "#616E7D",
+                        backgroundColor: "#4e63bd",
                         color: "white",
                         padding: "10px 20px",
                     }} onClick={() => {
