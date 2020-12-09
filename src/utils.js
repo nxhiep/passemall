@@ -369,10 +369,26 @@ export function isMobileUserAgent (request) {
 }
 
 export function getWebContext(context, params) {
-    let url = context.req.headers.referer;
+    let url = context ? getUrl(context.req) : ''
+    // console.log("url", context.res, 'url', url)
     return {props: {
         isMobile: isMobileUserAgent(context.req), 
         url: url ? url : '',
         ...(params || {})
     }}
+}
+
+function getUrl(request) {
+    let url = request.headers.referer;
+    if(url){
+        return url;
+    }
+    if(request.rawHeaders){
+        for(let value of request.rawHeaders) {
+            if(value.includes('http')){
+                return value;
+            }
+        }
+    }
+    return 'https://' + request.headers.host;
 }
