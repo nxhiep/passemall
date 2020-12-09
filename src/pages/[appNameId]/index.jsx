@@ -89,7 +89,8 @@ const useStyles = makeStyles({
     },
 });
 
-const AppPage = ({ appInfo, url, isMobile }) => {
+const AppPage = ({ appInfo, url, isMobile, headers }) => {
+    console.log("headers", headers)
     // console.log("AppPage", appInfo, url, isMobile);
     if(!appInfo || Object.keys(appInfo).length === 0 && appInfo.constructor === Object){
         return <ErrorPage title="Not found app" />
@@ -105,11 +106,9 @@ const AppPage = ({ appInfo, url, isMobile }) => {
             display: "flex",
             flexDirection: "column"
         }}>
-            <LazyLoad height={1000}>
-                <HeaderBannerPanel isMobile={isMobile} appInfo={appInfo} />
-                <div style={{height: isMobile ? "50px" : "100px"}}></div>
-                <Block1 isMobile={isMobile} appInfo={appInfo} />
-            </LazyLoad>
+            <HeaderBannerPanel isMobile={isMobile} appInfo={appInfo} />
+            <div style={{height: isMobile ? "50px" : "100px"}}></div>
+            <Block1 isMobile={isMobile} appInfo={appInfo} />
             <BodyPanel appInfo={appInfo} isMobile={isMobile} />
         </main>
     </>
@@ -539,7 +538,8 @@ export async function getServerSideProps(context) {
     let mapAppInfos = JSON.parse(appInfosData)
     const appInfo = mapAppInfos[appNameId] || {};
     return getWebContext(context, {
-        appInfo
+        appInfo,
+        headers: context.req.headers
     });
 }
 

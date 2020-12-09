@@ -370,8 +370,8 @@ export function isMobileUserAgent (request) {
 }
 
 export function getWebContext(context, params) {
-    let url = getUrl(context.req);
-    // console.log("url", context.request.headers, 'url', url)
+    let url = getUrl(context.req, context.params);
+    console.log("params", params)
     return {props: {
         isMobile: isMobileUserAgent(context.req), 
         url: url ? url : '',
@@ -379,12 +379,26 @@ export function getWebContext(context, params) {
     }}
 }
 
-function getUrl(request) {
+function getUrl(request, params) {
     let proto = request.headers['x-forwarded-proto'];
     let host = request.headers['x-forwarded-host'] || request.headers['host'];
     let page = request.headers['x-nextjs-page'];
     if(proto && host){
-        return proto + "://" + host + (page == '/index' ? "" : page);
+        if(page == '/index'){
+            page = '';
+        }
+        if(params){
+            if(page == '/[appNameId]'){
+                page = '/' + params.appNameId;
+            }
+            if(page == '/[screenChild]'){
+                page = '/' + params.screenChild;
+            }
+            if(page == '/[blog]'){
+                page = '/' + params.blog;
+            }
+        }
+        return proto + "://" + host + page;
     }
     let url = request.headers.referer;
     if(url){
