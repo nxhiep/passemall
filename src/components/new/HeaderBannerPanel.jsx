@@ -174,7 +174,7 @@ const SearchPanel = ({ isMobile, setSearchResults }) => {
                     results.push(element);
                 }
             });
-            console.log("data", results)
+            // console.log("data", results)
             setSearchResults(value, results)
         } else {
             setSearchResults(value, null)

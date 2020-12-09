@@ -330,7 +330,7 @@ const ListTestInfoUI = ({ testInfoState, appId, onChangeTestInfo, level, bucket 
             })
         }
     }
-    console.log("xxxxx testInfos", testInfos.length)
+    // console.log("xxxxx testInfos", testInfos.length)
     testInfos.sort((a, b) => a.index - b.index).forEach((el, index) => {
         let indexInt = isMobile ? parseInt(index / 2) : (isIPad ? parseInt(index / 4) : parseInt(index / 6));
         let testInfoItem = <TestInfoItem

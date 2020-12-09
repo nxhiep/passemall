@@ -81,7 +81,7 @@ const ListBlog = ({ appInfo, url, isMobile }) => {
     useEffect(() => {
         ReactGA.pageview('/blog');
     }, [])
-    console.log("appInfo", appInfo)
+    // console.log("appInfo", appInfo)
     return (
         <>
             <SEO url={url} appInfo={appInfo ? appInfo : { title: "ABC Elearning - Blog" }}

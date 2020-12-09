@@ -132,7 +132,7 @@ const FAQsWidget = ({ appInfo }) => {
         })
     };
     const getFAQByStateIdAndAppId = (stateId, appId) => {
-        console.log("getFAQByStateIdAndAppId stateId", stateId)
+        // console.log("getFAQByStateIdAndAppId stateId", stateId)
         if(stateId < 0){
             return;
         }

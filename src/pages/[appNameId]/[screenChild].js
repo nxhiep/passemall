@@ -50,7 +50,7 @@ function ScreenChild({ appInfo, topicId }) {
     const router = useRouter();
     let screen = router.query.screenChild
     screen = screen ?? '';
-    console.log("ScreenChild", screen)
+    // console.log("ScreenChild", screen)
     if (screen.startsWith(Routes.TEST_SCREEN)) {
         return <TestViewScreen topicId={topicId} appInfo={appInfo} />
     }
@@ -78,7 +78,7 @@ export async function getServerSideProps(context) {
             topicId = offset > -1 ? parseInt(screen.substring(offset, screen.length)) : -1;
         }
     }
-    console.log("topicId", topicId)
+    // console.log("topicId", topicId)
     return {
         props: {
             appInfo,
