@@ -1,5 +1,5 @@
 
-import { CircularProgress, Container, Grid, makeStyles, useMediaQuery, useTheme } from "@material-ui/core";
+import { CircularProgress, Container, Grid, Link, makeStyles, useMediaQuery, useTheme } from "@material-ui/core";
 import DashboardIcon from '@material-ui/icons/Dashboard';
 import EditIcon from '@material-ui/icons/Edit';
 import HowToRegIcon from '@material-ui/icons/HowToReg';
@@ -22,7 +22,8 @@ const useStyles = makeStyles({
     },
     appItem: {
         padding: "16px 0",
-        borderBottom: "1px solid rgba(250,142,69,.3)"
+        borderBottom: "1px solid rgba(250,142,69,.3)",
+        display: "block"
     },
     appItemText: {
         textTransform: "uppercase",
@@ -124,18 +125,19 @@ const ListApps = ({ appInfos, isMobile }) => {
     const styles = useStyles({ isMobile })
     const [open, setOpen] = useState(false)
     // const router = useRouter()
-    const openApp = (appNameId) => {
-        // router.push("/" + appNameId)
-        window.open("/" + appNameId, '_blank')
-    }
+    // const openApp = (appNameId) => {
+    //     // router.push("/" + appNameId)
+    //     window.open("/" + appNameId, '_blank')
+    // }
+    const getLink = (appInfo) => '/' + appInfo.appNameId;
     if(isMobile){
         return <>
             <Grid container wrap="wrap">
                 { appInfos.slice(0, 5).map(appInfo => {
-                    return <Grid item xs={12} sm={6} md={4} key={"appInfo-" + appInfo.id} className={styles.appItem} onClick={() => {
-                        openApp(appInfo.appNameId)
-                    }}>
-                        <div className={styles.appItemText}>{appInfo.appName}</div>
+                    return <Grid item xs={12} sm={6} md={4} key={"appInfo-" + appInfo.id}>
+                        <Link className={styles.appItem} href={getLink(appInfo)}>
+                            <div className={styles.appItemText}>{appInfo.appName}</div>
+                        </Link>
                     </Grid>
                 }) }
             </Grid>
@@ -146,10 +148,10 @@ const ListApps = ({ appInfos, isMobile }) => {
             </Grid> : null}
             {open ? <Grid container wrap="wrap">
                 { appInfos.slice(6, appInfos.length).map(appInfo => {
-                    return <Grid item xs={12} sm={6} md={4} key={"appInfo-" + appInfo.id} className={styles.appItem} onClick={() => {
-                        openApp(appInfo.appNameId)
-                    }}>
-                        <div className={styles.appItemText}>{appInfo.appName}</div>
+                    return <Grid item xs={12} sm={6} md={4} key={"appInfo-" + appInfo.id}>
+                        <Link className={styles.appItem} href={getLink(appInfo)}>
+                            <div className={styles.appItemText}>{appInfo.appName}</div>
+                        </Link>
                     </Grid>
                 }) }
             </Grid> : null}
@@ -157,10 +159,10 @@ const ListApps = ({ appInfos, isMobile }) => {
     }
     return <Grid container wrap="wrap">
         { appInfos.map(appInfo => {
-            return <Grid item xs={12} sm={6} md={4} key={"appInfo-" + appInfo.id} className={styles.appItem} onClick={() => {
-                    openApp(appInfo.appNameId)
-                }}>
-                <div className={styles.appItemText}>{appInfo.appName}</div>
+            return <Grid item xs={12} sm={6} md={4} key={"appInfo-" + appInfo.id}>
+                <Link className={styles.appItem} href={getLink(appInfo)}>
+                    <div className={styles.appItemText}>{appInfo.appName}</div>
+                </Link>
             </Grid>
         }) }
     </Grid>

@@ -295,7 +295,7 @@ const Block1 = ({ isMobile, appInfo }) => {
                 <Block1Item 
                     icon="icon-block1-2"
                     title={"No Sign up or Login Required"}
-                    desciption="All your progress is saved without an account even if you close your browser. No usernames, no passwords - just merely ASVAB training."
+                    desciption={"All your progress is saved without an account even if you close your browser. No usernames, no passwords - just merely "+appName+" training."}
                 />
                 <Block1Item 
                     icon="icon-block1-3"
