@@ -304,7 +304,7 @@ const Block1 = ({ isMobile, appInfo }) => {
                 <Block1Item 
                     icon="icon-block1-1"
                     title={"All " + appName + " practice questions free"}
-                    desciption={"1000+ "+appTitle+" questions and various simulator tests to explore. All you need to get your certificate is available here."}
+                    desciption={"1000+ "+appTitle+" tests and various simulator tests to explore. All you need to get your certificate is available here."}
                 />
                 <Block1Item 
                     icon="icon-block1-2"
