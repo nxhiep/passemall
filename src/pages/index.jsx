@@ -54,7 +54,7 @@ const Home = ({ isMobile, url }) => {
         }}>
             <HeaderBannerPanel isMobile={isMobile} />
             <div style={{height: "50px"}}></div>
-            <MyTitle isMobile={isMobile} title="PRACTICE RIGHT NOW WITH OUR FREE TESTS!" description="Let's select your exam first" />
+            <MyTitle isMobile={isMobile} title="PRACTICE RIGHT NOW WITH OUR FREE PRACTICE TESTS!" description="Let's select your exam first" />
             <Block1 isMobile={isMobile} />
             <div style={{height: "80px"}}></div>
             <LazyLoad height={2000}>
@@ -81,7 +81,7 @@ const MyTitle = ({ title, description, isMobile }) => {
             <span> </span>
             <span style={{color: "#ff6b00"}}>E-learning</span>
         </span>
-        <h2 style={{ fontSize: isMobile ? "" : "1.8em", color: "#1e3094" }}>{title}</h2>
+        <h2 style={{ fontSize: isMobile ? "" : "1.8em", color: "#1e3094", marginTop: "16px" }}>{title}</h2>
         <p style={{
             maxWidth: "500px",
             textAlign: "center",
@@ -174,12 +174,12 @@ const Block2 = ({ isMobile }) => {
     const theme = useTheme();
     const sm = useMediaQuery(theme.breakpoints.down(960));
     return <section>
-        <MyTitle isMobile={isMobile} title="SOME OF THE BEST FEATURES" description="With thousands of exam-simulated questions with detail explanations, lifetime access to the complete Manual, and dozens of test-taking strategies, our Test Prep helps you pass your test with flying colors." />
+        <MyTitle isMobile={isMobile} title="SOME OF THE BEST FEATURES" description="With thousands of exam-simulated questions with detail explanations, lifetime access to the complete Manual, and dozens of test-taking strategies, our FREE Pratice Test helps you pass your test with flying colors." />
         <div style={{height: "30px"}}></div>
         <Container>
             <Grid container spacing={3} alignItems="center">
                 {isMobile || sm ? null : <Grid item xs={12} sm={6} md={3}>
-                    <LazyLoad><img width="100%" src="/images/test5.jpg" alt="static-img" alt='With thousands of exam-simulated questions with detail explanations, lifetime access to the complete Manual, and dozens of test-taking strategies, our Test Prep helps you pass your test with flying colors' /></LazyLoad>
+                    <LazyLoad><img width="100%" src="/images/test5.jpg" alt="static-img" alt='With thousands of exam-simulated questions with detail explanations, lifetime access to the complete Manual, and dozens of test-taking strategies, our FREE Pratice Test helps you pass your test with flying colors' /></LazyLoad>
                 </Grid>}
                 <Grid item xs={12} sm={12} md={9}>
                     <Grid container>

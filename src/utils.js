@@ -1,5 +1,6 @@
 import { useMediaQuery, useTheme } from '@material-ui/core';
 import Config from '../src/config';
+import { APP_NEW_DOMAIN } from './config_app';
 
 export function shuffle(list) {
     return list.sort((a, b) => {
@@ -390,5 +391,5 @@ function getUrl(request) {
             }
         }
     }
-    return 'https://' + request.headers.host;
+    return getNewDomain(APP_NEW_DOMAIN);
 }

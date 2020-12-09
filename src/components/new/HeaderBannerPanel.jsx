@@ -113,7 +113,7 @@ const HeaderBannerPanel = ({ isMobile }) => {
                         }}>We are here for your success because your success is our last goal! That's why we have tried our best to bring you all free, friendly, and funny test prep solutions.</p>
                     </Grid>
                     {isMobile ? null : <Grid item xs={12} sm={5} md={5}>
-                        <img width="100%" src="/images/test3.png" style={{
+                        <img width="100%" src="/images/test3.png" alt="Happier study, easier pass with our free practice tests" style={{
                             position: "relative",
                             bottom: "-60px"
                         }} />

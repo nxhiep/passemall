@@ -150,7 +150,7 @@ const HeaderBannerPanel = ({ isMobile, appInfo }) => {
                         alignItems: "center",
                         color: "#3f51b5",
                         fontSize: "1.1em",
-                    }}>We're to make all your problems clearly!</p>
+                    }}>We're here to make all your problems clearly!</p>
                     <div style={{height: "32px"}}></div>
                 </Grid>
                 <Grid item xs={12} sm={6} md={5}>
