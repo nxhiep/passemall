@@ -12,7 +12,7 @@ import HeaderBannerPanel from "../components/new/HeaderBannerPanel";
 import SEO from "../components/SEO";
 import { GA_ID } from "../config_app";
 import { callApi } from "../services";
-import { getWebContext, oldUser, setScrollDownAuto } from "../utils";
+import { getNewDomain, getWebContext, oldUser, setScrollDownAuto } from "../utils";
 import './home.css';
 
 const useStyles = makeStyles({
@@ -129,13 +129,19 @@ const ListApps = ({ appInfos, isMobile }) => {
     //     // router.push("/" + appNameId)
     //     window.open("/" + appNameId, '_blank')
     // }
-    const getLink = (appInfo) => '/' + appInfo.appNameId;
+    const getLink = (appInfo) => {
+        let newDomain = getNewDomain(appInfo.id)
+        if(newDomain){
+            return newDomain;
+        }
+        return '/' + appInfo.appNameId
+    };
     if(isMobile){
         return <>
             <Grid container wrap="wrap">
                 { appInfos.slice(0, 5).map(appInfo => {
                     return <Grid item xs={12} sm={6} md={4} key={"appInfo-" + appInfo.id}>
-                        <Link className={styles.appItem} href={getLink(appInfo)}>
+                        <Link className={styles.appItem} href={getLink(appInfo)} target="_blank">
                             <div className={styles.appItemText}>{appInfo.appName}</div>
                         </Link>
                     </Grid>
@@ -149,7 +155,7 @@ const ListApps = ({ appInfos, isMobile }) => {
             {open ? <Grid container wrap="wrap">
                 { appInfos.slice(6, appInfos.length).map(appInfo => {
                     return <Grid item xs={12} sm={6} md={4} key={"appInfo-" + appInfo.id}>
-                        <Link className={styles.appItem} href={getLink(appInfo)}>
+                        <Link className={styles.appItem} href={getLink(appInfo)} target="_blank">
                             <div className={styles.appItemText}>{appInfo.appName}</div>
                         </Link>
                     </Grid>
@@ -160,7 +166,7 @@ const ListApps = ({ appInfos, isMobile }) => {
     return <Grid container wrap="wrap">
         { appInfos.map(appInfo => {
             return <Grid item xs={12} sm={6} md={4} key={"appInfo-" + appInfo.id}>
-                <Link className={styles.appItem} href={getLink(appInfo)}>
+                <Link className={styles.appItem} href={getLink(appInfo)} target="_blank">
                     <div className={styles.appItemText}>{appInfo.appName}</div>
                 </Link>
             </Grid>
