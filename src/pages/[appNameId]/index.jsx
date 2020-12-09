@@ -183,7 +183,9 @@ const HeaderBannerPanel = ({ isMobile, appInfo }) => {
                             <DownloadAppWidget appInfo={appInfo} />
                         </Grid>
                         {isMobile ? null : <Grid item xs={12} sm={5} md={5}>
-                            <img width="100%" src="/images/test3.png" style={superApp ? {} : {
+                            <img width="100%" src="/images/test3.png" 
+                                alt={appTitle}
+                                style={superApp ? {} : {
                                 position: "relative",
                                 bottom: "-60px"
                             }} />
@@ -292,18 +294,22 @@ const MyTitle = ({ title, isMobile, center }) => {
 
 const Block1 = ({ isMobile, appInfo }) => {
     let appName = (appInfo.appName || '').toLowerCase().replace('practice', '').replace('test', '').toUpperCase();
+    let appTitle1 = (appInfo.title || '').trim().replace('|', '').trim().replace('2020', '').trim()
+        .replace('-', '').trim().replace('ABC', '').trim().replace('Elearning', '').trim();
+    let appTitle = appTitle1.trim().replace('Tests', '').trim();
+
     return <section>
         <Container>
             <Grid container spacing={isMobile ? 2 : 3}>
                 <Block1Item 
                     icon="icon-block1-1"
-                    title={"All " + appName + " practice test free"}
-                    desciption="1000+ FREE practice questions and various simulator tests to explore. All you need to get your certificate is available here."
+                    title={"All " + appName + " practice questions free"}
+                    desciption={"1000+ "+appTitle+" questions and various simulator tests to explore. All you need to get your certificate is available here."}
                 />
                 <Block1Item 
                     icon="icon-block1-2"
                     title={"No Sign up or Login Required"}
-                    desciption={"All your progress is saved without an account even if you close your browser. No usernames, no passwords - just merely "+appName+" training."}
+                    desciption={"All your progress is saved without an account even if you close your browser. No usernames, no passwords - just merely "+appTitle1+"."}
                 />
                 <Block1Item 
                     icon="icon-block1-3"
@@ -341,12 +347,13 @@ const Block1Item = ({ icon, title, desciption }) => {
 }
 
 const Block2 = ({appInfo}) => {
-    let appName = (appInfo.appName || '').toLowerCase().replace('practice', '').replace('test', '').toUpperCase();
+    let appName = (appInfo.title || '').trim().replace('|', '').trim().replace('2020', '').trim()
+        .replace('-', '').trim().replace('ABC', '').trim().replace('Elearning', '').trim();
     const store = useStore((state) => state);
     const [openPopupChangeState, setOpenPopupChangeState] = useState(false);
     const [selectedState, setSelectedState] = useState(true);
     return <section className="content-home-page">
-        <MyTitle title={"Start your "+ appName +" Practice Test"} />
+        <MyTitle title={"Start your "+ appName} />
         <div style={{height: "40px"}}></div>
         <Provider store={store}>
             <PersistGate persistor={store.__persistor}>
