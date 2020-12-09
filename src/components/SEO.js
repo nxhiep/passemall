@@ -51,7 +51,7 @@ const SEO = ({ url, appInfo, children, mapFAQ }) => {
         <meta name="keywords" content={keywords} />
         <meta property="og:title" content={title} />
         <meta property="og:description" content={description} />
-        <meta property="og:image" content={image} />
+        { !!(imageShare || image) ? <meta property="og:image" content={imageShare || image} /> : null}
         <meta property="og:type" content="website" />
         {children}
         {mapFAQ && array.length > 0 ? <script
