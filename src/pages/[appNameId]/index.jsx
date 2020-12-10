@@ -90,7 +90,7 @@ const useStyles = makeStyles({
 });
 
 const AppPage = ({ appInfo, url, isMobile, headers }) => {
-    console.log("headers", headers)
+    // console.log("headers", headers)
     // console.log("AppPage", appInfo, url, isMobile);
     if(!appInfo || Object.keys(appInfo).length === 0 && appInfo.constructor === Object){
         return <ErrorPage title="Not found app" />
@@ -350,7 +350,7 @@ const Block2 = ({appInfo}) => {
     const store = useStore((state) => state);
     const [openPopupChangeState, setOpenPopupChangeState] = useState(false);
     const [selectedState, setSelectedState] = useState(true);
-    console.log("xxxxxxxxxxxxxxxxxxxxx");
+    // console.log("xxxxxxxxxxxxxxxxxxxxx");
     return <section className="content-home-page">
         <MyTitle title={"Start your "+ appName} />
         <div style={{height: "40px"}}></div>
