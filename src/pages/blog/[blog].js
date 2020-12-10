@@ -328,7 +328,7 @@ const RelatedStories = ({ topicId, isMb }) => {
             setRelativeds([])
         })
     }, [topicId])
-    console.log("relativeds", relativeds)
+    // console.log("relativeds", relativeds)
     if(!relativeds){
         return <div style={{
             display: "flex",

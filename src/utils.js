@@ -370,7 +370,7 @@ export function isMobileUserAgent (request) {
 
 export function getWebContext(context, params) {
     let url = getUrl(context.req, context.params);
-    console.log("params", params)
+    // console.log("params", params)
     return {props: {
         isMobile: isMobileUserAgent(context.req), 
         url: url ? url : '',
