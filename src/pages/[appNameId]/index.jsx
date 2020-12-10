@@ -100,6 +100,8 @@ const AppPage = ({ appInfo, url, isMobile, headers }) => {
         setScrollDownAuto("home")
         oldUser()
     }, [])
+    appInfo.title = (appInfo.title || '').trim().replace('|', '').trim()
+        .replace('-', '').trim().replace('ABC', '').trim().replace('Elearning', '').trim();
     return <>
         <SEO url={url} appInfo={appInfo} />
         <main style={{
@@ -109,7 +111,23 @@ const AppPage = ({ appInfo, url, isMobile, headers }) => {
             <HeaderBannerPanel isMobile={isMobile} appInfo={appInfo} />
             <div style={{height: isMobile ? "50px" : "100px"}}></div>
             <Block1 isMobile={isMobile} appInfo={appInfo} />
-            <BodyPanel appInfo={appInfo} isMobile={isMobile} />
+            <div style={{height: "70px"}}></div>
+            <div className="content-home-page-1">
+                <LazyLoad>
+                    <Block2 isMobile={isMobile} appInfo={appInfo} />
+                </LazyLoad>
+            </div>
+            <div style={{height: "50px"}}></div>
+            <Block3 isMobile={isMobile} appInfo={appInfo} />
+            <div style={{height: "50px"}}></div>
+            <Block4 isMobile={isMobile} appInfo={appInfo} />
+            <div style={{height: "50px"}}></div>
+            <Block5 isMobile={isMobile} appInfo={appInfo} />
+            <div style={{height: "50px"}}></div>
+            <link rel="stylesheet" type="text/css" href="/styles/slick.css" />
+            <Block6 isMobile={isMobile} appInfo={appInfo} />
+            <div style={{height: "50px"}}></div>
+            <FooterPanel isMobile={isMobile} />
         </main>
     </>
 }
@@ -266,35 +284,13 @@ const HeaderMenu = ({ styles, isMobile, appInfo }) => {
     </>
 }
 
-const BodyPanel = ({ isMobile, appInfo }) => {
-    return <>
-        <div className="content-home-page-1">
-        <LazyLoad height={2000}>
-            <div style={{height: "70px"}}></div>
-            <Block2 isMobile={isMobile} appInfo={appInfo} />
-            <div style={{height: "50px"}}></div>
-            <Block3 isMobile={isMobile} appInfo={appInfo} />
-            <div style={{height: "50px"}}></div>
-            <Block4 isMobile={isMobile} appInfo={appInfo} />
-            <div style={{height: "50px"}}></div>
-            <Block5 isMobile={isMobile} appInfo={appInfo} />
-            <div style={{height: "50px"}}></div>
-            <link rel="stylesheet" type="text/css" href="/styles/slick.css" />
-            <Block6 isMobile={isMobile} appInfo={appInfo} />
-            <div style={{height: "50px"}}></div>
-            <FooterPanel isMobile={isMobile} />
-        </LazyLoad>
-        </div>
-    </>
-}
-
 const MyTitle = ({ title, isMobile, center }) => {
     return <h1 style={{ textAlign: center === false ? "" : "center", fontSize: isMobile ? "" : "1.8em", color: "black" }}>{title}</h1>
 }
 
 const Block1 = ({ isMobile, appInfo }) => {
     let appName = (appInfo.appName || '').toLowerCase().replace('practice', '').replace('test', '').toUpperCase();
-    let appTitle1 = (appInfo.title || '').trim().replace('|', '').trim().replace('2020', '').trim()
+    let appTitle1 = (appInfo.title || '').trim().replace('|', '').trim()
         .replace('-', '').trim().replace('ABC', '').trim().replace('Elearning', '').trim();
     let appTitle = appTitle1.trim().replace('Tests', '').trim();
 
@@ -347,11 +343,12 @@ const Block1Item = ({ icon, title, desciption }) => {
 }
 
 const Block2 = ({appInfo}) => {
-    let appName = (appInfo.title || '').trim().replace('|', '').trim().replace('2020', '').trim()
+    let appName = (appInfo.title || '').trim().replace('|', '').trim()
         .replace('-', '').trim().replace('ABC', '').trim().replace('Elearning', '').trim();
     const store = useStore((state) => state);
     const [openPopupChangeState, setOpenPopupChangeState] = useState(false);
     const [selectedState, setSelectedState] = useState(true);
+    console.log("xxxxxxxxxxxxxxxxxxxxx");
     return <section className="content-home-page">
         <MyTitle title={"Start your "+ appName} />
         <div style={{height: "40px"}}></div>
