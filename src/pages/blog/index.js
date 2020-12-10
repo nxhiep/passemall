@@ -1,5 +1,5 @@
 import { Button, CircularProgress, Container, Grid, IconButton, Link, makeStyles, SwipeableDrawer, useMediaQuery, useTheme } from "@material-ui/core";
-import { Computer as ComputerIcon, Menu as MenuIcon } from '@material-ui/icons';
+import { Computer as ComputerIcon, ExpandLess as ExpandLessIcon, Menu as MenuIcon } from '@material-ui/icons';
 import NavigateNextIcon from '@material-ui/icons/NavigateNext';
 import fs from "fs";
 import { useRouter } from "next/router";
@@ -105,14 +105,6 @@ const HeaderBannerPanel = ({ isMobile, appInfo }) => {
     const styles = useStyles({ isMobile, bannerUrl });
     const theme = useTheme()
     const md1 = useMediaQuery(theme.breakpoints.down(1700))
-    let darkMode = false;
-    let link = '/#list-greet-apps';
-    if(appInfo.id){
-        link = getNewDomain(appInfo.id)
-        if(link){
-            link = '/' + appInfo.appNameId;
-        }
-    }
     return <div className={styles.bgheader}>
         <header className={styles.header}>
             <Container style={{height: "100%"}}>
@@ -161,20 +153,7 @@ const HeaderBannerPanel = ({ isMobile, appInfo }) => {
                         fontSize: "1.1em",
                     }}>We're here to make all your problems clearly!</p>
                     <div style={{height: "32px"}}></div>
-                    <Button variant="contained" color="inherit" style={{
-                        borderRadius: "40px",
-                        fontWeight: "bold",
-                        marginTop: "10px",
-                        backgroundColor: darkMode ? "white" : "#4e63bd",
-                        color: darkMode ? "#616E7D" : "white",
-                        border: darkMode ? "2px solid white" : "2px solid #4e63bd",
-                        paddingTop: "7px",
-                        paddingBottom: "7px"
-                    }} href={link}>
-                        <ComputerIcon />
-                        <span style={{width: "10px"}}></span>
-                        <span>Start your test</span>
-                    </Button>
+                    <DownloadWidget appInfo={appInfo} />
                 </Grid>
                 <Grid item xs={12} sm={6} md={5}>
                     {isMobile ? null : <img width={md1 ? "80%" : "100%" }src="/images/test3.png" />}
@@ -195,6 +174,55 @@ const HeaderMenu = ({ styles, isMobile, appInfo }) => {
             }}>SUPPORT</span>
         </div>
     </>
+}
+
+const DownloadWidget = ({ appInfo, center, darkMode }) => {
+    // if(!appInfo || !appInfo.id){
+    //     return null;
+    // }
+    const appExited = appInfo && appInfo.id;
+    return <div style={{display: "flex", alignItems:"center", justifyContent: "center", flexWrap: "wrap", justifyContent: center === true ? "center" : ""}}>
+        <Button 
+            variant="contained" 
+            color="primary" 
+            href={"/" + (APP_NEW_DOMAIN || !appExited ? "" : appInfo.appNameId)} 
+            style={{
+                borderRadius: "40px",
+                padding: "10px 30px",
+                fontWeight: "600",
+                marginTop: "10px",
+            }}
+            >
+            Start Practice
+        </Button>
+        {appExited ? <div style={{width: "20px"}}></div> : null}
+        {appExited  ? <div className={"dropdown-app-panel" + (darkMode === true ? " darkmode" : "")} style={{width: "320px"}}>
+            <button variant="outlined" color="inherit">
+                <span>Download on your mobile device</span>
+                <span style={{width: "10px"}}></span>
+                <ExpandLessIcon />
+            </button>
+            <div className="content">
+                <a href={appInfo.urlAndroid} target="_blank" rel="noopener noreferrer" onClick={() => {
+                    ReactGA.event({
+                        category: 'Click Google Play',
+                        action: 'Click Google Play App Home'
+                    })
+                }}>
+                    <img width="137px" height="45px" alt="Link google app" src="/images/googlePlayIcon.png" />
+                </a>
+                <div style={{ width: '10px' }}></div>
+                <a href={appInfo.urlIos} target="_blank" rel="noopener noreferrer" onClick={() => {
+                    ReactGA.event({
+                        category: 'Click App Store',
+                        action: 'Click Google Play App Home'
+                    })
+                }}>
+                    <img width="137px" height="45px" src="/images/appStoreIcon.png" alt="Link app store" />
+                </a>
+            </div>
+        </div> : null}
+    </div>
 }
 
 const BodyPanel = ({ appInfo, isMobile }) => {
@@ -224,7 +252,7 @@ const BodyPanel = ({ appInfo, isMobile }) => {
                 <Grid container spacing={2}>
                     <Grid container item xs={12} sm={12} md={8}>
                         { postInfos.map((postInfo) => {
-                            if(postInfo.title.toLowerCase().includes('about us')){
+                            if(postInfo.type == 2 || postInfo.title.toLowerCase().includes('about us')){
                                 return null
                             }
                             return <BlogItem key={postInfo.id + "-111"} isMobile={isMobile} data={postInfo} />
@@ -254,6 +282,9 @@ const RecentPosts = ({ data, isMobile }) => {
             recentPosts.push(element);
         } 
     });
+    if(!recentPosts || recentPosts.length == 0){
+        return null;
+    }
     return (<div className="recent-posts">
         <h2 style={{ 
             fontWeight: "600",
