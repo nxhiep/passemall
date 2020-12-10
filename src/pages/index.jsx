@@ -12,7 +12,7 @@ import HeaderBannerPanel from "../components/new/HeaderBannerPanel";
 import SEO from "../components/SEO";
 import { GA_ID } from "../config_app";
 import { callApi } from "../services";
-import { getNewDomain, getWebContext, isLocalhost, oldUser, setScrollDownAuto } from "../utils";
+import { getNewDomain, getWebContext, isProduction, oldUser, setScrollDownAuto } from "../utils";
 import './home.css';
 
 const useStyles = makeStyles({
@@ -121,7 +121,7 @@ const ListApps = ({ appInfos, isMobile }) => {
     // }
     const getLink = (appInfo) => {
         let newDomain = getNewDomain(appInfo.id)
-        if(newDomain && !isLocalhost){
+        if(newDomain && isProduction){
             return newDomain;
         }
         return '/' + appInfo.appNameId
