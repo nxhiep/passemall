@@ -106,9 +106,7 @@ const Blog = ({ newInfo, appInfo, isMobile, url, mapFAQ }) => {
         <>
             <SEO url={url} appInfo={seoInfo} mapFAQ={mapFAQ} />
             <main style={{height:"100%"}}>
-                <LazyLoad height={1000}>
-                    <HeaderBannerPanel newInfo={newInfo} appInfo={appInfo} isMobile={isMobile} />
-                </LazyLoad>
+                <HeaderBannerPanel newInfo={newInfo} appInfo={appInfo} isMobile={isMobile} />
                 <SocialWidget bottom={100} />
                 <div style={{ height: "50px" }}></div>
                 <BodyPanel newInfo={newInfo} appInfo={appInfo} isMobile={isMobile} />
@@ -118,10 +116,11 @@ const Blog = ({ newInfo, appInfo, isMobile, url, mapFAQ }) => {
 }
 
 const HeaderBannerPanel = ({ isMobile, appInfo, newInfo }) => {
+    console.log("HeaderBannerPanel newInfo", newInfo)
     const [openDrawer, setOpenDrawer] = useState(false);
     const handleOpenDrawer = (open) => setOpenDrawer(open)
-    const darkMode = !!newInfo.shareImage;
-    const styles = useStyles({ isMobile, bannerUrl: newInfo.shareImage });
+    const darkMode = !!(newInfo.shareImage || newInfo.bannerImage);
+    const styles = useStyles({ isMobile, bannerUrl: newInfo.shareImage || newInfo.bannerImage });
     return <div className={styles.bgheader}>
         <div className={styles.headerTemp}>
             <header className={styles.header}>
@@ -351,7 +350,7 @@ const RelatedStories = ({ topicId, isMb }) => {
                 <h2 style={{textAlign: "center"}}>Related Stories</h2>
                 <Slider {...settings}>
                     {
-                        relativeds.concat(relativeds).map(e => {
+                        relativeds.map(e => {
                             return <div key={e.id} className="padding-10">
                                 <BlogItem item={e} style={{
                                     padding: "10px",
