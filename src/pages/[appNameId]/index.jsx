@@ -120,7 +120,9 @@ const AppPage = ({ appInfo, url, isMobile, headers }) => {
             <div style={{height: "50px"}}></div>
             <Block3 isMobile={isMobile} appInfo={appInfo} />
             <div style={{height: "50px"}}></div>
-            <Block4 isMobile={isMobile} appInfo={appInfo} />
+            <LazyLoad>
+                <Block4 isMobile={isMobile} appInfo={appInfo} />
+            </LazyLoad>
             <div style={{height: "50px"}}></div>
             <Block5 isMobile={isMobile} appInfo={appInfo} />
             <div style={{height: "50px"}}></div>
@@ -285,7 +287,7 @@ const HeaderMenu = ({ styles, isMobile, appInfo }) => {
 }
 
 const MyTitle = ({ title, isMobile, center }) => {
-    return <h1 style={{ textAlign: center === false ? "" : "center", fontSize: isMobile ? "" : "1.8em", color: "black" }}>{title}</h1>
+    return <h2 style={{ textAlign: center === false ? "" : "center", fontSize: isMobile ? "" : "1.8em", color: "black" }}>{title}</h2>
 }
 
 const Block1 = ({ isMobile, appInfo }) => {
@@ -385,7 +387,7 @@ const Block3 = ({ isMobile, appInfo }) => {
         <Container>
             <Grid container spacing={4} alignItems="center">
                 <Grid item xs={12} sm={6}>
-                    <img width="90%" src={images[0]} style={isMobile ? {margin: "0 auto", display: "block"} : {}} />
+                    <LazyLoad><img width="90%" src={images[0]} style={isMobile ? {margin: "0 auto", display: "block"} : {}} /></LazyLoad>
                 </Grid>
                 <Grid item xs={12} sm={5}>
                     {/* <MyTitle isMobile={isMobile} title="Scientifically proven" center={false} /> */}
@@ -425,7 +427,7 @@ const Block4 = ({ isMobile, appInfo }) => {
             flexDirection: "column",
             alignContent: "center"
         }}>
-            <h1>Download the app and start studying for free today</h1>
+            <h2>Download the app and start studying for free today</h2>
             <DownloadAppWidget appInfo={appInfo} center={true} darkMode={true} />
             <div style={{height: "10px"}}></div>
         </Container>
