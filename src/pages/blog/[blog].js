@@ -432,7 +432,7 @@ export async function getServerSideProps(context) {
         if(element) {
             let h1s = element.querySelectorAll("h1,h2,h3");
             h1s && h1s.forEach((e) => {
-                let text = e.text;
+                let text = (e.text || '').trim();
                 let nextText = '';
                 let childNodes = e.parentNode.childNodes;
                 let nextIndex = childNodes.indexOf(e) + 1;
