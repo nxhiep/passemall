@@ -1,27 +1,19 @@
-# msg=$1
-# if [[ -z "$msg" ]] 
-# then
-#     now=$(date +"%T")
-#     msg="commit at $now"
-# fi
-# git status
-# git add .
-# git commit -m "$msg"
-# git push deploy master
-
+deploy() {
+    app=$1
+    echo "Deploying $app"
+    git branch -D $app
+    git checkout -b $app
+    ./build.sh $app
+    git add .
+    now=$(date +"%T")
+    git commit -m "deploy $app at $now"
+    git push $app $app -f
+    git checkout app
+}
 app=$1
-if [ "$app" = "cdl" ]
-then
-    echo "Deploy CDL"
-elif [ "$app" = "asvab" ]
-then
-    echo "Deploy ASVAB"
-elif [ "$app" = "ged" ]
-then
-    echo "Deploy GED"
-elif [ "$app" = "teas" ]
-then
-    echo "Deploy TEAS"
+branch=$(git branch --show-current)
+if [ "$branch" = "app" ]; then
+    deploy $app
 else
-    echo "Deploy PASSEMALL"
+    echo "Not branch app"
 fi
