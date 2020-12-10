@@ -338,7 +338,7 @@ const Block1Item = ({ icon, title, desciption, strong }) => {
     return <Grid item xs={12} sm={6} md={4}>
         <div style={{ padding: "20px", textAlign:"center" }}>
             <div className={icon}></div>
-            <p>{strong === false ? <div style={{ fontWeight: "bold" }}>{title}</div> : <strong>{title}</strong>}</p>
+            <p>{strong === false ? <span style={{ fontWeight: "bold" }}>{title}</span> : <strong>{title}</strong>}</p>
             <p>{desciption}</p>
         </div>
     </Grid>
