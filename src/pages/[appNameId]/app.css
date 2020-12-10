@@ -203,8 +203,11 @@ body {
 }
 
 .contentxxx h1 span,
+.contentxxx h1,
 .contentxxx h2 span,
-.contentxxx h3 span {
+.contentxxx h2,
+.contentxxx h3 span,
+.contentxxx h3 {
     font-weight: bold !important;
     color: black !important;
 }

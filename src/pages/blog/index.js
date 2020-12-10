@@ -1,5 +1,5 @@
-import { CircularProgress, Container, Grid, IconButton, Link, makeStyles, SwipeableDrawer } from "@material-ui/core";
-import { Menu as MenuIcon } from '@material-ui/icons';
+import { Button, CircularProgress, Container, Grid, IconButton, Link, makeStyles, SwipeableDrawer, useMediaQuery, useTheme } from "@material-ui/core";
+import { Computer as ComputerIcon, Menu as MenuIcon } from '@material-ui/icons';
 import NavigateNextIcon from '@material-ui/icons/NavigateNext';
 import fs from "fs";
 import { useRouter } from "next/router";
@@ -12,8 +12,9 @@ import SEO from '../../components/SEO';
 import { SocialWidget } from "../../components/SocialWidget";
 import { APP_NEW_DOMAIN, GA_ID } from '../../config_app';
 import { callApi } from "../../services";
-import { getRecentPosts, getWebContext, scrollDown } from '../../utils';
+import { getNewDomain, getRecentPosts, getWebContext, scrollDown } from '../../utils';
 import './blog.css';
+
 
 const useStyles = makeStyles({
     bgheader: props => {
@@ -21,7 +22,7 @@ const useStyles = makeStyles({
             background: props.isMobile ? "url(/images/new/banner-right.jpg) no-repeat" : "url(/images/new/banner-left.jpg) no-repeat, url(/images/new/banner-right.jpg) no-repeat",
             backgroundPosition: props.isMobile ? "top" : "top left, top right",
             backgroundSize: props.isMobile ? "cover" : "auto, auto 100%",
-            height: "100%",
+            height: "80%",
             display: "flex",
             flexDirection: "column",
             justifyContent: "space-between",
@@ -81,16 +82,14 @@ const ListBlog = ({ appInfo, url, isMobile }) => {
     useEffect(() => {
         ReactGA.pageview('/blog');
     }, [])
-    console.log("appInfo", appInfo)
+    // console.log("appInfo", appInfo)
     return (
         <>
             <SEO url={url} appInfo={appInfo && appInfo.id ? appInfo : { title: "ABC Elearning - Free Practice Questions and Exam Prep - Blog" }} />
             <main style={{height:"100%"}}>
-                <LazyLoad height={1000}>
-                    <HeaderBannerPanel appInfo={appInfo} isMobile={isMobile} />
-                </LazyLoad>
+                <HeaderBannerPanel appInfo={appInfo} isMobile={isMobile} />
                 <SocialWidget bottom={100} />
-                <div style={{ height: "50px" }}></div>
+                <div style={{ height: "20px" }}></div>
                 <LazyLoad height={2000}>
                     <BodyPanel appInfo={appInfo} isMobile={isMobile} />
                 </LazyLoad>
@@ -104,6 +103,16 @@ const HeaderBannerPanel = ({ isMobile, appInfo }) => {
     const handleOpenDrawer = (open) => setOpenDrawer(open)
     const bannerUrl = "/images/blog-background"+(isMobile ? "-mobile" : "")+".jpg";
     const styles = useStyles({ isMobile, bannerUrl });
+    const theme = useTheme()
+    const md1 = useMediaQuery(theme.breakpoints.down(1700))
+    let darkMode = false;
+    let link = '/#list-greet-apps';
+    if(appInfo.id){
+        link = getNewDomain(appInfo.id)
+        if(link){
+            link = '/' + appInfo.appNameId;
+        }
+    }
     return <div className={styles.bgheader}>
         <header className={styles.header}>
             <Container style={{height: "100%"}}>
@@ -152,9 +161,23 @@ const HeaderBannerPanel = ({ isMobile, appInfo }) => {
                         fontSize: "1.1em",
                     }}>We're here to make all your problems clearly!</p>
                     <div style={{height: "32px"}}></div>
+                    <Button variant="contained" color="inherit" style={{
+                        borderRadius: "40px",
+                        fontWeight: "bold",
+                        marginTop: "10px",
+                        backgroundColor: darkMode ? "white" : "#4e63bd",
+                        color: darkMode ? "#616E7D" : "white",
+                        border: darkMode ? "2px solid white" : "2px solid #4e63bd",
+                        paddingTop: "7px",
+                        paddingBottom: "7px"
+                    }} href={link}>
+                        <ComputerIcon />
+                        <span style={{width: "10px"}}></span>
+                        <span>Start your test</span>
+                    </Button>
                 </Grid>
                 <Grid item xs={12} sm={6} md={5}>
-                    {isMobile ? null : <img width="100%" src="/images/test3.png" />}
+                    {isMobile ? null : <img width={md1 ? "80%" : "100%" }src="/images/test3.png" />}
                 </Grid>
             </Grid>
         </Container>

@@ -150,6 +150,7 @@ right: 20px;
 .dropdown-app-panel.darkmode:hover button {
     border: 2px solid white;
     border-bottom-color: transparent;
+    background: #555555;
 }
 .dropdown-app-panel.darkmode:hover .content {
     background-color: transparent;
@@ -159,4 +160,5 @@ right: 20px;
     left: 0;
     border-top-color: transparent;
     top: calc(100% - 4px);
+    background: #555555;
 }

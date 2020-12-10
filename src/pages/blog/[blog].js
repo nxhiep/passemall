@@ -33,7 +33,7 @@ const useStyles = makeStyles({
             background: props.isMobile ? "url(/images/new/banner-right.jpg) no-repeat" : "url(/images/new/banner-left.jpg) no-repeat, url(/images/new/banner-right.jpg) no-repeat",
             backgroundPosition: props.isMobile ? "top" : "top left, top right",
             backgroundSize: props.isMobile ? "cover" : "auto, auto 100%",
-            height: "100%",
+            height: "80%",
         }
     },
     headerTemp: props => {
@@ -97,6 +97,7 @@ const useStyles = makeStyles({
 ReactGA.initialize(GA_ID);
 
 const Blog = ({ newInfo, appInfo, isMobile, url, mapFAQ }) => {
+    console.log("newInfo", newInfo)
     const seoInfo = new SEOInfo(newInfo);
     useEffect(() => {
         ReactGA.pageview('/blog-info', [newInfo.title]);
@@ -154,18 +155,20 @@ const HeaderBannerPanel = ({ isMobile, appInfo, newInfo }) => {
                 </Container>
             </header>
             <Container>
-                <Grid container justify="space-between" alignItems="center">
+                <Grid container justify="space-between" alignItems="center" justify="center">
                     <Grid item xs={12} sm={6} md={6}>
                         <h1 style={{
                             minHeight: isMobile ? "120px" : "0",
                             display: "flex",
                             alignItems: "center",
+                            justifyContent: "center",
                             color: darkMode ? "white" : "#3f51b5",
                         }}>{newInfo.title}</h1>
                         <p style={{
                             minHeight: isMobile ? "120px" : "0",
                             display: "flex",
                             alignItems: "center",
+                            justifyContent: "center",
                             color: darkMode ? "white" : "#3f51b5",
                             fontSize: "1.1em",
                         }}>{newInfo.description}</p>
@@ -184,7 +187,7 @@ const DownloadWidget = ({ appInfo, center, darkMode }) => {
     if(!appInfo || !appInfo.id){
         return null;
     }
-    return <div style={{display: "flex", alignItems:"center", flexWrap: "wrap", justifyContent: center === true ? "center" : ""}}>
+    return <div style={{display: "flex", alignItems:"center", justifyContent: "center", flexWrap: "wrap", justifyContent: center === true ? "center" : ""}}>
         <Button 
             variant="contained" 
             color="primary" 
@@ -193,7 +196,7 @@ const DownloadWidget = ({ appInfo, center, darkMode }) => {
                 borderRadius: "40px",
                 padding: "10px 30px",
                 fontWeight: "600",
-                marginTop: "10px"
+                marginTop: "10px",
             }}
             >
             Start Practice
@@ -435,15 +438,17 @@ export async function getServerSideProps(context) {
                 let nextIndex = childNodes.indexOf(e) + 1;
                 while(nextIndex < childNodes.length){
                     let t = childNodes[nextIndex].text;
-                    if(t){
-                        if(childNodes[nextIndex].tagName == 'h1' || childNodes[nextIndex].tagName == 'h2' || childNodes[nextIndex].tagName == 'h3'){
+                    if(!!t){
+                        if(childNodes[nextIndex].tagName == 'h1' 
+                        || childNodes[nextIndex].tagName == 'h2' 
+                        || childNodes[nextIndex].tagName == 'h3'){
                             break;
                         }
-                        nextText += ' ' + t;
+                        nextText += t.trim() + ' ';
                     }
                     nextIndex++;
                 }
-                if(text && nextText){
+                if(!!text && !!nextText && !!nextText.trim()){
                     mapFAQ[text] = nextText.trim()
                 }
             });

@@ -1,7 +1,8 @@
-import { Container, Grid, makeStyles, SwipeableDrawer, TextField } from "@material-ui/core"
+import { CircularProgress, Container, Grid, makeStyles, SwipeableDrawer, TextField } from "@material-ui/core"
 import { Menu as MenuIcon, Search as SearchIcon } from '@material-ui/icons'
 import { useState } from "react"
 import SearchResultsModal from "../../container/home/SearchResultsModal"
+import { callApi } from "../../services"
 
 const useStyles = makeStyles({
     bgheader: props => {
