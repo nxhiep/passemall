@@ -393,7 +393,7 @@ function getUrl(request, params) {
             if(page == '/[screenChild]'){
                 page = '/' + params.screenChild;
             }
-            if(page == '/[blog]'){
+            if(page == '/blog/[blog]'){
                 page = '/' + params.blog;
             }
         }
