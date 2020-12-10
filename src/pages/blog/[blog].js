@@ -24,9 +24,9 @@ const useStyles = makeStyles({
     bgheader: props => {
         if(props.bannerUrl){
             return {
-                background: "url("+props.bannerUrl+") no-repeat",
+                background: "url('"+encodeURI(props.bannerUrl)+"') no-repeat",
                 backgroundSize: "cover",
-                height: "100%",
+                height: "80%",
             }
         }
         return {
@@ -116,7 +116,7 @@ const Blog = ({ newInfo, appInfo, isMobile, url, mapFAQ }) => {
 }
 
 const HeaderBannerPanel = ({ isMobile, appInfo, newInfo }) => {
-    console.log("HeaderBannerPanel newInfo", newInfo)
+    // console.log("HeaderBannerPanel newInfo", newInfo)
     const [openDrawer, setOpenDrawer] = useState(false);
     const handleOpenDrawer = (open) => setOpenDrawer(open)
     const darkMode = !!(newInfo.shareImage || newInfo.bannerImage);
@@ -309,6 +309,9 @@ function replaceHTML(elementId) {
 }
 
 const RelatedStories = ({ topicId, isMb }) => {
+    if(!topicId || topicId < 0){
+        return null;
+    }
     const theme = useTheme();
     const isMobile = isMb || useMediaQuery(theme.breakpoints.between(0, 780));
     const isTablet = useMediaQuery(theme.breakpoints.between(0, 1200));
@@ -322,6 +325,7 @@ const RelatedStories = ({ topicId, isMb }) => {
             setRelativeds([])
         })
     }, [topicId])
+    console.log("relativeds", relativeds)
     if(!relativeds){
         return <div style={{
             display: "flex",

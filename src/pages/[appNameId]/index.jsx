@@ -334,11 +334,11 @@ const Block1 = ({ isMobile, appInfo }) => {
     </section>
 }
 
-const Block1Item = ({ icon, title, desciption }) => {
+const Block1Item = ({ icon, title, desciption, strong }) => {
     return <Grid item xs={12} sm={6} md={4}>
         <div style={{ padding: "20px", textAlign:"center" }}>
             <div className={icon}></div>
-            <p><strong>{title}</strong></p>
+            <p>{strong === false ? <div style={{ fontWeight: "bold" }}>{title}</div> : <strong>{title}</strong>}</p>
             <p>{desciption}</p>
         </div>
     </Grid>
@@ -444,31 +444,37 @@ const Block5 = ({isMobile, appInfo}) => {
                     icon="icon-block5-1"
                     title={"No Internet Required"}
                     desciption="Study anywhere at anytime without Internet connection."
+                    strong={false}
                 />
                 <Block1Item 
                     icon="icon-block5-2"
                     title={"Study Plan"}
                     desciption="Just enter your test date, a study plan will be setup for you. A clear schedule brings more value than you can imagine."
+                    strong={false}
                 />
                 <Block1Item 
                     icon="icon-block5-3"
                     title={"3 Interesting Test Modes"}
                     desciption="3 different test modes with increased difficult level let you experience the test in very exciting way."
+                    strong={false}
                 />
                 <Block1Item 
                     icon="icon-block5-4"
                     title={"Test Bank"}
                     desciption="3 features: Weak/Medium/Strong questions help you clearly determine which area you should work harder on."
+                    strong={false}
                 />
                 <Block1Item 
                     icon="icon-block5-5"
                     title={"Dark mode"}
                     desciption="Experience dark theme to ease your eyes and it's just... beautiful!"
+                    strong={false}
                 />
                 <Block1Item 
                     icon="icon-block5-6 "
                     title={"Study Reminder"}
                     desciption="Customize your study reminder to receive notification at any time you want"
+                    strong={false}
                 />
             </Grid>
         </Container>
