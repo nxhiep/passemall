@@ -203,8 +203,22 @@ body {
 }
 
 .contentxxx h1 span,
-.contentxxx h1 {
-    color: black !important;
+.contentxxx h2 span,
+.contentxxx h3 span {
     font-weight: bold !important;
+    color: black !important;
+}
+.contentxxx h1 span,
+.contentxxx h1 {
     font-size: 36px !important;
+}
+
+.contentxxx h2 span,
+.contentxxx h2 {
+    font-size: 30px !important;
+}
+
+.contentxxx h3 span,
+.contentxxx h3 {
+    font-size: 22px !important;
 }
