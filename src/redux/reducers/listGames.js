@@ -6,7 +6,7 @@ export class ListGamesState {
     constructor(props) {
         this.listGames = new Map();
         this.games = new Array();
-        if (props) {
+        if (props && props.games) {
             for (let i = 0; i < props.games.length; i++) {
                 const element = props.games[i];
                 let xxx = GameState.cloneGameState(element);
