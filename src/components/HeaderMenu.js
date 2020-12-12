@@ -58,8 +58,8 @@ const Content = ({ appInfo, headerMenu, darkMode }) => {
 
 const MenuList = ({ appInfo }) => {
     let rootLink = '/';
-    if(appInfo && (!isSuperApp(appInfo.id) || !APP_NEW_DOMAIN)){
-        rootLink = '/' + appInfo.appNameId;
+    if(!APP_NEW_DOMAIN && appInfo && appInfo.id){
+        rootLink = '/' + appInfo.id;
     }
     return <>
         <div>

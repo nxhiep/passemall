@@ -394,7 +394,7 @@ function getUrl(request, params) {
                 page = '/' + params.screenChild;
             }
             if(page == '/blog/[blog]'){
-                page = '/' + params.blog;
+                page = '/blog/' + params.blog;
             }
         }
         return proto + "://" + host + page;
