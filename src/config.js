@@ -1,7 +1,7 @@
 
 class Config {
 
-    static TEST_MODE = false;
+    static TEST_MODE = true;
 
     static USER_ID = 'kienxxx';
     static SECRET_KEY = "koolsoft-web";

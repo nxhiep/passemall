@@ -9,7 +9,7 @@ import QuestionProgress from '../../models/QuestionProgress';
 import { onBookmark } from '../../redux/actions';
 import { ReportDialog } from '../../components/Dialog'
 import { loadGame, onSelectedChoice } from '../../redux/actions/game';
-import { isMobileFunctions } from '../../utils';
+import { isMobileFunctions, shuffle } from '../../utils';
 import { useRouter } from 'next/router';
 
 const mapStateToProps = (state, ownProps) => ({
@@ -114,7 +114,7 @@ const QuestionsPanelx = ({ questionProgress, className, topicId, loadGame = () =
                                     <div style={{ visibility: 'hidden' }}>X</div>
                                 </div>
                             </div>
-                        </div >
+                        </div>
                     </div>
                     <span style={{ display: "flex", margin: "20px 20px 0px auto" }} >
                         <MoreVertIcon color="primary" onClick={(event) => handleClick(event)}></MoreVertIcon>
@@ -196,7 +196,7 @@ const QuestionsPanelx = ({ questionProgress, className, topicId, loadGame = () =
                             Next Quesiton<ArrowRightAltIcon />
                         </Button>
                     </div>
-                </div >
+                </div>
             </>
         )
     }
@@ -302,7 +302,7 @@ const CongratulationAlert = ({ topicName = "", onClose = () => { }, onBookmark =
 }
 const QuestionItemTS = ({ question, index, onBookmark, appInfoState }) => {
     const [showAlert, setShowAlert] = useState(false)
-    const listAnswer = question.choices;
+    const listAnswer = shuffle(question.choices);
     const [openCollapse, setOpenCollapse] = useState(false);
     const isMobile = isMobileFunctions()
     useEffect(() => {
@@ -452,4 +452,3 @@ const ProgressQuestionTS = ({ progress, questionId }) => {
 const AnswerButtonTS = connect(null, mapDispatchChoiceToProps)(AnswerButton2);
 const QuestionsPanelTS = connect(mapStateToProps, mapDispatchToProps)(QuestionsPanelx);
 export { CongratulationAlert, QuestionsPanelTS, QuestionItemTS, ChoicesPanelTS, AnswerButtonTS, ProgressQuestionTS };
-

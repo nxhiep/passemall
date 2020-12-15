@@ -284,7 +284,7 @@ class StudyViewScreenUI extends Component {
                         justify="center"
                         style={{ display: "flex", marginTop: "16px" }}
                     >
-                        <Button
+                        {this.state.currentIndex + 2 < this.state.currentTopic.orderIndex ? <Button
                             variant="contained"
                             color="primary"
                             className="next-part-button"
@@ -293,7 +293,7 @@ class StudyViewScreenUI extends Component {
                             }}
                         >
                             Go To Part {this.state.currentTopic.orderIndex + 2} <ArrowRightAltIcon />
-                        </Button>
+                        </Button> : null}
                         <Button
                             variant="contained"
                             color="primary"

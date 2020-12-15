@@ -354,7 +354,7 @@ const RelatedStories = ({ topicId, isMb }) => {
         };
         return (
             <Container style={{ paddingTop: '40px', paddingBottom: '40px' }}>
-                <h2 style={{textAlign: "center"}}>Related Stories</h2>
+                <h3 style={{textAlign: "center"}}>Related Stories</h3>
                 <Slider {...settings}>
                     {
                         relativeds.map(e => {
