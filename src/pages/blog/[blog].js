@@ -17,7 +17,7 @@ import { SocialWidget } from '../../components/SocialWidget';
 import { APP_NEW_DOMAIN, GA_ID } from '../../config_app';
 import SEOInfo from '../../models/SEOInfo';
 import { callApi } from '../../services';
-import { addRecentPost, getWebContext, isAppDMV, scrollDown } from '../../utils';
+import { addRecentPost, getNewDomain, getWebContext, isAppDMV, scrollDown } from '../../utils';
 import './blog-info.css';
 
 const useStyles = makeStyles({
@@ -97,10 +97,11 @@ const useStyles = makeStyles({
 ReactGA.initialize(GA_ID);
 
 const Blog = ({ newInfo, appInfo, isMobile, url, mapFAQ }) => {
-    console.log("newInfo", newInfo)
+    // console.log("newInfo", newInfo)
     const seoInfo = new SEOInfo(newInfo);
     useEffect(() => {
-        ReactGA.pageview('/blog-info', [newInfo.title]);
+        let l = getNewDomain(appInfo ? appInfo.id : -1)
+        ReactGA.pageview('/blog/' + (l ? l : appInfo.appNameId), [newInfo.title]);
         addRecentPost(newInfo.id);
     }, [])
     return (
@@ -212,7 +213,7 @@ const DownloadWidget = ({ appInfo, center, darkMode }) => {
                 <a href={appInfo.urlAndroid} target="_blank" rel="noopener noreferrer" onClick={() => {
                     ReactGA.event({
                         category: 'Click Google Play',
-                        action: 'Click Google Play App Home'
+                        action: 'Click Google Play App Home ' + (appInfo ? appInfo.appName : "")
                     })
                 }}>
                     <img width="137px" height="45px" alt="Link google app" src="/images/googlePlayIcon.png" />
@@ -221,7 +222,7 @@ const DownloadWidget = ({ appInfo, center, darkMode }) => {
                 <a href={appInfo.urlIos} target="_blank" rel="noopener noreferrer" onClick={() => {
                     ReactGA.event({
                         category: 'Click App Store',
-                        action: 'Click Google Play App Home'
+                        action: 'Click Google Play App Home ' + (appInfo ? appInfo.appName : "")
                     })
                 }}>
                     <img width="137px" height="45px" src="/images/appStoreIcon.png" alt="Link app store" />

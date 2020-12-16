@@ -80,7 +80,8 @@ const useStyles = makeStyles({
 ReactGA.initialize(GA_ID);
 const ListBlog = ({ appInfo, url, isMobile }) => {
     useEffect(() => {
-        ReactGA.pageview('/blog');
+        let l = getNewDomain(appInfo ? appInfo.id : -1)
+        ReactGA.pageview('/blog' + (l ? "/" + l : "/" + (appInfo.appNameId ? appInfo.appNameId : "")));
     }, [])
     // console.log("appInfo", appInfo)
     return (
@@ -206,7 +207,7 @@ const DownloadWidget = ({ appInfo, center, darkMode }) => {
                 <a href={appInfo.urlAndroid} target="_blank" rel="noopener noreferrer" onClick={() => {
                     ReactGA.event({
                         category: 'Click Google Play',
-                        action: 'Click Google Play App Home'
+                        action: 'Click Google Play App Home ' + (appInfo ? appInfo.appName : "")
                     })
                 }}>
                     <img width="137px" height="45px" alt="Link google app" src="/images/googlePlayIcon.png" />
@@ -215,7 +216,7 @@ const DownloadWidget = ({ appInfo, center, darkMode }) => {
                 <a href={appInfo.urlIos} target="_blank" rel="noopener noreferrer" onClick={() => {
                     ReactGA.event({
                         category: 'Click App Store',
-                        action: 'Click Google Play App Home'
+                        action: 'Click Google Play App Home ' + (appInfo ? appInfo.appName : "")
                     })
                 }}>
                     <img width="137px" height="45px" src="/images/appStoreIcon.png" alt="Link app store" />

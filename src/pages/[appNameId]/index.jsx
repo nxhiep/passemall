@@ -12,10 +12,10 @@ import Slider from "react-slick";
 import { PersistGate } from "redux-persist/lib/integration/react";
 import FooterPanel from "../../components/new/FooterPanel";
 import SEO from "../../components/SEO";
-import { APP_NEW_DOMAIN } from "../../config_app";
+import { APP_NEW_DOMAIN, GA_ID } from "../../config_app";
 import ErrorPage from "../../container/error";
 import { callApi } from "../../services";
-import { getHeaderBanner, getImageBlock3, getWebContext, isSuperApp, oldUser, scrollDown, scrollToTopic, setScrollDownAuto } from "../../utils";
+import { getHeaderBanner, getImageBlock3, getNewDomain, getWebContext, isSuperApp, oldUser, scrollDown, scrollToTopic, setScrollDownAuto } from "../../utils";
 import './app.css';
 const HomeContent = dynamic(() => import("../../container/home/HomeContent"), { ssr: false })
 const SelectStatePopup = dynamic(() => import("../../components/SelectStatePopup"), { ssr: false })
@@ -89,6 +89,8 @@ const useStyles = makeStyles({
     },
 });
 
+ReactGA.initialize(GA_ID);
+
 const AppPage = ({ appInfo, url, isMobile, headers }) => {
     // console.log("headers", headers)
     // console.log("AppPage", appInfo, url, isMobile);
@@ -96,7 +98,8 @@ const AppPage = ({ appInfo, url, isMobile, headers }) => {
         return <ErrorPage title="Not found app" />
     }
     useEffect(() => {
-        ReactGA.pageview('/appInfo');
+        let l = getNewDomain(appInfo.id)
+        ReactGA.pageview(l ? l : '/' + appInfo.appNameId);
         setScrollDownAuto("home")
         oldUser()
     }, [])
@@ -252,7 +255,7 @@ const DownloadAppWidget = ({ appInfo, center, darkMode }) => {
                 <a href={appInfo.urlAndroid} target="_blank" rel="noopener noreferrer" onClick={() => {
                     ReactGA.event({
                         category: 'Click Google Play',
-                        action: 'Click Google Play App Home'
+                        action: 'Click Google Play App Home ' + appInfo.appName
                     })
                 }}>
                     <img width="138px" height="45px" alt="Link google app" src="/images/googlePlayIcon.png" />
@@ -261,7 +264,7 @@ const DownloadAppWidget = ({ appInfo, center, darkMode }) => {
                 <a href={appInfo.urlIos} target="_blank" rel="noopener noreferrer" onClick={() => {
                     ReactGA.event({
                         category: 'Click App Store',
-                        action: 'Click Google Play App Home'
+                        action: 'Click Google Play App Home ' + appInfo.appName
                     })
                 }}>
                     <img width="138px" height="45px" src="/images/appStoreIcon.png" alt="Link app store" />
@@ -272,12 +275,16 @@ const DownloadAppWidget = ({ appInfo, center, darkMode }) => {
 }
 
 const HeaderMenu = ({ styles, isMobile, appInfo }) => {
+    let reviewLink = '/review';
+    if(!APP_NEW_DOMAIN && appInfo && appInfo.id){
+        reviewLink = "/" + appInfo.appNameId + reviewLink
+    }
     return <>
         <div className={isMobile ? "" : styles.flex}>
             <span onClick={() => {
                 scrollToTopic()
             }} className={styles.headerMenu}>LEARN</span>
-            <a href={"/" + appInfo.appNameId + "/review"} className={styles.headerMenu}>REVIEW</a>
+            <a href={reviewLink} className={styles.headerMenu}>REVIEW</a>
             <a href={"/blog?appId=" + appInfo.appNameId} className={styles.headerMenu}>BLOG</a>
             <span className={styles.headerMenu} onClick={() => {
                 scrollDown()
