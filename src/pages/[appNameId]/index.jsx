@@ -156,7 +156,7 @@ const HeaderBannerPanel = ({ isMobile, appInfo }) => {
                 <header className={styles.header}>
                     <Container style={{height: "100%"}}>
                         <Grid container justify="space-between" alignItems="center" style={{height: "100%"}}>
-                            <a href="/" style={{outline:'none'}}><img alt="ABC Elearning Logo" src={superApp ? "/images/logo/logo-light.svg" : "/images/logo/logo-dark.svg"} width="240px" height="60px" /></a>
+                            <a href="/" style={{outline:'none'}}><img alt="ABC Elearning" src={superApp ? "/images/logo/logo-light.svg" : "/images/logo/logo-dark.svg"} width="240px" height="60px" /></a>
                             {isMobile ? <button className={styles.menuButton}
                             onClick={() => {
                                 setOpenDrawer(true)
@@ -176,7 +176,7 @@ const HeaderBannerPanel = ({ isMobile, appInfo }) => {
                                 onOpen={() => handleOpenDrawer(true)}
                             >
                                 <div style={{padding: "10px"}}>
-                                    <a href="/"><img alt="ABC Elearning Logo" width="200px" height="48px" src="/images/logo-landing.png" /></a>
+                                    <a href="/"><img alt="ABC Elearning" width="200px" height="48px" src="/images/logo-landing.png" /></a>
                                 </div>
                                 <HeaderMenu styles={styles} isMobile={isMobile} appInfo={appInfo} />
                             </SwipeableDrawer> : null }

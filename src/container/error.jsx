@@ -10,7 +10,7 @@ const ErrorPage = ({ title }) => {
         <title>{title.toUpperCase()}</title>
         <header style={{height: "70px", backgroundColor: "#1e3094"}}>
             <Container style={{height: "100%", display: 'flex', alignItems: "center"}}>
-                <a href="/"><img alt="ABC Elearning Logo" src={"/images/logo/logo-dark.svg"} width="240px" height="60px" /></a>
+                <a href="/"><img alt="ABC Elearning" src={"/images/logo/logo-dark.svg"} width="240px" height="60px" /></a>
             </Container>
         </header>
         <Container>
