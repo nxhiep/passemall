@@ -1,6 +1,7 @@
 import { Container, Grid, makeStyles } from "@material-ui/core"
 import { VERSION } from "../../config_app";
 import { FacebookFooter, GmailFooter, LinkedInFooter, TumblrIcon, TwitterFooter, Youtube } from "../Icons";
+
 const useStyles = makeStyles({
     tagAFooter: {
         color: "#1239e1",

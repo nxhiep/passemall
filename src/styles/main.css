@@ -108,7 +108,9 @@ body::-webkit-scrollbar-thumb {
   display: flex;
   bottom: 16px;
   box-sizing: border-box;
-  left: 5%
+  left: 5%;
+  bottom: 10px;
+  z-index: 1000;
 }
 footer {
   width: 100%;

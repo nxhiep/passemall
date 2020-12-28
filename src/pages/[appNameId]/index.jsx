@@ -15,7 +15,7 @@ import SEO from "../../components/SEO";
 import { APP_NEW_DOMAIN, GA_ID } from "../../config_app";
 import ErrorPage from "../../container/error";
 import { callApi } from "../../services";
-import { getHeaderBanner, getImageBlock3, getNewDomain, getWebContext, isSuperApp, oldUser, scrollDown, scrollToTopic, setScrollDownAuto } from "../../utils";
+import { getHeaderBanner, getImageBlock3, getWebContext, isSuperApp, oldUser, scrollDown, scrollToTopic, setScrollDownAuto } from "../../utils";
 import './app.css';
 const HomeContent = dynamic(() => import("../../container/home/HomeContent"), { ssr: false })
 const SelectStatePopup = dynamic(() => import("../../components/SelectStatePopup"), { ssr: false })
@@ -98,8 +98,7 @@ const AppPage = ({ appInfo, url, isMobile, headers }) => {
         return <ErrorPage title="Not found app" />
     }
     useEffect(() => {
-        let l = getNewDomain(appInfo.id)
-        ReactGA.pageview(l ? l : '/' + appInfo.appNameId);
+        ReactGA.pageview(window.location.pathname, ["app-info"], "app-info");
         setScrollDownAuto("home")
         oldUser()
     }, [])
@@ -279,15 +278,48 @@ const HeaderMenu = ({ styles, isMobile, appInfo }) => {
     if(!APP_NEW_DOMAIN && appInfo && appInfo.id){
         reviewLink = "/" + appInfo.appNameId + reviewLink
     }
+    let testLink = '/test';
+    if(!APP_NEW_DOMAIN && appInfo && appInfo.id){
+        testLink = "/" + appInfo.appNameId + testLink
+    }
     return <>
         <div className={isMobile ? "" : styles.flex}>
             <span onClick={() => {
                 scrollToTopic()
+                ReactGA.event({
+                    action: "click-header-learn",
+                    label: "Click Header Menu Learn",
+                    category: "click-header-menu",
+                })
             }} className={styles.headerMenu}>LEARN</span>
-            <a href={reviewLink} className={styles.headerMenu}>REVIEW</a>
-            <a href={"/blog?appId=" + appInfo.appNameId} className={styles.headerMenu}>BLOG</a>
+            <a href={reviewLink} className={styles.headerMenu} onClick={() => {
+                ReactGA.event({
+                    action: "click-header-review",
+                    label: "Click Header Menu Review",
+                    category: "click-header-menu",
+                })
+            }}>REVIEW</a>
+            <a href={testLink} className={styles.headerMenu} onClick={() => {
+                ReactGA.event({
+                    action: "click-header-test",
+                    label: "Click Header Menu Test",
+                    category: "click-header-menu",
+                })
+            }}>TEST</a>
+            <a href={"/blog?appId=" + appInfo.appNameId} className={styles.headerMenu} onClick={() => {
+                ReactGA.event({
+                    action: "click-header-blog",
+                    label: "Click Header Menu Blog",
+                    category: "click-header-menu",
+                })
+            }}>BLOG</a>
             <span className={styles.headerMenu} onClick={() => {
                 scrollDown()
+                ReactGA.event({
+                    action: "click-header-support",
+                    label: "Click Header Menu Support",
+                    category: "click-header-menu",
+                })
             }}>SUPPORT</span>
         </div>
     </>

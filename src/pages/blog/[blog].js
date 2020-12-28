@@ -100,8 +100,7 @@ const Blog = ({ newInfo, appInfo, isMobile, url, mapFAQ }) => {
     // console.log("newInfo", newInfo)
     const seoInfo = new SEOInfo(newInfo);
     useEffect(() => {
-        let l = getNewDomain(appInfo ? appInfo.id : -1)
-        ReactGA.pageview('/blog/' + (l ? l : appInfo.appNameId), [newInfo.title]);
+        ReactGA.pageview(window.location.pathname, ["blog-details"], "blog-details")
         addRecentPost(newInfo.id);
     }, [])
     return (

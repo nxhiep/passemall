@@ -149,7 +149,8 @@ const FooterStudy = ({ isMobile }) => {
     if(APP_NEW_DOMAIN){
         rootPath = "/";
     }
-    return (
+    return <>
+        <div style={{width: "100%", height: "100px"}}></div>
         <div className="footer-mobile">
             <IconButton
                 onClick={() => {
@@ -194,8 +195,7 @@ const FooterStudy = ({ isMobile }) => {
                 </span>
             </IconButton>
         </div>
-    )
-
+    </>
 }
 
 export default Footer;

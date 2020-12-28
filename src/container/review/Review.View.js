@@ -95,7 +95,7 @@ class ReviewViewScreenUI extends React.Component {
         }
         return (
             <div className="body-panel review-page">
-                {this.state.isMobile ? null : <HeaderMenu appInfo={this.state.appInfo} darkMode={true} />}
+                <HeaderMenu appInfo={this.state.appInfo} darkMode={true} />
                 <Container className={'review-page-content' + (this.state.isMobile && this.state.showReview ? ' show-review' : '')}>
                     <Grid
                         container
@@ -146,8 +146,8 @@ class ReviewViewScreenUI extends React.Component {
                             }
                         </Grid>
                     </Grid>
+                    {this.state.isMobile && !this.state.showReview ? <Footer isStudy={true}></Footer> : null}
                 </Container>
-                {this.state.isMobile && !this.state.showReview ? <Footer isStudy={true}></Footer> : null}
                 <ShowImage />
             </div>
         );

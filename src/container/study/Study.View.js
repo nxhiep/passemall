@@ -191,6 +191,7 @@ class StudyViewScreenUI extends Component {
             // console.log("Mobile congratulationTopic", congratulationTopic, 'currentTopic', (currentTopic ? currentTopic.name : ''))
             return (
                 <div className="body-panel">
+                    <HeaderMenu appInfo={this.state.appInfo} darkMode={true} />
                     <Container className="study-game-panel">
                         {!!this.state.showAlertName ?
                             <CongratulationAlert topicName={this.state.showAlertName} onClose={() => this.setState({ showAlertName: '' })} />

@@ -4,6 +4,7 @@ import useMediaQuery from '@material-ui/core/useMediaQuery';
 import MenuIconButton from '@material-ui/icons/Menu';
 import React, { Fragment, useState } from 'react';
 import { SocialWidget } from '../SocialWidget';
+import ReactGA from 'react-ga'
 
 export const HeaderBlog = ({ appId, faq }) => {
     const theme = useTheme();
@@ -16,9 +17,27 @@ export const HeaderBlog = ({ appId, faq }) => {
                 </div>
             </a>
             {isMobile ? <MenuPanel /> : <div className="header-menu-pc">
-                <a href='/'>Home</a>
-                <a href='/blog' className={faq ? "" : "active"}>Blog</a>
-                {appId && appId > 0 ? <a href={'/faq?appId=' + appId} className={faq ? "active" : ""}>FAQ</a> : null}
+                <a href='/' onClick={() => {
+                    ReactGA.event({
+                        action: "click-header-home",
+                        label: "Click Header Menu Home",
+                        category: "click-header-menu",
+                    })
+                }}>Home</a>
+                <a href='/blog' className={faq ? "" : "active"} onClick={() => {
+                    ReactGA.event({
+                        action: "click-header-blog",
+                        label: "Click Header Menu Blog",
+                        category: "click-header-menu",
+                    })
+                }}>Blog</a>
+                {appId && appId > 0 ? <a href={'/faq?appId=' + appId} className={faq ? "active" : ""} onClick={() => {
+                    ReactGA.event({
+                        action: "click-header-faq",
+                        label: "Click Header Menu FAQ",
+                        category: "click-header-menu",
+                    })
+                }}>FAQ</a> : null}
             </div>}
         </Container>
     </header>

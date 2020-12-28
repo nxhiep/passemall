@@ -1,5 +1,5 @@
 import { Button, CircularProgress, Container, Grid, IconButton, Link, makeStyles, SwipeableDrawer, useMediaQuery, useTheme } from "@material-ui/core";
-import { Computer as ComputerIcon, ExpandLess as ExpandLessIcon, Menu as MenuIcon } from '@material-ui/icons';
+import { ExpandLess as ExpandLessIcon, Menu as MenuIcon } from '@material-ui/icons';
 import NavigateNextIcon from '@material-ui/icons/NavigateNext';
 import fs from "fs";
 import { useRouter } from "next/router";
@@ -12,7 +12,7 @@ import SEO from '../../components/SEO';
 import { SocialWidget } from "../../components/SocialWidget";
 import { APP_NEW_DOMAIN, GA_ID } from '../../config_app';
 import { callApi } from "../../services";
-import { getNewDomain, getRecentPosts, getWebContext, scrollDown } from '../../utils';
+import { getRecentPosts, getWebContext, scrollDown } from '../../utils';
 import './blog.css';
 
 
@@ -80,8 +80,7 @@ const useStyles = makeStyles({
 ReactGA.initialize(GA_ID);
 const ListBlog = ({ appInfo, url, isMobile }) => {
     useEffect(() => {
-        let l = getNewDomain(appInfo ? appInfo.id : -1)
-        ReactGA.pageview('/blog' + (l ? "/" + l : "/" + (appInfo.appNameId ? appInfo.appNameId : "")));
+        ReactGA.pageview(window.location.pathname, ["blog"], "blog")
     }, [])
     // console.log("appInfo", appInfo)
     return (

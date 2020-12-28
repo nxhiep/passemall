@@ -72,6 +72,7 @@ const TestViewUI = ({ stateInfoState, testInfoState, appInfoState, getTestInfoBy
     if (isMobile) {
         return (
             <div className="body-panel test-page">
+                <HeaderMenu appInfo={appInfoState} darkMode={true} />
                 <Container className="test-game-panel">
                     {showGame ?
                         <>
@@ -160,8 +161,8 @@ const TestViewUI = ({ stateInfoState, testInfoState, appInfoState, getTestInfoBy
                                 setOpenPopupChangeState(false);
                                 setOpenSelectTopic(true);
                             }} /> : ''}
+                    {showGame ? null : <Footer isStudy={true}></Footer>}
                 </Container>
-                {showGame ? null : <Footer isStudy={true}></Footer>}
             </div>
         )
     }

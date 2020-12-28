@@ -42,7 +42,7 @@ ReactGA.initialize(GA_ID);
 
 const Home = ({ isMobile, url }) => {
     useEffect(() => {
-        ReactGA.pageview('/homepage');
+        ReactGA.pageview(window.location.pathname, ["home-page"], 'home-page');
         setScrollDownAuto()
         oldUser();
     }, [])

@@ -3,6 +3,7 @@ import { Menu as MenuIcon, Search as SearchIcon } from '@material-ui/icons'
 import { useState } from "react"
 import SearchResultsModal from "../../container/home/SearchResultsModal"
 import { callApi } from "../../services"
+import ReactGA from 'react-ga';
 
 const useStyles = makeStyles({
     bgheader: props => {
@@ -136,9 +137,26 @@ const HeaderMenu = ({ isMobile, setSearchResults }) => {
     const styles = useStyles({ isMobile });
     return <>
         <div className={isMobile ? "" : styles.flex}>
-            <a href="/" className={styles.headerMenu}>HOME</a>
-            <a href="/blog" className={styles.headerMenu}>BLOG</a>
+            <a href="/" className={styles.headerMenu} onClick={() => {
+                ReactGA.event({
+                    action: "click-header-home",
+                    label: "Click Header Menu Home",
+                    category: "click-header-menu",
+                })
+            }}>HOME</a>
+            <a href="/blog" className={styles.headerMenu} onClick={() => {
+                ReactGA.event({
+                    action: "click-header-blog",
+                    label: "Click Header Menu Blog",
+                    category: "click-header-menu",
+                })
+            }}>BLOG</a>
             <span className={styles.headerMenu} onClick={() => {
+                ReactGA.event({
+                    action: "click-header-support",
+                    label: "Click Header Menu Support",
+                    category: "click-header-menu",
+                })
                 scrollDown()
             }}>SUPPORT</span>
         </div>
@@ -175,6 +193,11 @@ const SearchPanel = ({ isMobile, setSearchResults }) => {
         } else {
             setSearchResults(value, null)
         }
+        ReactGA.event({
+            action: "search-app-header-menu",
+            label: "Search App On Header Menu",
+            category: "search-app-header-menu",
+        })
         setLoading(false)
     }
 
