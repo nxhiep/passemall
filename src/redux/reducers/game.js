@@ -95,7 +95,7 @@ const gameReducer = (state = GameState.init(), action) => {
             state = GameState.cloneGameState(action.lastGame);
             state.isLoaded = true;
             onContinue(state, true);
-            state.isLoading = 4;
+            state.isLoading = state.isFinish ? 7 : 4;
             state.lastUpdate = new Date().getTime();
             return Object.assign({}, state);
         case Types.RESET_QUESTION_PROGRESS: {

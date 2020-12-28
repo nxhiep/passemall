@@ -227,7 +227,7 @@ const QuestionsPanelx = ({ questionProgress, className, topicId, loadGame = () =
                             <div style={{ visibility: 'hidden' }}>X</div>
                         </div>
                     </div>
-                </div >
+                </div>
             </div>
             {
                 questions.map((question) => {

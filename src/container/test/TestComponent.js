@@ -1,21 +1,21 @@
-import { Collapse, Grid, Button, IconButton, useTheme, useMediaQuery, Popover, Paper } from '@material-ui/core';
-import { NavigateBefore as BackIcon, NavigateNext as NextIcon, ArrowBack as ArrowBackIcon, Favorite as HeartIcon, FavoriteBorder as UnHeartIcon } from '@material-ui/icons';
+import { Button, Collapse, Grid, IconButton, Paper, Popover, useMediaQuery, useTheme } from '@material-ui/core';
+import { ArrowBack as ArrowBackIcon, Favorite as HeartIcon, FavoriteBorder as UnHeartIcon, NavigateBefore as BackIcon, NavigateNext as NextIcon } from '@material-ui/icons';
+import CancelIcon from '@material-ui/icons/Cancel';
+import MoreVertIcon from '@material-ui/icons/MoreVert';
+import TimerIcon from '@material-ui/icons/Timer';
 import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
+import { DialogInfo, ReportDialog } from '../../components/Dialog';
 import QuestionContentPanel, { TextContentType } from '../../components/QuestionContentPanel';
 import { LoadingWidget } from '../../components/Widgets';
 import Config from '../../config';
 import Choice from '../../models/Choice';
 import Question from '../../models/QuestionX';
 import { onBookmark } from '../../redux/actions';
-import { endTest } from '../../redux/actions/index';
 import { loadGame, onContinue, onSelectedChoice } from '../../redux/actions/game';
-import { DialogInfo, ReportDialog } from '../../components/Dialog';
-import { convertTime, isMobileFunctions } from '../../utils';
+import { endTest } from '../../redux/actions/index';
 import { setTimeLeftState } from '../../redux/actions/timeLeft';
-import MoreVertIcon from '@material-ui/icons/MoreVert';
-import CancelIcon from '@material-ui/icons/Cancel';
-import TimerIcon from '@material-ui/icons/Timer';
+import { convertTime, isMobileFunctions } from '../../utils';
 import { CongratulationAlert } from '../game/Game.ViewTS';
 var arrayIndex = new Array();
 const CountDownUI = ({ timeLeftReducer, id, setTimeLeftState, onContinue, endTest, level }) => {
@@ -79,7 +79,9 @@ const TestQuestionPanelUI = ({ showLeftPanel, endTest = () => { }, setShowLeftPa
             <div
                 className={"questions-panel" + (className ? " " + className : "") + (gameState.isFinish ? " end-game" : "")}
                 id="canvas">
-                {gameState.isFinish && isMobile ? <ArrowBackIcon onClick={() => setShowLeftPanel()} style={{ color: "#4E63BD", marginRight: "16px", marginTop: "20px" }} /> : null}
+                {gameState.isFinish && isMobile ? <IconButton onClick={() => setShowLeftPanel()}>
+                    <ArrowBackIcon style={{ color: "#4E63BD" }} />
+                </IconButton> : null}
                 { (gameState.level === Config.EASY_LEVEL || gameState.isFinish === true || showLeftPanel === true) ?
                     null : <CountDown onContinue={onContinue}
                         endTest={endTest}
@@ -366,6 +368,7 @@ const ButtonLevelUI = ({ showLeftPanel, isHaveRightPanel, setShowLeftPanel, test
     let id = gameStateId === -1 ? -1 : gameStateId.substring(0, gameStateId.length - 2);
     const theme = useTheme();
     const isMobile = useMediaQuery(theme.breakpoints.between(0, 780));
+
     const handleClickLoadGame = (levelClick, currentLevel) => {
         if (!isMobile) {
             if (id == testInfoId && levelClick !== currentLevel) {

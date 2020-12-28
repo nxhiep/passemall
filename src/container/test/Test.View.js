@@ -91,7 +91,7 @@ const TestViewUI = ({ stateInfoState, testInfoState, appInfoState, getTestInfoBy
                                         questionIds={currentTestInfo.questionIds}
                                         appInfoState={appInfoState}
                                         showLeftPanel={showLeftPanel}
-                                        setShowLeftPanel={() => setShowLeftPanel(true)}
+                                        setShowLeftPanel={() => endTest()}
                                     ></TestQuestionPanel>
                                 </div>
                             </Grid>
@@ -196,7 +196,9 @@ const TestViewUI = ({ stateInfoState, testInfoState, appInfoState, getTestInfoBy
 
                             <Grid item xs={12} sm={12} md={5} lg={4} className="left-panel border-box">
                                 {(gameState.isFinish && gameState.isLoading !== 2) ? (
-                                    <EndTestView bucket={appInfoState.bucket}></EndTestView>
+                                    <EndTestView bucket={appInfoState.bucket} setShowLeftPanel={() => {
+                                        console.log("setShowLeftPanel")
+                                    }}></EndTestView>
                                 ) : (
                                         <div className="left-panel-box border-box">
                                             <div className="left-panel-content">

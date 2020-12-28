@@ -73,7 +73,7 @@ const EndTestView = ({ gameState, testInfoState, topicState, bucket, resetQuesti
                     {isMobile ? <div style={{height: "100px", width: "100%"}}></div> : null}
                 </div>
 
-            </div >
+            </div>
             {isMobile ? (
                 <div style={{ display: "flex", flexDirection: "column" }}>
                     <Button style={{ bottom: "60px", background: "#4E63BD", color: "#fff" }}
