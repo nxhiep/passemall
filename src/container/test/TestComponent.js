@@ -41,7 +41,7 @@ const CountDownUI = ({ timeLeftReducer, id, setTimeLeftState, onContinue, endTes
     return (
         <div className="count-down">
             <TimerIcon></TimerIcon>
-            <div style={{ marginLeft: "8px" }}>
+            <div style={{ marginLeft: "8px", minWidth: "85px", textAlign: "center" }}>
                 {convertTime(timeLeftReducer.data[id] ? timeLeftReducer.data[id].timeLeft : -1)}
             </div>
         </div>
@@ -78,7 +78,6 @@ const TestQuestionPanelUI = ({ showLeftPanel, endTest = () => { }, setShowLeftPa
         <>
             <div
                 className={"questions-panel" + (className ? " " + className : "") + (gameState.isFinish ? " end-game" : "")}
-                style={gameState.isFinish && !isMobile ? { maxHeight: 550 } : {}}
                 id="canvas">
                 {gameState.isFinish && isMobile ? <ArrowBackIcon onClick={() => setShowLeftPanel()} style={{ color: "#4E63BD", marginRight: "16px", marginTop: "20px" }} /> : null}
                 { (gameState.level === Config.EASY_LEVEL || gameState.isFinish === true || showLeftPanel === true) ?
@@ -104,7 +103,8 @@ const TestQuestionPanelUI = ({ showLeftPanel, endTest = () => { }, setShowLeftPa
                 }
             </div>
             {
-                gameState.isFinish ? null : (
+                gameState.isFinish ? null : <>
+                { isMobile ? <div style={{height: "62px", width: "100%"}}></div> : null }
                 <div className="parent-button-test">
                     <Button
                         variant={isSkip ? "outlined" : "contained"}
@@ -121,7 +121,7 @@ const TestQuestionPanelUI = ({ showLeftPanel, endTest = () => { }, setShowLeftPa
                         {isSkip ? "Skip" : "Continue"}
                     </Button>
                 </div>
-                )
+                </>
             }
         </>
     );
@@ -275,10 +275,10 @@ const TestProgressPanelUI = ({ gameState, appInfo, onBookmark, setShowLeftPanel,
     return (
         <>
             {isMobile ? (
-                <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", padding: "0 8px", background: "#e5e5e5" }}>
+                <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", padding: isMobile ? "15px 8px" : "0 8px", background: "#e5e5e5" }}>
                     { !showAlert ? null : <CongratulationAlert onBookmark={true} onClose={() => setShowAlert(false)}></CongratulationAlert>}
 
-                    <ArrowBackIcon onClick={() => setShowLeftPanel()} style={{ color: "#4E63BD", marginRight: "16px", marginTop: "20px" }} />
+                    <ArrowBackIcon onClick={() => setShowLeftPanel()} style={{ color: "#4E63BD", marginTop: "20px" }} />
                     <div className="test-progress-panel" >
                         <div className="progress-panel">
                             <div className="content-line-progress" style={{ left: 'calc(' + size + '% - 10px)' }}>{gameState.indexActive} / {gameState.questions.length}</div>
@@ -289,7 +289,7 @@ const TestProgressPanelUI = ({ gameState, appInfo, onBookmark, setShowLeftPanel,
                             </div>
                         </div>
                     </div>
-                    <span style={{ display: "flex", marginTop: "16px" }}>
+                    <span style={{ display: "flex" }}>
                         <MoreVertIcon color="primary" onClick={(event) => handleClick(event)}></MoreVertIcon>
                         <Popover
                             open={open}

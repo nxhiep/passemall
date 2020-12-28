@@ -70,6 +70,7 @@ const EndTestView = ({ gameState, testInfoState, topicState, bucket, resetQuesti
                             <TopicProgressItem topicProgress={topicProgress} bucket={bucket} key={topicProgress.topicName}></TopicProgressItem>
                         )
                     })}
+                    {isMobile ? <div style={{height: "100px", width: "100%"}}></div> : null}
                 </div>
 
             </div >
