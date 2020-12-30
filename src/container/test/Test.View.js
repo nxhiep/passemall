@@ -1,7 +1,7 @@
-import { Button, Container, Grid } from '@material-ui/core';
+import { Button, Container, Dialog, DialogContent, DialogTitle, Grid, IconButton, Popover } from '@material-ui/core';
 import { useTheme } from '@material-ui/core/styles';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
-import { Done, Lock as LockIcon, PlayArrow } from '@material-ui/icons';
+import { Done, Lock as LockIcon, PlayArrow, NavigateBefore as BackIcon } from '@material-ui/icons';
 import ArrowRightAltIcon from '@material-ui/icons/ArrowRightAlt';
 import CloseIcon from '@material-ui/icons/Close';
 import React, { useEffect, useState } from 'react';
@@ -166,6 +166,7 @@ const TestViewUI = ({ stateInfoState, testInfoState, appInfoState, getTestInfoBy
             </div>
         )
     }
+    console.log("currentTestInfo", currentTestInfo)
     return (
         <div className="body-panel test-page">
             <HeaderMenu appInfo={appInfoState} darkMode={true} />
@@ -173,7 +174,9 @@ const TestViewUI = ({ stateInfoState, testInfoState, appInfoState, getTestInfoBy
                 {dialogInfo ? <AlertDialogSlide dialogInfo={dialogInfo} /> : ''}
                 {showGame ? (
                     <>
-                        <ButtonLevel testInfoId={currentTestInfo ? currentTestInfo.id : -1}
+                        {isHaveRightPanel ? null : <ButtonLevel
+                            hiddenBackButton={true}
+                            testInfoId={currentTestInfo ? currentTestInfo.id : -1}
                             appId={appInfoState.id}
                             timeTest={currentTestInfo ? currentTestInfo.timeTest : -1}
                             passPercent={currentTestInfo ? currentTestInfo.passPercent : -1}
@@ -183,8 +186,8 @@ const TestViewUI = ({ stateInfoState, testInfoState, appInfoState, getTestInfoBy
                             level={gameState.level}
                             setShowLeftPanel={() => setShowLeftPanel(false)}
                             isFinish={gameState.isFinish}
-                            setShowGame={() => setShowGame(false)}>
-                        </ButtonLevel>
+                            setShowGame={() => setShowGame(false)}
+                        />}
                         <div className="spacer-height-test"></div>
                         <Grid
                             container
@@ -201,6 +204,25 @@ const TestViewUI = ({ stateInfoState, testInfoState, appInfoState, getTestInfoBy
                                     }}></EndTestView>
                                 ) : (
                                         <div className="left-panel-box border-box">
+                                            <IconButton
+                                                onClick={() => {
+                                                    let id = gameState.id === -1 ? -1 : gameState.id.substring(0, gameState.id.length - 2);
+                                                    if (id === -1 || gameState.isFinish) {
+                                                        setShowGame();
+                                                    } else {
+                                                        if (id == currentTestInfo ? currentTestInfo.id : -1) {
+                                                            setDialogInfo(new DialogInfo({
+                                                                title: 'Play again', msg: 'Do you want to pause test', okText: '', cancelText: '', onConfirm: (result) => {
+                                                                    if (result) {
+                                                                        setShowGame();
+                                                                    }
+                                                                }
+                                                            }));
+                                                        }
+                                                    }
+                                                }}>
+                                                <BackIcon style={{ fontSize: "40px" }}></BackIcon>
+                                            </IconButton>
                                             <div className="left-panel-content">
                                                 <div className="description">
                                                     You are about to take the
@@ -217,6 +239,14 @@ const TestViewUI = ({ stateInfoState, testInfoState, appInfoState, getTestInfoBy
                                                     <li>Stop as soon as you have reached the failing score</li>
                                                 </ul>
                                             </div>
+                                            <ButtonLevelPC
+                                                currentTestInfo={currentTestInfo}
+                                                appInfoState={appInfoState}
+                                                gameState={gameState}
+                                                setShowLeftPanel={setShowLeftPanel}
+                                                setShowGame={setShowGame}
+                                                setDialogInfo={setDialogInfo}
+                                            />
                                             <Button
                                                 variant="contained"
                                                 color="primary"
@@ -230,8 +260,7 @@ const TestViewUI = ({ stateInfoState, testInfoState, appInfoState, getTestInfoBy
                                                         boxShadow: "inset 0px 4px 4px rgba(255, 255, 255, 0.25)",
                                                         borderRadius: "20px",
                                                         width: "240px",
-                                                        marginLeft: "auto",
-                                                        marginRight: "auto"
+                                                        margin: "10px auto",
                                                     }
                                                 }>End Test</Button>
                                         </div>
@@ -244,9 +273,9 @@ const TestViewUI = ({ stateInfoState, testInfoState, appInfoState, getTestInfoBy
                                         className="question-view-study-game border-box"
                                         testInfoId={currentTestInfo ? currentTestInfo.id : -1}
                                         appId={appInfoState.id}
-                                        timeTest={currentTestInfo.timeTest}
-                                        passPercent={currentTestInfo.passPercent}
-                                        questionIds={currentTestInfo.questionIds}
+                                        timeTest={currentTestInfo ? currentTestInfo.timeTest : 0}
+                                        passPercent={currentTestInfo ? currentTestInfo.passPercent : 0}
+                                        questionIds={currentTestInfo ? currentTestInfo.questionIds : []}
                                         appInfoState={appInfoState}
                                     ></TestQuestionPanel>
                                 </div>
@@ -302,11 +331,53 @@ const TestViewUI = ({ stateInfoState, testInfoState, appInfoState, getTestInfoBy
                             setOpenPopupChangeState(false);
                             setOpenSelectTopic(true)
                         }} /> : ''}
-            </Container >
+            </Container>
             <ShowImage></ShowImage>
-        </div >
+        </div>
     )
 }
+
+const ButtonLevelPC = ({ currentTestInfo, appInfoState, gameState, setShowLeftPanel, setShowGame, setDialogInfo }) => {
+    const [open, setOpen] = useState(false)
+    const id = "ButtonLevelPC";
+    useEffect(() => {
+        if(!currentTestInfo){
+            setOpen(true)
+        }
+    }, [])
+    return <div style={{width: "100%"}}>
+        <Button 
+            style={{ borderRadius: "50px", margin: "10px auto", paddingLeft: "50px", paddingRight: "50px", display: "block" }}
+            aria-describedby={id} 
+            variant="contained" 
+            color="primary" 
+            onClick={() => setOpen(true)}>Select Level</Button>
+        <Dialog onClose={() => setOpen(false)} aria-labelledby="simple-dialog-title" open={open}>
+            <DialogTitle>Select Level</DialogTitle>
+            <DialogContent>
+                <div className="button-level-popover">
+                    <ButtonLevel
+                        hiddenBackButton={true}
+                        testInfoId={currentTestInfo ? currentTestInfo.id : -1}
+                        appId={appInfoState.id}
+                        timeTest={currentTestInfo ? currentTestInfo.timeTest : -1}
+                        passPercent={currentTestInfo ? currentTestInfo.passPercent : -1}
+                        questionIds={currentTestInfo ? currentTestInfo.questionIds : null}
+                        setDialogInfo={setDialogInfo}
+                        gameStateId={gameState.id}
+                        level={gameState.level}
+                        setShowLeftPanel={() => setShowLeftPanel(false)}
+                        isFinish={gameState.isFinish}
+                        setShowGame={() => setShowGame(false)}
+                        onClickItem={() => setOpen(false)}
+                        >
+                    </ButtonLevel>
+                </div>
+            </DialogContent>
+        </Dialog>
+    </div>
+}
+
 const ListTestInfoUI = ({ testInfoState, appId, onChangeTestInfo, level, bucket }) => {
     let testInfos = new Array();
     const theme = useTheme();
@@ -361,7 +432,7 @@ const ListTestInfoUI = ({ testInfoState, appId, onChangeTestInfo, level, bucket 
     return (
         <>
             { widget}
-            {isIPad ? <div style={{height: "70px"}}></div> : null}
+            {isIPad ? <div style={{ height: "70px" }}></div> : null}
         </>
     )
 }

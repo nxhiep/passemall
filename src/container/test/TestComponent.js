@@ -364,12 +364,19 @@ const TestProgressPanelUI = ({ gameState, appInfo, onBookmark, setShowLeftPanel,
 
     );
 }
-const ButtonLevelUI = ({ showLeftPanel, isHaveRightPanel, setShowLeftPanel, testInfoId, appId, timeTest, passPercent, questionIds, loadGame, setDialogInfo, gameStateId, level, isFinish, setShowGame }) => {
+const ButtonLevelUI = ({ 
+    showLeftPanel, isHaveRightPanel, setShowLeftPanel, 
+    testInfoId, appId, timeTest, passPercent, 
+    questionIds, loadGame, setDialogInfo, 
+    gameStateId, level, isFinish, setShowGame,
+    hiddenBackButton, onClickItem
+    }) => {
     let id = gameStateId === -1 ? -1 : gameStateId.substring(0, gameStateId.length - 2);
     const theme = useTheme();
     const isMobile = useMediaQuery(theme.breakpoints.between(0, 780));
 
     const handleClickLoadGame = (levelClick, currentLevel) => {
+        onClickItem && onClickItem(levelClick, currentLevel)
         if (!isMobile) {
             if (id == testInfoId && levelClick !== currentLevel) {
                 setDialogInfo(new DialogInfo({
@@ -399,7 +406,7 @@ const ButtonLevelUI = ({ showLeftPanel, isHaveRightPanel, setShowLeftPanel, test
             justify="space-between"
             direction={isMobile ? "column" : "row"} 
             className="list-level">
-            <div className="button-back" 
+            {hiddenBackButton !== true ? <div className="button-back" 
                 onClick={() => {
                     if (!isMobile) {
                         if (id === -1 || isFinish) {
@@ -420,7 +427,7 @@ const ButtonLevelUI = ({ showLeftPanel, isHaveRightPanel, setShowLeftPanel, test
                     }
                 }}>
                 <BackIcon style={{ fontSize: "40px", color: "#818C99" }}></BackIcon>
-            </div>
+            </div> : null}
             <Grid item 
                 onClick={() => handleClickLoadGame(Config.EASY_LEVEL, level)} 
                 className={"button-level " + (level === Config.EASY_LEVEL && id == testInfoId ? "active" : "")}>
