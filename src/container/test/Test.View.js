@@ -256,10 +256,9 @@ const TestViewUI = ({ stateInfoState, testInfoState, appInfoState, getTestInfoBy
                                                 style={
                                                     {
                                                         display: ((gameState.isFinish && loading) || (gameState.currentQuestion && loading) || (gameState.level < 0)) ? "none" : "block",
-                                                        background: "#EF7352",
-                                                        boxShadow: "inset 0px 4px 4px rgba(255, 255, 255, 0.25)",
-                                                        borderRadius: "20px",
+                                                        borderRadius: "50px",
                                                         width: "240px",
+                                                        fontWeight: "500",
                                                         margin: "10px auto",
                                                     }
                                                 }>End Test</Button>
@@ -347,7 +346,7 @@ const ButtonLevelPC = ({ currentTestInfo, appInfoState, gameState, setShowLeftPa
     }, [])
     return <div style={{width: "100%"}}>
         <Button 
-            style={{ borderRadius: "50px", margin: "10px auto", paddingLeft: "50px", paddingRight: "50px", display: "block" }}
+            style={{ borderRadius: "50px", margin: "10px auto", width: "240px", display: "block", fontWeight: "500" }}
             aria-describedby={id} 
             variant="contained" 
             color="primary" 
