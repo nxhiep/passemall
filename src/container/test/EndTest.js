@@ -45,7 +45,7 @@ const EndTestView = ({ gameState, testInfoState, topicState, bucket, resetQuesti
                         {gameState.status === Config.GAME_STATUS_PASSED ? "You have passed your test!" : "Not enough to pass :("}
                     </div>
                     <div style={{ fontSize: "14px", maxWidth: "200px", marginLeft: "auto", marginRight: "auto", textAlign: "center" }}>
-                        {gameState.status === Config.GAME_STATUS_PASSED ? `Yowch! That hurt. Failing an exam always does. But hey, 
+                        {gameState.status === Config.GAME_STATUS_FAILED ? `Yowch! That hurt. Failing an exam always does. But hey, 
                         that was just one try. Get your notes together and try again. You can do this! ` : `Congratulations, you have
                         successfully completed this test.`}
                     </div>
