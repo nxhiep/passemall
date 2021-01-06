@@ -2,6 +2,7 @@ import { Button, Container, IconButton, makeStyles, useMediaQuery, useTheme } fr
 import { ArrowBack } from '@material-ui/icons';
 import React from 'react';
 import { connect } from 'react-redux';
+import Config from '../../config';
 import { resetQuestionProgress, setGameIsLoading } from '../../redux/actions';
 
 const useStyles = makeStyles({
@@ -40,8 +41,10 @@ const EndTestView = ({ gameState, testInfoState, topicState, bucket, resetQuesti
                     <img src="/images/finish.png" alt="finsih"></img>
                 </div>
                 <div style={{ marginTop: "16px" }}>
-                    <div style={{ fontSize: "18px", fontWeight: "bold", marginBottom: "4px", textAlign: "center" }}>{gameState.isFinish ? "Not enough to pass :(" : ""}</div>
-                    <div style={{ fontSize: "9px", fontWeight: "500", maxWidth: "200px", marginLeft: "auto", marginRight: "auto", textAlign: "center" }}>{gameState.isFinish ? `Yowch! That hurt. Failing an exam always does. But hey, 
+                    <div style={{ fontSize: "16px", fontWeight: "bold", marginBottom: "4px", textAlign: "center" }}>
+                        {gameState.isFinish ? (gameState.status === Config.GAME_STATUS_PASSED ? "Congratulations, you have passed your test!" : "Not enough to pass :(") : ""}
+                    </div>
+                    <div style={{ fontSize: "14px", maxWidth: "200px", marginLeft: "auto", marginRight: "auto", textAlign: "center" }}>{gameState.isFinish ? `Yowch! That hurt. Failing an exam always does. But hey, 
                         that was just one try. Get your notes together and try again. You can do this! ` : `Congratulations, you have
                         successfully completed this test. Your
                         rank is 2 out of two thousand`}</div>

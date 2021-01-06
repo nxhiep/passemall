@@ -407,7 +407,7 @@ const AnswerButton2 = ({ index, answer, explanation, result, selected, choice, o
         }
     }
     return (
-        <button className={"answer-button" + (!showResult && selected ? " selected" : "") + showCss + (Config.TEST_MODE && result ? " test-true" : "")} onClick={() => {
+        <button className={"answer-button" + (!showResult && selected ? " selected" : "") + showCss + ((Config.TEST_MODE || !isProduction()) && result ? " test-true" : "")} onClick={() => {
             if (showResult) {
                 return;
             }

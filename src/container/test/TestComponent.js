@@ -15,7 +15,7 @@ import { onBookmark } from '../../redux/actions';
 import { loadGame, onContinue, onSelectedChoice } from '../../redux/actions/game';
 import { endTest } from '../../redux/actions/index';
 import { setTimeLeftState } from '../../redux/actions/timeLeft';
-import { convertTime, isMobileFunctions } from '../../utils';
+import { convertTime, isMobileFunctions, isProduction } from '../../utils';
 import { CongratulationAlert } from '../game/Game.ViewTS';
 var arrayIndex = new Array();
 const CountDownUI = ({ timeLeftReducer, id, setTimeLeftState, onContinue, endTest, level }) => {
@@ -230,7 +230,7 @@ const AnswerButtonUI = ({ check, index = 0, showResult = false, choice = new Cho
         }
     }
     return (
-        <button className={"answer-button" + (!showResult && choice.selected ? " selected" : "") + showCss + (Config.TEST_MODE && choice.isCorrect ? " test-true" : "")}
+        <button className={"answer-button" + (!showResult && choice.selected ? " selected" : "") + showCss + ((Config.TEST_MODE || !isProduction()) && choice.isCorrect ? " test-true" : "")}
             onClick={() => {
                 if (showResult) {
                     return;

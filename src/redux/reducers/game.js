@@ -92,7 +92,9 @@ const gameReducer = (state = GameState.init(), action) => {
             state.lastUpdate = new Date().getTime();
             return Object.assign({}, state);
         case Types.RESUME_GAME:
+            // console.log("xxxxxxxxxxxxx 111", action.lastGame)
             state = GameState.cloneGameState(action.lastGame);
+            // console.log("xxxxxxxxxxxxx 222", state)
             state.isLoaded = true;
             onContinue(state, true);
             state.isLoading = state.isFinish ? 7 : 4;
@@ -231,7 +233,7 @@ const onContinue = (state, firstLoad) => {
 };
 const checkTestPassed = (state) => {
     if (state.questions.length > 0) {
-        if (state.progress.correct < (state.questions.length * state.passPercent)) {
+        if (state.progress.correct < (state.questions.length * state.passPercent / 100)) {
             state.status = Config.GAME_STATUS_FAILED;
         } else {
             state.status = Config.GAME_STATUS_PASSED;

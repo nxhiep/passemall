@@ -166,7 +166,7 @@ const TestViewUI = ({ stateInfoState, testInfoState, appInfoState, getTestInfoBy
             </div>
         )
     }
-    console.log("currentTestInfo", currentTestInfo)
+    // console.log("currentTestInfo", currentTestInfo)
     return (
         <div className="body-panel test-page">
             <HeaderMenu appInfo={appInfoState} darkMode={true} />

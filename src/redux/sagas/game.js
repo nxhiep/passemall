@@ -14,7 +14,6 @@ function* startGameReload() {
 }
 function* startGame() {
     let action = yield take(Types.GAME_LOAD_GAME);
-    // console.log("startGame action", action)
     let gameState = yield select((state) => state.gameState);
     let timeTest = action.timeTest
     let topicReducer = yield select((state) => state.topicReducer);
@@ -51,7 +50,6 @@ function* startGame() {
             }
         });
     }
-    // console.log("startGame currentGame", currentGame)
     if (currentGame == null || currentGame == undefined) {
         if (gameType === Config.STUDY_GAME || gameType === Config.REVIEW_GAME) {
             let cards;
@@ -127,12 +125,14 @@ function* onEndGame() {
     while (true) {
         try {
             let action = yield take(Types.GAME_END_GAME);
+            // console.log("onEndGame action", action)
             const gameState = yield select((state) => state.gameState);
             yield put(setTestInfoStatusEnd(gameState.id.substring(0, gameState.id.length - 2), gameState.status))
             if (gameState.gameType === Config.TEST_GAME) {
                 let id = gameState.id.substring(0, gameState.id.length - 2);
                 yield put(setTestInfoUnlock(id))
             }
+            yield put(updateListGame(gameState.appId, gameState.id, gameState));
         }
         catch (error) {
         }

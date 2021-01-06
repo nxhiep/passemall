@@ -74,3 +74,8 @@ export const setGameIsLoading = () => {
         type : Types.SET_GAME_IS_LOADING,
     }
 }
+export const calcProgress = () => {
+    return {
+        type : Types.CALC_PROGRESS,
+    }
+}
