@@ -9,7 +9,7 @@ import QuestionProgress from '../../models/QuestionProgress';
 import { onBookmark } from '../../redux/actions';
 import { ReportDialog } from '../../components/Dialog'
 import { loadGame, onSelectedChoice } from '../../redux/actions/game';
-import { isMobileFunctions, shuffle } from '../../utils';
+import { isMobileFunctions, isProduction, shuffle } from '../../utils';
 import { useRouter } from 'next/router';
 
 const mapStateToProps = (state, ownProps) => ({

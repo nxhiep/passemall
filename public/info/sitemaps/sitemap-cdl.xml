@@ -2325,4 +2325,24 @@
         <changefreq>monthly</changefreq>
         <priority>1.00</priority>
     </url>
+    <url>
+        <loc>https://cdl-prep.com/blog/what-you-need-to-know-about-the-cdl-5751671994974208</loc>
+        <changefreq>monthly</changefreq>
+        <priority>1.00</priority>
+    </url>
+    <url>
+        <loc>https://cdl-prep.com/blog/why-do-i-need-cdl-endorsements-4875186258051072</loc>
+        <changefreq>monthly</changefreq>
+        <priority>1.00</priority>
+    </url>
+    <url>
+        <loc>https://cdl-prep.com/blog/how-to-pass-your-hazmat-h-test-in-2020-5067872130826240</loc>
+        <changefreq>monthly</changefreq>
+        <priority>1.00</priority>
+    </url>
+    <url>
+        <loc>https://cdl-prep.com/blog/how-to-pass-your-cdl-written-test-in-2020-5656081323786240</loc>
+        <changefreq>monthly</changefreq>
+        <priority>1.00</priority>
+    </url>
 </urlset>

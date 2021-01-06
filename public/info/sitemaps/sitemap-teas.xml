@@ -50,4 +50,9 @@
         <changefreq>monthly</changefreq>
         <priority>1.00</priority>
     </url>
+    <url>
+        <loc>https://teas-prep.com/blog/all-you-need-to-know-about-the-teas-exam-6285989280481280</loc>
+        <changefreq>monthly</changefreq>
+        <priority>1.00</priority>
+    </url>
 </urlset>
