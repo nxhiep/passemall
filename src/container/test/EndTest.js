@@ -42,12 +42,13 @@ const EndTestView = ({ gameState, testInfoState, topicState, bucket, resetQuesti
                 </div>
                 <div style={{ marginTop: "16px" }}>
                     <div style={{ fontSize: "16px", fontWeight: "bold", marginBottom: "4px", textAlign: "center" }}>
-                        {gameState.isFinish ? (gameState.status === Config.GAME_STATUS_PASSED ? "Congratulations, you have passed your test!" : "Not enough to pass :(") : ""}
+                        {gameState.status === Config.GAME_STATUS_PASSED ? "You have passed your test!" : "Not enough to pass :("}
                     </div>
-                    <div style={{ fontSize: "14px", maxWidth: "200px", marginLeft: "auto", marginRight: "auto", textAlign: "center" }}>{gameState.isFinish ? `Yowch! That hurt. Failing an exam always does. But hey, 
+                    <div style={{ fontSize: "14px", maxWidth: "200px", marginLeft: "auto", marginRight: "auto", textAlign: "center" }}>
+                        {gameState.status === Config.GAME_STATUS_PASSED ? `Yowch! That hurt. Failing an exam always does. But hey, 
                         that was just one try. Get your notes together and try again. You can do this! ` : `Congratulations, you have
-                        successfully completed this test. Your
-                        rank is 2 out of two thousand`}</div>
+                        successfully completed this test.`}
+                    </div>
                 </div>
                 <div className="circle-progress">
                     <div className="circle">
