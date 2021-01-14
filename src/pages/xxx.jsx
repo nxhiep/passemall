@@ -6,7 +6,13 @@ const XXX = ({ headers }) => {
     return <>
         <SEO />
         <main>
-            XXXXX
+            {
+                Object.keys(headers).map(key => {
+                    return <div className="item">
+                        {headers[key]}
+                    </div>
+                })
+            }
         </main>
     </>
 }
