@@ -17,6 +17,9 @@ import { scrollToTop } from '../../models/Utils';
 import { getAllCardProgress } from '../../redux/actions/cardProgress';
 import { checkLoadedReceiveProps, isMobileFunctions, isSuperApp } from '../../utils';
 import { QuestionsPanelTS } from '../game/Game.ViewTS';
+
+ReactGA.initialize(GA_ID);
+
 const ReviewViewScreen = ({ appInfo }) => {
     const router = useRouter();
     let { appNameId, screen } = router.query
@@ -32,6 +35,7 @@ const ReviewViewScreen = ({ appInfo }) => {
         if (isMobile) {
             scrollToTop();
         }
+        ReactGA.pageview(window.location.pathname, ["review-page"], 'review-page');
     }, [isMobile]);
     if (!appInfo) {
         return <LoadingWidget />

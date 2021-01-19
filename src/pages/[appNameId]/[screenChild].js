@@ -54,27 +54,15 @@ function ScreenChild({ appInfo, topicId }) {
     screen = screen ?? '';
     // console.log("ScreenChild", screen)
     if (screen.startsWith(Routes.TEST_SCREEN)) {
-        useEffect(() => {
-            ReactGA.pageview(window.location.pathname, ["test-page"], 'test-page');
-        }, [])
         return <TestViewScreen topicId={topicId} appInfo={appInfo} />
     }
     if (screen.startsWith(Routes.REVIEW_SCREEN)) {
-        useEffect(() => {
-            ReactGA.pageview(window.location.pathname, ["review-page"], 'review-page');
-        }, [])
         return <ReviewViewScreen appInfo={appInfo} />
     }
     if (screen.length > 0 && topicId > -1) {
-        useEffect(() => {
-            ReactGA.pageview(window.location.pathname, ["study-page"], 'study-page');
-        }, [])
         return <StudyViewScreen appInfo={appInfo} topicId={topicId} />
     }
-    useEffect(() => {
-        ReactGA.pageview(window.location.pathname, ["error-page"], 'error-page');
-    }, [])
-    return <ErrorPage />
+    return <ErrorPage title="404 Not found" />
 }
 
 export async function getServerSideProps(context) {

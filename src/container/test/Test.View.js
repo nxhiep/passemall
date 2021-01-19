@@ -19,6 +19,9 @@ import { endTest, getTestInfoByAppId, getTestInfoByAppIdAndParentId, getTopicsBy
 import { CongratulationAlert } from "../game/Game.ViewTS";
 import EndTestView from "./EndTest";
 import { ButtonLevel, TestProgressPanel, TestQuestionPanel } from './TestComponent';
+
+ReactGA.initialize(GA_ID);
+
 const TestViewScreen = ({ appInfo, topicId = -1 }) => {
     const theme = useTheme()
     const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
@@ -28,7 +31,7 @@ const TestViewScreen = ({ appInfo, topicId = -1 }) => {
         }
     }, [isMobile]);
     useEffect(() => {
-        ReactGA.pageview('/testpage/' + appInfo.title);
+        ReactGA.pageview(window.location.pathname, ["test-page"], 'test-page');
     }, []);
     if (!appInfo) {
         return React.createElement(LoadingWidget, null);

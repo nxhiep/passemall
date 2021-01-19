@@ -1,7 +1,14 @@
 import { Container } from "@material-ui/core"
+import { useEffect } from "react";
+import ReactGA from 'react-ga';
+
+ReactGA.initialize(GA_ID);
 
 const ErrorPage = ({ title }) => {
     title = title ? title : "Error"
+    useEffect(() => {
+        ReactGA.pageview(window.location.pathname, ["error-page"], 'error-page');
+    }, [])
     return <>
         <link rel="icon" href='/info/images/logo60.png' />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />

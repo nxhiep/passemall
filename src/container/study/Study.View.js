@@ -17,11 +17,13 @@ import { getTopicById, getTopicsByParentId } from '../../redux/actions/topic';
 import { isMobileFunctions, isObjEmpty } from '../../utils';
 import { CongratulationAlert, QuestionsPanelTS } from '../game/Game.ViewTS';
 
+ReactGA.initialize(GA_ID);
+
 const questionsX = new Map();
 const StudyViewScreen = ({ appInfo, topicId }) => {
     const router = useRouter();
     useEffect(() => {
-        ReactGA.pageview('/studypage/' + appInfo.title);
+        ReactGA.pageview(window.location.pathname, ["study-page"], 'study-page');
     }, []);
     if (!appInfo) {
         return <LoadingWidget />
